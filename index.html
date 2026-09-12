@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arjav Jain — Vehicle Performance Engineer</title>
+<meta name="description" content="Arjav Jain — Vehicle dynamics, structures, thermal and electronics engineering across Formula Student and EV powertrain programs. Targeting motorsport (F1/WEC) and automotive engineering roles.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230b0d10%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22none%22 stroke=%22%23ff5a36%22 stroke-width=%228%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark"><span class="dot"></span><span id="nav-name">ARJAV JAIN</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">≡</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#competencies">Focus</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap" id="hero">
+    <div class="hero-kicker" id="heroKicker">VEHICLE DYNAMICS · MOTORSPORT ENGINEERING</div>
+    <h1 id="heroHeadline"></h1>
+    <p class="hero-tagline" id="heroTagline"></p>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View projects →</a>
+      <a href="#" id="resumeBtn" class="btn btn-ghost">Download résumé</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+    <div class="stat-strip" id="statStrip"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">01</span><h2 class="section-title">About</h2><span class="section-rule"></span></div>
+      <div class="about-grid">
+        <div class="about-text" id="aboutText"></div>
+        <div class="auth-card">
+          <img id="profilePhoto" class="profile-photo" alt="Profile photo">
+          <h4>Status</h4>
+          <p id="authText"></p>
+          <p id="locationText"></p>
+          <ul class="contact-list" id="quickContact"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section id="competencies">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">02</span><h2 class="section-title">Core Focus</h2><span class="section-rule"></span></div>
+      <p class="section-lede">Four disciplines that show up together in most race-car programs — and in my project history.</p>
+      <div class="comp-grid" id="compGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">03</span><h2 class="section-title">Projects <span>&amp; Research</span></h2><span class="section-rule"></span></div>
+      <p class="section-lede">Filter by discipline or by context. Every card expands for the full technical breakdown.</p>
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="project-grid" id="projectGrid"></div>
+      <p class="empty-state" id="emptyState" style="display:none;">No projects match that combination — try clearing a filter.</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">04</span><h2 class="section-title">Work Experience</h2><span class="section-rule"></span></div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- EDUCATION + AWARDS -->
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">05</span><h2 class="section-title">Education <span>&amp; Awards</span></h2><span class="section-rule"></span></div>
+      <div class="split-grid">
+        <div id="eduList"></div>
+        <ul class="award-list" id="awardList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">06</span><h2 class="section-title">Tools &amp; Skills</h2><span class="section-rule"></span></div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="wrap">
+      <h2 id="contactHeading"></h2>
+      <p id="contactBody"></p>
+      <div class="contact-actions" id="contactActions"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" id="footerText"></div>
+</footer>
+
+<script src="data/content.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
