@@ -30,7 +30,7 @@ window.SITE_CONTENT = {
     // Motorsport hiring (F1/WEC) filters hard on work-authorization and
     // relocation flexibility — say this plainly so recruiters don't have to guess.
     workAuthorization: "Open to relocation across the EU/UK for motorsport roles — add current visa/sponsorship status",
-    email: "arjavj2@illinois.edu",
+    email: "arjav.av@gmail.com",
     phone: "+1 217-800-2530",
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
@@ -52,6 +52,7 @@ window.SITE_CONTENT = {
   about: {
     paragraphs: [
       "I'm a mechanical engineer who builds and races cars — three Formula Student seasons across two countries, plus two years as a graduate powertrain engineer at Jaguar Land Rover. I work across the full vehicle stack: lap-time simulation and tire/suspension modeling, composite structures and FEA, battery/thermal systems, and the electronics that tie it together.",
+      "I've also run the engineering side of a race team: as Mechanical Head and Powertrain & Braking Head at IIT Roorkee Motorsports, I led 50+ engineers across 8 sub-divisions on a ₹35L (~$42K) annual build budget — season goals, technical direction, and delivery, not just my own subsystem.",
       "Currently finishing an MS in Mechanical Engineering at UIUC (4.0/4.0) while running battery-state estimation and suspension modeling for Illini Electric Motorsports' FSAE car. I'm looking for a vehicle dynamics, performance, or systems engineering role in motorsport — F1 or WEC, primarily in the EU/UK — and I'm equally at home in EV/automotive engineering roles more broadly."
     ]
   },
@@ -125,7 +126,7 @@ window.SITE_CONTENT = {
       status: "Competed",
       image: "assets/img/placeholder-project.svg",
       tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Set season strategy and delivered structures, thermal, aero, and vehicle-dynamics work across the whole car; tool for cost-event scoring took the team to 2nd place at FSUK.",
+      summary: "Set season strategy and delivered structures, thermal, aero, and vehicle-dynamics work across the whole car; the team placed 1st among all Asian teams in both the Engineering Design and Cost & Manufacturing events at FSUK'23, Silverstone.",
       bullets: [
         "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
         "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
@@ -135,14 +136,16 @@ window.SITE_CONTENT = {
         "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue.",
         "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
         "Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%.",
-        "Built a DBOM/CBOM costing tool that took the team to 2nd place in the FSUK'23 Cost & Manufacturing event."
+        "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
+        "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
+        "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
       ],
       metrics: [
         { label: "Torsional stiffness", value: "1755 N·m/°" },
         { label: "Mass reduction", value: "10%" },
         { label: "Lap time improvement", value: "12%" },
-        { label: "FSUK'23 Cost event", value: "2nd place" },
-        { label: "Overall competition finish", value: "", isPlaceholder: true }
+        { label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" },
+        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }
       ],
       links: [
         { label: "Team site", url: "— add IIT Roorkee Motorsports link —", isPlaceholder: true },
@@ -168,13 +171,14 @@ window.SITE_CONTENT = {
         "Designed the enclosure, mounting brackets, and cell holders for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
         "Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction.",
         "Optimized structural components and fixtures for the suspension, steering, and powertrain subsystems using FEA.",
-        "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules."
+        "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules.",
+        "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
       ],
       metrics: [
         { label: "Torque gain", value: "12%" },
         { label: "Lap-time reduction (aero + controls)", value: "14%" },
         { label: "BTMS heat dissipation", value: "1.4 kW" },
-        { label: "Competition result", value: "", isPlaceholder: true }
+        { label: "Formula Bharat Virtual '22", value: "3rd overall" }
       ],
       links: [
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
@@ -317,6 +321,49 @@ window.SITE_CONTENT = {
         { label: "Tooling cost saved", value: "50%" }
       ],
       links: []
+    },
+    {
+      id: "turbojet-nozzle",
+      title: "Flow Analysis & Optimization of a Supersonic Turbojet Intake and Nozzle",
+      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee (Guide: Prof. Ankit Bansal)",
+      context: "Research",
+      period: "Sep 2021 – Nov 2021",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Combustion & Powertrain Research"],
+      summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
+      bullets: [
+        "Examined the Method of Characteristics for designing shock-free, isentropic supersonic flow nozzles.",
+        "Ran 2D CFD simulations with an inviscid solver in ANSYS Fluent to analyze a spiked intake and de Laval nozzle for a turbojet engine.",
+        "Evaluated how exit and ambient pressure affect nozzle expansion behavior for supersonic flight up to Mach 2."
+      ],
+      metrics: [
+        { label: "Design method", value: "Method of Characteristics" },
+        { label: "Max flight speed studied", value: "Mach 2" },
+        { label: "CFD solver", value: "ANSYS Fluent (inviscid)" }
+      ],
+      links: []
+    },
+    {
+      id: "shape-memory-polymer",
+      title: "Shape Memory Polymer for Enhanced Stiffness",
+      org: "NTU India Connect — Nanyang Technological University, Singapore (Guide: Prof. Huang Weimin)",
+      context: "Research",
+      period: "Jan 2021 – Mar 2021",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Structures & Composites"],
+      summary: "International research placement developing composite designs for cyclic shape-memory actuation.",
+      bullets: [
+        "Created PET substrate–silicone matrix composite designs for cyclic shape-memory actuation using heating and cooling.",
+        "Ran thermal-structural coupled simulations to analyze how the composite actuates in response to temperature changes.",
+        "Selected for the competitive NTU India Connect research internship program, Spring '21."
+      ],
+      metrics: [
+        { label: "Program", value: "NTU India Connect, Singapore" },
+        { label: "Composite system", value: "PET / silicone matrix" }
+      ],
+      links: []
     }
   ],
 
@@ -356,6 +403,27 @@ window.SITE_CONTENT = {
     }
   ],
 
+  leadership: [
+    {
+      role: "Mechanical Head, Powertrain & Braking Head",
+      org: "IIT Roorkee Motorsports",
+      period: "Apr 2022 – Apr 2023",
+      bullets: [
+        "Led 8 sub-divisions and 50+ members of the mechanical and electrical division building the team's electric race cars, on an annual budget of ₹35L (~$42K).",
+        "Owned design, fabrication, and integration of every mechanical and electrical sub-assembly into the finished vehicle.",
+        "Set team philosophy, season goals, and technical timeline, and built out a board of faculty advisors, alumni, and sponsors for strategic oversight."
+      ]
+    },
+    {
+      role: "Chairperson",
+      org: "Society of Automotive Engineers, IIT Roorkee Chapter",
+      period: "Jun 2022 – May 2023",
+      bullets: [
+        "Ran all activities of the 50-member chapter for the year, including knowledge-transfer sessions, lectures, and industry visits to build automotive interest among newcomers."
+      ]
+    }
+  ],
+
   education: [
     {
       school: "University of Illinois at Urbana-Champaign",
@@ -376,20 +444,27 @@ window.SITE_CONTENT = {
   ],
 
   awards: [
-    { title: "J.N. Tata & K.C. Mahindra Endowments", org: "for postgraduate study abroad — among top 4% of Indian applicants", date: "Fall 2025" },
+    { title: "1st Place, FSUK'23 Engineering Design Event", org: "Among all Asian teams, EV category — Formula Student UK, Silverstone", date: "2023" },
+    { title: "1st Place, FSUK'23 Cost & Manufacturing Event", org: "Among all Asian teams, EV category — Formula Student UK, Silverstone", date: "2023" },
+    { title: "MathWorks Modeling Award, Formula Bharat", org: "1st place '23 (₹35K) and 3rd place '24 (₹15K)", date: "2023–24" },
     { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global", date: "2024" },
-    { title: "2nd Place, Cost & Manufacturing Event, FSUK'23", org: "Formula Student UK", date: "2023" },
+    { title: '"Exceptional Creator – Team" Award, JLR', org: "₹100K each — recognized FY24 and FY25", date: "2024, 2025" },
+    { title: "J.N. Tata Endowment", org: "₹2M grant for postgraduate study abroad, awarded to exceptional Indian students", date: "Fall 2025" },
+    { title: "K.C. Mahindra Scholarship", org: "For postgraduate study abroad — top 4% of 2,000+ applicants", date: "Fall 2025" },
     { title: "Gold Medal, Inter IIT Tech Meet 10.0", org: "Automotive problem statement set by JLR", date: "Fall 2022" },
     { title: "Gold Medal, Inter IIT Tech Meet 9.0", org: "Automotive problem statement set by Bosch", date: "Fall 2021" },
+    { title: "2nd Runner-Up, Innovate'22 Hackathon", org: "Daimler India Commercial Vehicles — ₹100K prize", date: "2022" },
+    { title: '"Most Electrifying Presenter"', org: "Uttarakhand Udyog Mahotsav '23", date: "2023" },
     { title: "Chanakya UG Fellowship", org: "Research grant — E-bicycle for last-mile food delivery", date: "Spring 2022" }
   ],
 
   skills: [
-    { category: "CAD & Simulation", items: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "ANSYS Workbench", "Abaqus", "NASTRAN", "Ansys Fluent", "Star-CCM+"] },
-    { category: "Vehicle & Controls", items: ["MATLAB/Simulink", "Simscape", "CarMaker", "VI-grade", "Pacejka tire modeling"] },
+    { category: "CAD & Simulation", items: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD", "ANSYS Workbench", "ANSYS ACP", "Abaqus", "NASTRAN", "Ansys Fluent", "Star-CCM+", "ParaView", "VisIT"] },
+    { category: "Vehicle & Controls", items: ["MATLAB/Simulink", "Simscape", "CarMaker", "VI-grade", "KISSsoft", "Pacejka tire modeling"] },
     { category: "Programming", items: ["C", "C++", "Python"] },
     { category: "Electronics", items: ["Altium", "LTSpice", "PSpice", "Oscilloscope / board-level test"] },
-    { category: "Manufacturing", items: ["3-axis CNC", "FDM / SLA / SLS", "Sand casting", "Composite wet layup", "CMM & 3D scanning", "Laser diagnostics"] }
+    { category: "Manufacturing", items: ["3-axis CNC", "Lathe", "FDM / SLA / SLS", "Laser & water-jet cutting", "TIG / MIG / metal arc welding", "Sand casting", "Composite wet layup", "CMM & 3D scanning", "Laser diagnostics"] },
+    { category: "Certifications", items: ["TÜV SÜD Level 2 & 3 — Qualified Electrician, HV Systems (EV/HEV)"] }
   ],
 
   contact: {

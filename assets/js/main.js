@@ -199,6 +199,21 @@
     timeline.appendChild(item);
   });
 
+  /* ---------------- Leadership ---------------- */
+  const leadershipTimeline = $("#leadershipTimeline");
+  (C.leadership || []).forEach((l) => {
+    const item = el("div", "tl-item");
+    item.innerHTML = `
+      <div class="tl-period">${esc(l.period)}</div>
+      <div>
+        <h3 class="tl-role">${esc(l.role)}</h3>
+        <div class="tl-org">${esc(l.org)}</div>
+        <ul>${l.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      </div>
+    `;
+    leadershipTimeline.appendChild(item);
+  });
+
   /* ---------------- Education + Awards ---------------- */
   const eduList = $("#eduList");
   C.education.forEach((ed) => {
