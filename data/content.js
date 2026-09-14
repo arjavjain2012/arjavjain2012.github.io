@@ -17,6 +17,8 @@
   - Anything marked "— add value —" or isPlaceholder: true is a spot where
     YOU should bring the real number/link once you have it. See
     EDITING_GUIDE.md in the project root for a full walkthrough.
+  - Projects and experience are listed most-recent-first by start date —
+    keep new entries sorted that way when you add one.
   ============================================================================
 */
 
@@ -24,8 +26,8 @@ window.SITE_CONTENT = {
 
   meta: {
     name: "Arjav Jain",
-    role: "Vehicle Performance Engineer",
-    tagline: "Building race cars from tube to track — vehicle dynamics, structures, thermal & electronics.",
+    role: "Mechanical Engineer",
+    tagline: "Structures, thermal, controls, and dynamics — wherever a vehicle or system needs an engineer.",
     location: "Urbana-Champaign, IL, USA",
     // Motorsport hiring (F1/WEC) filters hard on work-authorization and
     // relocation flexibility — say this plainly so recruiters don't have to guess.
@@ -40,7 +42,6 @@ window.SITE_CONTENT = {
   },
 
   hero: {
-    kicker: "Vehicle Dynamics · Motorsport Engineering",
     stats: [
       { value: "3", label: "Formula Student seasons, 2 countries" },
       { value: "1755", unit: "N·m/°", label: "chassis torsional stiffness delivered" },
@@ -51,34 +52,12 @@ window.SITE_CONTENT = {
 
   about: {
     paragraphs: [
-      "I'm a mechanical engineer who builds and races cars — three Formula Student seasons across two countries, plus two years as a graduate powertrain engineer at Jaguar Land Rover. I work across the full vehicle stack: lap-time simulation and tire/suspension modeling, composite structures and FEA, battery/thermal systems, and the electronics that tie it together.",
+      "I'm a mechanical engineer who builds and races cars — three Formula Student seasons across two countries, two years as a graduate powertrain engineer at Jaguar Land Rover, and a recent stint at Tesla. I work across the full systems stack: structures and FEA, thermal and energy systems, power electronics and controls, and the simulation that ties them together.",
       "I've also run the engineering side of a race team: as Mechanical Head and Powertrain & Braking Head at IIT Roorkee Motorsports, I led 50+ engineers across 8 sub-divisions on a ₹35L (~$42K) annual build budget — season goals, technical direction, and delivery, not just my own subsystem.",
-      "Currently finishing an MS in Mechanical Engineering at UIUC (4.0/4.0) while running battery-state estimation and suspension modeling for Illini Electric Motorsports' FSAE car. I'm looking for a vehicle dynamics, performance, or systems engineering role in motorsport — F1 or WEC, primarily in the EU/UK — and I'm equally at home in EV/automotive engineering roles more broadly."
+      "That range isn't limited to cars. My current Master's thesis applies the same systems-level thinking to power and thermal co-design for ultra-high-density data centers, and at Tesla I was root-causing thermal failures and building custom test infrastructure for grid-scale energy storage. I'd rather be useful across a whole program than narrowly specialized in one corner of it.",
+      "Currently finishing an MS in Mechanical Engineering at UIUC (4.0/4.0). I'm looking for a mechanical or systems engineering role — motorsport (F1/WEC, primarily EU/UK) is the target, but I'm equally suited to EV, energy, or aerospace-adjacent engineering more broadly."
     ]
   },
-
-  competencies: [
-    {
-      title: "Vehicle Dynamics & Simulation",
-      summary: "Lap-time simulation, tire modeling, suspension kinematics, and full-vehicle handling models used to make setup and design decisions.",
-      tools: ["MATLAB/Simulink", "CarMaker", "VI-grade (SuspensionGen)", "Simscape", "Python"]
-    },
-    {
-      title: "Structures & Composites",
-      summary: "CFRP monocoque and chassis design, FEA (static/fatigue/crash), topology optimization, and rapid tooling from concept to fabricated part.",
-      tools: ["CATIA 3DEXPERIENCE", "ANSYS Workbench", "Abaqus", "NASTRAN", "NX / SOLIDWORKS"]
-    },
-    {
-      title: "Thermal & Energy Systems",
-      summary: "Battery pack design and thermal management, cold-plate design for power electronics, and energy system sizing for EV and hybrid architectures.",
-      tools: ["Ansys Fluent", "Star-CCM+", "NTU/effectiveness methods", "Battery pack design"]
-    },
-    {
-      title: "Electronics & Controls",
-      summary: "Battery state estimation, power electronics, and the control loops (traction control, ABS, actuator control) that connect sensing to actuation.",
-      tools: ["Altium", "LTSpice/PSpice", "Kalman filtering", "PID / H-bridge control", "Oscilloscope / board-level test"]
-    }
-  ],
 
   filters: {
     disciplines: [
@@ -91,7 +70,35 @@ window.SITE_CONTENT = {
     contexts: ["Formula Student", "Industry", "Research"]
   },
 
+  // Sorted most-recent-first by start date.
   projects: [
+    {
+      id: "tesla",
+      title: "Grid-Forming ESS Thermal & Electrical Test Systems",
+      org: "Tesla, Inc., Palo Alto — System Integration & Test Engineer, Energy Engineering",
+      context: "Industry",
+      period: "May 2026 – Aug 2026",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Thermal & Energy Systems", "Electronics & Controls"],
+      summary: "Root-caused thermal/electrical failures and built custom test infrastructure for grid-scale energy storage systems.",
+      bullets: [
+        "Root-caused a full-power thermal runaway in a DC-DC power stage, confirmed the failure mode non-destructively, and validated a model-based derate-and-fan strategy across a -20°C to +50°C ambient sweep.",
+        "Ran a paired 26-channel A/B thermal study (duct installed vs. removed) under high tri-port loading, quantifying sub-1°C average cell ΔT with no measurable system impact.",
+        "Closed an off-grid thermal test gap by designing a programmable motor-plus-passive-load emulator covering motor-start and peak-power testing at a fraction of commercial rig cost.",
+        "Designed a multi-motor locked-rotor test rig coupling three induction motors on one synchronous belt to emulate single- and multi-phase motor-start loads across global grid voltages.",
+        "Architected a modular switched R-L load bank (tapped reactors plus per-phase resistor networks) delivering software-selectable inrush impedance across global grid-code corners.",
+        "Designed PLC-driven load switching for an off-grid test bench spanning 30+ contactor channels and 16 operating modes, unified by hard-wired interlocks and a one-call software mode library.",
+        "Decomposed 50+ system requirements across 4 grid configurations into a traceability matrix, authoring the pass/fail plan hierarchy adopted as the team-wide standard."
+      ],
+      metrics: [
+        { label: "Ambient sweep tested", value: "-20°C to +50°C" },
+        { label: "Cell ΔT (duct study)", value: "< 1°C avg" },
+        { label: "Test bench scale", value: "30+ channels, 16 modes" },
+        { label: "Requirements traced", value: "50+, 4 grid configs" }
+      ],
+      links: []
+    },
     {
       id: "iem26",
       title: "IEM'26 — Formula Student Electric Vehicle",
@@ -118,168 +125,26 @@ window.SITE_CONTENT = {
       ]
     },
     {
-      id: "rmse23",
-      title: "RMSE'23 — Formula Student Electric Vehicle",
-      org: "IIT Roorkee Motorsports, IITR",
-      context: "Formula Student",
-      period: "Jan 2022 – May 2023",
-      status: "Competed",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Set season strategy and delivered structures, thermal, aero, and vehicle-dynamics work across the whole car; the team placed 1st among all Asian teams in both the Engineering Design and Cost & Manufacturing events at FSUK'23, Silverstone.",
-      bullets: [
-        "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
-        "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
-        "Revised the tubular chassis to a 49F-51R weight distribution and 1755 N·m/° torsional stiffness, and ran FEA for crash-load cases.",
-        "Built a thermal model for the radiator and water-cooled motor/inverter loop using the NTU-effectiveness method.",
-        "Automated CFD runs and post-processing to generate aero maps, balancing aero load against vehicle dynamics.",
-        "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue.",
-        "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
-        "Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%.",
-        "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
-        "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
-        "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
-      ],
-      metrics: [
-        { label: "Torsional stiffness", value: "1755 N·m/°" },
-        { label: "Mass reduction", value: "10%" },
-        { label: "Lap time improvement", value: "12%" },
-        { label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" },
-        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }
-      ],
-      links: [
-        { label: "Team site", url: "— add IIT Roorkee Motorsports link —", isPlaceholder: true },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "rmse21",
-      title: "RMSE'21 — Formula Student Electric Vehicle",
-      org: "IIT Roorkee Motorsports, IITR",
-      context: "Formula Student",
-      period: "Jan 2021 – Dec 2021",
-      status: "Competed",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems"],
-      summary: "Powertrain selection, tire/lap-time modeling, aero, battery pack, and suspension FEA for the team's second EV.",
-      bullets: [
-        "Selected the 80 kW powertrain (motor/diff/tires) and revised gear ratios using tire-slip models, gaining 12% torque.",
-        "Built a quasi-steady-state point-mass lap-time simulation, validated to within 10% accuracy, to drive sensitivity studies.",
-        "Modeled tires with the Pacejka Magic Formula, calibrated against FSAE Tire Test Consortium data.",
-        "Led design of front and rear wings using CFD, validated with tuft testing, for a 7% lap-time reduction.",
-        "Optimized an active air-cooled battery thermal management system to dissipate 1.4 kW from a 128s6p pack of 18650 NMC cells.",
-        "Designed the enclosure, mounting brackets, and cell holders for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
-        "Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction.",
-        "Optimized structural components and fixtures for the suspension, steering, and powertrain subsystems using FEA.",
-        "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules.",
-        "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
-      ],
-      metrics: [
-        { label: "Torque gain", value: "12%" },
-        { label: "Lap-time reduction (aero + controls)", value: "14%" },
-        { label: "BTMS heat dissipation", value: "1.4 kW" },
-        { label: "Formula Bharat Virtual '22", value: "3rd overall" }
-      ],
-      links: [
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "jlr",
-      title: "Range-Extended EV & Power Electronics Cooling",
-      org: "Jaguar Land Rover TBSI, Bengaluru — Graduate EV-Powertrain Engineer Trainee",
-      context: "Industry",
-      period: "Aug 2023 – Jul 2025",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems", "Electronics & Controls", "Structures & Composites"],
-      summary: "Two-year graduate program: led a concept carbon-negative range extender and delivered thermal/electronics design for inverter and contactor hardware.",
-      bullets: [
-        "Initiated and led technical work on a concept range-extended EV powered by fugitive methane, targeting carbon-negative net emissions.",
-        "Proposed the cryogenic CH4 storage/delivery system and a road-load-based battery charge-depletion strategy for the APU, delivering 36% more range at 12% lower weight.",
-        "Designed, simulated, and rig-tested tubed and pin-fin cold-plate geometries to cool an in-house inverter and solid-state contactor.",
-        "Designed voltage/current/temperature sensing and closed-loop pre-charge and I²t e-fuse protection; tuned a 3-winding 4-switch buck-boost converter using Bode analysis.",
-        "Designed stack-up tolerancing and integrated a coreless current sensor into the contactor package, cutting volume by 40%.",
-        "Built the test plans and ran board-level, integrated, and thermal testing for the sensing and protection hardware.",
-        "Won 1st runner-up at JLR's Graduate Innovation Challenge, a year-long global program with 86 teams and 442 graduates."
-      ],
-      metrics: [
-        { label: "Range gain", value: "36%" },
-        { label: "Weight reduction", value: "12%" },
-        { label: "Contactor volume reduction", value: "40%" },
-        { label: "JLR Graduate Innovation Challenge", value: "1st runner-up / 86 teams" }
-      ],
-      links: [
-        { label: "Patent / publication status", url: "— add link if applicable —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "log9",
-      title: "RapidX — Fast-Charging Battery Architecture",
-      org: "Log9 Materials Scientific, Bengaluru — Industrial Design Intern",
-      context: "Industry",
-      period: "May 2022 – Jul 2022",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems", "Structures & Composites"],
-      summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
-      bullets: [
-        "Contributed to RapidX, a fast-charging LTO battery architecture for 2W/3W/4W small commercial vehicles.",
-        "Produced Cu-101 busbars, IP6X-rated enclosures, and cell packaging for the 368V/40Ah pack, designed for retrofit into the TATA Ace.",
-        "Engineered sheet-metal brackets, rubber dampeners, and waterproof foam pads, and drafted 2D drawings for prototyping.",
-        "Explored a portable PCM-based thermal management concept using paraffin wax to buffer 9 kJ of heat during fast charging."
-      ],
-      metrics: [
-        { label: "Pack spec", value: "368V / 40Ah" },
-        { label: "PCM heat buffered", value: "9 kJ" },
-        { label: "Enclosure rating", value: "IP6X" }
-      ],
-      links: []
-    },
-    {
-      id: "dorle",
-      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
-      org: "Dorle Controls LLC, Michigan, USA",
-      context: "Industry",
-      period: "Jan 2022 – May 2022",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
-      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
-      bullets: [
-        "Built a 14-DOF full-vehicle model from the ground up in Simulink/Simscape to analyze handling performance.",
-        "Implemented racing-line optimization for a specific circuit in MATLAB using the minimum-curvature method.",
-        "Constructed and validated models for advanced control systems, including traction control and ABS."
-      ],
-      metrics: [
-        { label: "Model fidelity", value: "14-DOF" },
-        { label: "Optimization method", value: "Minimum curvature" }
-      ],
-      links: []
-    },
-    {
-      id: "thesis",
-      title: "End-Gas Auto-Ignition in n-Heptane Combustion",
-      org: "Bachelor's Thesis, Mechanical & Industrial Engineering Dept., IITR",
+      id: "ms-thesis",
+      title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers",
+      org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign — Master's Thesis",
       context: "Research",
-      period: "Jul 2022 – May 2023",
-      status: "Complete",
+      period: "Sep 2025 – Present",
+      status: "In progress",
       image: "assets/img/placeholder-project.svg",
-      tags: ["Combustion & Powertrain Research"],
-      summary: "Direct numerical simulation of engine knock, examining how pressure waves interact with auto-ignition in hydrocarbon fuels.",
+      tags: ["Thermal & Energy Systems"],
+      summary: "Dynamic system-level modeling of direct-to-chip liquid cooling and power delivery for next-generation ultra-high-density data center racks.",
       bullets: [
-        "Ran 2D lab-scale DNS of knocking in a stoichiometric n-C7H16/O2/Ar mixture under engine-like conditions using PeleC, adaptive mesh refinement, and MACKS.",
-        "Ran 1D DNS in Cantera to resolve the interaction between flame propagation, auto-ignition, and pressure waves.",
-        "Formulated a method to analyze how pressure waves affect knocking behavior in hydrocarbon fuels at high temperature.",
-        "Submitted findings as a conference paper to the 41st International Symposium on Combustion (ISOC'26), Kyoto."
+        "Developed and validated direct-to-chip liquid cooling achieving 5 K/kW thermal resistance, supporting 4 kW/1U and scaling to MW-level racks.",
+        "Designed CTE-matched CuW microcoolers and 73 W/mK thermal interface materials, cutting warpage 3x and projecting under 10% performance degradation over 5 years.",
+        "Built 2 kW high-resolution thermal test vehicles and ran uncertainty-based calorimetric validation, improving system Total Usage Effectiveness (TUE) from 1.55 to 1.01."
       ],
       metrics: [
-        { label: "Simulation type", value: "2D/1D DNS" },
-        { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
+        { label: "Thermal resistance", value: "5 K/kW" },
+        { label: "Rack density supported", value: "4 kW/1U → MW-scale" },
+        { label: "System TUE improvement", value: "1.55 → 1.01" }
       ],
-      links: [
-        { label: "Paper / preprint", url: "— add link once available —", isPlaceholder: true }
-      ]
+      links: []
     },
     {
       id: "combustion-lab",
@@ -301,11 +166,123 @@ window.SITE_CONTENT = {
       links: []
     },
     {
+      id: "jlr",
+      title: "Range-Extended EV & Power Electronics Cooling",
+      org: "Jaguar Land Rover TBSI, Bengaluru — Graduate EV-Powertrain Engineer Trainee",
+      context: "Industry",
+      period: "Aug 2023 – Jul 2025",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Thermal & Energy Systems", "Electronics & Controls", "Structures & Composites"],
+      summary: "Two-year graduate program: led a concept carbon-negative range extender and delivered thermal/electronics design for inverter and contactor hardware.",
+      bullets: [
+        "Initiated and led technical work on a concept range-extended EV powered by fugitive methane, targeting carbon-negative net emissions.",
+        "Proposed the cryogenic CH4 storage/delivery system and a road-load-based battery charge-depletion strategy for the APU, delivering 36% more range at 12% lower weight.",
+        "Designed, simulated, and rig-tested tubed and pin-fin cold-plate geometries to cool an in-house inverter and solid-state contactor.",
+        "Designed voltage/current/temperature sensing and closed-loop pre-charge and I²t e-fuse protection; tuned a 3-winding 4-switch buck-boost converter using Bode analysis.",
+        "Designed stack-up tolerancing and integrated a coreless current sensor into the contactor package, cutting volume by 40%.",
+        "Ran DFMEA and ISO 26262 HARA for the xHEV powerpack system, plus ISO 16750-3 vibration testing to validate contactor durability against vehicle-level shock.",
+        "Built the test plans and ran board-level, integrated, and thermal testing for the sensing and protection hardware.",
+        "Won 1st runner-up at JLR's Graduate Innovation Challenge, a year-long global program with 86 teams and 442 graduates."
+      ],
+      metrics: [
+        { label: "Range gain", value: "36%" },
+        { label: "Weight reduction", value: "12%" },
+        { label: "Contactor volume reduction", value: "40%" },
+        { label: "JLR Graduate Innovation Challenge", value: "1st runner-up / 86 teams" }
+      ],
+      links: [
+        { label: "Patent / publication status", url: "— add link if applicable —", isPlaceholder: true }
+      ]
+    },
+    {
+      id: "thesis",
+      title: "End-Gas Auto-Ignition in n-Heptane Combustion",
+      org: "Bachelor's Thesis, Mechanical & Industrial Engineering Dept., IITR",
+      context: "Research",
+      period: "Jul 2022 – May 2023",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Combustion & Powertrain Research"],
+      summary: "Direct numerical simulation of engine knock, examining how pressure waves interact with auto-ignition in hydrocarbon fuels.",
+      bullets: [
+        "Ran 2D lab-scale DNS of knocking in a stoichiometric n-C7H16/O2/Ar mixture under engine-like conditions using PeleC, adaptive mesh refinement, and MACKS.",
+        "Ran 1D DNS in Cantera to resolve the interaction between flame propagation, auto-ignition mode, and pressure waves.",
+        "Developed numerical solvers from scratch to analyze high-fidelity fluid dynamics and pressure-wave interactions on knocking.",
+        "Authored 'Evaluating Models for Knock Timing and Autoignition Mode Prediction with 2D DNS,' submitted to the 41st International Symposium on Combustion (ISOC'26), Kyoto."
+      ],
+      metrics: [
+        { label: "Simulation type", value: "2D/1D DNS" },
+        { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
+      ],
+      links: [
+        { label: "Paper / preprint", url: "— add link once available —", isPlaceholder: true }
+      ]
+    },
+    {
+      id: "rmse23",
+      title: "RMSE'23 — Formula Student Electric Vehicle",
+      org: "IIT Roorkee Motorsports, IITR",
+      context: "Formula Student",
+      period: "Jan 2022 – May 2023",
+      status: "Competed",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
+      summary: "Set season strategy and delivered structures, thermal, aero, and vehicle-dynamics work across the whole car; the team placed 1st among all Asian teams in both the Engineering Design and Cost & Manufacturing events at FSUK'23, Silverstone.",
+      bullets: [
+        "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
+        "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
+        "Revised the tubular chassis to a 49F-51R weight distribution and 1755 N·m/° torsional stiffness, and ran FEA for crash-load cases.",
+        "Built a thermal model for the radiator and water-cooled loop sizing an 80 kW motor and inverter using the NTU-effectiveness method.",
+        "Automated CFD runs and post-processing to generate aero maps, balancing aero load against vehicle dynamics.",
+        "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue.",
+        "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
+        "Designed the vehicle's cable harness and cooling-pipe routing in CAD with validated bend radii, improving packaging efficiency by 12%.",
+        "Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%.",
+        "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
+        "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
+        "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
+      ],
+      metrics: [
+        { label: "Torsional stiffness", value: "1755 N·m/°" },
+        { label: "Mass reduction", value: "10%" },
+        { label: "Lap time improvement", value: "12%" },
+        { label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" },
+        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }
+      ],
+      links: [
+        { label: "Team site", url: "— add IIT Roorkee Motorsports link —", isPlaceholder: true },
+        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
+      ]
+    },
+    {
+      id: "dorle",
+      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
+      org: "Dorle Controls LLC, Michigan, USA",
+      context: "Industry",
+      period: "Jan 2022 – May 2022",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
+      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
+      bullets: [
+        "Developed a high-fidelity state-space representation from the ground up to model transient handling dynamics and cornering stability, in Simulink/Simscape.",
+        "Implemented racing-line optimization for a specific circuit in MATLAB using the minimum-curvature method.",
+        "Constructed and validated models for advanced control systems, including traction control and ABS.",
+        "Extracted transient vertical and lateral load cases to serve as input boundary conditions for chassis and suspension durability simulations."
+      ],
+      metrics: [
+        { label: "Model fidelity", value: "14-DOF" },
+        { label: "Optimization method", value: "Minimum curvature" }
+      ],
+      links: []
+    },
+    {
       id: "magnesium-wheels",
       title: "Rapid Tooling of Cast Magnesium Wheels for an FSAE Vehicle",
       org: "IIT Roorkee",
       context: "Research",
-      period: "2022 – 2023",
+      period: "Feb 2022 – May 2023",
       status: "Complete",
       image: "assets/img/placeholder-project.svg",
       tags: ["Structures & Composites"],
@@ -319,6 +296,30 @@ window.SITE_CONTENT = {
         { label: "Weight reduction", value: "25%" },
         { label: "Tooling time saved", value: "54%" },
         { label: "Tooling cost saved", value: "50%" }
+      ],
+      links: []
+    },
+    {
+      id: "log9",
+      title: "RapidX — Fast-Charging Battery Architecture",
+      org: "Log9 Materials Scientific, Bengaluru — Industrial Design Intern",
+      context: "Industry",
+      period: "May 2022 – Jul 2022",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Thermal & Energy Systems", "Structures & Composites"],
+      summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
+      bullets: [
+        "Contributed to RapidX, a fast-charging LTO battery architecture for 2W/3W/4W small commercial vehicles.",
+        "Produced Cu-101 busbars, IP6X-rated enclosures, and cell packaging for the 368V/40Ah pack, designed for retrofit into the TATA Ace.",
+        "Engineered sheet-metal brackets, rubber dampeners, and waterproof foam pads, and drafted 2D drawings for prototyping.",
+        "Characterized LTO cell abuse scenarios and cell-level thermal/C-rate behavior across a -20°C to 60°C range.",
+        "Explored a portable PCM-based thermal management concept using paraffin wax to buffer 9 kJ of heat during fast charging."
+      ],
+      metrics: [
+        { label: "Pack spec", value: "368V / 40Ah" },
+        { label: "PCM heat buffered", value: "9 kJ" },
+        { label: "Enclosure rating", value: "IP6X" }
       ],
       links: []
     },
@@ -345,6 +346,39 @@ window.SITE_CONTENT = {
       links: []
     },
     {
+      id: "rmse21",
+      title: "RMSE'21 — Formula Student Electric Vehicle",
+      org: "IIT Roorkee Motorsports, IITR",
+      context: "Formula Student",
+      period: "Jan 2021 – Dec 2021",
+      status: "Competed",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems"],
+      summary: "Powertrain selection, tire/lap-time modeling, aero, battery pack, and suspension FEA for the team's second EV.",
+      bullets: [
+        "Selected the 80 kW powertrain (motor/diff/tires) and revised gear ratios using tire-slip models, gaining 12% torque.",
+        "Built a quasi-steady-state point-mass lap-time simulation, validated to within 10% accuracy, to drive sensitivity studies.",
+        "Modeled tires with the Pacejka Magic Formula, calibrated against FSAE Tire Test Consortium data.",
+        "Led design of front and rear wings using CFD, validated with tuft testing, for a 7% lap-time reduction.",
+        "Simulated an active air-cooled battery thermal management system to dissipate 1.2 kW and hold cell temperatures below 45°C at peak 10C discharge rate.",
+        "Designed the enclosure, mounting brackets, cell holders, and busbars for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
+        "Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction.",
+        "Reduced mass across the suspension and drivetrain by 25% while holding a fatigue safety factor of 1.2 under the Goodman criterion.",
+        "Selected NMC cells, high-current relays, fuses, and harnesses complying with the ISO 6469-3 safety standard.",
+        "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules.",
+        "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
+      ],
+      metrics: [
+        { label: "Torque gain", value: "12%" },
+        { label: "Lap-time reduction (aero + controls)", value: "14%" },
+        { label: "Mass reduction (suspension/drivetrain)", value: "25%" },
+        { label: "Formula Bharat Virtual '22", value: "3rd overall" }
+      ],
+      links: [
+        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
+      ]
+    },
+    {
       id: "shape-memory-polymer",
       title: "Shape Memory Polymer for Enhanced Stiffness",
       org: "NTU India Connect — Nanyang Technological University, Singapore (Guide: Prof. Huang Weimin)",
@@ -367,7 +401,22 @@ window.SITE_CONTENT = {
     }
   ],
 
+  // Formal paid roles only — sorted most-recent-first by start date.
+  // Student-team leadership lives in `leadership` below; one-off academic/
+  // industry collaborations (like Dorle) live as `projects` entries instead.
   experience: [
+    {
+      org: "Tesla, Inc.",
+      role: "System Integration & Test Engineer, Energy Engineering",
+      location: "Palo Alto, CA, USA",
+      period: "May 2026 – Aug 2026",
+      bullets: [
+        "Root-caused a full-power thermal runaway in a DC-DC power stage and validated a model-based derate-and-fan strategy across a -20°C to +50°C ambient sweep.",
+        "Designed and built custom test infrastructure — a multi-motor locked-rotor rig, a modular switched R-L load bank, and a PLC-driven 30+ channel off-grid test bench — closing test gaps at a fraction of commercial rig cost.",
+        "Decomposed 50+ system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy adopted as the team-wide standard."
+      ],
+      projectRef: "tesla"
+    },
     {
       org: "Jaguar Land Rover TBSI Pvt. Ltd.",
       role: "Graduate EV-Powertrain Engineer Trainee, Sustainability Research Ecosystem",
@@ -379,17 +428,6 @@ window.SITE_CONTENT = {
         "1st runner-up, JLR Graduate Innovation Challenge — 86 teams, 442 graduates, global."
       ],
       projectRef: "jlr"
-    },
-    {
-      org: "Dorle Controls LLC",
-      role: "Vehicle Dynamics & Controls Intern",
-      location: "Michigan, USA",
-      period: "Jan 2022 – May 2022",
-      bullets: [
-        "Built a 14-DOF full-vehicle handling model from scratch in Simulink/Simscape.",
-        "Implemented racing-line optimization and validated traction-control/ABS logic against it."
-      ],
-      projectRef: "dorle"
     },
     {
       org: "Log9 Materials Scientific Pvt. Ltd.",
@@ -430,15 +468,39 @@ window.SITE_CONTENT = {
       degree: "M.S., Mechanical Engineering",
       score: "GPA 4.0 / 4.0",
       period: "Expected May 2027",
-      notes: ["Vehicle dynamics and battery/thermal systems coursework alongside FSAE research."]
+      thesis: "Holistic Rack-to-Processor Power and Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling — Energy Transport Research Lab.",
+      coursework: [
+        "Engineering Spectroscopy",
+        "Laser Diagnostics",
+        "Design of Heat Exchangers",
+        "Vehicle Dynamics",
+        "Model-Based Automotive Systems Engineering",
+        "Algorithms for Battery Management Systems"
+      ]
     },
     {
       school: "Indian Institute of Technology Roorkee",
       degree: "B.Tech., Mechanical Engineering",
       score: "CGPA 8.685 / 10.0",
       period: "Jul 2023",
-      notes: [
-        "Coursework: Vehicle Dynamics, I.C. Engine & Combustion Fundamentals, Model-Based Automotive Systems Engineering, Mechatronics, Automatic Control, Power Electronics Design, FEA, Design of Composites, Machine Design, Applied CFD, Fluid Machinery, DFM/DFA/GD&T, Concurrent Engineering."
+      thesis: "Understanding End Gas Auto-Ignition in n-Heptane Combustion at High Temperatures using 2D-DNS — see Projects.",
+      coursework: [
+        "I.C. Engine & Combustion Fundamentals",
+        "Vehicle Dynamics",
+        "Model-Based Automotive Systems Engineering",
+        "Mechatronics",
+        "Automatic Control",
+        "Power Electronics Design",
+        "FEA",
+        "Design of Composites",
+        "Machine Design",
+        "Applied CFD",
+        "Fluid Machinery",
+        "Dynamics and Vibrations",
+        "Failure Analysis",
+        "DFM / DFA / GD&T",
+        "Concurrent Engineering",
+        "Reverse Engineering & Rapid Prototyping"
       ]
     }
   ],
@@ -463,12 +525,12 @@ window.SITE_CONTENT = {
     { category: "Vehicle & Controls", items: ["MATLAB/Simulink", "Simscape", "CarMaker", "VI-grade", "KISSsoft", "Pacejka tire modeling"] },
     { category: "Programming", items: ["C", "C++", "Python"] },
     { category: "Electronics", items: ["Altium", "LTSpice", "PSpice", "Oscilloscope / board-level test"] },
-    { category: "Manufacturing", items: ["3-axis CNC", "Lathe", "FDM / SLA / SLS", "Laser & water-jet cutting", "TIG / MIG / metal arc welding", "Sand casting", "Composite wet layup", "CMM & 3D scanning", "Laser diagnostics"] },
+    { category: "Manufacturing", items: ["3-axis CNC", "Lathe", "FDM / SLA / SLS", "Laser & water-jet cutting", "TIG / MIG / metal arc welding", "Sand casting", "Injection molding", "Composite wet layup", "CMM & 3D scanning", "Laser diagnostics"] },
     { category: "Certifications", items: ["TÜV SÜD Level 2 & 3 — Qualified Electrician, HV Systems (EV/HEV)"] }
   ],
 
   contact: {
     heading: "Let's talk",
-    body: "Open to vehicle dynamics, performance, and systems engineering roles in motorsport (F1/WEC, primarily EU/UK) and in automotive/EV engineering more broadly."
+    body: "Open to mechanical and systems engineering roles across motorsport (F1/WEC, primarily EU/UK), EV, and energy systems."
   }
 };

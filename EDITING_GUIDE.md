@@ -85,7 +85,17 @@ every field. Fields:
 ### Add a new work experience entry
 
 Same idea, inside `experience: [ ... ]`. Most recent should go first —
-order in the file is the order shown on the page.
+order in the file is the order shown on the page. `experience` is only for
+formal paid roles; a one-off academic/industry collaboration (like the
+Dorle Controls engagement) belongs in `projects` instead, tagged
+`context: "Industry"`.
+
+### Update education (degree, thesis, coursework)
+
+Each entry in `education: [ ... ]` has an optional `thesis` string (shown
+in a highlighted callout — leave it out entirely for a degree with no
+thesis) and a `coursework` array of short course-name strings, which
+render as a chip row. Add or remove strings from `coursework` freely.
 
 ### Change your headline / tagline / bio
 

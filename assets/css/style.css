@@ -1,27 +1,29 @@
 /* ==========================================================================
    Arjav Jain — Portfolio
-   Design language: technical spec-sheet / telemetry overlay.
-   Dark chassis base, one warm accent (throttle orange) for emphasis,
-   one cool accent (telemetry teal) for tags/data, monospace for numbers.
+   Design language: engineering-book blueprint — inspired by the deep navy,
+   fine-line technical drawings, and coral title type of motorsport
+   engineering memoirs. Navy chassis base, one warm coral accent for
+   emphasis, one cool light-blue accent for tags/data, monospace for numbers.
    ========================================================================== */
 
 :root {
-  --bg: #0b0d10;
-  --bg-raised: #12161b;
-  --bg-card: #151a20;
-  --line: #232a33;
-  --line-soft: #1a2028;
-  --text: #e7ebf0;
-  --text-dim: #97a2b0;
-  --text-faint: #5b6573;
-  --accent: #ff5a36;
-  --accent-dim: #7a2e1c;
-  --teal: #3ee6c4;
-  --teal-dim: #1d5348;
-  --placeholder: #c9a227;
+  --bg: #0a2038;
+  --bg-raised: #0f2c48;
+  --bg-card: #0d2842;
+  --line: #1f4463;
+  --line-soft: #163554;
+  --text: #eef3f7;
+  --text-dim: #a9c2d6;
+  --text-faint: #6d90ab;
+  --accent: #ef7a6e;
+  --accent-dim: #6e3831;
+  --teal: #8fc7e8;
+  --teal-dim: #234a63;
+  --placeholder: #e0b04a;
   --radius: 2px;
   --mono: "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, monospace;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --display: "Poppins", var(--sans);
   --maxw: 1180px;
 }
 
@@ -149,31 +151,50 @@ header.nav {
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
   padding: 168px 0 80px;
   border-top: none;
+  overflow: hidden;
 }
-.hero-kicker {
-  font-family: var(--mono);
-  color: var(--teal);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 18px;
+.hero-blueprint {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
 }
-.hero h1 {
-  font-size: clamp(36px, 6vw, 64px);
-  line-height: 1.05;
-  margin: 0 0 20px;
-  letter-spacing: -0.02em;
+.hero-blueprint svg { width: 100%; height: 100%; display: block; }
+.bp-line { fill: none; stroke: var(--text-dim); stroke-width: 1.5; opacity: 0.55; }
+.bp-dash { stroke-dasharray: 6 7; }
+.bp-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; fill: var(--text-faint); }
+.bp-node { fill: var(--accent); opacity: 0.85; }
+.hero-content { position: relative; z-index: 1; }
+.hero-name-block { margin-bottom: 12px; }
+.hero-name-block h1 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: var(--accent);
 }
-.hero h1 .accent { color: var(--accent); }
+.hero-role {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(17px, 2.2vw, 22px);
+  color: var(--text);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
 .hero-tagline {
-  font-size: clamp(19px, 2.4vw, 24px);
+  font-size: clamp(17px, 2vw, 20px);
   max-width: 680px;
-  margin: 0 0 18px;
-  line-height: 1.4;
+  margin: 22px 0 18px;
+  line-height: 1.5;
+  color: var(--text-dim);
 }
-.hero-tagline .accent { color: var(--accent); font-weight: 600; }
+.hero-tagline .accent { color: var(--teal); font-weight: 500; }
 .hero-sub {
   font-size: clamp(15px, 1.8vw, 17px);
   color: var(--text-dim);
@@ -197,8 +218,8 @@ header.nav {
   transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
 .btn:hover { border-color: var(--text-dim); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: #12100e; font-weight: 600; }
-.btn-primary:hover { background: #ff7854; border-color: #ff7854; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #0a2038; font-weight: 600; }
+.btn-primary:hover { background: #f4948a; border-color: #f4948a; }
 .btn-ghost:hover { color: var(--teal); border-color: var(--teal); }
 
 .stat-strip {
@@ -263,36 +284,6 @@ header.nav {
 .contact-list a { text-decoration: none; font-family: var(--mono); font-size: 13.5px; color: var(--text); border-bottom: 1px dotted var(--line); padding-bottom: 2px; }
 .contact-list a:hover { color: var(--teal); }
 @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } }
-
-/* ---------- Competencies ---------- */
-.comp-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.comp-card {
-  background: var(--bg-card);
-  padding: 26px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.comp-num { font-family: var(--mono); color: var(--accent); font-size: 13px; }
-.comp-card h3 { margin: 0; font-size: 17px; }
-.comp-card p { margin: 0; color: var(--text-dim); font-size: 14px; flex: 1; }
-.tool-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-.tool-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--teal);
-  border: 1px solid var(--teal-dim);
-  padding: 3px 8px;
-  border-radius: var(--radius);
-}
-@media (max-width: 980px) { .comp-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .comp-grid { grid-template-columns: 1fr; } }
 
 /* ---------- Filters ---------- */
 .filter-bar {
@@ -419,7 +410,32 @@ header.nav {
 .edu-card h3 { margin: 0 0 4px; font-size: 16px; }
 .edu-degree { color: var(--teal); font-size: 13.5px; margin-bottom: 6px; }
 .edu-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
-.edu-notes { font-size: 13px; color: var(--text-dim); margin: 0; }
+.edu-thesis {
+  margin: 4px 0 16px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--accent);
+  background: rgba(239, 122, 110, 0.08);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.edu-thesis-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.edu-coursework-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 4px 0 8px;
+}
+.edu-coursework { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .award-list { list-style: none; margin: 0; padding: 0; }
 .award-item { padding: 16px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; }

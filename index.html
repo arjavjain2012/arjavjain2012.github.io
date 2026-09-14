@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arjav Jain — Vehicle Performance Engineer</title>
-<meta name="description" content="Arjav Jain — Vehicle dynamics, structures, thermal and electronics engineering across Formula Student and EV powertrain programs. Targeting motorsport (F1/WEC) and automotive engineering roles.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230b0d10%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22none%22 stroke=%22%23ff5a36%22 stroke-width=%228%22/></svg>">
+<title>Arjav Jain — Mechanical Engineer</title>
+<meta name="description" content="Arjav Jain — Mechanical engineer working across structures, thermal, electronics, and controls, from Formula Student and EV powertrain programs to Tesla energy systems. Targeting motorsport (F1/WEC) and systems engineering roles.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2210324d%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22none%22 stroke=%22%23ef7a6e%22 stroke-width=%228%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -19,7 +19,6 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">≡</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
-      <li><a href="#competencies">Focus</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#leadership">Leadership</a></li>
@@ -32,17 +31,46 @@
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero wrap" id="hero">
-    <div class="hero-kicker" id="heroKicker">VEHICLE DYNAMICS · MOTORSPORT ENGINEERING</div>
-    <h1 id="heroHeadline"></h1>
-    <p class="hero-tagline" id="heroTagline"></p>
-    <p class="hero-sub" id="heroSub"></p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View projects →</a>
-      <a href="#" id="resumeBtn" class="btn btn-ghost">Download résumé</a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+  <section class="hero" id="hero">
+    <div class="hero-blueprint" aria-hidden="true">
+      <svg viewBox="0 0 1400 560" preserveAspectRatio="xMidYMid slice">
+        <line x1="60" y1="470" x2="1340" y2="470" class="bp-line bp-dash"/>
+        <circle cx="250" cy="430" r="62" class="bp-line"/>
+        <circle cx="250" cy="430" r="30" class="bp-line"/>
+        <circle cx="1170" cy="430" r="68" class="bp-line"/>
+        <circle cx="1170" cy="430" r="33" class="bp-line"/>
+        <path class="bp-line" d="M60 448 L232 448 L236 470 L60 470 Z"/>
+        <path class="bp-line" d="M60 400 L60 448 M232 400 L232 448"/>
+        <path class="bp-line" d="M236 448 C 300 340, 380 280, 470 250 C 520 233, 560 228, 610 228 L 700 228 C 760 228, 840 236, 920 250 C 1000 264, 1060 290, 1110 340 L 1230 378 L 1250 420 L 1250 448 L 236 448 Z"/>
+        <path class="bp-line" d="M470 250 C 486 210, 520 186, 560 182 C 600 178, 626 196, 630 228"/>
+        <path class="bp-line bp-dash" d="M700 228 L700 190 M760 236 L760 195"/>
+        <path class="bp-line" d="M1110 250 L1340 214 L1340 236 L1160 268 Z"/>
+        <path class="bp-line" d="M1110 250 L1090 340"/>
+        <line x1="60" y1="524" x2="1340" y2="524" class="bp-line"/>
+        <line x1="60" y1="512" x2="60" y2="524" class="bp-line"/>
+        <line x1="1340" y1="512" x2="1340" y2="524" class="bp-line"/>
+        <text x="700" y="546" class="bp-label" text-anchor="middle">WHEELBASE — 2985mm</text>
+        <text x="250" y="512" class="bp-label" text-anchor="middle">FR</text>
+        <text x="1170" y="512" class="bp-label" text-anchor="middle">RR</text>
+        <circle cx="700" cy="228" r="3" class="bp-node"/>
+        <circle cx="250" cy="430" r="3" class="bp-node"/>
+        <circle cx="1170" cy="430" r="3" class="bp-node"/>
+      </svg>
     </div>
-    <div class="stat-strip" id="statStrip"></div>
+    <div class="wrap hero-content">
+      <div class="hero-name-block">
+        <h1 id="heroName">Arjav Jain</h1>
+        <p class="hero-role" id="heroRole"></p>
+      </div>
+      <p class="hero-tagline" id="heroTagline"></p>
+      <p class="hero-sub" id="heroSub"></p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View projects →</a>
+        <a href="#" id="resumeBtn" class="btn btn-ghost">Download résumé</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+      <div class="stat-strip" id="statStrip"></div>
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -62,19 +90,10 @@
     </div>
   </section>
 
-  <!-- COMPETENCIES -->
-  <section id="competencies">
-    <div class="wrap">
-      <div class="section-head"><span class="section-index">02</span><h2 class="section-title">Core Focus</h2><span class="section-rule"></span></div>
-      <p class="section-lede">Four disciplines that show up together in most race-car programs — and in my project history.</p>
-      <div class="comp-grid" id="compGrid"></div>
-    </div>
-  </section>
-
   <!-- PROJECTS -->
   <section id="projects">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">03</span><h2 class="section-title">Projects <span>&amp; Research</span></h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">02</span><h2 class="section-title">Projects <span>&amp; Research</span></h2><span class="section-rule"></span></div>
       <p class="section-lede">Filter by discipline or by context. Every card expands for the full technical breakdown.</p>
       <div class="filter-bar" id="filterBar"></div>
       <div class="project-grid" id="projectGrid"></div>
@@ -85,7 +104,7 @@
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">04</span><h2 class="section-title">Work Experience</h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">03</span><h2 class="section-title">Work Experience</h2><span class="section-rule"></span></div>
       <div class="timeline" id="timeline"></div>
     </div>
   </section>
@@ -93,7 +112,7 @@
   <!-- LEADERSHIP -->
   <section id="leadership">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">05</span><h2 class="section-title">Leadership</h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">04</span><h2 class="section-title">Leadership</h2><span class="section-rule"></span></div>
       <div class="timeline" id="leadershipTimeline"></div>
     </div>
   </section>
@@ -101,7 +120,7 @@
   <!-- EDUCATION + AWARDS -->
   <section id="education">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">06</span><h2 class="section-title">Education <span>&amp; Awards</span></h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">05</span><h2 class="section-title">Education <span>&amp; Awards</span></h2><span class="section-rule"></span></div>
       <div class="split-grid">
         <div id="eduList"></div>
         <ul class="award-list" id="awardList"></ul>
@@ -112,7 +131,7 @@
   <!-- SKILLS -->
   <section id="skills">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">07</span><h2 class="section-title">Tools &amp; Skills</h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">06</span><h2 class="section-title">Tools &amp; Skills</h2><span class="section-rule"></span></div>
       <div class="skills-grid" id="skillsGrid"></div>
     </div>
   </section>

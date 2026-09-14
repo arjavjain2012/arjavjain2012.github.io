@@ -39,8 +39,8 @@
   );
 
   /* ---------------- Hero ---------------- */
-  $("#heroKicker").textContent = C.hero.kicker;
-  $("#heroHeadline").textContent = C.meta.role + ".";
+  $("#heroName").textContent = C.meta.name;
+  $("#heroRole").textContent = C.meta.role;
   $("#heroTagline").innerHTML = `<span class="accent">${esc(C.meta.tagline)}</span>`;
   $("#heroSub").textContent = C.about.paragraphs[0] || "";
 
@@ -75,19 +75,6 @@
     const placeholder = isBlankPlaceholder(href);
     li.innerHTML = `<a href="${placeholder ? "#" : esc(href)}" class="${placeholder ? "needs-input" : ""}">${esc(label)}: ${esc(display)}</a>`;
     quickContact.appendChild(li);
-  });
-
-  /* ---------------- Competencies ---------------- */
-  const compGrid = $("#compGrid");
-  C.competencies.forEach((c, i) => {
-    const card = el("div", "comp-card");
-    card.innerHTML = `
-      <div class="comp-num">0${i + 1}</div>
-      <h3>${esc(c.title)}</h3>
-      <p>${esc(c.summary)}</p>
-      <div class="tool-tags">${c.tools.map((t) => `<span class="tool-tag">${esc(t)}</span>`).join("")}</div>
-    `;
-    compGrid.appendChild(card);
   });
 
   /* ---------------- Projects + Filters ---------------- */
@@ -222,7 +209,11 @@
       <h3>${esc(ed.school)}</h3>
       <div class="edu-degree">${esc(ed.degree)}</div>
       <div class="edu-meta"><span>${esc(ed.score)}</span><span>${esc(ed.period)}</span></div>
-      ${ed.notes.map((n) => `<p class="edu-notes">${esc(n)}</p>`).join("")}
+      ${ed.thesis ? `<div class="edu-thesis"><span class="edu-thesis-label">Thesis</span>${esc(ed.thesis)}</div>` : ""}
+      ${ed.coursework && ed.coursework.length ? `
+        <div class="edu-coursework-label">Coursework</div>
+        <div class="edu-coursework">${ed.coursework.map((c) => `<span class="skill-item">${esc(c)}</span>`).join("")}</div>
+      ` : ""}
     `;
     eduList.appendChild(card);
   });

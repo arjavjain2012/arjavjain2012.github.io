@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
   <defs>
     <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e2530" stroke-width="1"/>
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#163554" stroke-width="1"/>
     </pattern>
   </defs>
-  <rect width="640" height="400" fill="#12161b"/>
+  <rect width="640" height="400" fill="#0d2842"/>
   <rect width="640" height="400" fill="url(#grid)"/>
-  <rect x="1" y="1" width="638" height="398" fill="none" stroke="#2a323f" stroke-width="2" stroke-dasharray="6 6"/>
-  <g stroke="#ff5a36" stroke-width="2" fill="none" opacity="0.9">
+  <rect x="1" y="1" width="638" height="398" fill="none" stroke="#1f4463" stroke-width="2" stroke-dasharray="6 6"/>
+  <g stroke="#ef7a6e" stroke-width="2" fill="none" opacity="0.9">
     <path d="M40 40 L40 70 M40 40 L70 40"/>
     <path d="M600 40 L600 70 M600 40 L570 40"/>
     <path d="M40 360 L40 330 M40 360 L70 360"/>
     <path d="M600 360 L600 330 M600 360 L570 360"/>
   </g>
-  <text x="320" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#7a8494" letter-spacing="1">PROJECT PHOTO / RENDER</text>
-  <text x="320" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#4b5563" letter-spacing="1">replace via assets/img/projects/ — see EDITING_GUIDE.md</text>
+  <text x="320" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#a9c2d6" letter-spacing="1">PROJECT PHOTO / RENDER</text>
+  <text x="320" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d90ab" letter-spacing="1">replace via assets/img/projects/ — see EDITING_GUIDE.md</text>
 </svg>
