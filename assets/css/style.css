@@ -404,6 +404,63 @@ header.nav {
 .tl-item ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 620px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
 
+/* ---------- Work Experience (heavy cards) ---------- */
+.exp-list { display: flex; flex-direction: column; gap: 28px; }
+.exp-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  padding: 32px;
+}
+.exp-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  margin-bottom: 20px;
+}
+.exp-logo-badge {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+.exp-logo-badge img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.92; }
+.exp-logo-fallback {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.exp-head { flex: 1; min-width: 0; }
+.exp-role { margin: 0 0 6px; font-size: clamp(19px, 2.4vw, 23px); line-height: 1.25; }
+.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.exp-org { color: var(--teal); font-size: 15px; font-weight: 500; }
+.exp-product-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  background: rgba(239, 122, 110, 0.08);
+  padding: 3px 9px;
+  border-radius: var(--radius);
+}
+.exp-meta { display: flex; gap: 16px; font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
+.exp-bullets { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; }
+.exp-metric-row { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) {
+  .exp-card { padding: 22px; }
+  .exp-card-top { gap: 14px; }
+  .exp-logo-badge { width: 56px; height: 56px; padding: 10px; }
+}
+
 /* ---------- Education / Awards ---------- */
 .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .edu-card { border: 1px solid var(--line); background: var(--bg-raised); padding: 20px; margin-bottom: 16px; }

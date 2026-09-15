@@ -90,6 +90,17 @@ formal paid roles; a one-off academic/industry collaboration (like the
 Dorle Controls engagement) belongs in `projects` instead, tagged
 `context: "Industry"`.
 
+Each entry also takes:
+- `logo` — path to a company logo SVG/PNG (see `assets/img/logos/`); set
+  it to `null` if you don't have one and a two-letter fallback badge (from
+  the org name) renders instead.
+- `product` — optional short product name shown as a small pill next to
+  the org (e.g. `"RapidX"`); omit the field entirely if there's no named
+  product to call out.
+- `projectRef` — if this job also has a matching entry in `projects`, its
+  `id` here pulls that project's metric tiles into the experience card
+  automatically. Leave it out if there's no matching project.
+
 ### Update education (degree, thesis, coursework)
 
 Each entry in `education: [ ... ]` has an optional `thesis` string (shown

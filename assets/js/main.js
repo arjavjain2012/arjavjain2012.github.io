@@ -171,19 +171,29 @@
   renderProjects();
 
   /* ---------------- Experience ---------------- */
-  const timeline = $("#timeline");
+  const expList = $("#expList");
   C.experience.forEach((e) => {
-    const item = el("div", "tl-item");
-    item.innerHTML = `
-      <div class="tl-period">${esc(e.period)}</div>
-      <div>
-        <h3 class="tl-role">${esc(e.role)}</h3>
-        <div class="tl-org">${esc(e.org)}</div>
-        <div class="tl-loc">${esc(e.location)}</div>
-        <ul>${e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+    const linkedProject = e.projectRef ? C.projects.find((p) => p.id === e.projectRef) : null;
+    const logoHtml = e.logo
+      ? `<img src="${esc(e.logo)}" alt="${esc(e.org)} logo">`
+      : `<span class="exp-logo-fallback">${esc(e.org.slice(0, 2).toUpperCase())}</span>`;
+    const productHtml = e.product ? `<span class="exp-product-tag">${esc(e.product)}</span>` : "";
+
+    const card = el("article", "exp-card");
+    card.innerHTML = `
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="exp-card-top">
+        <div class="exp-logo-badge">${logoHtml}</div>
+        <div class="exp-head">
+          <h3 class="exp-role">${esc(e.role)}</h3>
+          <div class="exp-org-row"><span class="exp-org">${esc(e.org)}</span>${productHtml}</div>
+          <div class="exp-meta"><span>${esc(e.location)}</span><span>${esc(e.period)}</span></div>
+        </div>
       </div>
+      <ul class="exp-bullets">${e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${linkedProject && linkedProject.metrics && linkedProject.metrics.length ? `<div class="metric-row exp-metric-row">${linkedProject.metrics.map(metricHtml).join("")}</div>` : ""}
     `;
-    timeline.appendChild(item);
+    expList.appendChild(card);
   });
 
   /* ---------------- Leadership ---------------- */

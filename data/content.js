@@ -407,6 +407,7 @@ window.SITE_CONTENT = {
   experience: [
     {
       org: "Tesla, Inc.",
+      logo: "assets/img/logos/tesla.svg",
       role: "System Integration & Test Engineer, Energy Engineering",
       location: "Palo Alto, CA, USA",
       period: "May 2026 – Aug 2026",
@@ -419,6 +420,7 @@ window.SITE_CONTENT = {
     },
     {
       org: "Jaguar Land Rover TBSI Pvt. Ltd.",
+      logo: "assets/img/logos/jaguar.svg",
       role: "Graduate EV-Powertrain Engineer Trainee, Sustainability Research Ecosystem",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
@@ -431,6 +433,8 @@ window.SITE_CONTENT = {
     },
     {
       org: "Log9 Materials Scientific Pvt. Ltd.",
+      logo: null,
+      product: "RapidX",
       role: "Industrial Design Intern, RapidX",
       location: "Bengaluru, India",
       period: "May 2022 – Jul 2022",
