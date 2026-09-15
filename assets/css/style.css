@@ -424,27 +424,27 @@ header.nav {
 }
 .exp-logo-badge {
   flex: none;
-  width: 72px;
-  height: 72px;
+  width: 148px;
+  height: 148px;
   border: 1px solid var(--line);
   background: var(--bg-raised);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: 26px;
 }
-.exp-logo-badge img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.92; }
+.exp-logo-badge img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.95; }
 .exp-logo-fallback {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 40px;
   color: var(--accent);
   letter-spacing: 0.02em;
 }
-.exp-head { flex: 1; min-width: 0; }
-.exp-role { margin: 0 0 6px; font-size: clamp(19px, 2.4vw, 23px); line-height: 1.25; }
-.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
-.exp-org { color: var(--teal); font-size: 15px; font-weight: 500; }
+.exp-head { flex: 1; min-width: 0; padding-top: 6px; }
+.exp-role { margin: 0 0 8px; font-size: clamp(20px, 2.6vw, 25px); line-height: 1.25; }
+.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.exp-org { color: var(--teal); font-size: 16px; font-weight: 500; }
 .exp-product-tag {
   font-family: var(--mono);
   font-size: 11px;
@@ -458,11 +458,56 @@ header.nav {
 .exp-meta { display: flex; gap: 16px; font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
 .exp-bullets { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; }
 .exp-metric-row { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.exp-card-body { display: grid; grid-template-columns: 1fr 260px; gap: 28px; align-items: start; }
+.exp-product-image { border: 1px solid var(--line); background: var(--bg-raised); }
+.exp-product-image img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.exp-product-caption { font-family: var(--mono); font-size: 11px; color: var(--text-faint); padding: 10px 12px; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .exp-card-body { grid-template-columns: 1fr; }
+  .exp-product-image img { aspect-ratio: 16/9; }
+}
 @media (max-width: 640px) {
   .exp-card { padding: 22px; }
-  .exp-card-top { gap: 14px; }
-  .exp-logo-badge { width: 56px; height: 56px; padding: 10px; }
+  .exp-card-top { gap: 16px; }
+  .exp-logo-badge { width: 92px; height: 92px; padding: 16px; }
+  .exp-logo-fallback { font-size: 26px; }
 }
+
+/* ---------- Thesis & Publications ---------- */
+.thesis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.thesis-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  padding: 28px;
+}
+.thesis-level {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  border: 1px solid var(--teal-dim);
+  padding: 4px 10px;
+  margin-bottom: 14px;
+}
+.thesis-title { margin: 0 0 8px; font-size: clamp(17px, 2vw, 19px); line-height: 1.35; }
+.thesis-org { color: var(--text-dim); font-size: 13.5px; margin-bottom: 10px; }
+.thesis-meta { margin-bottom: 16px; }
+.thesis-summary { color: var(--text-dim); font-size: 14px; margin: 0 0 14px; }
+.pub-block { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.pub-block-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px; }
+.pub-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.pub-item { border: 1px solid var(--line); padding: 10px 12px; background: var(--bg-raised); }
+.pub-title { font-size: 14px; margin-bottom: 3px; }
+.pub-title a { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--teal); }
+.pub-title a:hover { color: var(--teal); }
+.pub-meta { font-family: var(--mono); font-size: 11.5px; color: var(--text-faint); }
+.pub-status { color: var(--placeholder); }
+.pub-placeholder { text-align: center; color: var(--placeholder); font-family: var(--mono); font-size: 12.5px; }
+@media (max-width: 860px) { .thesis-grid { grid-template-columns: 1fr; } }
 
 /* ---------- Education / Awards ---------- */
 .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }

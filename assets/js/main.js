@@ -177,7 +177,18 @@
     const logoHtml = e.logo
       ? `<img src="${esc(e.logo)}" alt="${esc(e.org)} logo">`
       : `<span class="exp-logo-fallback">${esc(e.org.slice(0, 2).toUpperCase())}</span>`;
-    const productHtml = e.product ? `<span class="exp-product-tag">${esc(e.product)}</span>` : "";
+    const productTagHtml = e.product ? `<span class="exp-product-tag">${esc(e.product)}</span>` : "";
+
+    const bulletsAndMetrics = `
+      <ul class="exp-bullets">${e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${linkedProject && linkedProject.metrics && linkedProject.metrics.length ? `<div class="metric-row exp-metric-row">${linkedProject.metrics.map(metricHtml).join("")}</div>` : ""}
+    `;
+    const productImageHtml = e.productImage ? `
+      <div class="exp-product-image">
+        <img src="${esc(e.productImage)}" alt="${esc(e.productCaption || e.org)}" loading="lazy">
+        ${e.productCaption ? `<div class="exp-product-caption">${esc(e.productCaption)}</div>` : ""}
+      </div>
+    ` : "";
 
     const card = el("article", "exp-card");
     card.innerHTML = `
@@ -186,14 +197,49 @@
         <div class="exp-logo-badge">${logoHtml}</div>
         <div class="exp-head">
           <h3 class="exp-role">${esc(e.role)}</h3>
-          <div class="exp-org-row"><span class="exp-org">${esc(e.org)}</span>${productHtml}</div>
+          <div class="exp-org-row"><span class="exp-org">${esc(e.org)}</span>${productTagHtml}</div>
           <div class="exp-meta"><span>${esc(e.location)}</span><span>${esc(e.period)}</span></div>
         </div>
       </div>
-      <ul class="exp-bullets">${e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${linkedProject && linkedProject.metrics && linkedProject.metrics.length ? `<div class="metric-row exp-metric-row">${linkedProject.metrics.map(metricHtml).join("")}</div>` : ""}
+      ${productImageHtml
+        ? `<div class="exp-card-body"><div>${bulletsAndMetrics}</div>${productImageHtml}</div>`
+        : bulletsAndMetrics}
     `;
     expList.appendChild(card);
+  });
+
+  /* ---------------- Thesis & Publications ---------------- */
+  const thesisGrid = $("#thesisGrid");
+  (C.theses || []).forEach((t) => {
+    const pubsHtml = (t.publications || []).map((p) => {
+      if (p.isPlaceholder || isBlankPlaceholder(p.url)) {
+        return `<li class="pub-item pub-placeholder">
+          <span class="needs-input">— add publication details —</span>
+        </li>`;
+      }
+      const isLink = !isBlankPlaceholder(p.url);
+      return `<li class="pub-item">
+        <div class="pub-title">${isLink ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a>` : esc(p.title)}</div>
+        <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
+      </li>`;
+    }).join("");
+
+    const card = el("article", "thesis-card");
+    card.innerHTML = `
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="thesis-level">${esc(t.level)}</div>
+      <h3 class="thesis-title">${esc(t.title)}</h3>
+      <div class="thesis-org">${esc(t.org)}</div>
+      <div class="exp-meta thesis-meta"><span>${esc(t.period)}</span><span class="project-status">${esc(t.status)}</span></div>
+      <p class="thesis-summary">${esc(t.summary)}</p>
+      <ul class="exp-bullets">${t.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${t.metrics && t.metrics.length ? `<div class="metric-row exp-metric-row">${t.metrics.map(metricHtml).join("")}</div>` : ""}
+      <div class="pub-block">
+        <div class="pub-block-label">Publications</div>
+        <ul class="pub-list">${pubsHtml}</ul>
+      </div>
+    `;
+    thesisGrid.appendChild(card);
   });
 
   /* ---------------- Leadership ---------------- */

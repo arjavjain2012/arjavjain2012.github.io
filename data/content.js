@@ -70,6 +70,61 @@ window.SITE_CONTENT = {
     contexts: ["Formula Student", "Industry", "Research"]
   },
 
+  // Shown side-by-side in the Thesis & Publications section, most recent first.
+  // `publications` entries are placeholders until real citation details/links
+  // are supplied — isPlaceholder rows render in the dashed "add" style.
+  theses: [
+    {
+      id: "ms-thesis",
+      level: "Master's Thesis",
+      title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling",
+      org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
+      period: "Sep 2025 – Present",
+      status: "In progress",
+      summary: "Dynamic system-level modeling of direct-to-chip liquid cooling and power delivery for next-generation ultra-high-density data center racks.",
+      bullets: [
+        "Developed and validated direct-to-chip liquid cooling achieving 5 K/kW thermal resistance, supporting 4 kW/1U and scaling to MW-level racks.",
+        "Designed CTE-matched CuW microcoolers and 73 W/mK thermal interface materials, cutting warpage 3x and projecting under 10% performance degradation over 5 years.",
+        "Built 2 kW high-resolution thermal test vehicles and ran uncertainty-based calorimetric validation, improving system Total Usage Effectiveness (TUE) from 1.55 to 1.01."
+      ],
+      metrics: [
+        { label: "Thermal resistance", value: "5 K/kW" },
+        { label: "Rack density supported", value: "4 kW/1U → MW-scale" },
+        { label: "System TUE improvement", value: "1.55 → 1.01" }
+      ],
+      publications: [
+        { title: "", venue: "", status: "", url: "— add publication details —", isPlaceholder: true }
+      ]
+    },
+    {
+      id: "bs-thesis",
+      level: "Bachelor's Thesis",
+      title: "Understanding End Gas Auto-Ignition in n-Heptane Combustion at High Temperatures using 2D-DNS",
+      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee",
+      period: "Jul 2022 – May 2023",
+      status: "Complete",
+      summary: "Direct numerical simulation of engine knock, examining how pressure waves interact with auto-ignition in hydrocarbon fuels.",
+      bullets: [
+        "Ran 2D lab-scale DNS of knocking in a stoichiometric n-C7H16/O2/Ar mixture under engine-like conditions using PeleC, adaptive mesh refinement, and MACKS.",
+        "Ran 1D DNS in Cantera to resolve the interaction between flame propagation, auto-ignition mode, and pressure waves.",
+        "Developed numerical solvers from scratch to analyze high-fidelity fluid dynamics and pressure-wave interactions on knocking."
+      ],
+      metrics: [
+        { label: "Simulation type", value: "2D/1D DNS" },
+        { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
+      ],
+      publications: [
+        {
+          title: "Evaluating Models for Knock Timing and Autoignition Mode Prediction with 2D DNS",
+          venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
+          status: "Submitted",
+          url: "— add paper/preprint link once available —",
+          isPlaceholder: true
+        }
+      ]
+    }
+  ],
+
   // Sorted most-recent-first by start date.
   projects: [
     {
@@ -125,28 +180,6 @@ window.SITE_CONTENT = {
       ]
     },
     {
-      id: "ms-thesis",
-      title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers",
-      org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign — Master's Thesis",
-      context: "Research",
-      period: "Sep 2025 – Present",
-      status: "In progress",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems"],
-      summary: "Dynamic system-level modeling of direct-to-chip liquid cooling and power delivery for next-generation ultra-high-density data center racks.",
-      bullets: [
-        "Developed and validated direct-to-chip liquid cooling achieving 5 K/kW thermal resistance, supporting 4 kW/1U and scaling to MW-level racks.",
-        "Designed CTE-matched CuW microcoolers and 73 W/mK thermal interface materials, cutting warpage 3x and projecting under 10% performance degradation over 5 years.",
-        "Built 2 kW high-resolution thermal test vehicles and ran uncertainty-based calorimetric validation, improving system Total Usage Effectiveness (TUE) from 1.55 to 1.01."
-      ],
-      metrics: [
-        { label: "Thermal resistance", value: "5 K/kW" },
-        { label: "Rack density supported", value: "4 kW/1U → MW-scale" },
-        { label: "System TUE improvement", value: "1.55 → 1.01" }
-      ],
-      links: []
-    },
-    {
       id: "combustion-lab",
       title: "OH Absorption & Emissions Spectroscopy",
       org: "Combustion Diagnostics Lab, UofI",
@@ -193,30 +226,6 @@ window.SITE_CONTENT = {
       ],
       links: [
         { label: "Patent / publication status", url: "— add link if applicable —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "thesis",
-      title: "End-Gas Auto-Ignition in n-Heptane Combustion",
-      org: "Bachelor's Thesis, Mechanical & Industrial Engineering Dept., IITR",
-      context: "Research",
-      period: "Jul 2022 – May 2023",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Combustion & Powertrain Research"],
-      summary: "Direct numerical simulation of engine knock, examining how pressure waves interact with auto-ignition in hydrocarbon fuels.",
-      bullets: [
-        "Ran 2D lab-scale DNS of knocking in a stoichiometric n-C7H16/O2/Ar mixture under engine-like conditions using PeleC, adaptive mesh refinement, and MACKS.",
-        "Ran 1D DNS in Cantera to resolve the interaction between flame propagation, auto-ignition mode, and pressure waves.",
-        "Developed numerical solvers from scratch to analyze high-fidelity fluid dynamics and pressure-wave interactions on knocking.",
-        "Authored 'Evaluating Models for Knock Timing and Autoignition Mode Prediction with 2D DNS,' submitted to the 41st International Symposium on Combustion (ISOC'26), Kyoto."
-      ],
-      metrics: [
-        { label: "Simulation type", value: "2D/1D DNS" },
-        { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
-      ],
-      links: [
-        { label: "Paper / preprint", url: "— add link once available —", isPlaceholder: true }
       ]
     },
     {
@@ -408,6 +417,8 @@ window.SITE_CONTENT = {
     {
       org: "Tesla, Inc.",
       logo: "assets/img/logos/tesla.svg",
+      productImage: "assets/img/products/tesla-powerwall.jpg",
+      productCaption: "Powerwall 2 — Tesla Energy",
       role: "System Integration & Test Engineer, Energy Engineering",
       location: "Palo Alto, CA, USA",
       period: "May 2026 – Aug 2026",
@@ -420,7 +431,13 @@ window.SITE_CONTENT = {
     },
     {
       org: "Jaguar Land Rover TBSI Pvt. Ltd.",
-      logo: "assets/img/logos/jaguar.svg",
+      logo: "assets/img/logos/jlr.svg",
+      // No freely-licensed photo of the Range Rover Electric exists yet (it's
+      // still a camouflaged prototype — press images are copyright-restricted).
+      // Drop a licensed photo in assets/img/products/ and set productImage
+      // + productCaption here once you have one you're cleared to use.
+      productImage: null,
+      productCaption: null,
       role: "Graduate EV-Powertrain Engineer Trainee, Sustainability Research Ecosystem",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",

@@ -100,6 +100,20 @@ Each entry also takes:
 - `projectRef` — if this job also has a matching entry in `projects`, its
   `id` here pulls that project's metric tiles into the experience card
   automatically. Leave it out if there's no matching project.
+- `productImage` / `productCaption` — an optional photo of something the
+  company makes (e.g. Tesla's Powerwall), shown alongside the bullets.
+  Set both to `null` if you don't have a photo you're cleared to use —
+  don't use a random photo pulled off the web without checking its
+  license; company press pages and Wikimedia Commons (check the license
+  on the file page) are the safest sources.
+
+### Add or edit a thesis (Thesis & Publications section)
+
+Each entry in `theses: [ ... ]` renders as its own card, side by side.
+`publications` is a list of `{ title, venue, status, url }` — set
+`isPlaceholder: true` (and leave `url` as an "— add ... —" string) until
+you have the real citation and link; it'll render as an obvious
+dashed-gold "add publication details" placeholder until then.
 
 ### Update education (degree, thesis, coursework)
 
