@@ -54,7 +54,10 @@ a { color: inherit; }
 }
 
 /* ---------- Section scaffolding ---------- */
-section { padding: 96px 0; border-top: 1px solid var(--line); }
+/* Compensates for the fixed 64px header: without this, clicking a nav
+   link scrolls the target section's title right underneath the header,
+   making it look cut off / like the section didn't load. */
+section { padding: 96px 0; border-top: 1px solid var(--line); scroll-margin-top: 84px; }
 section:first-of-type { border-top: none; }
 
 .section-head {
