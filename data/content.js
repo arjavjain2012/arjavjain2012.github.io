@@ -1,4 +1,4 @@
-/*
+﻿/*
   ============================================================================
   SITE CONTENT — this is the ONLY file you should need to edit day-to-day.
   ============================================================================
@@ -31,8 +31,8 @@ window.SITE_CONTENT = {
     location: "Urbana-Champaign, IL, USA",
     // Motorsport hiring (F1/WEC) filters hard on work-authorization and
     // relocation flexibility — say this plainly so recruiters don't have to guess.
-    workAuthorization: "Open to relocation across the EU/UK for motorsport roles — add current visa/sponsorship status",
-    email: "arjav.av@gmail.com",
+    workAuthorization: "Open to relocation",
+    email: "arjavj2@illinois.edu",
     phone: "+1 217-800-2530",
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
@@ -124,6 +124,175 @@ window.SITE_CONTENT = {
       ]
     }
   ],
+
+  // LAYER 3 DATA — sub-projects shown when a project card is opened (layer 2)
+  // and one of its discipline tiles is clicked. Keyed by project id. Projects
+  // with no entry here just show their full breakdown at layer 2. Swap each
+  // `image` for a real photo/render/screenshot from assets/img/projects/.
+  subprojects: {
+    rmse23: [
+      {
+        id: "chassis", title: "Chassis & Composite Structures", image: "assets/img/placeholder-project.svg",
+        highlights: ["1755 N·m/° torsional stiffness", "10% total mass reduction with CFRP"],
+        bullets: [
+          "Revised the tubular chassis to a 49F-51R weight distribution and 1755 N·m/° torsional stiffness, and ran FEA for crash-load cases.",
+          "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
+          "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue."
+        ],
+        metrics: [{ label: "Torsional stiffness", value: "1755 N·m/°" }, { label: "Weight distribution", value: "49F-51R" }, { label: "Mass reduction", value: "10%" }]
+      },
+      {
+        id: "dynamics", title: "Vehicle Dynamics & Lap-Time Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["12% lap-time reduction", "CarMaker sensitivity studies"],
+        bullets: ["Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%."],
+        metrics: [{ label: "Lap-time improvement", value: "12%" }]
+      },
+      {
+        id: "aero-thermal", title: "Aerodynamics & Cooling", image: "assets/img/placeholder-project.svg",
+        highlights: ["Automated CFD aero-map pipeline", "NTU-effectiveness cooling model, 80 kW"],
+        bullets: [
+          "Automated CFD runs and post-processing to generate aero maps, balancing aero load against vehicle dynamics.",
+          "Built a thermal model for the radiator and water-cooled loop sizing an 80 kW motor and inverter using the NTU-effectiveness method."
+        ],
+        metrics: [{ label: "Motor + inverter cooled", value: "80 kW" }]
+      },
+      {
+        id: "electronics", title: "LV Electronics & Harness", image: "assets/img/placeholder-project.svg",
+        highlights: ["Power, plausibility & DAQ PCBs", "12% packaging efficiency gain"],
+        bullets: [
+          "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
+          "Designed the vehicle's cable harness and cooling-pipe routing in CAD with validated bend radii, improving packaging efficiency by 12%."
+        ],
+        metrics: [{ label: "Packaging efficiency", value: "+12%" }]
+      },
+      {
+        id: "strategy", title: "Strategy, Cost & Results", image: "assets/img/placeholder-project.svg",
+        highlights: ["1st among Asian teams: Design + Cost events", "MathWorks Modeling Award, 1st"],
+        bullets: [
+          "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
+          "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
+          "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
+          "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
+        ],
+        metrics: [{ label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" }, { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }]
+      }
+    ],
+    rmse21: [
+      {
+        id: "powertrain", title: "Powertrain, Tires & Lap-Time Model", image: "assets/img/placeholder-project.svg",
+        highlights: ["12% torque gain from gear-ratio revision", "Pacejka tires calibrated to FSAE TTC data"],
+        bullets: [
+          "Selected the 80 kW powertrain (motor/diff/tires) and revised gear ratios using tire-slip models, gaining 12% torque.",
+          "Built a quasi-steady-state point-mass lap-time simulation, validated to within 10% accuracy, to drive sensitivity studies.",
+          "Modeled tires with the Pacejka Magic Formula, calibrated against FSAE Tire Test Consortium data."
+        ],
+        metrics: [{ label: "Torque gain", value: "12%" }, { label: "Lap-sim accuracy", value: "within 10%" }]
+      },
+      {
+        id: "aero", title: "Front & Rear Wing Aerodynamics", image: "assets/img/placeholder-project.svg",
+        highlights: ["CFD-designed wings, tuft-test validated", "7% lap-time reduction"],
+        bullets: ["Led design of front and rear wings using CFD, validated with tuft testing, for a 7% lap-time reduction."],
+        metrics: [{ label: "Lap-time reduction", value: "7%" }]
+      },
+      {
+        id: "battery", title: "Battery Pack & Thermal Management", image: "assets/img/placeholder-project.svg",
+        highlights: ["538V/18Ah pack enclosure & sizing", "1.2 kW air-cooled BTMS, cells < 45°C"],
+        bullets: [
+          "Simulated an active air-cooled battery thermal management system to dissipate 1.2 kW and hold cell temperatures below 45°C at peak 10C discharge rate.",
+          "Designed the enclosure, mounting brackets, cell holders, and busbars for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
+          "Selected NMC cells, high-current relays, fuses, and harnesses complying with the ISO 6469-3 safety standard."
+        ],
+        metrics: [{ label: "Pack", value: "538V / 18Ah" }, { label: "BTMS heat dissipation", value: "1.2 kW" }]
+      },
+      {
+        id: "controls", title: "Traction Control & ABS", image: "assets/img/placeholder-project.svg",
+        highlights: ["Longitudinal tire-slip model", "7% further lap-time reduction"],
+        bullets: ["Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction."],
+        metrics: [{ label: "Lap-time reduction", value: "7%" }]
+      },
+      {
+        id: "structures", title: "Structures & Ergonomics", image: "assets/img/placeholder-project.svg",
+        highlights: ["25% mass cut at FoS 1.2 (Goodman)", "Driver ergonomic rigs, FSAE-compliant pedal box"],
+        bullets: [
+          "Reduced mass across the suspension and drivetrain by 25% while holding a fatigue safety factor of 1.2 under the Goodman criterion.",
+          "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules."
+        ],
+        metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2" }]
+      },
+      {
+        id: "results", title: "Competition Results", image: "assets/img/placeholder-project.svg",
+        highlights: ["3rd overall, Formula Bharat Virtual '22", "1st Business Plan · 3rd Engineering Design"],
+        bullets: ["Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."],
+        metrics: [{ label: "Overall", value: "3rd" }, { label: "Business Plan", value: "1st" }]
+      }
+    ],
+    iem26: [
+      {
+        id: "soc", title: "Battery State Estimation", image: "assets/img/placeholder-project.svg",
+        highlights: ["Sigma-point Kalman filter", "98% SOC/SOH accuracy"],
+        bullets: ["Developing a sigma-point Kalman filter to estimate SOC and SOH of the Li-ion pack in real time, validated to 98% accuracy against reference cycles."],
+        metrics: [{ label: "SOC/SOH accuracy", value: "98%" }]
+      },
+      {
+        id: "suspension", title: "Suspension Modeling", image: "assets/img/placeholder-project.svg",
+        highlights: ["Roll-heave decoupled suspension", "VI-SuspensionGen kinematics"],
+        bullets: ["Modeling the roll-heave decoupled suspension in VI-SuspensionGen to inform kinematic setup ahead of build."],
+        metrics: []
+      },
+      {
+        id: "dyno", title: "Endurance Dynamometer", image: "assets/img/placeholder-project.svg",
+        highlights: ["Custom dyno rig", "35 kW PMSM motors + inverters"],
+        bullets: ["Building a custom dynamometer rig to emulate endurance-event loading on the 35 kW PMSM motors and inverters."],
+        metrics: [{ label: "Motor power", value: "35 kW PMSM" }]
+      }
+    ]
+  },
+
+  // SOFTWARE & MANUFACTURING SHOWCASE — one tile per competency. `image` is the
+  // tile thumbnail (use your most complex example in that tool); `gallery` holds
+  // the extra images shown when the tile is opened. Replace the placeholders.
+  toolkit: {
+    software: [
+      { name: "CAD & Design", caption: "— add your most complex assembly —", image: "assets/img/placeholder-project.svg",
+        tools: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "FEA & Structures", caption: "— add your most complex FEA —", image: "assets/img/placeholder-project.svg",
+        tools: ["ANSYS Workbench", "ANSYS ACP", "Abaqus", "NASTRAN"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "CFD & Thermal", caption: "— add your most complex CFD —", image: "assets/img/placeholder-project.svg",
+        tools: ["Ansys Fluent", "Star-CCM+", "ParaView", "VisIT"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "MATLAB / Simulink", caption: "— add your most complex model —", image: "assets/img/placeholder-project.svg",
+        tools: ["MATLAB", "Simulink", "Simscape", "Stateflow"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Vehicle Simulation", caption: "— add your most complex sim —", image: "assets/img/placeholder-project.svg",
+        tools: ["CarMaker", "VI-grade (SuspensionGen)", "KISSsoft", "Pacejka tire modeling"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Electronics & Code", caption: "— add your most complex board / program —", image: "assets/img/placeholder-project.svg",
+        tools: ["Altium", "LTSpice", "PSpice", "Python", "C / C++"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] }
+    ],
+    manufacturing: [
+      { name: "CNC & Machining", caption: "— add your most complex part —", image: "assets/img/placeholder-project.svg",
+        tools: ["3-axis CNC", "Lathe", "Laser cutting", "Water-jet cutting"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Composites", caption: "— add your best CFRP part —", image: "assets/img/placeholder-project.svg",
+        tools: ["CFRP wet layup", "Mould prep", "Structural components"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Casting & Rapid Tooling", caption: "— add the magnesium wheel —", image: "assets/img/placeholder-project.svg",
+        tools: ["Sand casting", "SLS-printed tooling", "Injection molding"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Additive Manufacturing", caption: "— add your best print —", image: "assets/img/placeholder-project.svg",
+        tools: ["FDM", "SLA", "SLS", "Generative design"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Welding & Fabrication", caption: "— add your best weldment —", image: "assets/img/placeholder-project.svg",
+        tools: ["TIG", "MIG", "Metal arc", "Sheet metal", "Soldering"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
+      { name: "Metrology & Test", caption: "— add an inspection report —", image: "assets/img/placeholder-project.svg",
+        tools: ["CMM", "3D scanning", "Oscilloscope / board-level test", "Laser diagnostics"],
+        gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] }
+    ]
+  },
 
   // Sorted most-recent-first by start date.
   projects: [
@@ -542,11 +711,7 @@ window.SITE_CONTENT = {
   ],
 
   skills: [
-    { category: "CAD & Simulation", items: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD", "ANSYS Workbench", "ANSYS ACP", "Abaqus", "NASTRAN", "Ansys Fluent", "Star-CCM+", "ParaView", "VisIT"] },
-    { category: "Vehicle & Controls", items: ["MATLAB/Simulink", "Simscape", "CarMaker", "VI-grade", "KISSsoft", "Pacejka tire modeling"] },
-    { category: "Programming", items: ["C", "C++", "Python"] },
-    { category: "Electronics", items: ["Altium", "LTSpice", "PSpice", "Oscilloscope / board-level test"] },
-    { category: "Manufacturing", items: ["3-axis CNC", "Lathe", "FDM / SLA / SLS", "Laser & water-jet cutting", "TIG / MIG / metal arc welding", "Sand casting", "Injection molding", "Composite wet layup", "CMM & 3D scanning", "Laser diagnostics"] },
+    { category: "Standards & Methods", items: ["ISO 26262 (HARA)", "DFMEA", "GD&T (ASME Y14.5)", "ISO 16750-3", "ISO 6469-3", "BS 8888", "Tolerance stack-up"] },
     { category: "Certifications", items: ["TÜV SÜD Level 2 & 3 — Qualified Electrician, HV Systems (EV/HEV)"] }
   ],
 
@@ -555,3 +720,4 @@ window.SITE_CONTENT = {
     body: "Open to mechanical and systems engineering roles across motorsport (F1/WEC, primarily EU/UK), EV, and energy systems."
   }
 };
+

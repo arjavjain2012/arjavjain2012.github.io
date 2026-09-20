@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -24,6 +24,7 @@
       <li><a href="#projects">Projects</a></li>
       <li><a href="#leadership">Leadership</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#toolkit">Toolkit</a></li>
       <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
   </div>
@@ -34,29 +35,7 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-blueprint" aria-hidden="true">
-      <svg viewBox="0 0 1400 560" preserveAspectRatio="xMidYMid slice">
-        <line x1="60" y1="470" x2="1340" y2="470" class="bp-line bp-dash"/>
-        <circle cx="250" cy="430" r="62" class="bp-line"/>
-        <circle cx="250" cy="430" r="30" class="bp-line"/>
-        <circle cx="1170" cy="430" r="68" class="bp-line"/>
-        <circle cx="1170" cy="430" r="33" class="bp-line"/>
-        <path class="bp-line" d="M60 448 L232 448 L236 470 L60 470 Z"/>
-        <path class="bp-line" d="M60 400 L60 448 M232 400 L232 448"/>
-        <path class="bp-line" d="M236 448 C 300 340, 380 280, 470 250 C 520 233, 560 228, 610 228 L 700 228 C 760 228, 840 236, 920 250 C 1000 264, 1060 290, 1110 340 L 1230 378 L 1250 420 L 1250 448 L 236 448 Z"/>
-        <path class="bp-line" d="M470 250 C 486 210, 520 186, 560 182 C 600 178, 626 196, 630 228"/>
-        <path class="bp-line bp-dash" d="M700 228 L700 190 M760 236 L760 195"/>
-        <path class="bp-line" d="M1110 250 L1340 214 L1340 236 L1160 268 Z"/>
-        <path class="bp-line" d="M1110 250 L1090 340"/>
-        <line x1="60" y1="524" x2="1340" y2="524" class="bp-line"/>
-        <line x1="60" y1="512" x2="60" y2="524" class="bp-line"/>
-        <line x1="1340" y1="512" x2="1340" y2="524" class="bp-line"/>
-        <text x="700" y="546" class="bp-label" text-anchor="middle">WHEELBASE — 2985mm</text>
-        <text x="250" y="512" class="bp-label" text-anchor="middle">FR</text>
-        <text x="1170" y="512" class="bp-label" text-anchor="middle">RR</text>
-        <circle cx="700" cy="228" r="3" class="bp-node"/>
-        <circle cx="250" cy="430" r="3" class="bp-node"/>
-        <circle cx="1170" cy="430" r="3" class="bp-node"/>
-      </svg>
+      <img src="assets/img/hero-car.png" alt="">
     </div>
     <div class="wrap hero-content">
       <div class="hero-name-block">
@@ -139,10 +118,22 @@
     </div>
   </section>
 
+  <!-- SOFTWARE & MANUFACTURING -->
+  <section id="toolkit">
+    <div class="wrap">
+      <div class="section-head"><span class="section-index">07</span><h2 class="section-title">Software <span>&amp; Manufacturing</span></h2><span class="section-rule"></span></div>
+      <p class="section-lede">Each tile shows the most complex work in that tool or process — open one for more evidence.</p>
+      <h3 class="sub-head">Software</h3>
+      <div class="tile-grid tile-grid-compact" id="softwareGrid"></div>
+      <h3 class="sub-head">Manufacturing</h3>
+      <div class="tile-grid tile-grid-compact" id="manufacturingGrid"></div>
+    </div>
+  </section>
+
   <!-- SKILLS -->
   <section id="skills">
     <div class="wrap">
-      <div class="section-head"><span class="section-index">07</span><h2 class="section-title">Tools &amp; Skills</h2><span class="section-rule"></span></div>
+      <div class="section-head"><span class="section-index">08</span><h2 class="section-title">Standards &amp; Certifications</h2><span class="section-rule"></span></div>
       <div class="skills-grid" id="skillsGrid"></div>
     </div>
   </section>
@@ -162,7 +153,21 @@
   <div class="wrap" id="footerText"></div>
 </footer>
 
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-panel" role="dialog" aria-modal="true">
+    <div class="modal-bar">
+      <button class="modal-back" id="modalBack" type="button">← Back</button>
+      <div class="modal-crumbs" id="modalCrumbs"></div>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script src="data/content.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+

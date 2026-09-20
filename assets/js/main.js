@@ -135,40 +135,149 @@
     return `<a class="${isPh ? "placeholder" : ""}" href="${isPh ? "#" : esc(l.url)}" ${isPh ? "" : 'target="_blank" rel="noopener"'}>${esc(l.label)} ${isPh ? "(add link)" : "→"}</a>`;
   }
 
+  /* ---------------- Layered detail panel (modal stack) ---------------- */
+  const modal = $("#modal"), modalBody = $("#modalBody"), modalCrumbs = $("#modalCrumbs"), modalBack = $("#modalBack");
+  let stack = [];
+  function paintModal() {
+    const v = stack[stack.length - 1];
+    modalCrumbs.textContent = stack.map((s) => s.crumb).join("  /  ");
+    modalBack.style.visibility = stack.length > 1 ? "visible" : "hidden";
+    modalBody.innerHTML = "";
+    modalBody.appendChild(v.render());
+    $(".modal-panel").scrollTop = 0;
+  }
+  function pushView(view) {
+    stack.push(view);
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    paintModal();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    stack = [];
+  }
+  function popView() {
+    stack.pop();
+    if (stack.length) paintModal(); else closeModal();
+  }
+  modalBack.addEventListener("click", popView);
+  $("#modalClose").addEventListener("click", closeModal);
+  $("#modalBackdrop").addEventListener("click", closeModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) closeModal();
+  });
+
+  const makeTile = (html, onOpen, cls) => {
+    const t = el("article", "tile " + (cls || ""));
+    t.tabIndex = 0;
+    t.setAttribute("role", "button");
+    t.innerHTML = html;
+    t.addEventListener("click", onOpen);
+    t.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } });
+    return t;
+  };
+
+  const metricsRow = (ms) => ms && ms.length ? `<div class="metric-row">${ms.map(metricHtml).join("")}</div>` : "";
+  const shortTitle = (s) => s.length > 32 ? s.slice(0, 30) + "…" : s;
+
+  function subDetail(p, s) {
+    const box = el("div", "detail");
+    box.innerHTML = `
+      <div class="detail-hero"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>
+      <div class="detail-kicker">${esc(p.title)}</div>
+      <h2 class="detail-title">${esc(s.title)}</h2>
+      ${metricsRow(s.metrics)}
+      <h4 class="detail-sub">Development highlights</h4>
+      <ul class="detail-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+    `;
+    return box;
+  }
+
+  function projectDetail(p) {
+    const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    const box = el("div", "detail");
+    box.innerHTML = `
+      <div class="detail-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
+      <div class="detail-kicker">${esc(p.period)} · ${esc(p.status)} · ${esc(p.org)}</div>
+      <h2 class="detail-title">${esc(p.title)}</h2>
+      <p class="detail-summary">${esc(p.summary)}</p>
+      <div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}<span class="ptag">${esc(p.context)}</span></div>
+      ${metricsRow(p.metrics)}
+    `;
+    if (subs.length) {
+      const h = el("h4", "detail-sub", "Disciplines &amp; sub-projects — open one for the full detail");
+      const grid = el("div", "tile-grid");
+      subs.forEach((s) => {
+        grid.appendChild(makeTile(`
+          <div class="tile-image"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
+          <div class="tile-body">
+            <h3>${esc(s.title)}</h3>
+            <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+            <div class="tile-cta">Open detail →</div>
+          </div>`, () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) })));
+      });
+      box.appendChild(h); box.appendChild(grid);
+    } else {
+      const h = el("h4", "detail-sub", "Development highlights");
+      const ul = el("ul", "detail-list", p.bullets.map((b) => `<li>${esc(b)}</li>`).join(""));
+      box.appendChild(h); box.appendChild(ul);
+    }
+    if (p.links && p.links.length) box.appendChild(el("div", "project-links", p.links.map(linkHtml).join("")));
+    return box;
+  }
+
+  function highlightChips(p) {
+    return (p.metrics || []).filter((m) => !m.isPlaceholder && !isBlankPlaceholder(m.value)).slice(0, 3)
+      .map((m) => `<span class="hl"><b>${esc(m.value)}</b> ${esc(m.label)}</span>`).join("");
+  }
+
   function renderProjects() {
     projectGrid.innerHTML = "";
     const visible = C.projects.filter(projectMatchesFilters);
     emptyState.style.display = visible.length ? "none" : "block";
-
     visible.forEach((p) => {
-      const card = el("article", "project-card");
-      card.innerHTML = `
-        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-        <div class="project-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
-        <div class="project-body">
+      projectGrid.appendChild(makeTile(`
+        <div class="tile-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+        <div class="tile-body">
           <div class="project-meta"><span>${esc(p.period)}</span><span class="project-status">${esc(p.status)}</span></div>
           <h3>${esc(p.title)}</h3>
           <div class="project-org">${esc(p.org)}</div>
-          <p class="project-summary">${esc(p.summary)}</p>
-          <div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}<span class="ptag">${esc(p.context)}</span></div>
-          <div class="metric-row">${p.metrics.map(metricHtml).join("")}</div>
-          <button class="project-toggle" type="button">+ Show full technical breakdown</button>
-          <div class="project-details">
-            <ul>${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-            ${p.links && p.links.length ? `<div class="project-links">${p.links.map(linkHtml).join("")}</div>` : ""}
-          </div>
-        </div>
-      `;
-      const toggleBtn = $(".project-toggle", card);
-      const details = $(".project-details", card);
-      toggleBtn.addEventListener("click", () => {
-        const open = details.classList.toggle("open");
-        toggleBtn.textContent = open ? "− Hide technical breakdown" : "+ Show full technical breakdown";
-      });
-      projectGrid.appendChild(card);
+          <p class="tile-summary">${esc(p.summary)}</p>
+          <div class="hl-row">${highlightChips(p)}</div>
+          <div class="tile-cta">View project →</div>
+        </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile"));
     });
   }
   renderProjects();
+
+  /* ---------------- Software & Manufacturing showcase ---------------- */
+  function toolkitDetail(kind, item) {
+    const box = el("div", "detail");
+    box.innerHTML = `
+      <div class="detail-kicker">${esc(kind)}</div>
+      <h2 class="detail-title">${esc(item.name)}</h2>
+      <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
+      <h4 class="detail-sub">Evidence</h4>
+      <div class="tile-grid">${(item.gallery || []).map((g) => `
+        <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
+    `;
+    return box;
+  }
+  function renderToolkit(gridSel, kind, items) {
+    const grid = $(gridSel);
+    (items || []).forEach((it) => {
+      grid.appendChild(makeTile(`
+        <div class="tile-image"><img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"></div>
+        <div class="tile-body">
+          <h3>${esc(it.name)}</h3>
+          <div class="tile-caption ${isBlankPlaceholder(it.caption) ? "needs-input" : ""}">${esc(it.caption)}</div>
+          <div class="tool-chips">${it.tools.slice(0, 4).map((t) => `<span class="mini-chip">${esc(t)}</span>`).join("")}</div>
+        </div>`, () => pushView({ crumb: it.name, render: () => toolkitDetail(kind, it) }), "tool-tile"));
+    });
+  }
+  renderToolkit("#softwareGrid", "Software", C.toolkit && C.toolkit.software);
+  renderToolkit("#manufacturingGrid", "Manufacturing", C.toolkit && C.toolkit.manufacturing);
 
   /* ---------------- Experience ---------------- */
   const expList = $("#expList");
@@ -192,7 +301,6 @@
 
     const card = el("article", "exp-card");
     card.innerHTML = `
-      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
       <div class="exp-card-top">
         <div class="exp-logo-badge">${logoHtml}</div>
         <div class="exp-head">
@@ -226,7 +334,6 @@
 
     const card = el("article", "thesis-card");
     card.innerHTML = `
-      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
       <div class="thesis-level">${esc(t.level)}</div>
       <h3 class="thesis-title">${esc(t.title)}</h3>
       <div class="thesis-org">${esc(t.org)}</div>
@@ -305,3 +412,4 @@
   /* ---------------- Footer ---------------- */
   $("#footerText").textContent = `${C.meta.name} — built with plain HTML/CSS/JS, no build step. © ${new Date().getFullYear()}`;
 })();
+

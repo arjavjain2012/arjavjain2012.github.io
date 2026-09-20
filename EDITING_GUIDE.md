@@ -107,6 +107,26 @@ Each entry also takes:
   license; company press pages and Wikimedia Commons (check the license
   on the file page) are the safest sources.
 
+### The three layers (projects → sub-projects → detail)
+
+- **Layer 1** — the project tiles on the main page (image, title, summary,
+  top 3 metrics). Comes from `projects`.
+- **Layer 2** — clicking a tile opens a panel with the full project. If the
+  project has an entry in `subprojects` (keyed by project `id`, e.g.
+  `rmse23`), layer 2 shows those disciplines as tiles; otherwise it shows
+  the project's `bullets` directly.
+- **Layer 3** — clicking a sub-project tile shows its `bullets`, `metrics`
+  and `image`. Each sub-project is `{ id, title, image, highlights: [2 short
+  lines], bullets: [...], metrics: [...] }`.
+
+### Software & Manufacturing tiles
+
+`toolkit.software` and `toolkit.manufacturing` each hold tiles:
+`{ name, caption, image, tools: [...], gallery: [{ image, caption }, ...] }`.
+`image` is the tile thumbnail (your most complex example in that tool);
+`gallery` is the extra evidence shown when the tile is opened. Put files in
+`assets/img/projects/` and point the paths there.
+
 ### Add or edit a thesis (Thesis & Publications section)
 
 Each entry in `theses: [ ... ]` renders as its own card, side by side.
