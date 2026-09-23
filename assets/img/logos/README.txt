@@ -14,13 +14,13 @@ notes the mark is too simple (plain lettering) to be copyrightable in the
 US, but is still a trademark of JLR — kept at identification size only,
 the same "past employer" use as the other logos here.
 
-Log9 Materials has no icon in Simple Icons, and I couldn't pull their
-actual logo file automatically (their site renders it client-side via JS,
-which our fetch tools can't execute). Its entry on the site currently
-falls back to a plain text wordmark badge — see data/content.js
-(experience[].logo is `null` for Log9, and main.js renders a styled
-two-letter badge instead). Drop the real Log9 logo file here and set its
-`logo` path in data/content.js if you get hold of one.
+log9.png — Log9 Materials' own wordmark, supplied directly by the site
+owner (Log9 has no icon in Simple Icons and their site renders its logo
+client-side via JS, which our fetch tools can't reach). The source image
+had an opaque white background; it's been background-removed (flood-fill
+to transparency) and cropped tight to the glyph so it matches the same
+`filter: brightness(0) invert(1)` treatment the other experience-card
+logos get in style.css (.exp-logo-badge img).
 
 Product photos (Tesla Powerwall, etc.) live in ../products/ instead of
 here — see ../products/README.txt.

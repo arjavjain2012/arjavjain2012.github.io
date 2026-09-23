@@ -601,12 +601,8 @@ window.SITE_CONTENT = {
     {
       org: "Jaguar Land Rover TBSI Pvt. Ltd.",
       logo: "assets/img/logos/jlr.svg",
-      // No freely-licensed photo of the Range Rover Electric exists yet (it's
-      // still a camouflaged prototype — press images are copyright-restricted).
-      // Drop a licensed photo in assets/img/products/ and set productImage
-      // + productCaption here once you have one you're cleared to use.
-      productImage: null,
-      productCaption: null,
+      productImage: "assets/img/products/range-rover-electric.jpg",
+      productCaption: "Range Rover Electric — production BEV flagship",
       role: "Graduate EV-Powertrain Engineer Trainee, HV Systems",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
@@ -619,7 +615,9 @@ window.SITE_CONTENT = {
     },
     {
       org: "Log9 Materials Scientific Pvt. Ltd.",
-      logo: null,
+      logo: "assets/img/logos/log9.png",
+      productImage: "assets/img/products/log9-rapidx8000.jpg",
+      productCaption: "RapidX 8000 — Log9 Materials",
       product: "RapidX",
       role: "Industrial Design Intern, RapidX",
       location: "Bengaluru, India",
