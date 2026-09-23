@@ -232,7 +232,7 @@
     const box = el("div", "detail");
     box.innerHTML = `
       <div class="detail-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
-      <div class="detail-kicker">${esc(p.period)} · ${esc(p.status)} · ${esc(p.org)}</div>
+      <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
       <div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}<span class="ptag">${esc(p.context)}</span></div>
@@ -269,7 +269,7 @@
     return makeTile(`
       <div class="tile-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
       <div class="tile-body">
-        <div class="project-meta"><span>${esc(p.period)}</span><span class="project-status">${esc(p.status)}</span></div>
+        <div class="project-meta"><span>${esc(p.period)}</span></div>
         <h3>${esc(p.title)}</h3>
         <div class="project-org">${esc(p.org)}</div>
         <p class="tile-summary">${esc(p.summary)}</p>
@@ -416,7 +416,7 @@
       <div class="thesis-level">${esc(t.level)}</div>
       <h3 class="thesis-title">${esc(t.title)}</h3>
       <div class="thesis-org">${esc(t.org)}</div>
-      <div class="exp-meta thesis-meta"><span>${esc(t.period)}</span><span class="project-status">${esc(t.status)}</span></div>
+      <div class="exp-meta thesis-meta"><span>${esc(t.period)}</span></div>
       <p class="thesis-summary">${esc(t.summary)}</p>
       <ul class="exp-bullets">${t.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
       ${t.metrics && t.metrics.length ? `<div class="metric-row exp-metric-row">${t.metrics.map(metricHtml).join("")}</div>` : ""}
