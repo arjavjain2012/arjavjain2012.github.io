@@ -338,7 +338,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 8px;
+  padding: 9px 8px;
   border: 1px solid var(--line);
   background: var(--bg-raised);
   border-radius: 10px;
@@ -346,8 +346,8 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   text-decoration: none;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
-.contact-icon svg { width: 28px; height: 28px; flex-shrink: 0; }
-.contact-label { font-family: var(--mono); font-size: 13px; font-weight: 600; line-height: 28px; color: var(--text); }
+.contact-icon svg { width: 26px; height: 26px; flex-shrink: 0; }
+.contact-label { font-family: var(--mono); font-size: 17px; font-weight: 600; line-height: 1; color: var(--text); }
 .contact-icon:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.32); }
 .contact-icon.needs-input { color: var(--placeholder); border-style: dashed; border-color: var(--placeholder); }
 .contact-icon.needs-input .contact-label { color: var(--placeholder); }
