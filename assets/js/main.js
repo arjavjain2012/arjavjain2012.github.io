@@ -134,8 +134,8 @@
   `;
 
   const CONTACT_ICONS = {
-    Email: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>`,
-    Phone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.6 2.5h3l1.3 4.2-2.2 1.7a13.4 13.4 0 0 0 6.9 6.9l1.7-2.2 4.2 1.3v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 4.7a2 2 0 0 1 2-2.2z"/></svg>`,
+    Email: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>`,
+    Phone: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
     LinkedIn: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`
   };
   const quickContact = $("#quickContact");
@@ -353,6 +353,11 @@
     const endYear = Math.ceil((globalEnd + pad) / 12);
     for (let y = startYear; y <= endYear; y++) years.push(y);
 
+    const shortDate = (str) => {
+      const m = str.trim().match(/([A-Za-z]+)\s+(\d{4})/);
+      return m ? `${m[1].slice(0, 3)} '${m[2].slice(2)}` : str.trim();
+    };
+
     const segHtml = expByDate.map((e, i) => {
       const s = spans[i];
       const endIdx = s.isPresent ? nowIndex : s.end.index;
@@ -361,10 +366,15 @@
       const widthPct = Math.max(rightPct - leftPct, 0.6);
       const midPct = leftPct + widthPct / 2;
       const short = e.org.split(",")[0].split(" ")[0];
+      const parts = e.period.split(/[–-]/);
+      const startLabel = shortDate(parts[0]);
+      const endLabel = s.isPresent ? "Present" : shortDate(parts[1] || parts[0]);
       return `
         <div class="exp-tl-range" style="left:${leftPct}%;width:${widthPct}%" title="${esc(e.org)}: ${esc(e.period)}"></div>
-        <div class="exp-tl-marker" style="left:${leftPct}%" title="${esc(e.org)} starts ${esc(e.period.split(/[–-]/)[0].trim())}"></div>
-        <div class="exp-tl-marker" style="left:${rightPct}%" title="${esc(e.org)} ends ${esc(e.period.split(/[–-]/)[1] ? e.period.split(/[–-]/)[1].trim() : "")}"></div>
+        <div class="exp-tl-marker" style="left:${leftPct}%" title="${esc(e.org)} starts ${esc(parts[0].trim())}"></div>
+        <div class="exp-tl-marker" style="left:${rightPct}%" title="${esc(e.org)} ends ${esc(parts[1] ? parts[1].trim() : "")}"></div>
+        <div class="exp-tl-date" style="left:${leftPct}%">${esc(startLabel)}</div>
+        <div class="exp-tl-date" style="left:${rightPct}%">${esc(endLabel)}</div>
         <div class="exp-tl-label" style="left:${midPct}%">${esc(short)}</div>
       `;
     }).join("");
@@ -429,9 +439,12 @@
         <div class="exp-title-block">
           ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
           <div class="exp-title-text">
-            <div class="exp-duration">${esc(e.period)}</div>
             <h3>${esc(e.role)}</h3>
             <div class="exp-org-line">${esc(e.org)}</div>
+            <div class="exp-location-line">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+              <span>${esc(e.location)}</span>
+            </div>
           </div>
         </div>
         <p class="tile-summary">${esc(summary)}</p>

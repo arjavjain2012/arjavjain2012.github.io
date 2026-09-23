@@ -320,20 +320,21 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   gap: 5px;
 }
 .id-info p svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--accent); }
-.uni-logo {
-  height: auto;
-  width: auto;
-  max-width: 150px;
-  object-fit: contain;
-  background: #fff;
-  padding: 8px 10px;
+.uni-logo-wrap {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 10px 12px;
+  max-width: 160px;
 }
+.uni-logo { width: 100%; height: 100%; object-fit: contain; display: block; }
 .id-contacts { flex: none; display: flex; gap: 10px; }
 .contact-icon {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -434,6 +435,16 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   font-family: var(--mono);
   font-size: 11px;
   color: var(--text-dim);
+  white-space: nowrap;
+}
+.exp-tl-date {
+  position: absolute;
+  top: 2px;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
   white-space: nowrap;
 }
 .exp-tl-axis { position: relative; height: 22px; }
@@ -569,6 +580,15 @@ footer {
 .exp-title-text h2, .exp-title-text h3 { margin: 0; }
 .exp-duration { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
 .exp-org-line { font-size: 13px; color: var(--text-dim); }
+.exp-location-line {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.exp-location-line svg { width: 11px; height: 11px; flex-shrink: 0; color: var(--accent); }
 .exp-logo-big {
   width: 60px;
   flex-shrink: 0;
