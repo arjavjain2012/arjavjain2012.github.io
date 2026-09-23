@@ -125,8 +125,13 @@
 
   $("#profilePhoto").src = C.meta.profileImage;
   $("#uniName").textContent = C.meta.university;
+  $("#uniLogo").src = C.meta.universityLogo;
   const gpa = (C.education && C.education[0] && C.education[0].score) || "";
-  $("#uniMeta").textContent = [C.meta.location, gpa].filter(Boolean).join(" · ");
+  const locationLine = [C.meta.location, gpa].filter(Boolean).join(" · ");
+  $("#uniMeta").innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+    <span>${esc(locationLine)}</span>
+  `;
 
   const CONTACT_ICONS = {
     Email: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>`,
@@ -143,7 +148,7 @@
     const placeholder = isBlankPlaceholder(href);
     const a = el("a", `contact-icon${placeholder ? " needs-input" : ""}`, CONTACT_ICONS[label]);
     a.href = placeholder ? "#" : href;
-    a.title = label;
+    a.dataset.label = label;
     a.setAttribute("aria-label", label);
     if (!placeholder) { a.target = "_blank"; a.rel = "noopener"; }
     quickContact.appendChild(a);

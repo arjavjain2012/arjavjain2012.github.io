@@ -35,7 +35,8 @@ window.SITE_CONTENT = {
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
     profileImage: "assets/img/profile.jpg",
-    university: "University of Illinois Urbana-Champaign"
+    university: "University of Illinois Urbana-Champaign",
+    universityLogo: "assets/img/logos/uiuc.svg"
   },
 
   hero: {
