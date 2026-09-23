@@ -51,10 +51,12 @@ window.SITE_CONTENT = {
     ],
     // Box 1 of the stat strip is generated automatically from the Thesis &
     // Publications data (see `theses` below) — it isn't listed here.
+    // Boxes 2-4 are blank placeholders — fill in value/unit/label and
+    // delete `isPlaceholder: true` on each one you complete.
     stats: [
-      { value: "1755", unit: "N·m/°", label: "chassis torsional stiffness delivered" },
-      { value: "5", label: "internal invention disclosures filed at JLR" },
-      { value: "36%", label: "EV range gain shipped at JLR" }
+      { value: "", label: "— add a stat —", isPlaceholder: true },
+      { value: "", label: "— add a stat —", isPlaceholder: true },
+      { value: "", label: "— add a stat —", isPlaceholder: true }
     ]
   },
 

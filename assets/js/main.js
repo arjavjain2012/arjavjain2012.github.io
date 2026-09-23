@@ -84,7 +84,10 @@
 
   C.hero.stats.forEach((s) => {
     const stat = el("div", "stat");
-    stat.innerHTML = `<div class="stat-value">${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ""}</div><div class="stat-label">${esc(s.label)}</div>`;
+    const isPh = s.isPlaceholder || isBlankPlaceholder(s.value);
+    stat.innerHTML = isPh
+      ? `<div class="stat-value needs-input">add value</div><div class="stat-label needs-input">${esc(s.label)}</div>`
+      : `<div class="stat-value">${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ""}</div><div class="stat-label">${esc(s.label)}</div>`;
     statStrip.appendChild(stat);
   });
 
