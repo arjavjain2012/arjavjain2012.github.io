@@ -7,11 +7,11 @@
    ========================================================================== */
 
 :root {
-  --bg: #0a2038;
-  --bg-raised: #0f2c48;
-  --bg-card: #0d2842;
+  --bg: #18191b;
+  --bg-raised: #0c233a;
+  --bg-card: #0c233a;
   --line: #1f4463;
-  --line-soft: #163554;
+  --line-soft: #122a43;
   --text: #eef3f7;
   --text-dim: #a9c2d6;
   --text-faint: #6d90ab;
