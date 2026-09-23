@@ -607,10 +607,5 @@ window.SITE_CONTENT = {
   skills: [
     { category: "Standards & Methods", items: ["ISO 26262 (HARA, ASIL D)", "DFMEA", "GD&T (ASME Y14.5)", "IEC 60664-1", "ISO 16750-3", "ISO 6469-3", "BS 8888", "Tolerance stack-up"] },
     { category: "Certifications & Languages", items: ["TÜV SÜD Level 2 & 3 — HV Live Working (EV/HEV)", "English", "Hindi", "German (B1 → B2)"] }
-  ],
-
-  contact: {
-    heading: "Let's talk",
-    body: "Open to mechanical and systems engineering roles across motorsport (F1/WEC, primarily EU/UK), EV, and energy systems."
-  }
+  ]
 };

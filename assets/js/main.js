@@ -146,9 +146,8 @@
   ];
   contactRows.forEach(([label, href]) => {
     const placeholder = isBlankPlaceholder(href);
-    const a = el("a", `contact-icon${placeholder ? " needs-input" : ""}`, CONTACT_ICONS[label]);
+    const a = el("a", `contact-icon${placeholder ? " needs-input" : ""}`, `${CONTACT_ICONS[label]}<span class="contact-label">${label}</span>`);
     a.href = placeholder ? "#" : href;
-    a.dataset.label = label;
     a.setAttribute("aria-label", label);
     if (!placeholder) { a.target = "_blank"; a.rel = "noopener"; }
     quickContact.appendChild(a);
@@ -390,8 +389,14 @@
     const box = el("div", "detail");
     box.innerHTML = `
       <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
-      <div class="detail-kicker">${esc(e.period)} · ${esc(e.location)} · ${esc(e.org)}</div>
-      <div class="title-row">${e.logo ? `<img class="title-logo" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}<h2 class="detail-title">${esc(e.role)}</h2></div>
+      <div class="exp-title-block">
+        ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
+        <div class="exp-title-text">
+          <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
+          <h2 class="detail-title">${esc(e.role)}</h2>
+          <div class="exp-org-line">${esc(e.org)}</div>
+        </div>
+      </div>
       <p class="detail-summary">${esc(e.summary || "")}</p>
       ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
       ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
@@ -421,9 +426,14 @@
     expList.appendChild(makeTile(`
       <div class="tile-image"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}" loading="lazy"></div>
       <div class="tile-body">
-        <div class="project-meta"><span>${esc(e.period)}</span><span class="project-status">${esc(e.location)}</span></div>
-        <div class="title-row">${e.logo ? `<img class="title-logo" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}<h3>${esc(e.role)}</h3></div>
-        <div class="project-org">${esc(e.org)}</div>
+        <div class="exp-title-block">
+          ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
+          <div class="exp-title-text">
+            <div class="exp-duration">${esc(e.period)}</div>
+            <h3>${esc(e.role)}</h3>
+            <div class="exp-org-line">${esc(e.org)}</div>
+          </div>
+        </div>
         <p class="tile-summary">${esc(summary)}</p>
         <div class="hl-row">${linkedProject ? highlightChips(linkedProject) : ""}</div>
         <div class="tile-cta">View role →</div>
@@ -514,16 +524,7 @@
     skillsGrid.appendChild(block);
   });
 
-  /* ---------------- Contact ---------------- */
-  $("#contactHeading").textContent = C.contact.heading;
-  $("#contactBody").textContent = C.contact.body;
-  const contactActions = $("#contactActions");
-  contactActions.innerHTML = `
-    <a class="btn btn-primary" href="mailto:${esc(C.meta.email)}">Email me →</a>
-    <a class="btn btn-ghost" href="${esc(C.meta.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
-  `;
-
   /* ---------------- Footer ---------------- */
-  $("#footerText").textContent = `${C.meta.name} — built with plain HTML/CSS/JS, no build step. © ${new Date().getFullYear()}`;
+  $("#footerText").textContent = `© ${new Date().getFullYear()} ${C.meta.name}`;
 })();
 
