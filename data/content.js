@@ -55,8 +55,8 @@ window.SITE_CONTENT = {
     // Boxes 2-4 are blank placeholders — fill in value/unit/label and
     // delete `isPlaceholder: true` on each one you complete.
     stats: [
-      { value: "", label: "— add a stat —", isPlaceholder: true },
-      { value: "", label: "— add a stat —", isPlaceholder: true },
+      { value: "2+", label: "Years of work experience" },
+      { value: "4+", label: "Years in FSAE" },
       { value: "", label: "— add a stat —", isPlaceholder: true }
     ]
   },
