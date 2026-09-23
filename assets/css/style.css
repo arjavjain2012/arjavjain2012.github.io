@@ -101,16 +101,11 @@ header.nav {
   justify-content: space-between;
 }
 .nav-mark {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.02em;
   display: flex;
   align-items: center;
-  gap: 8px;
   text-decoration: none;
 }
-.nav-mark .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+.nav-logo-mark { height: 26px; width: auto; display: block; }
 .nav-right { display: flex; align-items: center; gap: 22px; }
 .nav-links {
   display: flex;

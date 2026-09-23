@@ -26,7 +26,6 @@
 
   /* ---------------- Meta / Nav ---------------- */
   document.title = `${C.meta.name} — ${C.meta.role}`;
-  $("#nav-name").textContent = C.meta.name.toUpperCase();
 
   $("#navToggle").addEventListener("click", () => {
     $("#navLinks").classList.toggle("open");
