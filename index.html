@@ -47,7 +47,10 @@
         <a href="#projects" class="btn btn-primary">View projects →</a>
         <a href="#contact" class="btn btn-ghost">Get in touch</a>
       </div>
-      <div class="stat-strip" id="statStrip"></div>
+      <div class="stat-strip-wrap">
+        <div class="stat-strip" id="statStrip"></div>
+        <div class="stat-popover" id="statPopover" hidden></div>
+      </div>
     </div>
   </section>
 
@@ -58,7 +61,13 @@
       <div class="about-grid">
         <div class="about-text" id="aboutText"></div>
         <div class="auth-card">
-          <img id="profilePhoto" class="profile-photo" alt="Profile photo">
+          <div class="identity-row">
+            <img id="profilePhoto" class="profile-photo" alt="Profile photo">
+            <div class="uni-badge">
+              <img id="uniLogo" class="uni-logo" alt="University logo">
+              <span id="uniName" class="uni-name"></span>
+            </div>
+          </div>
           <h4>Status</h4>
           <p id="authText"></p>
           <p id="locationText"></p>

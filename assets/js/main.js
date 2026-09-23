@@ -38,9 +38,50 @@
   /* ---------------- Hero ---------------- */
   $("#heroName").textContent = C.meta.name;
   $("#heroRole").textContent = C.meta.role;
-  $("#heroSub").textContent = C.hero.hook || "";
+  $("#heroSub").innerHTML = (C.hero.hookLines && C.hero.hookLines.length
+    ? C.hero.hookLines.map(esc).join("<br>")
+    : esc(C.hero.hook || ""));
 
+  // Box 1 is generated from the Thesis & Publications data, not authored by
+  // hand — it's always accurate and doubles as a click-to-expand summary.
+  const allPubs = (C.theses || []).flatMap((t) =>
+    (t.publications || []).map((p) => ({ ...p, thesisTitle: t.title, thesisLevel: t.level }))
+  );
   const statStrip = $("#statStrip");
+  const pubStat = el("button", "stat stat-clickable");
+  pubStat.type = "button";
+  pubStat.innerHTML = `<div class="stat-value">${allPubs.length}</div><div class="stat-label">publications — click for details</div>`;
+  statStrip.appendChild(pubStat);
+
+  const statPopover = $("#statPopover");
+  function renderPubPopover() {
+    const rows = allPubs.map((p) => {
+      if (p.isPlaceholder || isBlankPlaceholder(p.url)) {
+        return `<li class="pub-item pub-placeholder"><div class="pub-meta">${esc(p.thesisLevel)}</div><span class="needs-input">— add publication details —</span></li>`;
+      }
+      return `<li class="pub-item">
+        <div class="pub-meta">${esc(p.thesisLevel)}</div>
+        <div class="pub-title"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a></div>
+        <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
+      </li>`;
+    }).join("");
+    statPopover.innerHTML = `
+      <div class="stat-popover-head">Publications<button type="button" class="stat-popover-close" id="statPopoverClose" aria-label="Close">✕</button></div>
+      <ul class="pub-list">${rows || `<li class="pub-item pub-placeholder"><span class="needs-input">— add publication details —</span></li>`}</ul>
+    `;
+    $("#statPopoverClose").addEventListener("click", (e) => { e.stopPropagation(); closePopover(); });
+  }
+  function openPopover() { renderPubPopover(); statPopover.hidden = false; pubStat.classList.add("active"); }
+  function closePopover() { statPopover.hidden = true; pubStat.classList.remove("active"); }
+  pubStat.addEventListener("click", (e) => {
+    e.stopPropagation();
+    statPopover.hidden ? openPopover() : closePopover();
+  });
+  document.addEventListener("click", (e) => {
+    if (!statPopover.hidden && !statPopover.contains(e.target) && e.target !== pubStat) closePopover();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePopover(); });
+
   C.hero.stats.forEach((s) => {
     const stat = el("div", "stat");
     stat.innerHTML = `<div class="stat-value">${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ""}</div><div class="stat-label">${esc(s.label)}</div>`;
@@ -52,6 +93,8 @@
   C.about.paragraphs.forEach((p) => aboutText.appendChild(el("p", null, esc(p))));
 
   $("#profilePhoto").src = C.meta.profileImage;
+  $("#uniLogo").src = C.meta.universityLogo;
+  $("#uniName").textContent = C.meta.university;
 
   const authTextEl = $("#authText");
   authTextEl.innerHTML = isBlankPlaceholder(C.meta.workAuthorization)
@@ -312,11 +355,16 @@
       const s = spans[i];
       const endIdx = s.isPresent ? nowIndex : s.end.index;
       const leftPct = ((s.start.index - (globalStart - pad)) / totalSpan) * 100;
-      const widthPct = Math.max(((endIdx - s.start.index) / totalSpan) * 100, 3);
+      const rightPct = ((endIdx - (globalStart - pad)) / totalSpan) * 100;
+      const widthPct = Math.max(rightPct - leftPct, 0.6);
+      const midPct = leftPct + widthPct / 2;
       const short = e.org.split(",")[0].split(" ")[0];
-      return `<div class="exp-tl-seg" style="left:${leftPct}%;width:${widthPct}%" title="${esc(e.org)}: ${esc(e.period)}">
-        <span class="exp-tl-seg-label">${esc(short)}</span>
-      </div>`;
+      return `
+        <div class="exp-tl-range" style="left:${leftPct}%;width:${widthPct}%" title="${esc(e.org)}: ${esc(e.period)}"></div>
+        <div class="exp-tl-marker" style="left:${leftPct}%" title="${esc(e.org)} starts ${esc(e.period.split(/[–-]/)[0].trim())}"></div>
+        <div class="exp-tl-marker" style="left:${rightPct}%" title="${esc(e.org)} ends ${esc(e.period.split(/[–-]/)[1] ? e.period.split(/[–-]/)[1].trim() : "")}"></div>
+        <div class="exp-tl-label" style="left:${midPct}%">${esc(short)}</div>
+      `;
     }).join("");
 
     const yearHtml = years.map((y) => {
@@ -326,7 +374,10 @@
     }).join("");
 
     track.innerHTML = `
-      <div class="exp-tl-track">${segHtml}</div>
+      <div class="exp-tl-track">
+        <div class="exp-tl-dash"></div>
+        ${segHtml}
+      </div>
       <div class="exp-tl-axis">${yearHtml}</div>
     `;
   }

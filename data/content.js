@@ -37,13 +37,25 @@ window.SITE_CONTENT = {
     phone: "+1 217-800-2530",
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
-    profileImage: "assets/img/placeholder-profile.svg"
+    profileImage: "assets/img/placeholder-profile.svg",
+    university: "University of Illinois Urbana-Champaign",
+    universityLogo: "assets/img/logos/uiuc.svg"
   },
 
   hero: {
+    // Kept as one string for anywhere else that wants the plain sentence
+    // (e.g. a future meta-description). The site renders `hookLines` below
+    // instead so the 3 sentences sit on 3 close-to-equal-width lines rather
+    // than wrapping wherever the browser feels like.
     hook: "I design multi-physics hardware that keeps every constraint in balance. Five Formula Student seasons, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
+    hookLines: [
+      "I design multi-physics hardware that keeps every constraint in balance. Five",
+      "Formula Student seasons, two years at JLR and a summer at Tesla taught me",
+      "performance lives in that balance. Every design since has been faster than the last."
+    ],
+    // Box 1 of the stat strip is generated automatically from the Thesis &
+    // Publications data (see `theses` below) — it isn't listed here.
     stats: [
-      { value: "3", label: "Formula Student seasons, 2 countries" },
       { value: "1755", unit: "N·m/°", label: "chassis torsional stiffness delivered" },
       { value: "5", label: "internal invention disclosures filed at JLR" },
       { value: "36%", label: "EV range gain shipped at JLR" }
