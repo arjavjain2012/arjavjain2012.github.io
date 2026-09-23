@@ -68,14 +68,15 @@ paste it as a new entry (remember the comma between entries), then edit
 every field. Fields:
 
 - `id` — short unique lowercase slug, used internally only.
-- `context` — must be exactly one of `"Formula Student"`, `"Industry"`,
-  or `"Research"` (these power the filter chips).
-- `tags` — a list of one or more of the five strings in
-  `filters.disciplines` at the top of the file (also powers filtering).
-  Don't invent a new tag string without also adding it to
-  `filters.disciplines`, or it won't show up as a filter chip.
+- `context` — `"Formula Student"` puts the project in the FSAE section
+  instead of Projects; any other value (`"Industry"`, `"Research"`, etc.)
+  keeps it in Projects. That's the only thing this field controls.
+- `tags` — a short list of discipline strings (e.g. "Thermal & Energy
+  Systems"); shown as chips in the project detail view, free-form.
 - `bullets` — as many as you want; they show in the expandable "technical
-  breakdown" on the card.
+  breakdown" on the card. Skip this field if the project has an entry in
+  `subprojects` (see below) — its bullets show there instead and a
+  top-level `bullets` array would just be unused.
 - `metrics` — 2-4 stat tiles. Use real numbers where you have them,
   placeholders otherwise.
 - `links` — optional; delete the array entirely (`links: []`) if there's

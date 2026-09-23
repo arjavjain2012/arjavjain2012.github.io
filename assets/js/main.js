@@ -38,9 +38,37 @@
   /* ---------------- Hero ---------------- */
   $("#heroName").textContent = C.meta.name;
   $("#heroRole").textContent = C.meta.role;
-  $("#heroSub").innerHTML = (C.hero.hookLines && C.hero.hookLines.length
-    ? C.hero.hookLines.map(esc).join("<br>")
-    : esc(C.hero.hook || ""));
+  const heroSub = $("#heroSub");
+  if (C.hero.hookLines && C.hero.hookLines.length) {
+    const lineEls = C.hero.hookLines.map((line) => {
+      const span = el("span", "hook-line", esc(line));
+      heroSub.appendChild(span);
+      return span;
+    });
+    // Equalize visual line width with tiny per-letter spacing instead of
+    // text-align:justify, which stretches word gaps unevenly and looks bad
+    // on short lines. A fraction-of-a-pixel letter-spacing tweak per line
+    // reads as normal text while still lining up all 3 right edges.
+    // Measured via canvas (not DOM rects) since a block-level nowrap span's
+    // own box width doesn't shrink to its overflowing text content.
+    const measureCanvas = document.createElement("canvas").getContext("2d");
+    const equalize = () => {
+      const font = getComputedStyle(lineEls[0]).font;
+      measureCanvas.font = font;
+      const widths = C.hero.hookLines.map((line) => measureCanvas.measureText(line).width);
+      const target = Math.max(...widths);
+      lineEls.forEach((s, i) => {
+        const len = C.hero.hookLines[i].length;
+        const spacing = len > 1 ? (target - widths[i]) / (len - 1) : 0;
+        s.style.letterSpacing = spacing.toFixed(3) + "px";
+      });
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalize);
+    else equalize();
+    window.addEventListener("resize", equalize);
+  } else {
+    heroSub.textContent = C.hero.hook || "";
+  }
 
   // Box 1 is generated from the Thesis & Publications data, not authored by
   // hand — it's always accurate and doubles as a click-to-expand summary.
@@ -121,50 +149,9 @@
     quickContact.appendChild(a);
   });
 
-  /* ---------------- Projects + Filters ---------------- */
+  /* ---------------- Projects ---------------- */
   const projectGrid = $("#projectGrid");
-  const filterBar = $("#filterBar");
-  const emptyState = $("#emptyState");
-  const activeFilters = new Set();
-
-  function makeChip(label, group) {
-    const btn = el("button", "chip");
-    btn.textContent = label;
-    btn.dataset.group = group;
-    btn.dataset.value = label;
-    btn.addEventListener("click", () => {
-      const key = group + ":" + label;
-      if (activeFilters.has(key)) activeFilters.delete(key);
-      else activeFilters.add(key);
-      btn.classList.toggle("active");
-      renderProjects();
-    });
-    return btn;
-  }
-
-  const gLabel1 = el("span", "filter-group-label", "Discipline");
-  filterBar.appendChild(gLabel1);
-  C.filters.disciplines.forEach((d) => filterBar.appendChild(makeChip(d, "discipline")));
-  filterBar.appendChild(el("span", "filter-sep"));
-  const gLabel2 = el("span", "filter-group-label", "Context");
-  filterBar.appendChild(gLabel2);
-  C.filters.contexts.forEach((c) => filterBar.appendChild(makeChip(c, "context")));
-
-  const clearBtn = el("button", "chip", "Clear filters");
-  clearBtn.addEventListener("click", () => {
-    activeFilters.clear();
-    filterBar.querySelectorAll(".chip.active").forEach((c) => c.classList.remove("active"));
-    renderProjects();
-  });
-  filterBar.appendChild(clearBtn);
-
-  function projectMatchesFilters(p) {
-    const disciplineFilters = [...activeFilters].filter((f) => f.startsWith("discipline:")).map((f) => f.split(":")[1]);
-    const contextFilters = [...activeFilters].filter((f) => f.startsWith("context:")).map((f) => f.split(":")[1]);
-    const disciplineOk = disciplineFilters.length === 0 || disciplineFilters.some((f) => p.tags.includes(f));
-    const contextOk = contextFilters.length === 0 || contextFilters.includes(p.context);
-    return disciplineOk && contextOk;
-  }
+  const fsaeGrid = $("#fsaeGrid");
 
   function metricHtml(m) {
     const isPh = m.isPlaceholder || isBlankPlaceholder(m.value);
@@ -276,21 +263,27 @@
       .map((m) => `<span class="hl"><b>${esc(m.value)}</b> ${esc(m.label)}</span>`).join("");
   }
 
+  function projectTile(p) {
+    return makeTile(`
+      <div class="tile-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+      <div class="tile-body">
+        <div class="project-meta"><span>${esc(p.period)}</span><span class="project-status">${esc(p.status)}</span></div>
+        <h3>${esc(p.title)}</h3>
+        <div class="project-org">${esc(p.org)}</div>
+        <p class="tile-summary">${esc(p.summary)}</p>
+        <div class="hl-row">${highlightChips(p)}</div>
+        <div class="tile-cta">View project →</div>
+      </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
+  }
+
   function renderProjects() {
+    // Formula Student projects (context: "Formula Student") render in the
+    // dedicated FSAE section instead of here, so each project appears once.
+    fsaeGrid.innerHTML = "";
     projectGrid.innerHTML = "";
-    const visible = C.projects.filter(projectMatchesFilters);
-    emptyState.style.display = visible.length ? "none" : "block";
-    visible.forEach((p) => {
-      projectGrid.appendChild(makeTile(`
-        <div class="tile-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
-        <div class="tile-body">
-          <div class="project-meta"><span>${esc(p.period)}</span><span class="project-status">${esc(p.status)}</span></div>
-          <h3>${esc(p.title)}</h3>
-          <div class="project-org">${esc(p.org)}</div>
-          <p class="tile-summary">${esc(p.summary)}</p>
-          <div class="hl-row">${highlightChips(p)}</div>
-          <div class="tile-cta">View project →</div>
-        </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile"));
+    C.projects.forEach((p) => {
+      const grid = p.context === "Formula Student" ? fsaeGrid : projectGrid;
+      grid.appendChild(projectTile(p));
     });
   }
   renderProjects();

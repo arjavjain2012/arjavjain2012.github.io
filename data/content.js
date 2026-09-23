@@ -69,17 +69,6 @@ window.SITE_CONTENT = {
     ]
   },
 
-  filters: {
-    disciplines: [
-      "Vehicle Dynamics & Simulation",
-      "Structures & Composites",
-      "Thermal & Energy Systems",
-      "Electronics & Controls",
-      "Combustion & Powertrain Research"
-    ],
-    contexts: ["Formula Student", "Industry", "Research"]
-  },
-
   // Shown side-by-side in the Thesis & Publications section, most recent first.
   // `publications` entries are placeholders until real citation details/links
   // are supplied — isPlaceholder rows render in the dashed "add" style.
@@ -474,6 +463,26 @@ window.SITE_CONTENT = {
         { label: "Predicted peak-temp cut", value: "15 K" }
       ],
       links: []
+    },
+    {
+      id: "rmse23",
+      title: "RMSE'23 — Formula Student Electric Vehicle",
+      org: "IIT Roorkee Motorsports, IITR",
+      context: "Formula Student",
+      period: "Apr 2022 – Jul 2023",
+      status: "Competed",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
+      summary: "Chassis, vehicle dynamics, powertrain cooling, and LV electronics for the team's third EV — 1st in Engineering Design and 2nd in Cost & Manufacturing at FSUK'23.",
+      metrics: [
+        { label: "Chassis torsional stiffness", value: "1755 N·m/° (+30%)" },
+        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" },
+        { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
+        { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
+      ],
+      links: [
+        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
+      ]
     },
     {
       id: "dorle",
