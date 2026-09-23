@@ -297,11 +297,11 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   flex: none;
   padding: 16px 18px;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   gap: 14px;
 }
-.id-info-text { min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.id-info-text { min-width: 0; }
 .id-info h4 {
   margin: 0 0 6px;
   font-family: var(--display);
@@ -326,10 +326,10 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   align-items: center;
   justify-content: center;
   background: #fff;
-  padding: 10px 12px;
-  max-width: 160px;
+  padding: 6px 8px;
+  height: 34px;
 }
-.uni-logo { width: 100%; height: 100%; object-fit: contain; display: block; }
+.uni-logo { height: 100%; width: auto; object-fit: contain; display: block; }
 .id-contacts { flex: none; display: flex; gap: 10px; }
 .contact-icon {
   flex: 1;
