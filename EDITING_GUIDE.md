@@ -150,11 +150,12 @@ Edit `meta.role`, `hero.hook`, and `about.paragraphs` near the top of the
 file. `hero.hook` is the one big sentence under your name in the hero —
 keep it to roughly 3 lines at desktop width, or it'll wrap awkwardly.
 
-### Update contact info, GitHub link
+### Update contact info
 
-All in the `meta: { ... }` block near the top: `email`, `phone`,
-`linkedin`, `github`. These render as the row of 4 icon links under the
-About card — each opens `mailto:`, `tel:`, or the URL directly.
+`email`, `phone`, and `linkedin` are in the `meta: { ... }` block near the
+top. They render as the row of 3 icon links below the About photo — each
+opens `mailto:`, `tel:`, or the URL directly. `meta.github` still exists
+in case you want to bring GitHub back later, but it isn't rendered.
 
 ### The Experience timeline bar and cards
 
@@ -169,10 +170,11 @@ the bar use the same tile-and-modal template as Projects — add a
 
 ### Add your profile photo
 
-Drop an image in `assets/img/` (a square crop works best, e.g. 400x400px),
-then set `meta.profileImage` in `content.js` to its path. It shows up next
-to your university logo in the About card, with `meta.location` as a small
-floating badge on the photo's corner.
+Drop an image in `assets/img/` and set `meta.profileImage` in `content.js`
+to its path. It fills the top block next to the About text — any aspect
+ratio works, it's cropped to fill the block (`object-fit: cover`). The
+block below it shows `meta.university`, `meta.location`, and the GPA from
+your first `education` entry; the block below that is the 3 contact icons.
 
 ### Reorder sections or change the nav
 
