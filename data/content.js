@@ -287,34 +287,6 @@ window.SITE_CONTENT = {
   // Sorted most-recent-first by start date.
   projects: [
     {
-      id: "tesla",
-      title: "Thermal & Reliability Validation, Energy Products",
-      org: "Tesla, Inc., Palo Alto — Intern, System Integration & Test Engineer",
-      context: "Industry",
-      period: "May 2026 – Aug 2026",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Root-caused a thermal runaway and validated derate strategy on a grid-scale energy product across its full qualification envelope.",
-      bullets: [
-        "Decoded thermal, power, and fault CAN telemetry via DBC, validating reported values against independent measurements.",
-        "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to the onboard PCB-NTC within 1°C.",
-        "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
-        "Ran a paired 41-channel thermal study qualifying an air-duct delete, isolating the sole tradeoff as extended cell-heater soak time at −20°C.",
-        "Constructed worst-case thermal stress cases from first principles across load, ambient, and duty-cycle corners to anchor validation.",
-        "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy.",
-        "Validated pre-release firmware on test units, regression-testing derate, thermal, and fault behavior against system requirements.",
-        "Built a VFD-absorbed motor-stall and resistive load bank covering compressor-start and peak-power loading for thermal stress testing."
-      ],
-      metrics: [
-        { label: "Rated output at 40°C", value: "96% preserved" },
-        { label: "Qualification sweep", value: "-20°C to 50°C" },
-        { label: "Thermal study scale", value: "41-channel" },
-        { label: "Requirements traced", value: "162, 4 grid configs" }
-      ],
-      links: []
-    },
-    {
       id: "cold-plate-ml",
       title: "Gradient-Boosted Surrogate Models for EV Battery Cold-Plate CFD",
       org: "Applied Heat Transfer Course Project, UofI",
@@ -377,49 +349,6 @@ window.SITE_CONTENT = {
       links: []
     },
     {
-      id: "jlr",
-      title: "Range-Extended EV & Solid-State Contactor, HV Systems",
-      org: "Jaguar Land Rover TBSI, Bengaluru — Graduate EV-Powertrain Engineer Trainee, HV Systems",
-      context: "Industry",
-      period: "Aug 2023 – Jul 2025",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems", "Electronics & Controls", "Structures & Composites"],
-      summary: "Two-year graduate program: initiated a carbon-negative range-extender concept and led production-intent thermal, mechanical, and electronics design of a solid-state contactor.",
-      bullets: [
-        "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
-        "1st runner-up of 86 teams and 442 graduates in JLR's year-long global Graduate Innovation Challenge with the CH4 REEV.",
-        "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
-        "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
-        "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware.",
-        "Developed a 50 kg cryogenic CH4 storage and delivery concept, modeling tank heat ingress to limit boil-off to 2% per day.",
-        "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and solid-state contactor, rejecting 24 W/cm².",
-        "Built an instrumented coolant-loop rig to test cold plates at full load, validating a 35 K junction margin at a 17 kPa drop.",
-        "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), with DFM from packaging to prototype.",
-        "Designed 650 A C101 busbars to IEC 60664-1 creepage and clearance, minimizing loop inductance; draughted BS 8888 drawings.",
-        "Designed the IP67 SSC enclosure, selecting O-rings, gaskets, and TIM for sealed, leak-free, low-thermal-resistance joints.",
-        "Ran worst-case tolerance stack-ups and applied ASME Y14.5 GD&T to position coreless current sensors within 0.30 mm.",
-        "Ran modal and random-vibration FEA on the SSC to ISO 16750-3 profiles, achieving a 2.9 minimum safety factor.",
-        "Developed a road-load-based charge-depletion strategy to schedule APU operation, cutting fuel use 33% per drive cycle.",
-        "Designed closed-loop pre-charge and I²t e-fuse control; tuned a 3W 4-switch buck-boost via Bode analysis to a 55° phase margin.",
-        "Developed PID position control for a powered-bonnet actuator via H-bridge PWM drive, accurate to within 0.8 mm.",
-        "Applied IEC 60664-1 creepage and clearance across the SSC's mechanical and PCB design for a 1500 V working voltage.",
-        "Designed a hybrid RCD and TVS snubber for the solid-state contactor after simulating 11 topologies, clamping turn-off to 1.1 kV."
-      ],
-      metrics: [
-        { label: "Range gain", value: "36%" },
-        { label: "Mass reduction", value: "12%" },
-        { label: "Invention disclosures filed", value: "5" },
-        { label: "DFMEA high-risk RPN cut", value: "26%" },
-        { label: "Cold plate heat rejection", value: "24 W/cm²" },
-        { label: "SSC vibration safety factor", value: "2.9" },
-        { label: "JLR Graduate Innovation Challenge", value: "1st runner-up / 86 teams" }
-      ],
-      links: [
-        { label: "Patent / publication status", url: "— add link if applicable —", isPlaceholder: true }
-      ]
-    },
-    {
       id: "magnesium-wheels",
       title: "Rapid Tooling of Cast Magnesium Wheels for an FSAE Vehicle",
       org: "Reverse Engineering and Rapid Tooling Course Project, IIT Roorkee",
@@ -437,30 +366,6 @@ window.SITE_CONTENT = {
       metrics: [
         { label: "Tooling lead time saved", value: "54%" },
         { label: "Dimensional conformance", value: "within 0.5 mm" }
-      ],
-      links: []
-    },
-    {
-      id: "log9",
-      title: "RapidX — Fast-Charging Battery Architecture",
-      org: "Log9 Materials Scientific, Bengaluru — Industrial Design Intern",
-      context: "Industry",
-      period: "May 2022 – Jul 2022",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Thermal & Energy Systems", "Structures & Composites"],
-      summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
-      bullets: [
-        "Designed pack hardware for RapidX, a fast-charging lithium-titanate (LTO) battery for 2W, 3W, and 4W commercial vehicles.",
-        "Designed C101 busbars, an IP67 enclosure, and cell packaging for a 368V, 40Ah LTO pack retrofitted to the Tata Ace LCV.",
-        "Designed sheet-metal brackets, rubber dampers, and waterproof foam seals; released BS 8888 drawings for prototyping.",
-        "Sized a paraffin PCM buffer to absorb 9 kJ of fast-charge heat per module, predicting a 15 K cut in peak cell temperature."
-      ],
-      metrics: [
-        { label: "Pack spec", value: "368V / 40Ah" },
-        { label: "Enclosure rating", value: "IP67" },
-        { label: "PCM heat buffered", value: "9 kJ" },
-        { label: "Predicted peak-temp cut", value: "15 K" }
       ],
       links: []
     },
@@ -563,27 +468,6 @@ window.SITE_CONTENT = {
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
-    {
-      id: "shape-memory-polymer",
-      title: "Shape Memory Polymer for Enhanced Stiffness",
-      org: "NTU India Connect — Nanyang Technological University, Singapore (Guide: Prof. Huang Weimin)",
-      context: "Research",
-      period: "Jan 2021 – Mar 2021",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Structures & Composites"],
-      summary: "International research placement developing composite designs for cyclic shape-memory actuation.",
-      bullets: [
-        "Created PET substrate–silicone matrix composite designs for cyclic shape-memory actuation using heating and cooling.",
-        "Ran thermal-structural coupled simulations to analyze how the composite actuates in response to temperature changes.",
-        "Selected for the competitive NTU India Connect research internship program, Spring '21."
-      ],
-      metrics: [
-        { label: "Program", value: "NTU India Connect, Singapore" },
-        { label: "Composite system", value: "PET / silicone matrix" }
-      ],
-      links: []
-    }
   ],
 
   // Formal paid roles only — sorted most-recent-first by start date.
@@ -603,8 +487,7 @@ window.SITE_CONTENT = {
         "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
         "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
         "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy."
-      ],
-      projectRef: "tesla"
+      ]
     },
     {
       org: "Jaguar Land Rover TBSI Pvt. Ltd.",
@@ -619,8 +502,7 @@ window.SITE_CONTENT = {
         "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
         "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
         "Led production-intent mechanical and thermal design of a solid-state contactor rejecting 24 W/cm², at a 2.9 vibration safety factor."
-      ],
-      projectRef: "jlr"
+      ]
     },
     {
       org: "Log9 Materials Scientific Pvt. Ltd.",
@@ -634,8 +516,7 @@ window.SITE_CONTENT = {
       summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
       bullets: [
         "Designed pack hardware — busbars, IP67 enclosure, and cell packaging — for a 368V/40Ah fast-charge LTO battery architecture."
-      ],
-      projectRef: "log9"
+      ]
     }
   ],
 
