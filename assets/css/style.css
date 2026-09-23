@@ -38,6 +38,23 @@
   --text-dim: #445164;
   --text-faint: #6b7789;
 }
+/* These surfaces stay navy regardless of theme (see note above), so
+   re-scope the text tokens back to their light-on-dark values for
+   everything nested inside them — otherwise they'd inherit the light
+   theme's dark text color onto their own dark background. */
+:root[data-theme="light"] header.nav,
+:root[data-theme="light"] .nav-links,
+:root[data-theme="light"] .stat-strip,
+:root[data-theme="light"] .stat-popover,
+:root[data-theme="light"] .id-block,
+:root[data-theme="light"] .thesis-card,
+:root[data-theme="light"] .edu-card,
+:root[data-theme="light"] .tile,
+:root[data-theme="light"] .gallery-item {
+  --text: #eef3f7;
+  --text-dim: #a9c2d6;
+  --text-faint: #6d90ab;
+}
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -538,7 +555,7 @@ footer {
   position: absolute;
   bottom: 14px;
   right: 14px;
-  background: var(--bg);
+  background: #18191b;
   border: 1px solid var(--line);
   padding: 4px 8px;
   font-family: var(--mono);
