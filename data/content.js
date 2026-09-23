@@ -42,6 +42,7 @@ window.SITE_CONTENT = {
   },
 
   hero: {
+    hook: "I design multi-physics hardware that keeps every constraint in balance. Five Formula Student seasons, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
     stats: [
       { value: "3", label: "Formula Student seasons, 2 countries" },
       { value: "1755", unit: "N·m/°", label: "chassis torsional stiffness delivered" },

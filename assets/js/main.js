@@ -42,7 +42,7 @@
   $("#heroName").textContent = C.meta.name;
   $("#heroRole").textContent = C.meta.role;
   $("#heroTagline").innerHTML = `<span class="accent">${esc(C.meta.tagline)}</span>`;
-  $("#heroSub").textContent = C.about.paragraphs[0] || "";
+  $("#heroSub").textContent = C.hero.hook || "";
 
   const statStrip = $("#statStrip");
   C.hero.stats.forEach((s) => {
