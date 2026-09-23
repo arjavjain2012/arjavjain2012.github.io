@@ -41,7 +41,6 @@
   /* ---------------- Hero ---------------- */
   $("#heroName").textContent = C.meta.name;
   $("#heroRole").textContent = C.meta.role;
-  $("#heroTagline").innerHTML = `<span class="accent">${esc(C.meta.tagline)}</span>`;
   $("#heroSub").textContent = C.hero.hook || "";
 
   const statStrip = $("#statStrip");

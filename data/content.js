@@ -26,8 +26,7 @@ window.SITE_CONTENT = {
 
   meta: {
     name: "Arjav Jain",
-    role: "Mechanical Engineer",
-    tagline: "Structures, thermal, controls, and dynamics — wherever a vehicle or system needs an engineer.",
+    role: "Master's in Mechanical Engineering",
     location: "Urbana-Champaign, IL, USA",
     // Motorsport hiring (F1/WEC) filters hard on work-authorization and
     // relocation flexibility — say this plainly so recruiters don't have to guess.
