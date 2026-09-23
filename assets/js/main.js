@@ -336,63 +336,6 @@
 
   const expByDate = [...C.experience].sort((a, b) => parsePeriod(a.period).start.index - parsePeriod(b.period).start.index);
 
-  function renderExpTimeline() {
-    const track = $("#expTimeline");
-    if (!expByDate.length) return;
-    const spans = expByDate.map((e) => parsePeriod(e.period));
-    const nowIndex = (() => { const d = new Date(); return d.getFullYear() * 12 + d.getMonth(); })();
-    const globalStart = Math.min(...spans.map((s) => s.start.index));
-    const globalEnd = Math.max(...spans.map((s) => (s.isPresent ? nowIndex : s.end.index)));
-    const pad = 2;
-    const totalSpan = (globalEnd - globalStart) + pad * 2;
-
-    const years = [];
-    const startYear = Math.floor((globalStart - pad) / 12);
-    const endYear = Math.ceil((globalEnd + pad) / 12);
-    for (let y = startYear; y <= endYear; y++) years.push(y);
-
-    const shortDate = (str) => {
-      const m = str.trim().match(/([A-Za-z]+)\s+(\d{4})/);
-      return m ? `${m[1].slice(0, 3)} '${m[2].slice(2)}` : str.trim();
-    };
-
-    const segHtml = expByDate.map((e, i) => {
-      const s = spans[i];
-      const endIdx = s.isPresent ? nowIndex : s.end.index;
-      const leftPct = ((s.start.index - (globalStart - pad)) / totalSpan) * 100;
-      const rightPct = ((endIdx - (globalStart - pad)) / totalSpan) * 100;
-      const widthPct = Math.max(rightPct - leftPct, 0.6);
-      const midPct = leftPct + widthPct / 2;
-      const short = e.org.split(",")[0].split(" ")[0];
-      const parts = e.period.split(/[–-]/);
-      const startLabel = shortDate(parts[0]);
-      const endLabel = s.isPresent ? "Present" : shortDate(parts[1] || parts[0]);
-      return `
-        <div class="exp-tl-range" style="left:${leftPct}%;width:${widthPct}%" title="${esc(e.org)}: ${esc(e.period)}"></div>
-        <div class="exp-tl-marker" style="left:${leftPct}%" title="${esc(e.org)} starts ${esc(parts[0].trim())}"></div>
-        <div class="exp-tl-marker" style="left:${rightPct}%" title="${esc(e.org)} ends ${esc(parts[1] ? parts[1].trim() : "")}"></div>
-        <div class="exp-tl-date" style="left:${leftPct}%">${esc(startLabel)}</div>
-        <div class="exp-tl-date" style="left:${rightPct}%">${esc(endLabel)}</div>
-        <div class="exp-tl-label" style="left:${midPct}%">${esc(short)}</div>
-      `;
-    }).join("");
-
-    const yearHtml = years.map((y) => {
-      const leftPct = ((y * 12 - (globalStart - pad)) / totalSpan) * 100;
-      if (leftPct < 0 || leftPct > 100) return "";
-      return `<div class="exp-tl-tick" style="left:${leftPct}%"><span>${y}</span></div>`;
-    }).join("");
-
-    track.innerHTML = `
-      <div class="exp-tl-track">
-        <div class="exp-tl-dash"></div>
-        ${segHtml}
-      </div>
-      <div class="exp-tl-axis">${yearHtml}</div>
-    `;
-  }
-  renderExpTimeline();
-
   function expDetail(e, linkedProject) {
     const box = el("div", "detail");
     box.innerHTML = `
@@ -448,7 +391,8 @@
         <p class="tile-summary">${esc(summary)}</p>
         <div class="hl-row">${linkedProject ? highlightChips(linkedProject) : ""}</div>
         <div class="tile-cta">View role →</div>
-      </div>`, () => pushView({ crumb: shortTitle(e.role), render: () => expDetail(e, linkedProject) }), "project-tile"));
+      </div>
+      <div class="exp-date-badge">${esc(e.period)}</div>`, () => pushView({ crumb: shortTitle(e.role), render: () => expDetail(e, linkedProject) }), "project-tile exp-tile"));
   });
 
   /* ---------------- Thesis & Publications ---------------- */

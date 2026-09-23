@@ -10,8 +10,8 @@
   --bg: #18191b;
   --bg-raised: #0c233a;
   --bg-card: #0c233a;
-  --line: #1f4463;
-  --line-soft: #122a43;
+  --line: #2f5c85;
+  --line-soft: #17212c;
   --text: #eef3f7;
   --text-dim: #a9c2d6;
   --text-faint: #6d90ab;
@@ -378,59 +378,6 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .tl-item ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 620px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
 
-/* ---------- Work Experience timeline bar ---------- */
-.exp-timeline { margin-bottom: 36px; }
-.exp-tl-track {
-  position: relative;
-  height: 64px;
-}
-.exp-tl-dash {
-  position: absolute;
-  top: 28px;
-  left: 0;
-  right: 0;
-  height: 0;
-  border-top: 2px dashed var(--line);
-}
-.exp-tl-range {
-  position: absolute;
-  top: 27px;
-  height: 2px;
-  background: var(--accent);
-}
-.exp-tl-marker {
-  position: absolute;
-  top: 28px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--accent);
-  transform: translate(-50%, -50%);
-}
-.exp-tl-label {
-  position: absolute;
-  top: 42px;
-  transform: translateX(-50%);
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-.exp-tl-date {
-  position: absolute;
-  top: 2px;
-  transform: translateX(-50%);
-  font-family: var(--mono);
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--accent);
-  white-space: nowrap;
-}
-.exp-tl-axis { position: relative; height: 22px; }
-.exp-tl-tick { position: absolute; top: 0; transform: translateX(-50%); }
-.exp-tl-tick span { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
 
 
 /* ---------- Thesis & Publications ---------- */
@@ -555,6 +502,20 @@ footer {
 .tile-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
 .tile:hover .tile-image img, .tile:focus-visible .tile-image img { transform: scale(1.08); }
 .tile-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.exp-tile { position: relative; }
+.exp-date-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  pointer-events: none;
+}
 .tile h3 { margin: 0; font-size: 16px; line-height: 1.3; }
 .exp-title-block { display: flex; align-items: stretch; gap: 14px; margin-bottom: 10px; }
 .exp-title-text { display: flex; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; }
