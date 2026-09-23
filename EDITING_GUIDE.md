@@ -135,17 +135,20 @@ Each entry in `theses: [ ... ]` renders as its own card, side by side.
 you have the real citation and link; it'll render as an obvious
 dashed-gold "add publication details" placeholder until then.
 
-### Update education (degree, thesis, coursework)
+### Update education (degree, thesis, teaching, coursework)
 
 Each entry in `education: [ ... ]` has an optional `thesis` string (shown
 in a highlighted callout — leave it out entirely for a degree with no
-thesis) and a `coursework` array of short course-name strings, which
-render as a chip row. Add or remove strings from `coursework` freely.
+thesis), an optional `teaching` string (a one-line TA credit, e.g. "Graduate
+Teaching Assistant — Heat Transfer (166 students)" — leave it out if none),
+and a `coursework` array of short course-name strings, which render as a
+chip row. Add or remove strings from any of these freely.
 
-### Change your headline / tagline / bio
+### Change your headline / bio
 
-Edit `meta.role`, `meta.tagline`, and `about.paragraphs` near the top of
-the file.
+Edit `meta.role`, `hero.hook`, and `about.paragraphs` near the top of the
+file. `hero.hook` is the one big sentence under your name in the hero —
+keep it to roughly 3 lines at desktop width, or it'll wrap awkwardly.
 
 ### Update contact info, GitHub link, work authorization
 
@@ -157,10 +160,13 @@ Graduate visa, no sponsorship required until [date]" or "will require
 sponsorship") saves everyone time and reads as confident, not as a
 weakness.
 
-### Swap the résumé PDF
+### The Experience timeline bar
 
-Drop the file in `resume/` and either name it `Arjav_Jain_Resume.pdf` or
-update `meta.resumeFile` in `content.js` to match your filename.
+The bar above the three Work Experience cards is computed automatically
+from each entry's `period` string — there's nothing to edit by hand. Just
+keep `period` in the "Mon YYYY – Mon YYYY" format (e.g. `"May 2026 – Aug
+2026"`) when you add or edit a role, and the bar's segment position/width
+and the card order (left = earliest) update themselves.
 
 ### Add your profile photo
 

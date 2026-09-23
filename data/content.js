@@ -1,4 +1,4 @@
-﻿/*
+/*
   ============================================================================
   SITE CONTENT — this is the ONLY file you should need to edit day-to-day.
   ============================================================================
@@ -18,7 +18,9 @@
     YOU should bring the real number/link once you have it. See
     EDITING_GUIDE.md in the project root for a full walkthrough.
   - Projects and experience are listed most-recent-first by start date —
-    keep new entries sorted that way when you add one.
+    keep new entries sorted that way when you add one. The Experience
+    timeline bar computes its own layout from each entry's `period`
+    string, so just keep periods in "Mon YYYY – Mon YYYY" format.
   ============================================================================
 */
 
@@ -35,8 +37,6 @@ window.SITE_CONTENT = {
     phone: "+1 217-800-2530",
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
-    // Drop your master resume PDF in the /resume folder and point to it here.
-    resumeFile: "resume/Arjav_Jain_Resume.pdf",
     profileImage: "assets/img/placeholder-profile.svg"
   },
 
@@ -45,7 +45,7 @@ window.SITE_CONTENT = {
     stats: [
       { value: "3", label: "Formula Student seasons, 2 countries" },
       { value: "1755", unit: "N·m/°", label: "chassis torsional stiffness delivered" },
-      { value: "98%", label: "battery SOC/SOH estimation accuracy" },
+      { value: "5", label: "internal invention disclosures filed at JLR" },
       { value: "36%", label: "EV range gain shipped at JLR" }
     ]
   },
@@ -53,8 +53,8 @@ window.SITE_CONTENT = {
   about: {
     paragraphs: [
       "I'm a mechanical engineer who builds and races cars — three Formula Student seasons across two countries, two years as a graduate powertrain engineer at Jaguar Land Rover, and a recent stint at Tesla. I work across the full systems stack: structures and FEA, thermal and energy systems, power electronics and controls, and the simulation that ties them together.",
-      "I've also run the engineering side of a race team: as Mechanical Head and Powertrain & Braking Head at IIT Roorkee Motorsports, I led 50+ engineers across 8 sub-divisions on a ₹35L (~$42K) annual build budget — season goals, technical direction, and delivery, not just my own subsystem.",
-      "That range isn't limited to cars. My current Master's thesis applies the same systems-level thinking to power and thermal co-design for ultra-high-density data centers, and at Tesla I was root-causing thermal failures and building custom test infrastructure for grid-scale energy storage. I'd rather be useful across a whole program than narrowly specialized in one corner of it.",
+      "I've also run the engineering side of a race team: as Mechanical Head and Powertrain & Braking Head at IIT Roorkee Motorsports, I led 50+ engineers across 8 sub-divisions on a £33K annual build budget — season goals, technical direction, and delivery, not just my own subsystem.",
+      "That range isn't limited to cars. My current Master's thesis applies the same systems-level thinking to power and thermal co-design for ultra-high-density data centers, and at Tesla I was root-causing thermal failures and validating derate strategies for grid-scale energy storage. I'd rather be useful across a whole program than narrowly specialized in one corner of it.",
       "Currently finishing an MS in Mechanical Engineering at UIUC (4.0/4.0). I'm looking for a mechanical or systems engineering role — motorsport (F1/WEC, primarily EU/UK) is the target, but I'm equally suited to EV, energy, or aerospace-adjacent engineering more broadly."
     ]
   },
@@ -79,18 +79,19 @@ window.SITE_CONTENT = {
       level: "Master's Thesis",
       title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling",
       org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
-      period: "Sep 2025 – Present",
+      period: "Jan 2026 – Present",
       status: "In progress",
-      summary: "Dynamic system-level modeling of direct-to-chip liquid cooling and power delivery for next-generation ultra-high-density data center racks.",
+      summary: "System-level thermal-hydraulic modeling of a 200 kW liquid-cooled AI rack, from full physics down to a real-time reduced-order model.",
       bullets: [
-        "Developed and validated direct-to-chip liquid cooling achieving 5 K/kW thermal resistance, supporting 4 kW/1U and scaling to MW-level racks.",
-        "Designed CTE-matched CuW microcoolers and 73 W/mK thermal interface materials, cutting warpage 3x and projecting under 10% performance degradation over 5 years.",
-        "Built 2 kW high-resolution thermal test vehicles and ran uncertainty-based calorimetric validation, improving system Total Usage Effectiveness (TUE) from 1.55 to 1.01."
+        "Built a transient chip-to-ambient thermal-hydraulic model of a 200 kW liquid-cooled AI rack, integrating CPU, GPU, PSU, SSD, and 14 CDUs.",
+        "Built a physics-based, closed-loop lumped-parameter reduced-order model (ROM) of the rack, running 20-100x faster within 0.08 K median chip RMSE.",
+        "Built a dual-loop coolant test rig and characterized 6 micro-cooler designs at 1 kW, reaching 0.0048 K/W — 5x below commercial parts.",
+        "Modeling the detailed physics of an MW-class rack for above-ambient cooling feasibility, and extending the ROM to GW-scale facility simulation."
       ],
       metrics: [
-        { label: "Thermal resistance", value: "5 K/kW" },
-        { label: "Rack density supported", value: "4 kW/1U → MW-scale" },
-        { label: "System TUE improvement", value: "1.55 → 1.01" }
+        { label: "Rack modeled", value: "200 kW, 14 CDUs" },
+        { label: "ROM speedup", value: "20-100x, 0.08 K RMSE" },
+        { label: "Best micro-cooler", value: "0.0048 K/W (5x better)" }
       ],
       publications: [
         { title: "", venue: "", status: "", url: "— add publication details —", isPlaceholder: true }
@@ -99,18 +100,20 @@ window.SITE_CONTENT = {
     {
       id: "bs-thesis",
       level: "Bachelor's Thesis",
-      title: "Understanding End Gas Auto-Ignition in n-Heptane Combustion at High Temperatures using 2D-DNS",
+      title: "Autoignition and Knock in n-Heptane Combustion at High Temperatures using 2D-DNS",
       org: "Mechanical & Industrial Engineering Dept., IIT Roorkee",
-      period: "Jul 2022 – May 2023",
+      period: "Jul 2022 – Jul 2024",
       status: "Complete",
-      summary: "Direct numerical simulation of engine knock, examining how pressure waves interact with auto-ignition in hydrocarbon fuels.",
+      summary: "Direct numerical simulation of engine knock, proposing a new framework that unifies knock-timing and autoignition-mode prediction.",
       bullets: [
-        "Ran 2D lab-scale DNS of knocking in a stoichiometric n-C7H16/O2/Ar mixture under engine-like conditions using PeleC, adaptive mesh refinement, and MACKS.",
-        "Ran 1D DNS in Cantera to resolve the interaction between flame propagation, auto-ignition mode, and pressure waves.",
-        "Developed numerical solvers from scratch to analyze high-fidelity fluid dynamics and pressure-wave interactions on knocking."
+        "Ran 2D DNS of SI engine end-gas knock in n-heptane at 3 engine-like conditions, resolving to 3.9 micron cells with adaptive mesh refinement.",
+        "Set up PeleC and AMReX compressible reacting solves with HLLC shock capturing and a reduced gasoline surrogate mechanism.",
+        "Proposed an ETD-xi framework — the first to unify knock-timing and autoignition-mode prediction in multi-dimensional DNS.",
+        "Wrote MATLAB post-processing to detect autoignition kernels and track pressure-wave reflections across the DNS dataset."
       ],
       metrics: [
-        { label: "Simulation type", value: "2D/1D DNS" },
+        { label: "Mesh resolution", value: "3.9 micron cells (AMR)" },
+        { label: "Engine-like conditions studied", value: "3" },
         { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
       ],
       publications: [
@@ -133,117 +136,105 @@ window.SITE_CONTENT = {
     rmse23: [
       {
         id: "chassis", title: "Chassis & Composite Structures", image: "assets/img/placeholder-project.svg",
-        highlights: ["1755 N·m/° torsional stiffness", "10% total mass reduction with CFRP"],
+        highlights: ["+30% torsional stiffness, to 1755 N·m/°", "1.3 FOS at 40g, Tsai-Wu checked in ANSYS ACP"],
         bullets: [
-          "Revised the tubular chassis to a 49F-51R weight distribution and 1755 N·m/° torsional stiffness, and ran FEA for crash-load cases.",
-          "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
-          "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue."
+          "Raised chassis torsional stiffness 30% to 1755 N·m/° with CFRP floor closeouts, correlated between FEA and twist-rig tests.",
+          "Applied generative design to additively manufactured wing mounts and topology optimization to CNC pedals, saving 1.2 kg.",
+          "Selected fabric, resin, and core, and set ply orientation and stacking for the bodywork, wings, floor closeouts, and steering wheel.",
+          "Sized CFRP sandwich laminates by classical lamination theory, holding a 1.3 FOS at 40g load with Tsai-Wu checks in ANSYS ACP.",
+          "Built CNC-MDF and wire-cut foam moulds, vacuum-bagged every layup, and ran three-point bend and perimeter shear testing."
         ],
-        metrics: [{ label: "Torsional stiffness", value: "1755 N·m/°" }, { label: "Weight distribution", value: "49F-51R" }, { label: "Mass reduction", value: "10%" }]
+        metrics: [{ label: "Torsional stiffness", value: "1755 N·m/° (+30%)" }, { label: "Mass saved (mounts/pedals)", value: "1.2 kg" }, { label: "Laminate FOS", value: "1.3 @ 40g" }]
       },
       {
         id: "dynamics", title: "Vehicle Dynamics & Lap-Time Simulation", image: "assets/img/placeholder-project.svg",
-        highlights: ["12% lap-time reduction", "CarMaker sensitivity studies"],
-        bullets: ["Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%."],
-        metrics: [{ label: "Lap-time improvement", value: "12%" }]
+        highlights: ["65 kW powertrain set via OptimumLap", "Pacejka MF 5.2 tyre models from TTC data"],
+        bullets: [
+          "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain.",
+          "Processed TTC tyre data into Pacejka MF 5.2 models, driving tyre selection on traction, braking mu, and operating temperature.",
+          "Modeled understeer gradient against lateral load transfer distribution in constant-radius tests, setting 47-53 LLTD for neutral steer.",
+          "Built a Simulink tyre-slip braking model to set brake bias at 3.1 and size the master cylinder and caliper combination."
+        ],
+        metrics: [{ label: "Powertrain set", value: "65 kW" }, { label: "LLTD target", value: "47-53" }, { label: "Brake bias", value: "3.1" }]
       },
       {
-        id: "aero-thermal", title: "Aerodynamics & Cooling", image: "assets/img/placeholder-project.svg",
-        highlights: ["Automated CFD aero-map pipeline", "NTU-effectiveness cooling model, 80 kW"],
+        id: "aero-thermal", title: "Powertrain Cooling", image: "assets/img/placeholder-project.svg",
+        highlights: ["2 kW heat duty modeled over endurance cycle", "Bench-validated to 136 kPa, 7.5 LPM"],
         bullets: [
-          "Automated CFD runs and post-processing to generate aero maps, balancing aero load against vehicle dynamics.",
-          "Built a thermal model for the radiator and water-cooled loop sizing an 80 kW motor and inverter using the NTU-effectiveness method."
+          "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty, driving a transient Simulink model of the coolant loop.",
+          "Sized the radiator, pump, and fan by NTU-effectiveness analysis, holding coolant inlet under the 50°C motor and 65°C inverter limits.",
+          "Validated loop pressure drop and radiator performance on an instrumented bench against a 136 kPa, 7.5 LPM operating point."
         ],
-        metrics: [{ label: "Motor + inverter cooled", value: "80 kW" }]
+        metrics: [{ label: "Heat duty", value: "2 kW" }, { label: "Bench operating point", value: "136 kPa, 7.5 LPM" }]
       },
       {
         id: "electronics", title: "LV Electronics & Harness", image: "assets/img/placeholder-project.svg",
-        highlights: ["Power, plausibility & DAQ PCBs", "12% packaging efficiency gain"],
+        highlights: ["LV power card: 360 W at 92% efficiency", "Bench-verified before scrutineering"],
         bullets: [
-          "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
-          "Designed the vehicle's cable harness and cooling-pipe routing in CAD with validated bend radii, improving packaging efficiency by 12%."
+          "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards.",
+          "Laid out, assembled, and bench-tested the boards, verifying implausibility and shutdown behavior against FS rules before scrutineering.",
+          "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access."
         ],
-        metrics: [{ label: "Packaging efficiency", value: "+12%" }]
+        metrics: [{ label: "LV power card", value: "360 W @ 92%" }]
       },
       {
-        id: "strategy", title: "Strategy, Cost & Results", image: "assets/img/placeholder-project.svg",
-        highlights: ["1st among Asian teams: Design + Cost events", "MathWorks Modeling Award, 1st"],
+        id: "strategy", title: "Season Strategy & Results", image: "assets/img/placeholder-project.svg",
+        highlights: ["1st among Asian teams, Engineering Design", "2nd among Asian teams, Cost & Manufacturing"],
         bullets: [
-          "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
-          "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
+          "Set season targets for reliability, competitiveness, and manufacturability, restructuring the design process across every vertical.",
+          "Built a design and cost BOM tool for the full vehicle, taking 2nd among Asian teams in the FSUK'23 Cost & Manufacturing event.",
           "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
           "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
         ],
-        metrics: [{ label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" }, { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }]
+        metrics: [{ label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }, { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" }, { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }]
       }
     ],
     rmse21: [
       {
-        id: "powertrain", title: "Powertrain, Tires & Lap-Time Model", image: "assets/img/placeholder-project.svg",
-        highlights: ["12% torque gain from gear-ratio revision", "Pacejka tires calibrated to FSAE TTC data"],
+        id: "powertrain", title: "Powertrain, Tyres & Lap-Time Model", image: "assets/img/placeholder-project.svg",
+        highlights: ["12% wheel-torque gain", "Longitudinal tyre-slip ABS/TC model"],
         bullets: [
-          "Selected the 80 kW powertrain (motor/diff/tires) and revised gear ratios using tire-slip models, gaining 12% torque.",
-          "Built a quasi-steady-state point-mass lap-time simulation, validated to within 10% accuracy, to drive sensitivity studies.",
-          "Modeled tires with the Pacejka Magic Formula, calibrated against FSAE Tire Test Consortium data."
+          "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
+          "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
+          "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3."
         ],
-        metrics: [{ label: "Torque gain", value: "12%" }, { label: "Lap-sim accuracy", value: "within 10%" }]
+        metrics: [{ label: "Wheel torque gain", value: "12%" }, { label: "Lap-time gain (ABS/TC)", value: "7%" }, { label: "Pack", value: "538V / 18Ah" }]
       },
       {
-        id: "aero", title: "Front & Rear Wing Aerodynamics", image: "assets/img/placeholder-project.svg",
-        highlights: ["CFD-designed wings, tuft-test validated", "7% lap-time reduction"],
-        bullets: ["Led design of front and rear wings using CFD, validated with tuft testing, for a 7% lap-time reduction."],
-        metrics: [{ label: "Lap-time reduction", value: "7%" }]
-      },
-      {
-        id: "battery", title: "Battery Pack & Thermal Management", image: "assets/img/placeholder-project.svg",
-        highlights: ["538V/18Ah pack enclosure & sizing", "1.2 kW air-cooled BTMS, cells < 45°C"],
+        id: "aero", title: "Brake & Accumulator Thermal", image: "assets/img/placeholder-project.svg",
+        highlights: ["AISI 4130 discs sized for 300-450°C", "1.2 kW forced-air accumulator cooling"],
         bullets: [
-          "Simulated an active air-cooled battery thermal management system to dissipate 1.2 kW and hold cell temperatures below 45°C at peak 10C discharge rate.",
-          "Designed the enclosure, mounting brackets, cell holders, and busbars for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
-          "Selected NMC cells, high-current relays, fuses, and harnesses complying with the ISO 6469-3 safety standard."
+          "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
+          "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge."
         ],
-        metrics: [{ label: "Pack", value: "538V / 18Ah" }, { label: "BTMS heat dissipation", value: "1.2 kW" }]
+        metrics: [{ label: "Disc endurance range", value: "300-450°C" }, { label: "Accumulator cooling", value: "1.2 kW rejected" }]
       },
       {
-        id: "controls", title: "Traction Control & ABS", image: "assets/img/placeholder-project.svg",
-        highlights: ["Longitudinal tire-slip model", "7% further lap-time reduction"],
-        bullets: ["Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction."],
-        metrics: [{ label: "Lap-time reduction", value: "7%" }]
-      },
-      {
-        id: "structures", title: "Structures & Ergonomics", image: "assets/img/placeholder-project.svg",
-        highlights: ["25% mass cut at FoS 1.2 (Goodman)", "Driver ergonomic rigs, FSAE-compliant pedal box"],
+        id: "battery", title: "Electronics & BMS", image: "assets/img/placeholder-project.svg",
+        highlights: ["Segment BMS on bq79616, passive balancing", "Latched shutdown circuit (BSPD/IMD/BMS)"],
         bullets: [
-          "Reduced mass across the suspension and drivetrain by 25% while holding a fatigue safety factor of 1.2 under the Goodman criterion.",
-          "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules."
+          "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
+          "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault.",
+          "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor."
         ],
-        metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2" }]
+        metrics: [{ label: "Pre-charge close-in", value: "95% DC bus" }]
+      },
+      {
+        id: "controls", title: "Structures & Full-Vehicle CAD", image: "assets/img/placeholder-project.svg",
+        highlights: ["25% mass cut at 1.2 Goodman FOS", "800-part master assembly, 14 kinematic iterations"],
+        bullets: [
+          "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
+          "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
+          "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
+          "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks."
+        ],
+        metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2 (Goodman)" }, { label: "Master assembly", value: "800 parts" }]
       },
       {
         id: "results", title: "Competition Results", image: "assets/img/placeholder-project.svg",
         highlights: ["3rd overall, Formula Bharat Virtual '22", "1st Business Plan · 3rd Engineering Design"],
         bullets: ["Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."],
         metrics: [{ label: "Overall", value: "3rd" }, { label: "Business Plan", value: "1st" }]
-      }
-    ],
-    iem26: [
-      {
-        id: "soc", title: "Battery State Estimation", image: "assets/img/placeholder-project.svg",
-        highlights: ["Sigma-point Kalman filter", "98% SOC/SOH accuracy"],
-        bullets: ["Developing a sigma-point Kalman filter to estimate SOC and SOH of the Li-ion pack in real time, validated to 98% accuracy against reference cycles."],
-        metrics: [{ label: "SOC/SOH accuracy", value: "98%" }]
-      },
-      {
-        id: "suspension", title: "Suspension Modeling", image: "assets/img/placeholder-project.svg",
-        highlights: ["Roll-heave decoupled suspension", "VI-SuspensionGen kinematics"],
-        bullets: ["Modeling the roll-heave decoupled suspension in VI-SuspensionGen to inform kinematic setup ahead of build."],
-        metrics: []
-      },
-      {
-        id: "dyno", title: "Endurance Dynamometer", image: "assets/img/placeholder-project.svg",
-        highlights: ["Custom dyno rig", "35 kW PMSM motors + inverters"],
-        bullets: ["Building a custom dynamometer rig to emulate endurance-event loading on the 35 kW PMSM motors and inverters."],
-        metrics: [{ label: "Motor power", value: "35 kW PMSM" }]
       }
     ]
   },
@@ -257,19 +248,19 @@ window.SITE_CONTENT = {
         tools: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "FEA & Structures", caption: "— add your most complex FEA —", image: "assets/img/placeholder-project.svg",
-        tools: ["ANSYS Workbench", "ANSYS ACP", "Abaqus", "NASTRAN"],
+        tools: ["ANSYS Workbench", "ANSYS Mechanical", "ANSYS ACP", "Abaqus", "NASTRAN"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "CFD & Thermal", caption: "— add your most complex CFD —", image: "assets/img/placeholder-project.svg",
-        tools: ["Ansys Fluent", "Star-CCM+", "ParaView", "VisIT"],
+        tools: ["Ansys Fluent", "Ansys Icepak", "Star-CCM+", "ParaView", "VisIT"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "MATLAB / Simulink", caption: "— add your most complex model —", image: "assets/img/placeholder-project.svg",
         tools: ["MATLAB", "Simulink", "Simscape", "Stateflow"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Vehicle Simulation", caption: "— add your most complex sim —", image: "assets/img/placeholder-project.svg",
-        tools: ["CarMaker", "VI-grade (SuspensionGen)", "KISSsoft", "Pacejka tire modeling"],
+        tools: ["CarMaker", "Vi-CarRealTime", "Vi-DriveSim", "VI-grade (SuspensionGen)", "KISSsoft", "OptimumLap", "Pacejka MF 5.2"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Electronics & Code", caption: "— add your most complex board / program —", image: "assets/img/placeholder-project.svg",
-        tools: ["Altium", "LTSpice", "PSpice", "Python", "C / C++"],
+        tools: ["Altium", "LTspice", "PSpice", "Python", "C / C++"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] }
     ],
     manufacturing: [
@@ -277,7 +268,7 @@ window.SITE_CONTENT = {
         tools: ["3-axis CNC", "Lathe", "Laser cutting", "Water-jet cutting"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Composites", caption: "— add your best CFRP part —", image: "assets/img/placeholder-project.svg",
-        tools: ["CFRP wet layup", "Mould prep", "Structural components"],
+        tools: ["CFRP wet layup", "Vacuum bagging", "CNC-MDF & wire-cut foam moulds"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Casting & Rapid Tooling", caption: "— add the magnesium wheel —", image: "assets/img/placeholder-project.svg",
         tools: ["Sand casting", "SLS-printed tooling", "Injection molding"],
@@ -286,10 +277,10 @@ window.SITE_CONTENT = {
         tools: ["FDM", "SLA", "SLS", "Generative design"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Welding & Fabrication", caption: "— add your best weldment —", image: "assets/img/placeholder-project.svg",
-        tools: ["TIG", "MIG", "Metal arc", "Sheet metal", "Soldering"],
+        tools: ["TIG", "MIG", "Sheet metal", "Soldering"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] },
       { name: "Metrology & Test", caption: "— add an inspection report —", image: "assets/img/placeholder-project.svg",
-        tools: ["CMM", "3D scanning", "Oscilloscope / board-level test", "Laser diagnostics"],
+        tools: ["CMM", "3D scanning", "Thermocouple & strain-gauge instrumentation", "DAQ", "CAN bus analysis (DBC, PCAN)", "Oscilloscope"],
         gallery: [{ image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }, { image: "assets/img/placeholder-project.svg", caption: "— add image —" }] }
     ]
   },
@@ -298,28 +289,50 @@ window.SITE_CONTENT = {
   projects: [
     {
       id: "tesla",
-      title: "Grid-Forming ESS Thermal & Electrical Test Systems",
-      org: "Tesla, Inc., Palo Alto — System Integration & Test Engineer, Energy Engineering",
+      title: "Thermal & Reliability Validation, Energy Products",
+      org: "Tesla, Inc., Palo Alto — Intern, System Integration & Test Engineer",
       context: "Industry",
       period: "May 2026 – Aug 2026",
       status: "Complete",
       image: "assets/img/placeholder-project.svg",
       tags: ["Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Root-caused thermal/electrical failures and built custom test infrastructure for grid-scale energy storage systems.",
+      summary: "Root-caused a thermal runaway and validated derate strategy on a grid-scale energy product across its full qualification envelope.",
       bullets: [
-        "Root-caused a full-power thermal runaway in a DC-DC power stage, confirmed the failure mode non-destructively, and validated a model-based derate-and-fan strategy across a -20°C to +50°C ambient sweep.",
-        "Ran a paired 26-channel A/B thermal study (duct installed vs. removed) under high tri-port loading, quantifying sub-1°C average cell ΔT with no measurable system impact.",
-        "Closed an off-grid thermal test gap by designing a programmable motor-plus-passive-load emulator covering motor-start and peak-power testing at a fraction of commercial rig cost.",
-        "Designed a multi-motor locked-rotor test rig coupling three induction motors on one synchronous belt to emulate single- and multi-phase motor-start loads across global grid voltages.",
-        "Architected a modular switched R-L load bank (tapped reactors plus per-phase resistor networks) delivering software-selectable inrush impedance across global grid-code corners.",
-        "Designed PLC-driven load switching for an off-grid test bench spanning 30+ contactor channels and 16 operating modes, unified by hard-wired interlocks and a one-call software mode library.",
-        "Decomposed 50+ system requirements across 4 grid configurations into a traceability matrix, authoring the pass/fail plan hierarchy adopted as the team-wide standard."
+        "Decoded thermal, power, and fault CAN telemetry via DBC, validating reported values against independent measurements.",
+        "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to the onboard PCB-NTC within 1°C.",
+        "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
+        "Ran a paired 41-channel thermal study qualifying an air-duct delete, isolating the sole tradeoff as extended cell-heater soak time at −20°C.",
+        "Constructed worst-case thermal stress cases from first principles across load, ambient, and duty-cycle corners to anchor validation.",
+        "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy.",
+        "Validated pre-release firmware on test units, regression-testing derate, thermal, and fault behavior against system requirements.",
+        "Built a VFD-absorbed motor-stall and resistive load bank covering compressor-start and peak-power loading for thermal stress testing."
       ],
       metrics: [
-        { label: "Ambient sweep tested", value: "-20°C to +50°C" },
-        { label: "Cell ΔT (duct study)", value: "< 1°C avg" },
-        { label: "Test bench scale", value: "30+ channels, 16 modes" },
-        { label: "Requirements traced", value: "50+, 4 grid configs" }
+        { label: "Rated output at 40°C", value: "96% preserved" },
+        { label: "Qualification sweep", value: "-20°C to 50°C" },
+        { label: "Thermal study scale", value: "41-channel" },
+        { label: "Requirements traced", value: "162, 4 grid configs" }
+      ],
+      links: []
+    },
+    {
+      id: "cold-plate-ml",
+      title: "Gradient-Boosted Surrogate Models for EV Battery Cold-Plate CFD",
+      org: "Applied Heat Transfer Course Project, UofI",
+      context: "Research",
+      period: "Jan 2026 – May 2026",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Thermal & Energy Systems"],
+      summary: "Multi-objective CFD optimization of an EV battery cold plate, sped up with a machine-learned surrogate model.",
+      bullets: [
+        "Ran 50 conjugate heat transfer cases in ANSYS Fluent on an EV battery cold plate via a Latin hypercube DOE over 4 variables.",
+        "Trained an XGBoost surrogate on the CFD dataset, predicting pressure drop to R² 0.92 and cutting design evaluation to seconds."
+      ],
+      metrics: [
+        { label: "CFD cases run", value: "50 (Latin hypercube DOE)" },
+        { label: "Surrogate accuracy", value: "R² 0.92" },
+        { label: "Design evaluation time", value: "cut to seconds" }
       ],
       links: []
     },
@@ -331,16 +344,13 @@ window.SITE_CONTENT = {
       period: "Sep 2025 – Present",
       status: "In progress",
       image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
-      summary: "Battery state estimation and suspension modeling for UIUC's current FSAE Electric build.",
+      tags: ["Vehicle Dynamics & Simulation"],
+      summary: "Driver-in-the-loop simulation for UIUC's current FSAE Electric build.",
       bullets: [
-        "Developing a sigma-point Kalman filter to estimate SOC and SOH of the Li-ion pack in real time, validated to 98% accuracy against reference cycles.",
-        "Modeling the roll-heave decoupled suspension in VI-SuspensionGen to inform kinematic setup ahead of build.",
-        "Building a custom dynamometer rig to emulate endurance-event loading on the 35 kW PMSM motors and inverters."
+        "Built a driver-in-the-loop simulator in Vi-DriveSim on a Vi-CarRealTime vehicle model, correlating to on-car telemetry within 5%."
       ],
       metrics: [
-        { label: "SOC/SOH accuracy", value: "98%" },
-        { label: "Motor power", value: "35 kW PMSM" },
+        { label: "Telemetry correlation", value: "within 5%" },
         { label: "Competition result", value: "", isPlaceholder: true }
       ],
       links: [
@@ -350,17 +360,17 @@ window.SITE_CONTENT = {
     },
     {
       id: "combustion-lab",
-      title: "OH Absorption & Emissions Spectroscopy",
-      org: "Combustion Diagnostics Lab, UofI",
+      title: "Optical Flame Diagnostics: OH Thermometry by UV Absorption & Emission",
+      org: "Spectroscopy Course Project, Combustion Diagnostics Lab, UofI",
       context: "Research",
-      period: "Sep 2025 – Present",
-      status: "In progress",
+      period: "Sep 2025 – Dec 2025",
+      status: "Complete",
       image: "assets/img/placeholder-project.svg",
       tags: ["Combustion & Powertrain Research"],
-      summary: "Laser/optical diagnostics to map temperature and species concentration inside small flames.",
+      summary: "Laser/optical diagnostics to map OH radical temperature and concentration inside small flames.",
       bullets: [
-        "Ran UV broadband absorption spectroscopy to estimate temperature and OH radical mass fraction across candle, butane, sterno, propane, and hexamine flames.",
-        "Applied a line-of-sight method to spatially resolve the temperature distribution within each flame."
+        "Measured OH radical temperature and mass fraction in candle, butane, propane, sterno, and hexamine flames by UV absorption.",
+        "Spatially resolved flame temperature by line-of-sight measurement, cross-checking absorption results against emission spectra."
       ],
       metrics: [
         { label: "Flames characterized", value: "5" }
@@ -369,28 +379,41 @@ window.SITE_CONTENT = {
     },
     {
       id: "jlr",
-      title: "Range-Extended EV & Power Electronics Cooling",
-      org: "Jaguar Land Rover TBSI, Bengaluru — Graduate EV-Powertrain Engineer Trainee",
+      title: "Range-Extended EV & Solid-State Contactor, HV Systems",
+      org: "Jaguar Land Rover TBSI, Bengaluru — Graduate EV-Powertrain Engineer Trainee, HV Systems",
       context: "Industry",
       period: "Aug 2023 – Jul 2025",
       status: "Complete",
       image: "assets/img/placeholder-project.svg",
       tags: ["Thermal & Energy Systems", "Electronics & Controls", "Structures & Composites"],
-      summary: "Two-year graduate program: led a concept carbon-negative range extender and delivered thermal/electronics design for inverter and contactor hardware.",
+      summary: "Two-year graduate program: initiated a carbon-negative range-extender concept and led production-intent thermal, mechanical, and electronics design of a solid-state contactor.",
       bullets: [
-        "Initiated and led technical work on a concept range-extended EV powered by fugitive methane, targeting carbon-negative net emissions.",
-        "Proposed the cryogenic CH4 storage/delivery system and a road-load-based battery charge-depletion strategy for the APU, delivering 36% more range at 12% lower weight.",
-        "Designed, simulated, and rig-tested tubed and pin-fin cold-plate geometries to cool an in-house inverter and solid-state contactor.",
-        "Designed voltage/current/temperature sensing and closed-loop pre-charge and I²t e-fuse protection; tuned a 3-winding 4-switch buck-boost converter using Bode analysis.",
-        "Designed stack-up tolerancing and integrated a coreless current sensor into the contactor package, cutting volume by 40%.",
-        "Ran DFMEA and ISO 26262 HARA for the xHEV powerpack system, plus ISO 16750-3 vibration testing to validate contactor durability against vehicle-level shock.",
-        "Built the test plans and ran board-level, integrated, and thermal testing for the sensing and protection hardware.",
-        "Won 1st runner-up at JLR's Graduate Innovation Challenge, a year-long global program with 86 teams and 442 graduates."
+        "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
+        "1st runner-up of 86 teams and 442 graduates in JLR's year-long global Graduate Innovation Challenge with the CH4 REEV.",
+        "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
+        "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
+        "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware.",
+        "Developed a 50 kg cryogenic CH4 storage and delivery concept, modeling tank heat ingress to limit boil-off to 2% per day.",
+        "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and solid-state contactor, rejecting 24 W/cm².",
+        "Built an instrumented coolant-loop rig to test cold plates at full load, validating a 35 K junction margin at a 17 kPa drop.",
+        "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), with DFM from packaging to prototype.",
+        "Designed 650 A C101 busbars to IEC 60664-1 creepage and clearance, minimizing loop inductance; draughted BS 8888 drawings.",
+        "Designed the IP67 SSC enclosure, selecting O-rings, gaskets, and TIM for sealed, leak-free, low-thermal-resistance joints.",
+        "Ran worst-case tolerance stack-ups and applied ASME Y14.5 GD&T to position coreless current sensors within 0.30 mm.",
+        "Ran modal and random-vibration FEA on the SSC to ISO 16750-3 profiles, achieving a 2.9 minimum safety factor.",
+        "Developed a road-load-based charge-depletion strategy to schedule APU operation, cutting fuel use 33% per drive cycle.",
+        "Designed closed-loop pre-charge and I²t e-fuse control; tuned a 3W 4-switch buck-boost via Bode analysis to a 55° phase margin.",
+        "Developed PID position control for a powered-bonnet actuator via H-bridge PWM drive, accurate to within 0.8 mm.",
+        "Applied IEC 60664-1 creepage and clearance across the SSC's mechanical and PCB design for a 1500 V working voltage.",
+        "Designed a hybrid RCD and TVS snubber for the solid-state contactor after simulating 11 topologies, clamping turn-off to 1.1 kV."
       ],
       metrics: [
         { label: "Range gain", value: "36%" },
-        { label: "Weight reduction", value: "12%" },
-        { label: "Contactor volume reduction", value: "40%" },
+        { label: "Mass reduction", value: "12%" },
+        { label: "Invention disclosures filed", value: "5" },
+        { label: "DFMEA high-risk RPN cut", value: "26%" },
+        { label: "Cold plate heat rejection", value: "24 W/cm²" },
+        { label: "SSC vibration safety factor", value: "2.9" },
         { label: "JLR Graduate Innovation Challenge", value: "1st runner-up / 86 teams" }
       ],
       links: [
@@ -398,82 +421,23 @@ window.SITE_CONTENT = {
       ]
     },
     {
-      id: "rmse23",
-      title: "RMSE'23 — Formula Student Electric Vehicle",
-      org: "IIT Roorkee Motorsports, IITR",
-      context: "Formula Student",
-      period: "Jan 2022 – May 2023",
-      status: "Competed",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Set season strategy and delivered structures, thermal, aero, and vehicle-dynamics work across the whole car; the team placed 1st among all Asian teams in both the Engineering Design and Cost & Manufacturing events at FSUK'23, Silverstone.",
-      bullets: [
-        "Set season goals around reliability, competitiveness, and manufacturing efficiency, and streamlined the design process across every subsystem.",
-        "Designed, fabricated, and installed CFRP structural components via wet layup, cutting total mass by 10%.",
-        "Revised the tubular chassis to a 49F-51R weight distribution and 1755 N·m/° torsional stiffness, and ran FEA for crash-load cases.",
-        "Built a thermal model for the radiator and water-cooled loop sizing an 80 kW motor and inverter using the NTU-effectiveness method.",
-        "Automated CFD runs and post-processing to generate aero maps, balancing aero load against vehicle dynamics.",
-        "Applied generative design to additive-manufactured motor/diff mounts and topology-optimized CNC pedals and wing mount for fatigue.",
-        "Designed schematics and PCBs for the car's LV systems — power distribution, accelerator/brake plausibility, and DAQ.",
-        "Designed the vehicle's cable harness and cooling-pipe routing in CAD with validated bend radii, improving packaging efficiency by 12%.",
-        "Refined vehicle architecture and ran CarMaker sensitivity studies, cutting overall lap time by 12%.",
-        "Built a DBOM/CBOM costing tool that helped take the team to 1st place among all Asian teams in the FSUK'23 Cost & Manufacturing event.",
-        "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
-        "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
-      ],
-      metrics: [
-        { label: "Torsional stiffness", value: "1755 N·m/°" },
-        { label: "Mass reduction", value: "10%" },
-        { label: "Lap time improvement", value: "12%" },
-        { label: "FSUK'23 Cost & Manufacturing", value: "1st, Asian teams" },
-        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }
-      ],
-      links: [
-        { label: "Team site", url: "— add IIT Roorkee Motorsports link —", isPlaceholder: true },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "dorle",
-      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
-      org: "Dorle Controls LLC, Michigan, USA",
-      context: "Industry",
-      period: "Jan 2022 – May 2022",
-      status: "Complete",
-      image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
-      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
-      bullets: [
-        "Developed a high-fidelity state-space representation from the ground up to model transient handling dynamics and cornering stability, in Simulink/Simscape.",
-        "Implemented racing-line optimization for a specific circuit in MATLAB using the minimum-curvature method.",
-        "Constructed and validated models for advanced control systems, including traction control and ABS.",
-        "Extracted transient vertical and lateral load cases to serve as input boundary conditions for chassis and suspension durability simulations."
-      ],
-      metrics: [
-        { label: "Model fidelity", value: "14-DOF" },
-        { label: "Optimization method", value: "Minimum curvature" }
-      ],
-      links: []
-    },
-    {
       id: "magnesium-wheels",
       title: "Rapid Tooling of Cast Magnesium Wheels for an FSAE Vehicle",
-      org: "IIT Roorkee",
+      org: "Reverse Engineering and Rapid Tooling Course Project, IIT Roorkee",
       context: "Research",
-      period: "Feb 2022 – May 2023",
+      period: "Feb 2023 – May 2023",
       status: "Complete",
       image: "assets/img/placeholder-project.svg",
       tags: ["Structures & Composites"],
       summary: "Lightweighting a cast wheel and proving out rapid tooling to cut cost and lead time for low-volume casting.",
       bullets: [
-        "Compared candidate wheel geometries with FEA and a Pugh matrix, landing on a design with 25% lower weight.",
-        "Used SLS 3D-printed tooling in place of machined tooling, cutting tooling time by 54% and cost by 50%.",
-        "Cast the wheel in magnesium via sand casting and verified it with CMM and 3D-scanning inspection."
+        "Compared wheel geometries by FEA under lateral, bump, torsion, and mounting load cases, selecting the final design by Pugh matrix.",
+        "Designed printed sand-casting tooling with draft, shrinkage compensation, and machining stock, cutting tooling lead time 54%.",
+        "Cast the wheel in magnesium and verified dimensional conformance by CMM and 3D scanning to within 0.5 mm of nominal."
       ],
       metrics: [
-        { label: "Weight reduction", value: "25%" },
-        { label: "Tooling time saved", value: "54%" },
-        { label: "Tooling cost saved", value: "50%" }
+        { label: "Tooling lead time saved", value: "54%" },
+        { label: "Dimensional conformance", value: "within 0.5 mm" }
       ],
       links: []
     },
@@ -488,16 +452,38 @@ window.SITE_CONTENT = {
       tags: ["Thermal & Energy Systems", "Structures & Composites"],
       summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
       bullets: [
-        "Contributed to RapidX, a fast-charging LTO battery architecture for 2W/3W/4W small commercial vehicles.",
-        "Produced Cu-101 busbars, IP6X-rated enclosures, and cell packaging for the 368V/40Ah pack, designed for retrofit into the TATA Ace.",
-        "Engineered sheet-metal brackets, rubber dampeners, and waterproof foam pads, and drafted 2D drawings for prototyping.",
-        "Characterized LTO cell abuse scenarios and cell-level thermal/C-rate behavior across a -20°C to 60°C range.",
-        "Explored a portable PCM-based thermal management concept using paraffin wax to buffer 9 kJ of heat during fast charging."
+        "Designed pack hardware for RapidX, a fast-charging lithium-titanate (LTO) battery for 2W, 3W, and 4W commercial vehicles.",
+        "Designed C101 busbars, an IP67 enclosure, and cell packaging for a 368V, 40Ah LTO pack retrofitted to the Tata Ace LCV.",
+        "Designed sheet-metal brackets, rubber dampers, and waterproof foam seals; released BS 8888 drawings for prototyping.",
+        "Sized a paraffin PCM buffer to absorb 9 kJ of fast-charge heat per module, predicting a 15 K cut in peak cell temperature."
       ],
       metrics: [
         { label: "Pack spec", value: "368V / 40Ah" },
+        { label: "Enclosure rating", value: "IP67" },
         { label: "PCM heat buffered", value: "9 kJ" },
-        { label: "Enclosure rating", value: "IP6X" }
+        { label: "Predicted peak-temp cut", value: "15 K" }
+      ],
+      links: []
+    },
+    {
+      id: "dorle",
+      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
+      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee — Independent Project, in collaboration with Dorle Controls, Michigan",
+      context: "Industry",
+      period: "Jan 2022 – May 2022",
+      status: "Complete",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
+      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
+      bullets: [
+        "Developed a high-fidelity state-space representation from the ground up to model transient handling dynamics and cornering stability.",
+        "Implemented racing-line optimization using the minimum-curvature method to generate time-optimal trajectories for a specific circuit.",
+        "Coupled ride, handling, and suspension subsystems to resolve vertical, roll, pitch, and yaw dynamics under road profile and steer inputs.",
+        "Validated the integrated model against constant-velocity and acceleration test cases, checking normal load and weight distribution."
+      ],
+      metrics: [
+        { label: "Model fidelity", value: "14-DOF" },
+        { label: "Optimization method", value: "Minimum curvature" }
       ],
       links: []
     },
@@ -531,25 +517,27 @@ window.SITE_CONTENT = {
       period: "Jan 2021 – Dec 2021",
       status: "Competed",
       image: "assets/img/placeholder-project.svg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems"],
-      summary: "Powertrain selection, tire/lap-time modeling, aero, battery pack, and suspension FEA for the team's second EV.",
+      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
+      summary: "Powertrain selection, brake/accumulator thermal, full-vehicle structures, and BMS electronics for the team's second EV.",
       bullets: [
-        "Selected the 80 kW powertrain (motor/diff/tires) and revised gear ratios using tire-slip models, gaining 12% torque.",
-        "Built a quasi-steady-state point-mass lap-time simulation, validated to within 10% accuracy, to drive sensitivity studies.",
-        "Modeled tires with the Pacejka Magic Formula, calibrated against FSAE Tire Test Consortium data.",
-        "Led design of front and rear wings using CFD, validated with tuft testing, for a 7% lap-time reduction.",
-        "Simulated an active air-cooled battery thermal management system to dissipate 1.2 kW and hold cell temperatures below 45°C at peak 10C discharge rate.",
-        "Designed the enclosure, mounting brackets, cell holders, and busbars for the 538V/18Ah pack, and sized it with a well-to-wheel model.",
-        "Simulated ABS and traction control using a longitudinal tire-slip model, contributing a further 7% lap-time reduction.",
-        "Reduced mass across the suspension and drivetrain by 25% while holding a fatigue safety factor of 1.2 under the Goodman criterion.",
-        "Selected NMC cells, high-current relays, fuses, and harnesses complying with the ISO 6469-3 safety standard.",
-        "Customized ergonomic rigs to improve driver posture and visibility while keeping the pedal box within FSAE rules.",
+        "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
+        "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
+        "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
+        "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
+        "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge.",
+        "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
+        "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
+        "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
+        "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks.",
+        "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
+        "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault.",
+        "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor.",
         "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
       ],
       metrics: [
-        { label: "Torque gain", value: "12%" },
-        { label: "Lap-time reduction (aero + controls)", value: "14%" },
+        { label: "Wheel torque gain", value: "12%" },
         { label: "Mass reduction (suspension/drivetrain)", value: "25%" },
+        { label: "Master assembly", value: "800 parts" },
         { label: "Formula Bharat Virtual '22", value: "3rd overall" }
       ],
       links: [
@@ -588,13 +576,13 @@ window.SITE_CONTENT = {
       logo: "assets/img/logos/tesla.svg",
       productImage: "assets/img/products/tesla-powerwall.jpg",
       productCaption: "Powerwall 2 — Tesla Energy",
-      role: "System Integration & Test Engineer, Energy Engineering",
+      role: "Intern — System Integration & Test Engineer, Energy Products",
       location: "Palo Alto, CA, USA",
       period: "May 2026 – Aug 2026",
       bullets: [
-        "Root-caused a full-power thermal runaway in a DC-DC power stage and validated a model-based derate-and-fan strategy across a -20°C to +50°C ambient sweep.",
-        "Designed and built custom test infrastructure — a multi-motor locked-rotor rig, a modular switched R-L load bank, and a PLC-driven 30+ channel off-grid test bench — closing test gaps at a fraction of commercial rig cost.",
-        "Decomposed 50+ system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy adopted as the team-wide standard."
+        "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
+        "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
+        "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy."
       ],
       projectRef: "tesla"
     },
@@ -607,13 +595,13 @@ window.SITE_CONTENT = {
       // + productCaption here once you have one you're cleared to use.
       productImage: null,
       productCaption: null,
-      role: "Graduate EV-Powertrain Engineer Trainee, Sustainability Research Ecosystem",
+      role: "Graduate EV-Powertrain Engineer Trainee, HV Systems",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
       bullets: [
-        "Led technical work on a concept carbon-negative, range-extended EV powered by fugitive methane.",
-        "Delivered thermal (cold-plate) and electronics (sensing, protection, power conversion) design for an in-house inverter and solid-state contactor.",
-        "1st runner-up, JLR Graduate Innovation Challenge — 86 teams, 442 graduates, global."
+        "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
+        "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
+        "Led production-intent mechanical and thermal design of a solid-state contactor rejecting 24 W/cm², at a 2.9 vibration safety factor."
       ],
       projectRef: "jlr"
     },
@@ -625,7 +613,7 @@ window.SITE_CONTENT = {
       location: "Bengaluru, India",
       period: "May 2022 – Jul 2022",
       bullets: [
-        "Delivered mechanical packaging (busbars, enclosures, brackets) for a 368V/40Ah fast-charge LTO battery architecture."
+        "Designed pack hardware — busbars, IP67 enclosure, and cell packaging — for a 368V/40Ah fast-charge LTO battery architecture."
       ],
       projectRef: "log9"
     }
@@ -637,9 +625,9 @@ window.SITE_CONTENT = {
       org: "IIT Roorkee Motorsports",
       period: "Apr 2022 – Apr 2023",
       bullets: [
-        "Led 8 sub-divisions and 50+ members of the mechanical and electrical division building the team's electric race cars, on an annual budget of ₹35L (~$42K).",
-        "Owned design, fabrication, and integration of every mechanical and electrical sub-assembly into the finished vehicle.",
-        "Set team philosophy, season goals, and technical timeline, and built out a board of faculty advisors, alumni, and sponsors for strategic oversight."
+        "Led 50+ members across 8 sub-divisions on a £33K budget, owning design, fabrication, and full-vehicle integration of the electric car.",
+        "Set season targets for reliability, competitiveness, and manufacturability, restructuring the design process across every vertical.",
+        "Built a design and cost BOM tool for the full vehicle, taking 2nd among Asian teams in Cost and Manufacturing at FSUK 2023."
       ]
     },
     {
@@ -659,7 +647,10 @@ window.SITE_CONTENT = {
       score: "GPA 4.0 / 4.0",
       period: "Expected May 2027",
       thesis: "Holistic Rack-to-Processor Power and Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling — Energy Transport Research Lab.",
+      teaching: "Graduate Teaching Assistant — Heat Transfer (166 students)",
       coursework: [
+        "Design of Thermal Systems",
+        "Fracture of Engineering Materials",
         "Engineering Spectroscopy",
         "Laser Diagnostics",
         "Design of Heat Exchangers",
@@ -673,7 +664,8 @@ window.SITE_CONTENT = {
       degree: "B.Tech., Mechanical Engineering",
       score: "CGPA 8.685 / 10.0",
       period: "Jul 2023",
-      thesis: "Understanding End Gas Auto-Ignition in n-Heptane Combustion at High Temperatures using 2D-DNS — see Projects.",
+      thesis: "Autoignition and Knock in n-Heptane Combustion at High Temperatures using 2D-DNS — see Thesis & Publications.",
+      teaching: "Undergraduate Teaching Assistant — Programming & Data Structures (23 students)",
       coursework: [
         "I.C. Engine & Combustion Fundamentals",
         "Vehicle Dynamics",
@@ -697,22 +689,22 @@ window.SITE_CONTENT = {
 
   awards: [
     { title: "1st Place, FSUK'23 Engineering Design Event", org: "Among all Asian teams, EV category — Formula Student UK, Silverstone", date: "2023" },
-    { title: "1st Place, FSUK'23 Cost & Manufacturing Event", org: "Among all Asian teams, EV category — Formula Student UK, Silverstone", date: "2023" },
+    { title: "2nd Place, FSUK'23 Cost & Manufacturing Event", org: "Among all Asian teams, EV category — Formula Student UK, Silverstone", date: "2023" },
     { title: "MathWorks Modeling Award, Formula Bharat", org: "1st place '23 (₹35K) and 3rd place '24 (₹15K)", date: "2023–24" },
     { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global", date: "2024" },
-    { title: '"Exceptional Creator – Team" Award, JLR', org: "₹100K each — recognized FY24 and FY25", date: "2024, 2025" },
+    { title: "5 Internal Invention Disclosures Filed, JLR", org: "DC-link capacitor pre-charging, REEV, and charge-depletion control", date: "2024–25" },
+    { title: '"Exceptional Creator" Recognition, JLR', org: "Twice awarded — FY24 and FY25", date: "2024, 2025" },
     { title: "J.N. Tata Endowment", org: "₹2M grant for postgraduate study abroad, awarded to exceptional Indian students", date: "Fall 2025" },
     { title: "K.C. Mahindra Scholarship", org: "For postgraduate study abroad — top 4% of 2,000+ applicants", date: "Fall 2025" },
     { title: "Gold Medal, Inter IIT Tech Meet 10.0", org: "Automotive problem statement set by JLR", date: "Fall 2022" },
     { title: "Gold Medal, Inter IIT Tech Meet 9.0", org: "Automotive problem statement set by Bosch", date: "Fall 2021" },
-    { title: "2nd Runner-Up, Innovate'22 Hackathon", org: "Daimler India Commercial Vehicles — ₹100K prize", date: "2022" },
-    { title: '"Most Electrifying Presenter"', org: "Uttarakhand Udyog Mahotsav '23", date: "2023" },
+    { title: "2nd Runner-Up, Innovate'22 Hackathon", org: "Daimler India Commercial Vehicles", date: "2022" },
     { title: "Chanakya UG Fellowship", org: "Research grant — E-bicycle for last-mile food delivery", date: "Spring 2022" }
   ],
 
   skills: [
-    { category: "Standards & Methods", items: ["ISO 26262 (HARA)", "DFMEA", "GD&T (ASME Y14.5)", "ISO 16750-3", "ISO 6469-3", "BS 8888", "Tolerance stack-up"] },
-    { category: "Certifications", items: ["TÜV SÜD Level 2 & 3 — Qualified Electrician, HV Systems (EV/HEV)"] }
+    { category: "Standards & Methods", items: ["ISO 26262 (HARA, ASIL D)", "DFMEA", "GD&T (ASME Y14.5)", "IEC 60664-1", "ISO 16750-3", "ISO 6469-3", "BS 8888", "Tolerance stack-up"] },
+    { category: "Certifications & Languages", items: ["TÜV SÜD Level 2 & 3 — HV Live Working (EV/HEV)", "English", "Hindi", "German (B1 → B2)"] }
   ],
 
   contact: {
@@ -720,4 +712,3 @@ window.SITE_CONTENT = {
     body: "Open to mechanical and systems engineering roles across motorsport (F1/WEC, primarily EU/UK), EV, and energy systems."
   }
 };
-

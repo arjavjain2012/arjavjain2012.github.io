@@ -24,7 +24,7 @@
   --mono: "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, monospace;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --display: "Poppins", var(--sans);
-  --maxw: 1320px;
+  --maxw: 1480px;
 }
 
 * { box-sizing: border-box; }
@@ -394,71 +394,97 @@ header.nav {
 .tl-item ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 620px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
 
-/* ---------- Work Experience (heavy cards) ---------- */
-.exp-list { display: flex; flex-direction: column; gap: 28px; }
+/* ---------- Work Experience timeline bar ---------- */
+.exp-timeline { margin-bottom: 36px; }
+.exp-tl-track {
+  position: relative;
+  height: 44px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+}
+.exp-tl-seg {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  background: var(--accent);
+  opacity: 0.85;
+  min-width: 3px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.exp-tl-seg-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: #10233b;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0 8px;
+}
+.exp-tl-axis { position: relative; height: 22px; }
+.exp-tl-tick { position: absolute; top: 0; transform: translateX(-50%); }
+.exp-tl-tick span { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+
+/* ---------- Work Experience (3-up cards) ---------- */
+.exp-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .exp-card {
   position: relative;
   background: var(--bg-card);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
-  padding: 32px;
+  border-top: 3px solid var(--accent);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
 }
 .exp-card-top {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 22px;
-  margin-bottom: 20px;
+  gap: 14px;
+  margin-bottom: 16px;
 }
 .exp-logo-badge {
   flex: none;
-  width: 148px;
-  height: 148px;
+  width: 84px;
+  height: 84px;
   border: 1px solid var(--line);
   background: var(--bg-raised);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 26px;
+  padding: 15px;
 }
 .exp-logo-badge img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.95; }
 .exp-logo-fallback {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 40px;
+  font-size: 24px;
   color: var(--accent);
   letter-spacing: 0.02em;
 }
-.exp-head { flex: 1; min-width: 0; padding-top: 6px; }
-.exp-role { margin: 0 0 8px; font-size: clamp(20px, 2.6vw, 25px); line-height: 1.25; }
-.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
-.exp-org { color: var(--teal); font-size: 16px; font-weight: 500; }
+.exp-head { min-width: 0; }
+.exp-role { margin: 0 0 6px; font-size: 17px; line-height: 1.3; }
+.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.exp-org { color: var(--teal); font-size: 13.5px; font-weight: 500; }
 .exp-product-tag {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.04em;
   color: var(--accent);
   border: 1px solid var(--accent-dim);
   background: rgba(239, 122, 110, 0.08);
-  padding: 3px 9px;
+  padding: 2px 8px;
   border-radius: var(--radius);
 }
-.exp-meta { display: flex; gap: 16px; font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
-.exp-bullets { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; }
-.exp-metric-row { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
-.exp-card-body { display: grid; grid-template-columns: 1fr 260px; gap: 28px; align-items: start; }
+.exp-meta { display: flex; flex-direction: column; gap: 2px; font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+.exp-bullets { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 13.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px; }
+.exp-metric-row { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.exp-card-body { display: flex; flex-direction: column; gap: 18px; }
 .exp-product-image { border: 1px solid var(--line); background: var(--bg-raised); }
-.exp-product-image img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
-.exp-product-caption { font-family: var(--mono); font-size: 11px; color: var(--text-faint); padding: 10px 12px; border-top: 1px solid var(--line); }
-@media (max-width: 900px) {
-  .exp-card-body { grid-template-columns: 1fr; }
-  .exp-product-image img { aspect-ratio: 16/9; }
-}
-@media (max-width: 640px) {
-  .exp-card { padding: 22px; }
-  .exp-card-top { gap: 16px; }
-  .exp-logo-badge { width: 92px; height: 92px; padding: 16px; }
-  .exp-logo-fallback { font-size: 26px; }
-}
+.exp-product-image img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.exp-product-caption { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); padding: 8px 10px; border-top: 1px solid var(--line); }
+@media (max-width: 980px) { .exp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .exp-list { grid-template-columns: 1fr; } }
 
 /* ---------- Thesis & Publications ---------- */
 .thesis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
@@ -509,6 +535,11 @@ header.nav {
   background: rgba(239, 122, 110, 0.08);
   font-size: 13px;
   color: var(--text-dim);
+}
+.edu-teaching {
+  font-size: 13px;
+  color: var(--teal);
+  margin: 0 0 14px;
 }
 .edu-thesis-label {
   display: block;

@@ -27,9 +27,6 @@
   /* ---------------- Meta / Nav ---------------- */
   document.title = `${C.meta.name} — ${C.meta.role}`;
   $("#nav-name").textContent = C.meta.name.toUpperCase();
-  const resumeBtn = $("#resumeBtn");
-  resumeBtn.href = C.meta.resumeFile;
-  resumeBtn.setAttribute("download", "");
 
   $("#navToggle").addEventListener("click", () => {
     $("#navLinks").classList.toggle("open");
@@ -278,9 +275,65 @@
   renderToolkit("#softwareGrid", "Software", C.toolkit && C.toolkit.software);
   renderToolkit("#manufacturingGrid", "Manufacturing", C.toolkit && C.toolkit.manufacturing);
 
-  /* ---------------- Experience ---------------- */
+  /* ---------------- Experience (timeline bar + chronological 3-up) ---------------- */
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  function parsePeriod(period) {
+    const parts = period.split(/[–-]/).map((s) => s.trim());
+    const parseOne = (s) => {
+      const m = s.match(/([A-Za-z]+)\s+(\d{4})/);
+      if (!m) return null;
+      const mi = MONTHS.indexOf(m[1].slice(0, 3).toLowerCase());
+      return { year: +m[2], month: mi < 0 ? 0 : mi, index: +m[2] * 12 + (mi < 0 ? 0 : mi) };
+    };
+    const start = parseOne(parts[0]);
+    const isPresent = /present/i.test(parts[1] || "");
+    const end = isPresent ? null : parseOne(parts[1] || parts[0]);
+    return { start, end: end || start, isPresent };
+  }
+
+  const expByDate = [...C.experience].sort((a, b) => parsePeriod(a.period).start.index - parsePeriod(b.period).start.index);
+
+  function renderExpTimeline() {
+    const track = $("#expTimeline");
+    if (!expByDate.length) return;
+    const spans = expByDate.map((e) => parsePeriod(e.period));
+    const nowIndex = (() => { const d = new Date(); return d.getFullYear() * 12 + d.getMonth(); })();
+    const globalStart = Math.min(...spans.map((s) => s.start.index));
+    const globalEnd = Math.max(...spans.map((s) => (s.isPresent ? nowIndex : s.end.index)));
+    const pad = 2;
+    const totalSpan = (globalEnd - globalStart) + pad * 2;
+
+    const years = [];
+    const startYear = Math.floor((globalStart - pad) / 12);
+    const endYear = Math.ceil((globalEnd + pad) / 12);
+    for (let y = startYear; y <= endYear; y++) years.push(y);
+
+    const segHtml = expByDate.map((e, i) => {
+      const s = spans[i];
+      const endIdx = s.isPresent ? nowIndex : s.end.index;
+      const leftPct = ((s.start.index - (globalStart - pad)) / totalSpan) * 100;
+      const widthPct = Math.max(((endIdx - s.start.index) / totalSpan) * 100, 3);
+      const short = e.org.split(",")[0].split(" ")[0];
+      return `<div class="exp-tl-seg" style="left:${leftPct}%;width:${widthPct}%" title="${esc(e.org)}: ${esc(e.period)}">
+        <span class="exp-tl-seg-label">${esc(short)}</span>
+      </div>`;
+    }).join("");
+
+    const yearHtml = years.map((y) => {
+      const leftPct = ((y * 12 - (globalStart - pad)) / totalSpan) * 100;
+      if (leftPct < 0 || leftPct > 100) return "";
+      return `<div class="exp-tl-tick" style="left:${leftPct}%"><span>${y}</span></div>`;
+    }).join("");
+
+    track.innerHTML = `
+      <div class="exp-tl-track">${segHtml}</div>
+      <div class="exp-tl-axis">${yearHtml}</div>
+    `;
+  }
+  renderExpTimeline();
+
   const expList = $("#expList");
-  C.experience.forEach((e) => {
+  expByDate.forEach((e) => {
     const linkedProject = e.projectRef ? C.projects.find((p) => p.id === e.projectRef) : null;
     const logoHtml = e.logo
       ? `<img src="${esc(e.logo)}" alt="${esc(e.org)} logo">`
@@ -308,9 +361,10 @@
           <div class="exp-meta"><span>${esc(e.location)}</span><span>${esc(e.period)}</span></div>
         </div>
       </div>
-      ${productImageHtml
-        ? `<div class="exp-card-body"><div>${bulletsAndMetrics}</div>${productImageHtml}</div>`
-        : bulletsAndMetrics}
+      <div class="exp-card-body">
+        <div>${bulletsAndMetrics}</div>
+        ${productImageHtml}
+      </div>
     `;
     expList.appendChild(card);
   });
@@ -372,6 +426,7 @@
       <div class="edu-degree">${esc(ed.degree)}</div>
       <div class="edu-meta"><span>${esc(ed.score)}</span><span>${esc(ed.period)}</span></div>
       ${ed.thesis ? `<div class="edu-thesis"><span class="edu-thesis-label">Thesis</span>${esc(ed.thesis)}</div>` : ""}
+      ${ed.teaching ? `<div class="edu-teaching">${esc(ed.teaching)}</div>` : ""}
       ${ed.coursework && ed.coursework.length ? `
         <div class="edu-coursework-label">Coursework</div>
         <div class="edu-coursework">${ed.coursework.map((c) => `<span class="skill-item">${esc(c)}</span>`).join("")}</div>
@@ -405,7 +460,6 @@
   contactActions.innerHTML = `
     <a class="btn btn-primary" href="mailto:${esc(C.meta.email)}">Email me →</a>
     <a class="btn btn-ghost" href="${esc(C.meta.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="btn btn-ghost" href="${esc(C.meta.resumeFile)}" download>Download résumé</a>
   `;
 
   /* ---------------- Footer ---------------- */
