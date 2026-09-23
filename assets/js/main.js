@@ -34,6 +34,27 @@
     a.addEventListener("click", () => $("#navLinks").classList.remove("open"))
   );
 
+  /* ---------------- Theme toggle ---------------- */
+  const SUN_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>`;
+  const MOON_ICON = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  const themeToggle = $("#themeToggle");
+  function currentTheme() {
+    return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  }
+  function paintThemeToggle() {
+    const isLight = currentTheme() === "light";
+    themeToggle.innerHTML = isLight ? MOON_ICON : SUN_ICON;
+    themeToggle.title = isLight ? "Switch to dark theme" : "Switch to light theme";
+  }
+  paintThemeToggle();
+  themeToggle.addEventListener("click", () => {
+    const next = currentTheme() === "light" ? "dark" : "light";
+    if (next === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    paintThemeToggle();
+  });
+
   /* ---------------- Hero ---------------- */
   $("#heroName").textContent = C.meta.name;
   $("#heroRole").textContent = C.meta.role;

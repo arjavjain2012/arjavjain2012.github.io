@@ -27,6 +27,18 @@
   --maxw: 1400px;
 }
 
+/* Light theme: the page background and body text flip to light, while
+   cards/tiles/nav keep their navy "chassis" look (those already have
+   light text and logos designed for a dark surface, so re-theming them
+   would mean redesigning every logo/icon for light-on-light). */
+:root[data-theme="light"] {
+  --bg: #eef1f4;
+  --line-soft: #dde3ea;
+  --text: #101820;
+  --text-dim: #445164;
+  --text-faint: #6b7789;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -116,18 +128,35 @@ header.nav {
 }
 .nav-links a {
   text-decoration: none;
-  color: var(--text-dim);
+  color: var(--text);
   font-family: var(--mono);
+  font-weight: 700;
   letter-spacing: 0.02em;
   transition: color 0.15s;
 }
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover { color: var(--accent); }
 .nav-social { display: flex; align-items: center; gap: 14px; }
 .nav-social-icon { display: flex; color: var(--text-dim); transition: color 0.15s; }
 .nav-social-icon svg { width: 17px; height: 17px; }
 .nav-social-icon-tight svg { width: 13px; height: 13px; }
 .nav-social-icon:hover { color: var(--accent); }
 .nav-social-icon.needs-input { color: var(--placeholder); }
+.theme-toggle {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: color 0.15s, border-color 0.15s;
+}
+.theme-toggle svg { width: 15px; height: 15px; }
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
 .nav-cta {
   border: 1px solid var(--accent);
   color: var(--accent) !important;
