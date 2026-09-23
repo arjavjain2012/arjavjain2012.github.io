@@ -144,7 +144,8 @@
   ];
   navSocialRows.forEach(([label, href]) => {
     const placeholder = isBlankPlaceholder(href);
-    const a = el("a", `nav-social-icon${placeholder ? " needs-input" : ""}`, CONTACT_ICONS[label]);
+    const sizeClass = label === "LinkedIn" ? " nav-social-icon-tight" : "";
+    const a = el("a", `nav-social-icon${sizeClass}${placeholder ? " needs-input" : ""}`, CONTACT_ICONS[label]);
     a.href = placeholder ? "#" : href;
     a.setAttribute("aria-label", label);
     if (!placeholder) { a.target = "_blank"; a.rel = "noopener"; }

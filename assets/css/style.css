@@ -130,6 +130,7 @@ header.nav {
 .nav-social { display: flex; align-items: center; gap: 14px; }
 .nav-social-icon { display: flex; color: var(--text-dim); transition: color 0.15s; }
 .nav-social-icon svg { width: 17px; height: 17px; }
+.nav-social-icon-tight svg { width: 13px; height: 13px; }
 .nav-social-icon:hover { color: var(--accent); }
 .nav-social-icon.needs-input { color: var(--placeholder); }
 .nav-cta {
@@ -326,16 +327,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   gap: 5px;
 }
 .id-info p svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--accent); }
-.uni-logo-wrap {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  padding: 6px 8px;
-  height: 34px;
-}
-.uni-logo { height: 100%; width: auto; object-fit: contain; display: block; }
+.uni-logo { height: 34px; width: auto; display: block; flex-shrink: 0; }
 @media (max-width: 860px) {
   .about-grid { grid-template-columns: 1fr; }
   .auth-col { height: auto; }
