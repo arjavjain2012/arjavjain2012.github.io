@@ -36,7 +36,7 @@ window.SITE_CONTENT = {
     github: "— add your GitHub profile URL —",
     profileImage: "assets/img/profile.jpg",
     university: "University of Illinois Urbana-Champaign",
-    universityLogo: "assets/img/logos/uiuc.svg"
+    universityLogo: "assets/img/logos/uiuc.png"
   },
 
   hero: {

@@ -391,7 +391,7 @@
     box.innerHTML = `
       <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
       <div class="detail-kicker">${esc(e.period)} · ${esc(e.location)} · ${esc(e.org)}</div>
-      <h2 class="detail-title">${esc(e.role)}</h2>
+      <div class="title-row">${e.logo ? `<img class="title-logo" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}<h2 class="detail-title">${esc(e.role)}</h2></div>
       <p class="detail-summary">${esc(e.summary || "")}</p>
       ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
       ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
@@ -422,7 +422,7 @@
       <div class="tile-image"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}" loading="lazy"></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(e.period)}</span><span class="project-status">${esc(e.location)}</span></div>
-        <h3>${esc(e.role)}</h3>
+        <div class="title-row">${e.logo ? `<img class="title-logo" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}<h3>${esc(e.role)}</h3></div>
         <div class="project-org">${esc(e.org)}</div>
         <p class="tile-summary">${esc(summary)}</p>
         <div class="hl-row">${linkedProject ? highlightChips(linkedProject) : ""}</div>
