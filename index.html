@@ -60,18 +60,20 @@
       <div class="section-head"><h2 class="section-title">About</h2><span class="section-rule"></span></div>
       <div class="about-grid">
         <div class="about-text" id="aboutText"></div>
-        <div class="auth-card">
-          <div class="identity-row">
-            <img id="profilePhoto" class="profile-photo" alt="Profile photo">
-            <div class="uni-badge">
-              <img id="uniLogo" class="uni-logo" alt="University logo">
-              <span id="uniName" class="uni-name"></span>
+        <div class="auth-col">
+          <div class="auth-card">
+            <div class="identity-row">
+              <div class="photo-wrap">
+                <img id="profilePhoto" class="profile-photo" alt="Profile photo">
+                <span class="location-badge" id="locationBadge"></span>
+              </div>
+              <div class="uni-badge">
+                <img id="uniLogo" class="uni-logo" alt="University logo">
+                <span id="uniName" class="uni-name"></span>
+              </div>
             </div>
           </div>
-          <h4>Status</h4>
-          <p id="authText"></p>
-          <p id="locationText"></p>
-          <ul class="contact-list" id="quickContact"></ul>
+          <div class="contact-icons" id="quickContact"></div>
         </div>
       </div>
     </div>
@@ -81,9 +83,8 @@
   <section id="experience">
     <div class="wrap">
       <div class="section-head"><h2 class="section-title">Work <span>Experience</span></h2><span class="section-rule"></span></div>
-      <p class="section-lede">Tesla, Jaguar Land Rover, and Log9 — thermal, electrical, and systems work on real production and pre-production programs.</p>
       <div class="exp-timeline" id="expTimeline"></div>
-      <div class="exp-list" id="expList"></div>
+      <div class="project-grid" id="expList"></div>
     </div>
   </section>
 
@@ -91,7 +92,6 @@
   <section id="thesis">
     <div class="wrap">
       <div class="section-head"><h2 class="section-title">Thesis <span>&amp; Publications</span></h2><span class="section-rule"></span></div>
-      <p class="section-lede">Bachelor's and Master's research, side by side — full write-ups in each card.</p>
       <div class="thesis-grid" id="thesisGrid"></div>
     </div>
   </section>
@@ -100,7 +100,6 @@
   <section id="projects">
     <div class="wrap">
       <div class="section-head"><h2 class="section-title">Projects <span>&amp; Research</span></h2><span class="section-rule"></span></div>
-      <p class="section-lede">Filter by discipline or by context. Every card expands for the full technical breakdown.</p>
       <div class="filter-bar" id="filterBar"></div>
       <div class="project-grid" id="projectGrid"></div>
       <p class="empty-state" id="emptyState" style="display:none;">No projects match that combination — try clearing a filter.</p>
@@ -130,7 +129,6 @@
   <section id="toolkit">
     <div class="wrap">
       <div class="section-head"><h2 class="section-title">Software <span>&amp; Manufacturing</span></h2><span class="section-rule"></span></div>
-      <p class="section-lede">Each tile shows the most complex work in that tool or process — open one for more evidence.</p>
       <h3 class="sub-head">Software</h3>
       <div class="tile-grid tile-grid-compact" id="softwareGrid"></div>
       <h3 class="sub-head">Manufacturing</h3>

@@ -30,14 +30,11 @@ window.SITE_CONTENT = {
     name: "Arjav Jain",
     role: "Master's in Mechanical Engineering",
     location: "Urbana-Champaign, IL, USA",
-    // Motorsport hiring (F1/WEC) filters hard on work-authorization and
-    // relocation flexibility — say this plainly so recruiters don't have to guess.
-    workAuthorization: "Open to relocation",
     email: "arjavj2@illinois.edu",
     phone: "+1 217-800-2530",
     linkedin: "https://www.linkedin.com/in/arjavjain20",
     github: "— add your GitHub profile URL —",
-    profileImage: "assets/img/placeholder-profile.svg",
+    profileImage: "assets/img/profile.jpg",
     university: "University of Illinois Urbana-Champaign",
     universityLogo: "assets/img/logos/uiuc.svg"
   },
@@ -591,6 +588,7 @@ window.SITE_CONTENT = {
       role: "Intern — System Integration & Test Engineer, Energy Products",
       location: "Palo Alto, CA, USA",
       period: "May 2026 – Aug 2026",
+      summary: "Root-caused a thermal runaway and validated derate strategy on a grid-scale energy product across its full qualification envelope.",
       bullets: [
         "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
         "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
@@ -606,6 +604,7 @@ window.SITE_CONTENT = {
       role: "Graduate EV-Powertrain Engineer Trainee, HV Systems",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
+      summary: "Two-year graduate program: initiated a carbon-negative range-extender concept and led production-intent thermal, mechanical, and electronics design of a solid-state contactor.",
       bullets: [
         "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
         "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
@@ -616,12 +615,13 @@ window.SITE_CONTENT = {
     {
       org: "Log9 Materials Scientific Pvt. Ltd.",
       logo: "assets/img/logos/log9.png",
-      productImage: "assets/img/products/log9-rapidx8000.jpg",
-      productCaption: "RapidX 8000 — Log9 Materials",
+      productImage: "assets/img/products/log9-rapidx8000-internal.jpg",
+      productCaption: "RapidX 8000 — internal module assembly",
       product: "RapidX",
       role: "Industrial Design Intern, RapidX",
       location: "Bengaluru, India",
       period: "May 2022 – Jul 2022",
+      summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
       bullets: [
         "Designed pack hardware — busbars, IP67 enclosure, and cell packaging — for a 368V/40Ah fast-charge LTO battery architecture."
       ],

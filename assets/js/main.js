@@ -96,24 +96,32 @@
   $("#uniLogo").src = C.meta.universityLogo;
   $("#uniName").textContent = C.meta.university;
 
-  const authTextEl = $("#authText");
-  authTextEl.innerHTML = isBlankPlaceholder(C.meta.workAuthorization)
-    ? `<span class="needs-input" title="Add your visa/work-authorization status in data/content.js">${esc(C.meta.workAuthorization)}</span>`
-    : esc(C.meta.workAuthorization);
-  $("#locationText").textContent = "Based in " + C.meta.location;
+  $("#locationBadge").innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+    <span>${esc(C.meta.location)}</span>
+  `;
 
+  const CONTACT_ICONS = {
+    Email: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>`,
+    Phone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.6 2.5h3l1.3 4.2-2.2 1.7a13.4 13.4 0 0 0 6.9 6.9l1.7-2.2 4.2 1.3v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 4.7a2 2 0 0 1 2-2.2z"/></svg>`,
+    LinkedIn: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+    GitHub: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`
+  };
   const quickContact = $("#quickContact");
   const contactRows = [
-    ["Email", `mailto:${C.meta.email}`, C.meta.email],
-    ["Phone", `tel:${C.meta.phone}`, C.meta.phone],
-    ["LinkedIn", C.meta.linkedin, "linkedin.com/in/arjavjain20"],
-    ["GitHub", C.meta.github, isBlankPlaceholder(C.meta.github) ? "add link" : C.meta.github]
+    ["Email", `mailto:${C.meta.email}`],
+    ["Phone", `tel:${C.meta.phone}`],
+    ["LinkedIn", C.meta.linkedin],
+    ["GitHub", C.meta.github]
   ];
-  contactRows.forEach(([label, href, display]) => {
-    const li = el("li");
+  contactRows.forEach(([label, href]) => {
     const placeholder = isBlankPlaceholder(href);
-    li.innerHTML = `<a href="${placeholder ? "#" : esc(href)}" class="${placeholder ? "needs-input" : ""}">${esc(label)}: ${esc(display)}</a>`;
-    quickContact.appendChild(li);
+    const a = el("a", `contact-icon${placeholder ? " needs-input" : ""}`, CONTACT_ICONS[label]);
+    a.href = placeholder ? "#" : href;
+    a.title = label;
+    a.setAttribute("aria-label", label);
+    if (!placeholder) { a.target = "_blank"; a.rel = "noopener"; }
+    quickContact.appendChild(a);
   });
 
   /* ---------------- Projects + Filters ---------------- */
@@ -383,41 +391,48 @@
   }
   renderExpTimeline();
 
+  function expDetail(e, linkedProject) {
+    const box = el("div", "detail");
+    box.innerHTML = `
+      <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
+      <div class="detail-kicker">${esc(e.period)} · ${esc(e.location)} · ${esc(e.org)}</div>
+      <h2 class="detail-title">${esc(e.role)}</h2>
+      <p class="detail-summary">${esc(e.summary || "")}</p>
+      ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
+      ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
+    `;
+    const h = el("h4", "detail-sub", "Development highlights");
+    const ul = el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join(""));
+    box.appendChild(h);
+    box.appendChild(ul);
+    if (linkedProject) {
+      const linkRow = el("div", "project-links");
+      const a = el("a", null, "Full project write-up →");
+      a.href = "#";
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        pushView({ crumb: shortTitle(linkedProject.title), render: () => projectDetail(linkedProject) });
+      });
+      linkRow.appendChild(a);
+      box.appendChild(linkRow);
+    }
+    return box;
+  }
+
   const expList = $("#expList");
   expByDate.forEach((e) => {
     const linkedProject = e.projectRef ? C.projects.find((p) => p.id === e.projectRef) : null;
-    const logoHtml = e.logo
-      ? `<img src="${esc(e.logo)}" alt="${esc(e.org)} logo">`
-      : `<span class="exp-logo-fallback">${esc(e.org.slice(0, 2).toUpperCase())}</span>`;
-    const productTagHtml = e.product ? `<span class="exp-product-tag">${esc(e.product)}</span>` : "";
-
-    const bulletsAndMetrics = `
-      <ul class="exp-bullets">${e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${linkedProject && linkedProject.metrics && linkedProject.metrics.length ? `<div class="metric-row exp-metric-row">${linkedProject.metrics.map(metricHtml).join("")}</div>` : ""}
-    `;
-    const productImageHtml = e.productImage ? `
-      <div class="exp-product-image">
-        <img src="${esc(e.productImage)}" alt="${esc(e.productCaption || e.org)}" loading="lazy">
-        ${e.productCaption ? `<div class="exp-product-caption">${esc(e.productCaption)}</div>` : ""}
-      </div>
-    ` : "";
-
-    const card = el("article", "exp-card");
-    card.innerHTML = `
-      <div class="exp-card-top">
-        <div class="exp-logo-badge">${logoHtml}</div>
-        <div class="exp-head">
-          <h3 class="exp-role">${esc(e.role)}</h3>
-          <div class="exp-org-row"><span class="exp-org">${esc(e.org)}</span>${productTagHtml}</div>
-          <div class="exp-meta"><span>${esc(e.location)}</span><span>${esc(e.period)}</span></div>
-        </div>
-      </div>
-      <div class="exp-card-body">
-        <div>${bulletsAndMetrics}</div>
-        ${productImageHtml}
-      </div>
-    `;
-    expList.appendChild(card);
+    const summary = e.summary || e.bullets[0];
+    expList.appendChild(makeTile(`
+      <div class="tile-image"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}" loading="lazy"></div>
+      <div class="tile-body">
+        <div class="project-meta"><span>${esc(e.period)}</span><span class="project-status">${esc(e.location)}</span></div>
+        <h3>${esc(e.role)}</h3>
+        <div class="project-org">${esc(e.org)}</div>
+        <p class="tile-summary">${esc(summary)}</p>
+        <div class="hl-row">${linkedProject ? highlightChips(linkedProject) : ""}</div>
+        <div class="tile-cta">View role →</div>
+      </div>`, () => pushView({ crumb: shortTitle(e.role), render: () => expDetail(e, linkedProject) }), "project-tile"));
   });
 
   /* ---------------- Thesis & Publications ---------------- */

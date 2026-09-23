@@ -18,9 +18,14 @@ log9.png — Log9 Materials' own wordmark, supplied directly by the site
 owner (Log9 has no icon in Simple Icons and their site renders its logo
 client-side via JS, which our fetch tools can't reach). The source image
 had an opaque white background; it's been background-removed (flood-fill
-to transparency) and cropped tight to the glyph so it matches the same
-`filter: brightness(0) invert(1)` treatment the other experience-card
-logos get in style.css (.exp-logo-badge img).
+to transparency) and cropped tight to the glyph.
+
+Note: the Experience tiles now use the same tile/detail template as
+Projects, so each entry's logo is only a fallback image (shown if
+`productImage` is null) rather than a dedicated badge — with a
+`productImage` set for Tesla, JLR, and Log9, these logo files aren't
+currently rendered anywhere, but are kept here in case a future entry
+has no product photo.
 
 Product photos (Tesla Powerwall, etc.) live in ../products/ instead of
 here — see ../products/README.txt.

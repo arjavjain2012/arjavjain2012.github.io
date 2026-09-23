@@ -57,30 +57,29 @@ a { color: inherit; }
 /* Compensates for the fixed 64px header: without this, clicking a nav
    link scrolls the target section's title right underneath the header,
    making it look cut off / like the section didn't load. */
-section { padding: 96px 0; border-top: 1px solid var(--line); scroll-margin-top: 84px; }
-section:first-of-type { border-top: none; }
+section { padding: 96px 0; scroll-margin-top: 84px; }
 
 .section-head {
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 48px;
 }
 .section-title {
-  font-size: clamp(24px, 3vw, 32px);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(38px, 6vw, 64px);
   margin: 0;
   letter-spacing: -0.01em;
+  line-height: 1.05;
 }
 .section-title span { color: var(--text-dim); font-weight: 400; }
 .section-rule {
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-}
-.section-lede {
-  color: var(--text-dim);
-  max-width: 640px;
-  margin: -20px 0 40px;
+  display: block;
+  width: 120px;
+  height: 4px;
+  background: var(--accent);
 }
 
 /* ---------- Nav ---------- */
@@ -304,6 +303,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 }
 .about-text p { color: var(--text-dim); margin: 0 0 18px; font-size: 16px; }
 .about-text p:first-child { color: var(--text); font-size: 18px; }
+.auth-col { display: flex; flex-direction: column; gap: 18px; }
 .auth-card {
   border: 1px solid var(--line);
   background: var(--bg-raised);
@@ -312,16 +312,33 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .identity-row {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 18px;
+  gap: 18px;
 }
+.photo-wrap { position: relative; flex-shrink: 0; }
 .profile-photo {
-  width: 72px;
-  height: 72px;
+  width: 92px;
+  height: 92px;
   object-fit: cover;
   border: 1px solid var(--line);
-  flex-shrink: 0;
+  display: block;
 }
+.location-badge {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  z-index: 2;
+}
+.location-badge svg { width: 11px; height: 11px; flex-shrink: 0; color: var(--accent); }
 .uni-badge {
   display: flex;
   flex-direction: column;
@@ -342,18 +359,20 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   color: var(--text-dim);
   letter-spacing: 0.02em;
 }
-.auth-card h4 {
-  margin: 0 0 10px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--teal);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.contact-icons { display: flex; gap: 10px; }
+.contact-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  transition: border-color 0.15s, color 0.15s;
 }
-.auth-card p { margin: 0 0 6px; font-size: 14.5px; color: var(--text-dim); }
-.contact-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.contact-list a { text-decoration: none; font-family: var(--mono); font-size: 13.5px; color: var(--text); border-bottom: 1px dotted var(--line); padding-bottom: 2px; }
-.contact-list a:hover { color: var(--teal); }
+.contact-icon svg { width: 18px; height: 18px; }
+.contact-icon:hover { border-color: var(--accent); color: var(--accent); }
+.contact-icon.needs-input { border-style: dashed; border-color: var(--placeholder); color: var(--placeholder); }
 @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } }
 
 /* ---------- Filters ---------- */
@@ -519,66 +538,6 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .exp-tl-tick { position: absolute; top: 0; transform: translateX(-50%); }
 .exp-tl-tick span { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
 
-/* ---------- Work Experience (3-up cards) ---------- */
-.exp-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
-.exp-card {
-  position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--accent);
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-}
-.exp-card-top {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-.exp-logo-badge {
-  flex: none;
-  width: 84px;
-  height: 84px;
-  border: 1px solid var(--line);
-  background: var(--bg-raised);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-}
-.exp-logo-badge img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.95; }
-.exp-logo-fallback {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 24px;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
-.exp-head { min-width: 0; }
-.exp-role { margin: 0 0 6px; font-size: 17px; line-height: 1.3; }
-.exp-org-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-.exp-org { color: var(--teal); font-size: 13.5px; font-weight: 500; }
-.exp-product-tag {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  color: var(--accent);
-  border: 1px solid var(--accent-dim);
-  background: rgba(239, 122, 110, 0.08);
-  padding: 2px 8px;
-  border-radius: var(--radius);
-}
-.exp-meta { display: flex; flex-direction: column; gap: 2px; font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
-.exp-bullets { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 13.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px; }
-.exp-metric-row { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
-.exp-card-body { display: flex; flex-direction: column; gap: 18px; }
-.exp-product-image { border: 1px solid var(--line); background: var(--bg-raised); }
-.exp-product-image img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-.exp-product-caption { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); padding: 8px 10px; border-top: 1px solid var(--line); }
-@media (max-width: 980px) { .exp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 620px) { .exp-list { grid-template-columns: 1fr; } }
 
 /* ---------- Thesis & Publications ---------- */
 .thesis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }

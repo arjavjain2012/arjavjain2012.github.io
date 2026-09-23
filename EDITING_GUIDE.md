@@ -150,29 +150,29 @@ Edit `meta.role`, `hero.hook`, and `about.paragraphs` near the top of the
 file. `hero.hook` is the one big sentence under your name in the hero —
 keep it to roughly 3 lines at desktop width, or it'll wrap awkwardly.
 
-### Update contact info, GitHub link, work authorization
+### Update contact info, GitHub link
 
-All in the `meta: { ... }` block near the top:
-`email`, `phone`, `linkedin`, `github`, `workAuthorization`.
-`workAuthorization` is worth prioritizing — EU/UK motorsport teams filter
-hard on visa sponsorship, and stating your situation plainly (e.g. "UK
-Graduate visa, no sponsorship required until [date]" or "will require
-sponsorship") saves everyone time and reads as confident, not as a
-weakness.
+All in the `meta: { ... }` block near the top: `email`, `phone`,
+`linkedin`, `github`. These render as the row of 4 icon links under the
+About card — each opens `mailto:`, `tel:`, or the URL directly.
 
-### The Experience timeline bar
+### The Experience timeline bar and cards
 
-The bar above the three Work Experience cards is computed automatically
-from each entry's `period` string — there's nothing to edit by hand. Just
-keep `period` in the "Mon YYYY – Mon YYYY" format (e.g. `"May 2026 – Aug
+The bar above the Work Experience tiles is computed automatically from
+each entry's `period` string — there's nothing to edit by hand. Just keep
+`period` in the "Mon YYYY – Mon YYYY" format (e.g. `"May 2026 – Aug
 2026"`) when you add or edit a role, and the bar's segment position/width
-and the card order (left = earliest) update themselves.
+and the tile order (left = earliest) update themselves. The tiles below
+the bar use the same tile-and-modal template as Projects — add a
+`summary` string to an experience entry (one line) for the tile, and its
+`bullets`/`productImage` show in the detail view when it's clicked.
 
 ### Add your profile photo
 
 Drop an image in `assets/img/` (a square crop works best, e.g. 400x400px),
-then set `meta.profileImage` in `content.js` to its path. It shows up as
-the small photo in the "Status" card in the About section.
+then set `meta.profileImage` in `content.js` to its path. It shows up next
+to your university logo in the About card, with `meta.location` as a small
+floating badge on the photo's corner.
 
 ### Reorder sections or change the nav
 
