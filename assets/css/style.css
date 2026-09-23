@@ -327,7 +327,16 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   gap: 5px;
 }
 .id-info p svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--accent); }
-.uni-logo { height: 34px; width: auto; display: block; flex-shrink: 0; }
+.uni-logo-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  width: 131px;
+  height: 34px;
+}
+.uni-logo { height: 26px; width: auto; object-fit: contain; display: block; }
 @media (max-width: 860px) {
   .about-grid { grid-template-columns: 1fr; }
   .auth-col { height: auto; }
