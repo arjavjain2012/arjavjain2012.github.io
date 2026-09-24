@@ -33,27 +33,41 @@
    would mean redesigning every logo/icon for light-on-light). */
 :root[data-theme="light"] {
   --bg: #eef1f4;
+  --bg-raised: #ffffff;
+  --bg-card: #ffffff;
   --line-soft: #dde3ea;
   --text: #101820;
   --text-dim: #445164;
   --text-faint: #6b7789;
+  /* --accent/--teal/--placeholder are tuned as light foreground colors
+     for dark navy surfaces; on the now-white cards/page they read as
+     washed out, so darken them here for readable contrast. The "-dim"
+     tint/border variants are left alone since a dark border reads fine
+     against either a light or dark surface. */
+  --accent: #d5473a;
+  --teal: #1c6690;
+  --placeholder: #93690a;
 }
-/* These surfaces stay navy regardless of theme (see note above), so
+/* The nav bar stays navy regardless of theme (see note above), so
    re-scope the text tokens back to their light-on-dark values for
-   everything nested inside them — otherwise they'd inherit the light
-   theme's dark text color onto their own dark background. */
+   everything nested inside it — otherwise it'd inherit the light
+   theme's dark text color onto its own dark background. Cards/tiles now
+   flip to light along with --bg-raised/--bg-card above, so they don't
+   need this — they just follow the normal (now light-theme) text colors. */
 :root[data-theme="light"] header.nav,
-:root[data-theme="light"] .nav-links,
-:root[data-theme="light"] .stat-strip,
-:root[data-theme="light"] .stat-popover,
-:root[data-theme="light"] .id-block,
-:root[data-theme="light"] .thesis-card,
-:root[data-theme="light"] .edu-card,
-:root[data-theme="light"] .tile,
-:root[data-theme="light"] .gallery-item {
+:root[data-theme="light"] .nav-links {
   --text: #eef3f7;
   --text-dim: #a9c2d6;
   --text-faint: #6d90ab;
+  --accent: #ef7a6e;
+}
+/* Company logos in Experience cards are white-on-transparent (built for
+   a dark card); on a light card force them to a dark silhouette instead
+   so they stay visible. This also overrides Log9's own colors in light
+   mode — it loses its teal accent there, but stays legible. */
+:root[data-theme="light"] .exp-logo-big {
+  filter: brightness(0);
+  opacity: 0.85;
 }
 
 * { box-sizing: border-box; }
