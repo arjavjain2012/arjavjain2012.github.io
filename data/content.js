@@ -322,7 +322,7 @@ window.SITE_CONTENT = {
       org: "Illini Electric Motorsports, UofI",
       context: "Formula Student",
       period: "Sep 2025 – Present",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/iem26.webp",
       tags: ["Vehicle Dynamics & Simulation"],
       summary: "Driver-in-the-loop simulation for UIUC's current FSAE Electric build.",
       bullets: [
@@ -381,7 +381,7 @@ window.SITE_CONTENT = {
       org: "IIT Roorkee Motorsports, IITR",
       context: "Formula Student",
       period: "Apr 2022 – Jul 2023",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/rmse23.jpg",
       tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
       summary: "Chassis, vehicle dynamics, powertrain cooling, and LV electronics for the team's third EV — 1st in Engineering Design and 2nd in Cost & Manufacturing at FSUK'23.",
       metrics: [
@@ -442,7 +442,7 @@ window.SITE_CONTENT = {
       org: "IIT Roorkee Motorsports, IITR",
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/rmse21.jpg",
       tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
       summary: "Powertrain selection, brake/accumulator thermal, full-vehicle structures, and BMS electronics for the team's second EV.",
       bullets: [
