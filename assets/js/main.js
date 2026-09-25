@@ -104,12 +104,13 @@
   const statPopover = $("#statPopover");
   function renderPubPopover() {
     const rows = allPubs.map((p) => {
-      if (p.isPlaceholder || isBlankPlaceholder(p.url)) {
+      if (isBlankPlaceholder(p.title)) {
         return `<li class="pub-item pub-placeholder"><div class="pub-meta">${esc(p.thesisLevel)}</div><span class="needs-input">— add publication details —</span></li>`;
       }
+      const isLink = !isBlankPlaceholder(p.url);
       return `<li class="pub-item">
         <div class="pub-meta">${esc(p.thesisLevel)}</div>
-        <div class="pub-title"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a></div>
+        <div class="pub-title">${isLink ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a>` : esc(p.title)}</div>
         <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
       </li>`;
     }).join("");
@@ -131,11 +132,13 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePopover(); });
 
   C.hero.stats.forEach((s) => {
-    const stat = el("div", "stat");
+    const stat = el(s.link ? "button" : "div", `stat${s.link ? " stat-clickable" : ""}`);
+    if (s.link) stat.type = "button";
     const isPh = s.isPlaceholder || isBlankPlaceholder(s.value);
     stat.innerHTML = isPh
       ? `<div class="stat-value needs-input">add value</div><div class="stat-label needs-input">${esc(s.label)}</div>`
       : `<div class="stat-value">${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ""}</div><div class="stat-label">${esc(s.label)}</div>`;
+    if (s.link) stat.addEventListener("click", () => document.querySelector(s.link)?.scrollIntoView({ behavior: "smooth" }));
     statStrip.appendChild(stat);
   });
 
@@ -420,7 +423,7 @@
   const thesisGrid = $("#thesisGrid");
   (C.theses || []).forEach((t) => {
     const pubsHtml = (t.publications || []).map((p) => {
-      if (p.isPlaceholder || isBlankPlaceholder(p.url)) {
+      if (isBlankPlaceholder(p.title)) {
         return `<li class="pub-item pub-placeholder">
           <span class="needs-input">— add publication details —</span>
         </li>`;

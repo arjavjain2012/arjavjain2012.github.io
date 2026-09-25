@@ -55,7 +55,7 @@ window.SITE_CONTENT = {
     // Boxes 2-4 are blank placeholders — fill in value/unit/label and
     // delete `isPlaceholder: true` on each one you complete.
     stats: [
-      { value: "2+", label: "Years of work experience" },
+      { value: "2+", label: "Years of work experience", link: "#experience" },
       { value: "4+", label: "Years in FSAE" },
       { value: "", label: "— add a stat —", isPlaceholder: true }
     ]
@@ -92,7 +92,20 @@ window.SITE_CONTENT = {
         { label: "Best micro-cooler", value: "0.0048 K/W (5x better)" }
       ],
       publications: [
-        { title: "", venue: "", status: "", url: "— add publication details —", isPlaceholder: true }
+        {
+          title: "Data Center Thermal Analysis using Dynamic System Modeling",
+          venue: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
+          status: "In progress",
+          url: "— add publication details —",
+          isPlaceholder: true
+        },
+        {
+          title: "Techno-Economic and Life-Cycle Assessment of Carbon-Negative Hydrogen via Direct Reforming of Raw Biogas with Integrated CO₂ Capture and Storage",
+          venue: "— add venue —",
+          status: "In progress",
+          url: "— add publication details —",
+          isPlaceholder: true
+        }
       ]
     },
     {
@@ -115,11 +128,10 @@ window.SITE_CONTENT = {
       ],
       publications: [
         {
-          title: "Evaluating Models for Knock Timing and Autoignition Mode Prediction with 2D DNS",
+          title: "Evaluating Simple Models for Knock Timing and Autoignition Mode Prediction with 2D DNS of n-Heptane in an Enclosure",
           venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
-          status: "Submitted",
-          url: "— add paper/preprint link once available —",
-          isPlaceholder: true
+          status: "Published",
+          url: "https://www.researchgate.net/publication/414365684_Evaluating_simple_models_for_knock_timing_and_autoignition_mode_prediction_with_2D_DNS_of_n-heptane_in_an_enclosure"
         }
       ]
     }
