@@ -343,7 +343,7 @@ window.SITE_CONTENT = {
       org: "Spectroscopy Course Project, Combustion Diagnostics Lab, UofI",
       context: "Research",
       period: "Sep 2025 – Dec 2025",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/combustion-lab.jpg",
       tags: ["Combustion & Powertrain Research"],
       summary: "Laser/optical diagnostics to map OH radical temperature and concentration inside small flames.",
       bullets: [
@@ -361,7 +361,7 @@ window.SITE_CONTENT = {
       org: "Reverse Engineering and Rapid Tooling Course Project, IIT Roorkee",
       context: "Research",
       period: "Feb 2023 – May 2023",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/magnesium-wheels.png",
       tags: ["Structures & Composites"],
       summary: "Lightweighting a cast wheel and proving out rapid tooling to cut cost and lead time for low-volume casting.",
       bullets: [
@@ -400,7 +400,7 @@ window.SITE_CONTENT = {
       org: "Mechanical & Industrial Engineering Dept., IIT Roorkee — Independent Project, in collaboration with Dorle Controls, Michigan",
       context: "Industry",
       period: "Jan 2022 – May 2022",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/dorle.png",
       tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
       summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
       bullets: [
@@ -421,7 +421,7 @@ window.SITE_CONTENT = {
       org: "Mechanical & Industrial Engineering Dept., IIT Roorkee (Guide: Prof. Ankit Bansal)",
       context: "Research",
       period: "Sep 2021 – Nov 2021",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/turbojet-nozzle.png",
       tags: ["Combustion & Powertrain Research"],
       summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
       bullets: [
