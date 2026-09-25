@@ -44,10 +44,10 @@ window.SITE_CONTENT = {
     // (e.g. a future meta-description). The site renders `hookLines` below
     // instead so the 3 sentences sit on 3 close-to-equal-width lines rather
     // than wrapping wherever the browser feels like.
-    hook: "I design multi-physics hardware that keeps every constraint in balance. Five Formula Student seasons, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
+    hook: "I design multi-physics hardware that keeps every constraint in balance. Five Formula Student years, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
     hookLines: [
       "I design multi-physics hardware that keeps every constraint in balance. Five",
-      "Formula Student seasons, two years at JLR and a summer at Tesla taught me",
+      "Formula Student years, two years at JLR and a summer at Tesla taught me",
       "performance lives in that balance. Every design since has been faster than the last."
     ],
     // Box 1 of the stat strip is generated automatically from the Thesis &
@@ -56,7 +56,7 @@ window.SITE_CONTENT = {
     // delete `isPlaceholder: true` on each one you complete.
     stats: [
       { value: "2+", label: "Years of work experience", link: "#experience" },
-      { value: "4+", label: "Years in FSAE" },
+      { value: "5+", label: "Years in FSAE", link: "#fsae" },
       { value: "", label: "— add a stat —", isPlaceholder: true }
     ]
   },
@@ -101,7 +101,7 @@ window.SITE_CONTENT = {
         },
         {
           title: "Techno-Economic and Life-Cycle Assessment of Carbon-Negative Hydrogen via Direct Reforming of Raw Biogas with Integrated CO₂ Capture and Storage",
-          venue: "— add venue —",
+          venue: "University of Illinois Urbana-Champaign",
           status: "In progress",
           url: "— add publication details —",
           isPlaceholder: true
