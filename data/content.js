@@ -412,6 +412,7 @@ window.SITE_CONTENT = {
       context: "Industry",
       period: "Jan 2022 – May 2022",
       image: "assets/img/projects/dorle.png",
+      imageFit: "contain",
       tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
       summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
       bullets: [
@@ -518,6 +519,7 @@ window.SITE_CONTENT = {
       context: "Competition",
       period: "Mar 2022",
       image: "assets/img/projects/jlr-bonnet.png",
+      imageFit: "contain",
       tags: ["Electronics & Controls"],
       summary: "Gold medal-winning actuation system, designed both mathematically and mechanically, to power a car's bonnet.",
       bullets: [
@@ -621,6 +623,7 @@ window.SITE_CONTENT = {
       context: "Competition",
       period: "Aug 2020",
       image: "assets/img/projects/nav-ujjwal.png",
+      imageFit: "contain",
       tags: ["Structures & Composites"],
       summary: "Designed an autonomous drone to transport essentials to differently-abled groups, including its carbon-fiber frame.",
       bullets: [
