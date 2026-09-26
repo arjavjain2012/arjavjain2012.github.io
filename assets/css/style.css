@@ -100,7 +100,16 @@ a { color: inherit; }
 /* Compensates for the fixed 64px header: without this, clicking a nav
    link scrolls the target section's title right underneath the header,
    making it look cut off / like the section didn't load. */
-section { padding: 96px 0; scroll-margin-top: 84px; }
+section { padding: 96px 0; scroll-margin-top: 84px; position: relative; z-index: 0; }
+.bg-drawing {
+  position: absolute;
+  z-index: -1;
+  opacity: 0.2;
+  pointer-events: none;
+  height: auto;
+  max-width: 40%;
+}
+@media (max-width: 1150px) { .bg-drawing { display: none; } }
 
 .section-head {
   display: flex;
