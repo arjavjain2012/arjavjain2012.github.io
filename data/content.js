@@ -694,6 +694,46 @@ window.SITE_CONTENT = {
         "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
         "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
         "Led production-intent mechanical and thermal design of a solid-state contactor rejecting 24 W/cm², at a 2.9 vibration safety factor."
+      ],
+      achievements: [
+        { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global — CH4 REEV concept", date: "2024" },
+        { title: "5 Internal Invention Disclosures Filed", org: "DC-link capacitor pre-charging, REEV, and charge-depletion control", date: "2024–25" },
+        { title: '"Exceptional Creator" Recognition', org: "Twice awarded by JLR — FY24 and FY25", date: "2024, 2025" },
+        { title: "Gold Medal, Inter IIT Tech Meet 10.0", org: "Automotive problem statement set by JLR — powered bonnet actuator", date: "Fall 2022" },
+        { title: "Ashorne Hill Graduate Program", org: "Completed JLR's leadership, stakeholder management, and project-execution program", date: "2023–25" }
+      ],
+      subProjects: [
+        {
+          id: "ssc",
+          title: "Solid-State Contactor (SSC)",
+          image: "assets/img/products/jlr-ssc-contactor.jpg",
+          bullets: [
+            "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), taking it from packaging concept to prototype via DFM.",
+            "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and the SSC, rejecting 24 W/cm²; validated a 35 K junction margin on an instrumented coolant-loop rig at 17 kPa drop.",
+            "Designed 650 A C101 busbars to IEC 60664-1 creepage and clearance to minimise loop inductance, and the IP67 SSC enclosure with sealed, low-thermal-resistance O-ring, gasket, and TIM joints.",
+            "Ran worst-case tolerance stack-ups and applied ASME Y14.5 GD&T to position coreless current sensors within 0.30 mm; verified a 2.9 minimum safety factor by modal and random-vibration FEA to ISO 16750-3.",
+            "Designed closed-loop pre-charge and I²t e-fuse control, tuning a 3 W 4-switch buck-boost converter via Bode analysis to 55° phase margin, and laid out its PCB with sensing and gate drive.",
+            "Designed a hybrid RCD/TVS snubber for the SSC after simulating 11 topologies, clamping turn-off to 1.1 kV, and applied IEC 60664-1 creepage and clearance across its 1500 V mechanical and PCB design."
+          ]
+        },
+        {
+          id: "reev",
+          title: "Range-Extended EV (CH4 REEV)",
+          bullets: [
+            "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
+            "Developed a 50 kg cryogenic CH4 storage and delivery concept, modeling tank heat ingress to limit boil-off to 2% per day.",
+            "Developed a road-load-based charge-depletion strategy to schedule APU operation, cutting fuel use 33% per drive cycle."
+          ]
+        },
+        {
+          id: "xhev",
+          title: "xHEV Powerpack",
+          bullets: [
+            "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
+            "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware.",
+            "Developed PID position control for a powered bonnet actuator via H-bridge PWM drive, accurate to within 0.8 mm."
+          ]
+        }
       ]
     },
     {

@@ -369,7 +369,7 @@
     return { start, end: end || start, isPresent };
   }
 
-  const expByDate = [...C.experience].sort((a, b) => parsePeriod(a.period).start.index - parsePeriod(b.period).start.index);
+  const expByDate = [...C.experience].sort((a, b) => parsePeriod(b.period).start.index - parsePeriod(a.period).start.index);
 
   function expDetail(e, linkedProject) {
     const box = el("div", "detail");
@@ -387,10 +387,42 @@
       ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
       ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
     `;
-    const h = el("h4", "detail-sub", "Development highlights");
-    const ul = el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join(""));
-    box.appendChild(h);
-    box.appendChild(ul);
+    if (e.subProjects && e.subProjects.length) {
+      if (e.achievements && e.achievements.length) {
+        box.appendChild(el("h4", "detail-sub", "Achievements"));
+        const aul = el("ul", "award-list");
+        e.achievements.forEach((a) => {
+          const li = el("li", "award-item");
+          li.innerHTML = `
+            <div><div class="award-title">${esc(a.title)}</div><div class="award-org">${esc(a.org)}</div></div>
+            <div class="award-date">${esc(a.date)}</div>
+          `;
+          aul.appendChild(li);
+        });
+        box.appendChild(aul);
+      }
+      box.appendChild(el("h4", "detail-sub", "Projects"));
+      const projWrap = el("div", "jlr-projects");
+      e.subProjects.forEach((p) => {
+        const details = document.createElement("details");
+        details.className = "jlr-project";
+        details.innerHTML = `
+          <summary class="jlr-project-summary">
+            <span class="jlr-project-title">${esc(p.title)}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="jlr-project-body">
+            ${p.image ? `<div class="jlr-project-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>` : ""}
+            <ul class="detail-list jlr-project-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+          </div>
+        `;
+        projWrap.appendChild(details);
+      });
+      box.appendChild(projWrap);
+    } else {
+      box.appendChild(el("h4", "detail-sub", "Development highlights"));
+      box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));
+    }
     if (linkedProject) {
       const linkRow = el("div", "project-links");
       const a = el("a", null, "Full project write-up →");
