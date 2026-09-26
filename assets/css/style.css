@@ -108,7 +108,7 @@ section { padding: 96px 0; scroll-margin-top: 84px; position: relative; z-index:
   opacity: 0.4;
   pointer-events: none;
   height: auto;
-  max-width: 60%;
+  max-width: 85%;
 }
 @media (max-width: 1150px) { .bg-drawing { display: none; } }
 

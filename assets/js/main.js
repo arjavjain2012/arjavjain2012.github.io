@@ -535,17 +535,17 @@
   // behind it). Each sits in a section corner and is free to be covered by
   // that section's cards — see .bg-drawing in style.css.
   const BG_DRAWINGS = [
-    { section: "experience", image: "motor-mount-front.png", side: "right", vpos: "top", width: 320, rotate: -6 },
-    { section: "experience", image: "front-upright-front.png", side: "left", vpos: "bottom", width: 300, rotate: 4 },
-    { section: "fsae", image: "chassis-tubes-side.png", side: "right", vpos: "bottom", width: 440, rotate: -3 },
-    { section: "thesis", image: "dashboard-side.png", side: "right", vpos: "top", width: 280, rotate: 6 },
-    { section: "thesis", image: "rocker-connect-front.png", side: "left", vpos: "bottom", width: 300, rotate: -5 },
-    { section: "projects", image: "tubes-mounts-side.png", side: "left", vpos: "bottom", width: 420, rotate: 3 },
-    { section: "projects", image: "firewall-front.png", side: "right", vpos: "top", width: 300, rotate: 5 },
-    { section: "leadership", image: "rack-pinion-side.png", side: "left", vpos: "top", width: 380, rotate: -4 },
-    { section: "education", image: "brake-disc-front.png", side: "right", vpos: "bottom", width: 340, rotate: 4 },
-    { section: "toolkit", image: "steering-wheel-front.png", side: "left", vpos: "top", width: 340, rotate: -5 },
-    { section: "skills", image: "front-upright-struct-front.png", side: "right", vpos: "bottom", width: 320, rotate: 4 }
+    { section: "experience", image: "motor-mount-front.png", side: "right", vpos: "top", width: 620, rotate: -6 },
+    { section: "experience", image: "front-upright-front.png", side: "left", vpos: "bottom", width: 580, rotate: 4 },
+    { section: "fsae", image: "chassis-tubes-side.png", side: "right", vpos: "bottom", width: 760, rotate: -3 },
+    { section: "thesis", image: "dashboard-side.png", side: "right", vpos: "top", width: 540, rotate: 6 },
+    { section: "thesis", image: "rocker-connect-front.png", side: "left", vpos: "bottom", width: 580, rotate: -5 },
+    { section: "projects", image: "tubes-mounts-side.png", side: "left", vpos: "bottom", width: 740, rotate: 3 },
+    { section: "projects", image: "firewall-front.png", side: "right", vpos: "top", width: 580, rotate: 5 },
+    { section: "leadership", image: "rack-pinion-side.png", side: "left", vpos: "top", width: 700, rotate: -4 },
+    { section: "education", image: "brake-disc-front.png", side: "right", vpos: "bottom", width: 640, rotate: 4 },
+    { section: "toolkit", image: "steering-wheel-front.png", side: "left", vpos: "top", width: 640, rotate: -5 },
+    { section: "skills", image: "front-upright-struct-front.png", side: "right", vpos: "bottom", width: 600, rotate: 4 }
   ];
   BG_DRAWINGS.forEach((d) => {
     const host = $("#" + d.section);
