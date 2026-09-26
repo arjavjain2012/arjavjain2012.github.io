@@ -281,7 +281,18 @@
       box.appendChild(h); box.appendChild(ul);
     }
     if (p.links && p.links.length) box.appendChild(el("div", "project-links", p.links.map(linkHtml).join("")));
+    if (p.tools && p.tools.length) {
+      const h = el("h4", "detail-sub", "Tools Used");
+      const row = el("div", "tools-row", p.tools.map(toolBadge).join(""));
+      box.appendChild(h); box.appendChild(row);
+    }
     return box;
+  }
+
+  function toolBadge(t) {
+    return t.logo
+      ? `<div class="tool-badge" title="${esc(t.name)}"><img src="${esc(t.logo)}" alt="${esc(t.name)}" loading="lazy"></div>`
+      : `<div class="tool-badge tool-badge-text">${esc(t.name)}</div>`;
   }
 
   function highlightChips(p) {

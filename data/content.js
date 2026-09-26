@@ -301,15 +301,22 @@ window.SITE_CONTENT = {
       tags: ["Thermal & Energy Systems"],
       summary: "Multi-objective CFD optimization of an EV battery cold plate, sped up with a machine-learned surrogate model.",
       bullets: [
-        "Ran 50 conjugate heat transfer cases in ANSYS Fluent on an EV battery cold plate via a Latin hypercube DOE over 4 variables.",
-        "Trained an XGBoost surrogate on the CFD dataset, predicting pressure drop to R² 0.92 and cutting design evaluation to seconds."
+        "Ran 50 conjugate heat transfer cases in ANSYS Fluent on an EV battery cold plate via a Latin hypercube DOE over 4 variables, confirming fully laminar flow (Re < 500) across the design space.",
+        "Trained an XGBoost surrogate on the CFD dataset with scikit-learn, predicting pressure drop to R² 0.92 and cutting design evaluation to seconds.",
+        "Identified an optimal design point balancing 0.05 K/W thermal resistance against just 0.0055 W pumping power, and ran feature-importance analysis to show flow velocity and Reynolds number dominate both thermal and hydraulic behavior."
       ],
       metrics: [
         { label: "CFD cases run", value: "50 (Latin hypercube DOE)" },
-        { label: "Surrogate accuracy", value: "R² 0.92" },
-        { label: "Design evaluation time", value: "cut to seconds" }
+        { label: "Surrogate accuracy (pressure drop)", value: "R² 0.92" },
+        { label: "Optimal design point", value: "0.05 K/W, 0.0055 W pump" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" },
+        { name: "Python", logo: "assets/img/tools/python.svg" },
+        { name: "scikit-learn", logo: "assets/img/tools/scikit-learn.svg" },
+        { name: "XGBoost" }
+      ]
     },
     {
       id: "iem26",
@@ -342,11 +349,15 @@ window.SITE_CONTENT = {
       tags: ["Combustion & Powertrain Research"],
       summary: "Laser/optical diagnostics to map OH radical temperature and concentration inside small flames.",
       bullets: [
-        "Measured OH radical temperature and mass fraction in candle, butane, propane, sterno, and hexamine flames by UV absorption.",
-        "Spatially resolved flame temperature by line-of-sight measurement, cross-checking absorption results against emission spectra."
+        "Built a UV broadband absorption spectroscopy (BAS) rig around a 310nm LED source, a 1.54m Czerny-Turner spectrometer, and an Andor iDus CCD, wavelength-calibrated against an Hg lamp.",
+        "Extracted OH line parameters from the LIFBASE and HITRAN databases and ran Boltzmann analysis on measured absorbance to determine rotational temperature at two heights above each flame.",
+        "Characterized 5 fuels (butane, propane, candle wax, sterno gel, hexamine) by BAS, finding gaseous flames burn hottest (propane 2184 K) and cleanest, while sooting solid/gel fuels run cooler (candle down to 1030 K) with weaker OH signal.",
+        "Cross-checked absorption-based temperatures against chemiluminescence emission spectra, and implemented rolling-percentile baseline masking to isolate OH features from continuum background."
       ],
       metrics: [
-        { label: "Flames characterized", value: "5" }
+        { label: "Flames characterized", value: "5" },
+        { label: "Temperature range measured", value: "1030–2184 K" },
+        { label: "OH mole fraction range", value: "0.0006–0.043" }
       ],
       links: []
     },
@@ -360,15 +371,20 @@ window.SITE_CONTENT = {
       tags: ["Structures & Composites"],
       summary: "Lightweighting a cast wheel and proving out rapid tooling to cut cost and lead time for low-volume casting.",
       bullets: [
-        "Compared wheel geometries by FEA under lateral, bump, torsion, and mounting load cases, selecting the final design by Pugh matrix.",
-        "Designed printed sand-casting tooling with draft, shrinkage compensation, and machining stock, cutting tooling lead time 54%.",
+        "Benchmarked the team's existing 3-piece aluminum wheel by FEA, then used a QFD to prioritize a one-piece cast-magnesium redesign on mechanics, manufacturing, and aesthetics.",
+        "Validated and optimized the new spoke design against the incumbent under 1000 lb torsion, lateral, and longitudinal loads plus a 100 lb mounting load, matching stiffness at 25% lower weight.",
+        "Designed and 3D-printed the sand-casting tooling (accounting for 2% linear shrinkage in AZ91C-T4 magnesium), cutting tooling lead time 54% and cost 49.6% versus machined aluminum tooling.",
         "Cast the wheel in magnesium and verified dimensional conformance by CMM and 3D scanning to within 0.5 mm of nominal."
       ],
       metrics: [
-        { label: "Tooling lead time saved", value: "54%" },
+        { label: "Weight reduction", value: "25% (~4 lb)" },
+        { label: "Tooling lead time / cost saved", value: "54% / 49.6%" },
         { label: "Dimensional conformance", value: "within 0.5 mm" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "SolidWorks" }
+      ]
     },
     {
       id: "rmse23",
@@ -399,16 +415,19 @@ window.SITE_CONTENT = {
       tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
       summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
       bullets: [
-        "Developed a high-fidelity state-space representation from the ground up to model transient handling dynamics and cornering stability.",
+        "Led a 5-person team building a 14-DOF full-vehicle model in MATLAB/Simulink from first-principles equations, split across powertrain/braking, ride, handling, and suspension subsystems.",
+        "Owned the powertrain & braking subsystem: modeled the electric powertrain and hydraulic brakes with 2D lookup tables for motor efficiency, outputting wheel torque, battery SOC, and motor power from driver throttle/brake inputs.",
         "Implemented racing-line optimization using the minimum-curvature method to generate time-optimal trajectories for a specific circuit.",
-        "Coupled ride, handling, and suspension subsystems to resolve vertical, roll, pitch, and yaw dynamics under road profile and steer inputs.",
-        "Validated the integrated model against constant-velocity and acceleration test cases, checking normal load and weight distribution."
+        "Integrated all subsystems through a shared tyre sub-block outputting tire forces, moments, and wheel speeds, then validated the full model against constant-velocity and acceleration test cases."
       ],
       metrics: [
         { label: "Model fidelity", value: "14-DOF" },
         { label: "Optimization method", value: "Minimum curvature" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" }
+      ]
     },
     {
       id: "turbojet-nozzle",
@@ -421,15 +440,20 @@ window.SITE_CONTENT = {
       summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
       bullets: [
         "Examined the Method of Characteristics for designing shock-free, isentropic supersonic flow nozzles.",
-        "Ran 2D CFD simulations with an inviscid solver in ANSYS Fluent to analyze a spiked intake and de Laval nozzle for a turbojet engine.",
+        "Modeled a 2D axisymmetric converging-diverging nozzle in SolidWorks and ran density-based, inviscid ANSYS Fluent CFD, refining a hex-dominant mesh from 5mm to 0.1–0.5mm elements (11,770 nodes) to resolve the shock structure.",
+        "Analyzed a spiked supersonic intake at Mach 1, 2, and 3 free-stream conditions, and identified over- and under-expanded regimes on the nozzle by sweeping outlet back-pressure.",
         "Evaluated how exit and ambient pressure affect nozzle expansion behavior for supersonic flight up to Mach 2."
       ],
       metrics: [
         { label: "Design method", value: "Method of Characteristics" },
-        { label: "Max flight speed studied", value: "Mach 2" },
-        { label: "CFD solver", value: "ANSYS Fluent (inviscid)" }
+        { label: "Max flight speed studied", value: "Mach 3 (intake)" },
+        { label: "Mesh refinement", value: "5mm → 0.1–0.5mm" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "SolidWorks" },
+        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
+      ]
     },
     {
       id: "rmse21",
@@ -475,10 +499,14 @@ window.SITE_CONTENT = {
       tags: ["Structures & Composites"],
       summary: "24-hour hackathon redesigning a long-haul truck driver's cabin with drivers and cabin experts.",
       bullets: [
-        "Ideated an improved drivers' cabin for long-haul trucks with direct input from drivers and cabin experts in a 24-hour event.",
-        "Devised a system package to raise driver performance by lowering overall in-cabin NVH levels."
+        "Ran a weighted decision matrix across candidate cabin problems (ventilation, fatigue, seating, theft) to prioritize a Noise-Vibration-Harshness (N-V-H) redesign, backed by a driver survey and literature on fatigue-linked accident risk.",
+        "Proposed Active Noise Cancellation (DSP + microphones) to cut in-cabin noise from 90–104 dB toward the 85 dB nominal target, reducing measured noise by up to 43%.",
+        "Proposed an air-cushion seating system to counter cabin vibration, projected to cut vibration by 33%, fatigue by 14%, and seating pressure by 18% versus a foam-cushion seat.",
+        "Proposed an active seat-suspension system for load-adaptive damping against road harshness, completing the N-V-H solution set within an estimated ₹19,000 component cost."
       ],
       metrics: [
+        { label: "Noise reduction", value: "up to 43%" },
+        { label: "Vibration reduction", value: "up to 33%" },
         { label: "Result", value: "2nd Runner-up, Innovate'22" }
       ],
       links: []
@@ -493,13 +521,22 @@ window.SITE_CONTENT = {
       tags: ["Electronics & Controls"],
       summary: "Gold medal-winning actuation system, designed both mathematically and mechanically, to power a car's bonnet.",
       bullets: [
-        "Devised a system, both mathematically and mechanically, to actuate the bonnet of a car.",
-        "Performed actuator selection calculations and built a model of all physical actuating components."
+        "Benchmarked existing powered-tailgate mechanisms and selected direct linear actuation over a slider-crank design for fewer parts and lower friction loss, using 2 Ti Motion TA23 linear actuators driven by an Arduino UNO and Cytron motor driver.",
+        "Derived the bonnet-angle/actuator-length governing equations and solved them numerically in MATLAB (fzero), then optimized U- and T-mount positions in SolidWorks to minimize peak actuator load.",
+        "Modeled the full electro-mechanical system in Simulink/Simscape with PWM/H-bridge and PI control, simulating a 9–14 kg bonnet settling within ±1° of its final angle in 4 seconds at 300.3 J.",
+        "FEA-verified the CNC-machined Al-3003 mounts to a minimum FoS of 1.34, and packaged the mechanism into just 32% of the available bonnet volume for under ₹20,000 in parts — scoring 142/150 for Gold at Inter IIT Tech Meet 10.0."
       ],
       metrics: [
-        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 10.0" }
+        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 10.0" },
+        { label: "Score", value: "142 / 150" },
+        { label: "Bill of materials", value: "< ₹20,000" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "SolidWorks" },
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" },
+        { name: "Arduino", logo: "assets/img/tools/arduino.svg" }
+      ]
     },
     {
       id: "pedalthon",
@@ -511,13 +548,22 @@ window.SITE_CONTENT = {
       tags: ["Structures & Composites"],
       summary: "Designed a commercial electric bicycle from scratch for last-mile deliveries, leading a 5-member team.",
       bullets: [
-        "Led the 5-member team representing the institute, securing 1st runner-up at Pedalthon.",
-        "Designed a commercial electric bicycle from scratch for last-mile delivery use cases."
+        "Led 5-member team BLAZZE to design a 141 kg-payload-rated electric cargo bicycle with a tubular Al 6061-T6 space frame, two 57.5 L storage boxes, and a 170 km design range.",
+        "Sized the BLDC hub motor and 1:30 planetary drivetrain from a torque/power calculator against gradeability and top-speed targets, selecting a 750W-peak motor at 88% efficiency.",
+        "Sized and modeled the 14s4p Li-ion pack through a wheel-to-well accumulator model: 2316 Wh without regenerative braking vs. 495.4 Wh with it — a 78.6% reduction — landing on a 600 Wh pack with BMS, pre-charge, and shutdown circuitry.",
+        "Built GPS/GSM vehicle tracking on Arduino, simulated in Proteus, and validated the disc-brake tyre-slip model to a 205m stopping distance — all within a ₹75,000 total build cost."
       ],
       metrics: [
+        { label: "Design range", value: "170 km" },
+        { label: "Battery savings from regen", value: "78.6%" },
+        { label: "Total build cost", value: "₹75,000" },
         { label: "Result", value: "1st Runner-up, Pedalthon" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "Arduino", logo: "assets/img/tools/arduino.svg" },
+        { name: "Proteus", logo: "assets/img/tools/proteus.svg" }
+      ]
     },
     {
       id: "bosch-ev",
@@ -530,13 +576,20 @@ window.SITE_CONTENT = {
       tags: ["Vehicle Dynamics & Simulation"],
       summary: "Gold medal-winning performance baselining and powertrain design for an electric ultralight commercial vehicle.",
       bullets: [
-        "Worked on performance baselining and powertrain design of an electric ultralight commercial vehicle.",
-        "Mathematically modeled powertrain sizing and built forward-integrated powertrain models for the vehicle."
+        "Selected the Ultra-Light Commercial Vehicle (B2B) segment and baselined performance targets (800 kg payload, 300 km range, 75 km/h top speed) from market and use-case analysis.",
+        "Built longitudinal vehicle-dynamics and WLTP drive-cycle models in MATLAB/Simulink, then sized a 96%-efficient PMSM traction motor (165 Nm / 26 kW peak) and its FOC motor controller from the resulting torque/power envelope.",
+        "Modeled the full powertrain (battery, motor, transmission, regen) in Simulink/Simscape and quantified 3 independent battery-size levers: lowering drag coefficient 0.86→0.52 (-6.4%), adding an automatic 2-gear transmission (-3%), and regenerative braking (-13.3%).",
+        "Combined all three optimizations for a 22% reduction in required battery size (60.9 kWh → 47.5 kWh) for the same 300 km range, at Inter IIT Tech Meet 9.0."
       ],
       metrics: [
-        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 9.0" }
+        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 9.0" },
+        { label: "Battery size reduction", value: "22% (60.9→47.5 kWh)" },
+        { label: "Motor efficiency", value: "96% peak" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" }
+      ]
     },
     {
       id: "rejuvenation-heritage",
@@ -548,14 +601,18 @@ window.SITE_CONTENT = {
       tags: ["Data Science & Machine Learning"],
       summary: "1st-place hackathon project restoring depleted Ajanta and Ellora cave paintings with GAN-based inpainting.",
       bullets: [
-        "Developed a model to restore old, depleted paintings from the Ajanta and Ellora caves.",
-        "Built a training dataset by overlaying randomly augmented graphic defects on ancient paintings and texturing with NST.",
-        "Implemented inpainting with mask segmentation and a GAN model."
+        "Curated a training dataset of Indian heritage artwork, standardizing images to 500×500px and synthesizing damage via a custom apply_distortion() function to model realistic patch loss without unrealistic binary (B&W) masks.",
+        "Designed a denoising-autoencoder-based Context Encoder architecture — convolutional encoder/decoder trained to inpaint only the masked, damaged regions rather than reconstruct the whole image.",
+        "Combined an adversarial discriminator with reconstruction loss so the generator produced sharper, more plausible fill-in than a plain autoencoder, restoring damaged Ajanta and Ellora frescoes.",
+        "Placed 1st at Tech4Heritage among Team128 'Ancient_AI' entries."
       ],
       metrics: [
         { label: "Result", value: "1st Place, Tech4Heritage Hackathon" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "Python", logo: "assets/img/tools/python.svg" }
+      ]
     },
     {
       id: "nav-ujjwal",
@@ -567,13 +624,22 @@ window.SITE_CONTENT = {
       tags: ["Structures & Composites"],
       summary: "Designed an autonomous drone to transport essentials to differently-abled groups, including its carbon-fiber frame.",
       bullets: [
-        "Worked on the design of an autonomous drone to transport essentials to differently-abled groups.",
-        "Designed and assembled all components, including its sandwich-structured carbon-fiber frame."
+        "Co-designed an autonomous multi-rotor (Team Excelsior) capable of both no-contact last-mile delivery and indoor autonomous navigation, built around a CFRP-sandwich-panel central pod with 3D-printed arms — 2.3 kg empty, up to 3.5 kg payload, 20–35 min flight time.",
+        "Designed and 3D-printed a custom camera gimbal driven by servo motors on a Raspberry Pi, using gyroscope/accelerometer feedback in place of a purchased off-the-shelf gimbal.",
+        "Built the autonomy stack on PX4 + ROS + a Raspberry Pi companion computer, with LiDAR/ultrasonic + IMU sensor fusion for altitude/attitude estimation and real-time telemetry downlink via QGroundControl.",
+        "Trained a MobileNetSSD model in TensorFlow for real-time gate/obstacle detection, converting bounding-box geometry into a reference point for a PID-based navigation and collision-avoidance controller."
       ],
       metrics: [
+        { label: "Payload capacity", value: "up to 3.5 kg" },
+        { label: "Flight time", value: "20–35 min" },
         { label: "Result", value: "1st Runner-up, Nav Ujjwal E-Innovation Hackathon" }
       ],
-      links: []
+      links: [],
+      tools: [
+        { name: "TensorFlow", logo: "assets/img/tools/tensorflow.svg" },
+        { name: "ROS", logo: "assets/img/tools/ros.svg" },
+        { name: "Raspberry Pi", logo: "assets/img/tools/raspberrypi.svg" }
+      ]
     },
     {
       id: "rc-car",
