@@ -75,9 +75,9 @@ window.SITE_CONTENT = {
   theses: [
     {
       id: "ms-thesis",
-      level: "Master's Thesis",
+      level: "Master's Thesis — In Progress",
       title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling",
-      org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
+      org: "Energy Transport Research Lab, UIUC",
       period: "Jan 2026 – Present",
       image: "assets/img/projects/ms-thesis.png",
       summary: "System-level thermal-hydraulic modeling of a 200 kW liquid-cooled AI rack, from full physics down to a real-time reduced-order model.",
@@ -95,7 +95,7 @@ window.SITE_CONTENT = {
       publications: [
         {
           title: "Data Center Thermal Analysis using Dynamic System Modeling",
-          venue: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
+          venue: "Energy Transport Research Lab, UIUC",
           status: "In progress",
           url: "— add publication details —",
           isPlaceholder: true
@@ -106,7 +106,7 @@ window.SITE_CONTENT = {
       id: "bs-thesis",
       level: "Bachelor's Thesis",
       title: "Autoignition and Knock in n-Heptane Combustion at High Temperatures using 2D-DNS",
-      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee",
+      org: "Combustion Theory & Modeling Lab, IIT Roorkee",
       period: "Jul 2022 – Jul 2024",
       image: "assets/img/projects/bs-thesis.png",
       summary: "Direct numerical simulation of engine knock, proposing a new framework that unifies knock-timing and autoignition-mode prediction.",
@@ -119,7 +119,7 @@ window.SITE_CONTENT = {
       metrics: [
         { label: "Mesh resolution", value: "3.9 micron cells (AMR)" },
         { label: "Engine-like conditions studied", value: "3" },
-        { label: "Conference submission", value: "41st ISOC'26, Kyoto" }
+        { label: "Conference publication", value: "41st ISOC'26, Kyoto" }
       ],
       publications: [
         {
@@ -127,6 +127,16 @@ window.SITE_CONTENT = {
           venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
           status: "Published",
           url: "https://www.researchgate.net/publication/414365684_Evaluating_simple_models_for_knock_timing_and_autoignition_mode_prediction_with_2D_DNS_of_n-heptane_in_an_enclosure"
+        },
+        {
+          title: "Conference Presentation",
+          venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
+          url: "assets/docs/bs-thesis-presentation.pptx"
+        },
+        {
+          title: "Conference Poster",
+          venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
+          url: "assets/docs/bs-thesis-poster.pptx"
         }
       ]
     }
