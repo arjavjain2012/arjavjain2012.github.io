@@ -418,6 +418,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .ptag { font-family: var(--mono); font-size: 10.5px; padding: 3px 8px; border: 1px solid var(--line); color: var(--text-dim); border-radius: var(--radius); }
 .proj-filter-row { margin: 14px 0 20px; }
+.project-filter-bar { margin: -8px 0 28px; }
 .ptag-filter { cursor: pointer; transition: border-color 0.15s, color 0.15s; }
 .ptag-filter:hover { border-color: var(--accent); color: var(--accent); }
 .ptag-filter.ptag-active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb, 220, 90, 60), 0.08); }

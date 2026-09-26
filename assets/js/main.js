@@ -14,6 +14,12 @@
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const DISCIPLINE_ORDER = ["Design", "Thermal", "Electronics", "Controls"];
+  const PROJECT_FILTER_CATEGORIES = [
+    { label: "Mechanical Design", tag: "Structures & Composites" },
+    { label: "Thermal", tag: "Thermal & Energy Systems" },
+    { label: "Electronics & Control", tag: "Electronics & Controls" },
+    { label: "Vehicle Dynamics & Simulation", tag: "Vehicle Dynamics & Simulation" }
+  ];
   const el = (tag, cls, html) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -262,9 +268,9 @@
       <div class="detail-hero${p.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}"${p.heroPosition ? ` style="object-position: ${esc(p.heroPosition)}"` : ""}></div>
       <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
+      ${metricsRow(p.metrics)}
       <p class="detail-summary">${esc(p.summary)}</p>
       ${(!filterable && !p.hideTagsRow && (p.tags.length || p.context)) ? `<div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}${p.context ? `<span class="ptag">${esc(p.context)}</span>` : ""}</div>` : ""}
-      ${metricsRow(p.metrics)}
     `;
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
@@ -351,11 +357,38 @@
     // Formula Student projects (context: "Formula Student") render in the
     // dedicated FSAE section instead of here, so each project appears once.
     fsaeGrid.innerHTML = "";
-    projectGrid.innerHTML = "";
     C.projects.forEach((p) => {
-      const grid = p.context === "Formula Student" ? fsaeGrid : projectGrid;
-      grid.appendChild(projectTile(p));
+      if (p.context === "Formula Student") fsaeGrid.appendChild(projectTile(p));
     });
+
+    const featured = C.projects.filter((p) => p.context !== "Formula Student");
+    let activeFilter = null;
+    const renderFeatured = () => {
+      projectGrid.innerHTML = "";
+      const visible = activeFilter ? featured.filter((p) => (p.tags || []).includes(activeFilter)) : featured;
+      visible.forEach((p) => projectGrid.appendChild(projectTile(p)));
+    };
+
+    const bar = el("div", "project-tags project-filter-bar");
+    const buttons = PROJECT_FILTER_CATEGORIES.map((cat) => {
+      const btn = el("span", "ptag ptag-filter", esc(cat.label));
+      btn.tabIndex = 0;
+      btn.setAttribute("role", "button");
+      bar.appendChild(btn);
+      return btn;
+    });
+    buttons.forEach((btn, i) => {
+      const onActivate = () => {
+        const cat = PROJECT_FILTER_CATEGORIES[i].tag;
+        activeFilter = activeFilter === cat ? null : cat;
+        buttons.forEach((b, j) => b.classList.toggle("ptag-active", PROJECT_FILTER_CATEGORIES[j].tag === activeFilter));
+        renderFeatured();
+      };
+      btn.addEventListener("click", onActivate);
+      btn.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
+    });
+    projectGrid.parentNode.insertBefore(bar, projectGrid);
+    renderFeatured();
   }
   renderProjects();
 
