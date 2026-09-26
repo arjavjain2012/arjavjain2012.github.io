@@ -465,6 +465,10 @@
     } else {
       box.appendChild(el("h4", "detail-sub", "Development highlights"));
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));
+      if (e.tools && e.tools.length) {
+        box.appendChild(el("h4", "detail-sub", "Tools Used"));
+        box.appendChild(el("div", "tools-row", e.tools.map(toolBadge).join("")));
+      }
     }
     if (linkedProject) {
       const linkRow = el("div", "project-links");

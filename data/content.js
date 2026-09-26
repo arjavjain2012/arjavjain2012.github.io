@@ -701,6 +701,16 @@ window.SITE_CONTENT = {
                 "Validated pre-release firmware on test units, regression-testing derate, thermal, and fault behaviour against system requirements."
               ]
             }
+          ],
+          tools: [
+            { name: "PCAN" },
+            { name: "CANape" },
+            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+            { name: "FlexAnalyzer" },
+            { name: "Chroma" },
+            { name: "ElektoAutomatik" },
+            { name: "NI DAQ" },
+            { name: "Python", logo: "assets/img/tools/python.svg" }
           ]
         },
         {
@@ -722,6 +732,14 @@ window.SITE_CONTENT = {
                 "Built a VFD-absorbed motor-stall and resistive load bank covering compressor-start and peak-power loading for thermal stress testing."
               ]
             }
+          ],
+          tools: [
+            { name: "3DEXPERIENCE CATIA" },
+            { name: "LTSpice" },
+            { name: "Draw.io" },
+            { name: "Weg" },
+            { name: "MS Office" },
+            { name: "Python", logo: "assets/img/tools/python.svg" }
           ]
         }
       ]
@@ -848,6 +866,12 @@ window.SITE_CONTENT = {
         "Designed C101 busbars, an IP67 enclosure, and cell packaging for a 368 V, 40 Ah LTO pack retrofitted to the Tata Ace LCV.",
         "Designed sheet-metal brackets, rubber dampers, and waterproof foam seals, and released BS 8888 drawings for prototyping.",
         "Sized a paraffin PCM buffer to absorb 9 kJ of fast-charge heat per module, predicting a 15 K cut in peak cell temperature."
+      ],
+      tools: [
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
+        { name: "ANSYS", logo: "assets/img/tools/ansys.svg" },
+        { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+        { name: "MS Office" }
       ]
     }
   ],
