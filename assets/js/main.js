@@ -534,16 +534,22 @@
   // sections (never in #about, which has bare paragraph text with no card
   // behind it). Each sits in a section corner and is free to be covered by
   // that section's cards — see .bg-drawing in style.css.
+  // Each entry gives explicit top/bottom/left/right offsets (px, relative to
+  // its section) instead of a generic corner, so placement can be tuned
+  // precisely — e.g. pushed down past a grid's cards, or bled off-page.
   const BG_DRAWINGS = [
-    { section: "experience", image: "motor-mount-front.png", side: "right", vpos: "top", width: 620, rotate: -6 },
-    { section: "experience", image: "front-upright-front.png", side: "left", vpos: "bottom", width: 580, rotate: 4 },
-    { section: "fsae", image: "chassis-tubes-side.png", side: "right", vpos: "bottom", width: 760, rotate: -3 },
-    { section: "thesis", image: "rocker-connect-front.png", side: "left", vpos: "bottom", width: 580, rotate: -5 },
-    { section: "projects", image: "dashboard-side.png", side: "right", vpos: "top", width: 540, rotate: 6 },
-    { section: "projects", image: "rack-pinion-side.png", side: "left", vpos: "bottom", width: 700, rotate: 3 },
-    { section: "education", image: "brake-disc-front.png", side: "left", vpos: "bottom", width: 640, rotate: 4 },
-    { section: "toolkit", image: "steering-wheel-front.png", side: "left", vpos: "bottom", width: 640, rotate: -5 },
-    { section: "skills", image: "front-upright-struct-front.png", side: "right", vpos: "bottom", width: 600, rotate: 4 }
+    { section: "experience", image: "motor-mount-front.png", top: 60, right: -40, width: 620, rotate: -6 },
+    { section: "experience", image: "front-upright-front.png", bottom: 10, left: -40, width: 580, rotate: 4 },
+    { section: "fsae", image: "chassis-tubes-side.png", bottom: -260, right: -40, width: 760, rotate: -3 },
+    { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
+    { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
+    { section: "projects", image: "nosecone-side.png", top: 60, left: -40, width: 480, rotate: -4 },
+    { section: "projects", image: "rear-wing-front.png", bottom: 10, right: -40, width: 520, rotate: 5 },
+    { section: "projects", image: "rack-pinion-side.png", bottom: -420, left: -40, width: 700, rotate: 3 },
+    { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4 },
+    { section: "toolkit", image: "steering-wheel-front.png", bottom: 10, left: -40, width: 640, rotate: -5 },
+    { section: "toolkit", image: "rear-upright-front.png", top: 290, right: -40, width: 420, rotate: 5 },
+    { section: "skills", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4 }
   ];
   BG_DRAWINGS.forEach((d) => {
     const host = $("#" + d.section);
@@ -553,8 +559,7 @@
     img.alt = "";
     img.setAttribute("aria-hidden", "true");
     img.style.width = d.width + "px";
-    img.style[d.side] = "-40px";
-    img.style[d.vpos] = d.vpos === "top" ? "60px" : "10px";
+    ["top", "bottom", "left", "right"].forEach((k) => { if (d[k] !== undefined) img.style[k] = d[k] + "px"; });
     img.style.transform = `rotate(${d.rotate}deg)`;
     host.appendChild(img);
   });
