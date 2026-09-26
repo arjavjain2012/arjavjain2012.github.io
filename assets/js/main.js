@@ -13,6 +13,7 @@
   }
 
   const $ = (sel, root) => (root || document).querySelector(sel);
+  const DISCIPLINE_ORDER = ["Design", "Thermal", "Electronics", "Controls"];
   const el = (tag, cls, html) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -404,6 +405,7 @@
 
       box.appendChild(el("h4", "detail-sub", "Projects"));
       const projRow = el("div", "tile-grid jlr-proj-row");
+      projRow.style.setProperty("--jlr-proj-cols", String(e.subProjects.length));
       const fullDetail = el("div", "jlr-proj-fulldetail");
       fullDetail.hidden = true;
       fullDetail.innerHTML = `<button type="button" class="jlr-detail-close" aria-label="Close project detail">✕</button><div class="jlr-detail-content"></div>`;
@@ -431,15 +433,17 @@
         cards.forEach((c) => c.classList.toggle("jlr-proj-selected", c.dataset.id === id));
         if (id) {
           const p = e.subProjects.find((sp) => sp.id === id);
-          const bulletsHtml = p.categories && p.categories.length
-            ? p.categories.map((cat) => `
+          const orderedCats = p.categories && p.categories.length
+            ? [...p.categories].sort((a, b) => DISCIPLINE_ORDER.indexOf(a.name) - DISCIPLINE_ORDER.indexOf(b.name))
+            : null;
+          const bulletsHtml = orderedCats
+            ? orderedCats.map((cat) => `
                 <div class="jlr-proj-cat">${esc(cat.name)}</div>
                 <ul class="detail-list">${cat.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
               `).join("")
             : `<ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
           detailContent.innerHTML = `
             <h3 class="jlr-detail-title">${esc(p.title)}</h3>
-            ${p.summary ? `<p class="detail-summary">${esc(p.summary)}</p>` : ""}
             ${bulletsHtml}
             ${p.tools && p.tools.length ? `<div class="detail-sub">Tools Used</div><div class="tools-row">${p.tools.map(toolBadge).join("")}</div>` : ""}
           `;

@@ -679,6 +679,51 @@ window.SITE_CONTENT = {
         "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
         "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
         "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy."
+      ],
+      subProjects: [
+        {
+          id: "regression",
+          title: "Cross-Variant Thermal Regression Suite",
+          image: "assets/img/products/tesla-thermal-regression.jpg",
+          summary: "Decoded thermal, power, and fault CAN telemetry via DBC, validating reported values against independent measurements.",
+          categories: [
+            {
+              name: "Thermal",
+              bullets: [
+                "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
+                "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
+                "Ran a paired 41-channel thermal study qualifying an air-duct delete, isolating the sole tradeoff as extended cell-heater soak time at -20°C."
+              ]
+            },
+            {
+              name: "Electronics",
+              bullets: [
+                "Validated pre-release firmware on test units, regression-testing derate, thermal, and fault behaviour against system requirements."
+              ]
+            }
+          ]
+        },
+        {
+          id: "emulator",
+          title: "Home Load Emulator Rig",
+          image: "assets/img/products/tesla-home-emulator.jpg",
+          summary: "Decoded thermal, power, and fault CAN telemetry via DBC, validating reported values against independent measurements.",
+          categories: [
+            {
+              name: "Thermal",
+              bullets: [
+                "Constructed worst-case thermal stress cases from first principles across load, ambient, and duty-cycle corners to anchor validation."
+              ]
+            },
+            {
+              name: "Electronics",
+              bullets: [
+                "Decomposed 162 system requirements across 4 grid configurations into a traceability matrix and pass/fail plan hierarchy.",
+                "Built a VFD-absorbed motor-stall and resistive load bank covering compressor-start and peak-power loading for thermal stress testing."
+              ]
+            }
+          ]
+        }
       ]
     },
     {
