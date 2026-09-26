@@ -402,23 +402,33 @@
         box.appendChild(aul);
       }
       box.appendChild(el("h4", "detail-sub", "Projects"));
-      const projWrap = el("div", "jlr-projects");
+      const projGrid = el("div", "tile-grid jlr-projects");
       e.subProjects.forEach((p) => {
-        const details = document.createElement("details");
-        details.className = "jlr-project";
-        details.innerHTML = `
-          <summary class="jlr-project-summary">
-            <span class="jlr-project-title">${esc(p.title)}</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="jlr-project-body">
-            ${p.image ? `<div class="jlr-project-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>` : ""}
-            <ul class="detail-list jlr-project-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-          </div>
-        `;
-        projWrap.appendChild(details);
+        const card = el("article", "tile project-tile jlr-proj-tile");
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-expanded", "false");
+        card.innerHTML = `
+          <div class="tile-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
+          <div class="tile-body">
+            <h3>${esc(p.title)}</h3>
+            <p class="tile-summary">${esc(p.summary || "")}</p>
+            <div class="tile-cta jlr-proj-cta">Expand →</div>
+            <ul class="detail-list jlr-proj-detail" hidden>${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+          </div>`;
+        const cta = card.querySelector(".jlr-proj-cta");
+        const panel = card.querySelector(".jlr-proj-detail");
+        const toggle = () => {
+          const open = card.classList.toggle("jlr-proj-open");
+          panel.hidden = !open;
+          card.setAttribute("aria-expanded", String(open));
+          cta.textContent = open ? "Collapse ↑" : "Expand →";
+        };
+        card.addEventListener("click", toggle);
+        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); } });
+        projGrid.appendChild(card);
       });
-      box.appendChild(projWrap);
+      box.appendChild(projGrid);
     } else {
       box.appendChild(el("h4", "detail-sub", "Development highlights"));
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));

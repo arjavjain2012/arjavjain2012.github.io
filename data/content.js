@@ -699,7 +699,6 @@ window.SITE_CONTENT = {
         { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global — CH4 REEV concept", date: "2024" },
         { title: "5 Internal Invention Disclosures Filed", org: "DC-link capacitor pre-charging, REEV, and charge-depletion control", date: "2024–25" },
         { title: '"Exceptional Creator" Recognition', org: "Twice awarded by JLR — FY24 and FY25", date: "2024, 2025" },
-        { title: "Gold Medal, Inter IIT Tech Meet 10.0", org: "Automotive problem statement set by JLR — powered bonnet actuator", date: "Fall 2022" },
         { title: "Ashorne Hill Graduate Program", org: "Completed JLR's leadership, stakeholder management, and project-execution program", date: "2023–25" }
       ],
       subProjects: [
@@ -707,6 +706,7 @@ window.SITE_CONTENT = {
           id: "ssc",
           title: "Solid-State Contactor (SSC)",
           image: "assets/img/products/jlr-ssc-contactor.jpg",
+          summary: "Production-intent thermal, mechanical, and electronics design of a 1500 V solid-state contactor, from cold-plate concept to prototype.",
           bullets: [
             "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), taking it from packaging concept to prototype via DFM.",
             "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and the SSC, rejecting 24 W/cm²; validated a 35 K junction margin on an instrumented coolant-loop rig at 17 kPa drop.",
@@ -719,6 +719,8 @@ window.SITE_CONTENT = {
         {
           id: "reev",
           title: "Range-Extended EV (CH4 REEV)",
+          image: "assets/img/products/jlr-reev-concept.jpg",
+          summary: "A carbon-negative, fugitive-CH4 range-extended EV concept — cryogenic storage, charge-depletion control, and 36% more range.",
           bullets: [
             "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
             "Developed a 50 kg cryogenic CH4 storage and delivery concept, modeling tank heat ingress to limit boil-off to 2% per day.",
@@ -728,6 +730,8 @@ window.SITE_CONTENT = {
         {
           id: "xhev",
           title: "xHEV Powerpack",
+          image: "assets/img/products/jlr-xhev-powerpack.jpg",
+          summary: "Boundary diagrams, DFMEA, and ISO 26262 safety analysis for the xHEV powerpack, plus bonnet-actuator position control.",
           bullets: [
             "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
             "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware.",
