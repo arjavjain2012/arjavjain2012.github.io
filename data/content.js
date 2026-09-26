@@ -707,13 +707,48 @@ window.SITE_CONTENT = {
           title: "Solid-State Contactor (SSC)",
           image: "assets/img/products/jlr-ssc-contactor.webp",
           summary: "Production-intent thermal, mechanical, and electronics design of a 1500 V solid-state contactor, from cold-plate concept to prototype.",
-          bullets: [
-            "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), taking it from packaging concept to prototype via DFM.",
-            "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and the SSC, rejecting 24 W/cm²; validated a 35 K junction margin on an instrumented coolant-loop rig at 17 kPa drop.",
-            "Designed 650 A C101 busbars to IEC 60664-1 creepage and clearance to minimise loop inductance, and the IP67 SSC enclosure with sealed, low-thermal-resistance O-ring, gasket, and TIM joints.",
-            "Ran worst-case tolerance stack-ups and applied ASME Y14.5 GD&T to position coreless current sensors within 0.30 mm; verified a 2.9 minimum safety factor by modal and random-vibration FEA to ISO 16750-3.",
-            "Designed closed-loop pre-charge and I²t e-fuse control, tuning a 3 W 4-switch buck-boost converter via Bode analysis to 55° phase margin, and laid out its PCB with sensing and gate drive.",
-            "Designed a hybrid RCD/TVS snubber for the SSC after simulating 11 topologies, clamping turn-off to 1.1 kV, and applied IEC 60664-1 creepage and clearance across its 1500 V mechanical and PCB design."
+          categories: [
+            {
+              name: "Thermal",
+              bullets: [
+                "Designed and simulated tubed and pin-fin cold plates for a 350 kW inverter and the SSC, rejecting 24 W/cm².",
+                "Built an instrumented coolant-loop rig to test cold plates at full load, validating a 35 K junction margin at 17 kPa drop."
+              ]
+            },
+            {
+              name: "Design",
+              bullets: [
+                "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), with DFM from packaging to prototype.",
+                "Designed 650 A C101 busbars to IEC 60664-1 creepage and clearance, minimising loop inductance; draughted BS 8888 drawings.",
+                "Designed the IP67 SSC enclosure, selecting O-rings, gaskets, and TIM for sealed, leak-free, low-thermal-resistance joints.",
+                "Ran worst-case tolerance stack-ups and applied ASME Y14.5 GD&T to position coreless current sensors within 0.30 mm.",
+                "Ran modal and random-vibration FEA on the SSC to ISO 16750-3 profiles, achieving a 2.9 minimum safety factor."
+              ]
+            },
+            {
+              name: "Controls",
+              bullets: [
+                "Designed closed-loop pre-charge and I²t e-fuse control, tuning a 3 W 4-switch buck-boost converter via Bode analysis to 55° phase margin."
+              ]
+            },
+            {
+              name: "Electronics",
+              bullets: [
+                "Designed voltage, current, and temperature sensing circuits, and ran board-level thermal and environmental validation.",
+                "Applied IEC 60664-1 creepage and clearance across the SSC's mechanical and PCB design for 1500 V working voltage.",
+                "Designed a 3 W 4-switch buck-boost converter (12 V to 6 V) and laid out its PCB with sensing and gate drive.",
+                "Designed a hybrid RCD/TVS snubber for the SSC after simulating 11 topologies, clamping turn-off to 1.1 kV."
+              ]
+            }
+          ],
+          tools: [
+            { name: "3DExperience CATIA" },
+            { name: "Star CCM+" },
+            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+            { name: "LTSpice" },
+            { name: "PSpice" },
+            { name: "ABAQUS" },
+            { name: "Altium" }
           ]
         },
         {
@@ -725,17 +760,29 @@ window.SITE_CONTENT = {
             "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
             "Developed a 50 kg cryogenic CH4 storage and delivery concept, modeling tank heat ingress to limit boil-off to 2% per day.",
             "Developed a road-load-based charge-depletion strategy to schedule APU operation, cutting fuel use 33% per drive cycle."
+          ],
+          tools: [
+            { name: "3DExperience CATIA" },
+            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+            { name: "ANSYS", logo: "assets/img/tools/ansys.svg" },
+            { name: "Lucid" }
           ]
         },
         {
           id: "xhev",
           title: "xHEV Powerpack",
           image: "assets/img/products/jlr-xhev-powerpack.png",
-          summary: "Boundary diagrams, DFMEA, and ISO 26262 safety analysis for the xHEV powerpack, plus bonnet-actuator position control.",
+          summary: "Boundary diagrams and ISO 26262 safety analysis for the xHEV powerpack.",
           bullets: [
             "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
-            "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware.",
-            "Developed PID position control for a powered bonnet actuator via H-bridge PWM drive, accurate to within 0.8 mm."
+            "Performed ISO 26262 HARA to ASIL D, authored test plans, and ran environmental validation for safety-critical HV hardware."
+          ],
+          tools: [
+            { name: "Lucid" },
+            { name: "JIRA" },
+            { name: "Polarion" },
+            { name: "3DExperience" },
+            { name: "MS Office" }
           ]
         }
       ]

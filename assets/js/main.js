@@ -431,10 +431,17 @@
         cards.forEach((c) => c.classList.toggle("jlr-proj-selected", c.dataset.id === id));
         if (id) {
           const p = e.subProjects.find((sp) => sp.id === id);
+          const bulletsHtml = p.categories && p.categories.length
+            ? p.categories.map((cat) => `
+                <div class="jlr-proj-cat">${esc(cat.name)}</div>
+                <ul class="detail-list">${cat.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+              `).join("")
+            : `<ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
           detailContent.innerHTML = `
             <h3 class="jlr-detail-title">${esc(p.title)}</h3>
             ${p.summary ? `<p class="detail-summary">${esc(p.summary)}</p>` : ""}
-            <ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+            ${bulletsHtml}
+            ${p.tools && p.tools.length ? `<div class="detail-sub">Tools Used</div><div class="tools-row">${p.tools.map(toolBadge).join("")}</div>` : ""}
           `;
           fullDetail.hidden = false;
           fullDetail.scrollIntoView({ behavior: "smooth", block: "center" });
