@@ -452,7 +452,7 @@
 
   function thesisTile(t) {
     return makeTile(`
-      <div class="tile-image"><img src="${esc(t.image || "assets/img/placeholder-project.svg")}" alt="${esc(t.title)}" loading="lazy"></div>
+      <div class="tile-image thesis-tile-image"><img src="${esc(t.image || "assets/img/placeholder-project.svg")}" alt="${esc(t.title)}" loading="lazy"></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(t.period)}</span></div>
         <div class="thesis-level thesis-level-tile">${esc(t.level)}</div>
