@@ -535,24 +535,17 @@
   // behind it). Each sits in a section corner and is free to be covered by
   // that section's cards — see .bg-drawing in style.css.
   const BG_DRAWINGS = [
-    { section: "experience", image: "motor-mount-front.png", side: "right", vpos: "top", width: 160, rotate: -6 },
-    { section: "experience", image: "rear-upright-iso.png", side: "left", vpos: "bottom", width: 150, rotate: 5 },
-    { section: "experience", image: "front-upright-front.png", side: "right", vpos: "bottom", width: 150, rotate: 4 },
-    { section: "fsae", image: "front-wing-iso.png", side: "left", vpos: "top", width: 190, rotate: 4 },
-    { section: "fsae", image: "chassis-tubes-side.png", side: "right", vpos: "bottom", width: 220, rotate: -3 },
-    { section: "thesis", image: "dashboard-side.png", side: "right", vpos: "top", width: 130, rotate: 6 },
-    { section: "thesis", image: "rocker-connect-front.png", side: "left", vpos: "bottom", width: 150, rotate: -5 },
-    { section: "projects", image: "rear-wing-iso.png", side: "right", vpos: "top", width: 180, rotate: -4 },
-    { section: "projects", image: "tubes-mounts-side.png", side: "left", vpos: "bottom", width: 210, rotate: 3 },
-    { section: "projects", image: "firewall-front.png", side: "right", vpos: "bottom", width: 150, rotate: 5 },
-    { section: "leadership", image: "jack-iso.png", side: "left", vpos: "top", width: 110, rotate: -6 },
-    { section: "leadership", image: "a-arm-upper-iso.png", side: "right", vpos: "bottom", width: 160, rotate: 5 },
-    { section: "education", image: "brake-disc-front.png", side: "right", vpos: "top", width: 170, rotate: 4 },
-    { section: "education", image: "rack-pinion-side.png", side: "left", vpos: "bottom", width: 190, rotate: -4 },
-    { section: "toolkit", image: "steering-wheel-front.png", side: "left", vpos: "top", width: 170, rotate: -5 },
-    { section: "toolkit", image: "front-upright-struct-front.png", side: "right", vpos: "bottom", width: 160, rotate: 4 },
-    { section: "skills", image: "rear-body-iso.png", side: "right", vpos: "top", width: 140, rotate: -5 },
-    { section: "skills", image: "nosecone-iso.png", side: "left", vpos: "bottom", width: 150, rotate: 6 }
+    { section: "experience", image: "motor-mount-front.png", side: "right", vpos: "top", width: 320, rotate: -6 },
+    { section: "experience", image: "front-upright-front.png", side: "left", vpos: "bottom", width: 300, rotate: 4 },
+    { section: "fsae", image: "chassis-tubes-side.png", side: "right", vpos: "bottom", width: 440, rotate: -3 },
+    { section: "thesis", image: "dashboard-side.png", side: "right", vpos: "top", width: 280, rotate: 6 },
+    { section: "thesis", image: "rocker-connect-front.png", side: "left", vpos: "bottom", width: 300, rotate: -5 },
+    { section: "projects", image: "tubes-mounts-side.png", side: "left", vpos: "bottom", width: 420, rotate: 3 },
+    { section: "projects", image: "firewall-front.png", side: "right", vpos: "top", width: 300, rotate: 5 },
+    { section: "leadership", image: "rack-pinion-side.png", side: "left", vpos: "top", width: 380, rotate: -4 },
+    { section: "education", image: "brake-disc-front.png", side: "right", vpos: "bottom", width: 340, rotate: 4 },
+    { section: "toolkit", image: "steering-wheel-front.png", side: "left", vpos: "top", width: 340, rotate: -5 },
+    { section: "skills", image: "front-upright-struct-front.png", side: "right", vpos: "bottom", width: 320, rotate: 4 }
   ];
   BG_DRAWINGS.forEach((d) => {
     const host = $("#" + d.section);
@@ -562,8 +555,8 @@
     img.alt = "";
     img.setAttribute("aria-hidden", "true");
     img.style.width = d.width + "px";
-    img.style[d.side] = "12px";
-    img.style[d.vpos] = d.vpos === "top" ? "70px" : "24px";
+    img.style[d.side] = "-40px";
+    img.style[d.vpos] = d.vpos === "top" ? "60px" : "10px";
     img.style.transform = `rotate(${d.rotate}deg)`;
     host.appendChild(img);
   });
