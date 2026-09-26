@@ -139,7 +139,7 @@ window.SITE_CONTENT = {
   subprojects: {
     rmse23: [
       {
-        id: "chassis", title: "Chassis & Composite Structures", image: "assets/img/placeholder-project.svg",
+        id: "chassis", title: "Chassis & Composite Structures", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
         highlights: ["+30% torsional stiffness, to 1755 N·m/°", "1.3 FOS at 40g, Tsai-Wu checked in ANSYS ACP"],
         bullets: [
           "Raised chassis torsional stiffness 30% to 1755 N·m/° with CFRP floor closeouts, correlated between FEA and twist-rig tests.",
@@ -151,7 +151,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Torsional stiffness", value: "1755 N·m/° (+30%)" }, { label: "Mass saved (mounts/pedals)", value: "1.2 kg" }, { label: "Laminate FOS", value: "1.3 @ 40g" }]
       },
       {
-        id: "dynamics", title: "Vehicle Dynamics & Lap-Time Simulation", image: "assets/img/placeholder-project.svg",
+        id: "dynamics", title: "Vehicle Dynamics & Lap-Time Simulation", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
         highlights: ["65 kW powertrain set via OptimumLap", "Pacejka MF 5.2 tyre models from TTC data"],
         bullets: [
           "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain.",
@@ -162,7 +162,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Powertrain set", value: "65 kW" }, { label: "LLTD target", value: "47-53" }, { label: "Brake bias", value: "3.1" }]
       },
       {
-        id: "aero-thermal", title: "Powertrain Cooling", image: "assets/img/placeholder-project.svg",
+        id: "aero-thermal", title: "Powertrain Cooling", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
         highlights: ["2 kW heat duty modeled over endurance cycle", "Bench-validated to 136 kPa, 7.5 LPM"],
         bullets: [
           "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty, driving a transient Simulink model of the coolant loop.",
@@ -172,7 +172,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Heat duty", value: "2 kW" }, { label: "Bench operating point", value: "136 kPa, 7.5 LPM" }]
       },
       {
-        id: "electronics", title: "LV Electronics & Harness", image: "assets/img/placeholder-project.svg",
+        id: "electronics", title: "LV Electronics & Harness", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
         highlights: ["LV power card: 360 W at 92% efficiency", "Bench-verified before scrutineering"],
         bullets: [
           "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards.",
@@ -180,22 +180,11 @@ window.SITE_CONTENT = {
           "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access."
         ],
         metrics: [{ label: "LV power card", value: "360 W @ 92%" }]
-      },
-      {
-        id: "strategy", title: "Season Strategy & Results", image: "assets/img/placeholder-project.svg",
-        highlights: ["1st among Asian teams, Engineering Design", "2nd among Asian teams, Cost & Manufacturing"],
-        bullets: [
-          "Set season targets for reliability, competitiveness, and manufacturability, restructuring the design process across every vertical.",
-          "Built a design and cost BOM tool for the full vehicle, taking 2nd among Asian teams in the FSUK'23 Cost & Manufacturing event.",
-          "Placed 1st among all Asian teams in the FSUK'23 Engineering Design Event (EV category) at Silverstone.",
-          "Won the MathWorks Modeling Award (1st place) at Formula Bharat '23 for the team's modeling and simulation work."
-        ],
-        metrics: [{ label: "FSUK'23 Engineering Design", value: "1st, Asian teams" }, { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" }, { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }]
       }
     ],
     rmse21: [
       {
-        id: "powertrain", title: "Powertrain, Tyres & Lap-Time Model", image: "assets/img/placeholder-project.svg",
+        id: "powertrain", title: "Powertrain, Tyres & Lap-Time Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
         highlights: ["12% wheel-torque gain", "Longitudinal tyre-slip ABS/TC model"],
         bullets: [
           "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
@@ -205,7 +194,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Wheel torque gain", value: "12%" }, { label: "Lap-time gain (ABS/TC)", value: "7%" }, { label: "Pack", value: "538V / 18Ah" }]
       },
       {
-        id: "aero", title: "Brake & Accumulator Thermal", image: "assets/img/placeholder-project.svg",
+        id: "aero", title: "Brake & Accumulator Thermal", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
         highlights: ["AISI 4130 discs sized for 300-450°C", "1.2 kW forced-air accumulator cooling"],
         bullets: [
           "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
@@ -214,7 +203,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Disc endurance range", value: "300-450°C" }, { label: "Accumulator cooling", value: "1.2 kW rejected" }]
       },
       {
-        id: "battery", title: "Electronics & BMS", image: "assets/img/placeholder-project.svg",
+        id: "battery", title: "Electronics & BMS", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
         highlights: ["Segment BMS on bq79616, passive balancing", "Latched shutdown circuit (BSPD/IMD/BMS)"],
         bullets: [
           "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
@@ -224,7 +213,7 @@ window.SITE_CONTENT = {
         metrics: [{ label: "Pre-charge close-in", value: "95% DC bus" }]
       },
       {
-        id: "controls", title: "Structures & Full-Vehicle CAD", image: "assets/img/placeholder-project.svg",
+        id: "controls", title: "Structures & Full-Vehicle CAD", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
         highlights: ["25% mass cut at 1.2 Goodman FOS", "800-part master assembly, 14 kinematic iterations"],
         bullets: [
           "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
@@ -233,12 +222,6 @@ window.SITE_CONTENT = {
           "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks."
         ],
         metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2 (Goodman)" }, { label: "Master assembly", value: "800 parts" }]
-      },
-      {
-        id: "results", title: "Competition Results", image: "assets/img/placeholder-project.svg",
-        highlights: ["3rd overall, Formula Bharat Virtual '22", "1st Business Plan · 3rd Engineering Design"],
-        bullets: ["Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."],
-        metrics: [{ label: "Overall", value: "3rd" }, { label: "Business Plan", value: "1st" }]
       }
     ]
   },
@@ -326,9 +309,13 @@ window.SITE_CONTENT = {
       period: "Sep 2025 – Present",
       image: "assets/img/projects/iem26.webp",
       heroPosition: "50% 78%",
-      tags: ["Vehicle Dynamics & Simulation", "3rd in Engineering Design — FSAEM 2026"],
+      tags: [],
+      hideTagsRow: true,
       summary: "Powertrain and Vehicle Dynamics Engineer",
       bullets: [],
+      metrics: [
+        { label: "Engineering Design, FSAEM 2026", value: "3rd" }
+      ],
       links: [
         { label: "Team site", url: "https://www.illinielectricmotorsports.com/" },
         { label: "Project write-up / demo video", url: "— add link —", isPlaceholder: true }
@@ -388,15 +375,15 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Apr 2022 – Jul 2023",
       image: "assets/img/projects/rmse23.jpg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Chassis, vehicle dynamics, powertrain cooling, and LV electronics for the team's third EV — 1st in Engineering Design and 2nd in Cost & Manufacturing at FSUK'23.",
+      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
+      summary: "Mechanical Head and Powertrain & Braking Head",
       metrics: [
-        { label: "Chassis torsional stiffness", value: "1755 N·m/° (+30%)" },
         { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" },
         { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
         { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
       ],
       links: [
+        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
@@ -458,8 +445,8 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
-      tags: ["Vehicle Dynamics & Simulation", "Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls"],
-      summary: "Powertrain selection, brake/accumulator thermal, full-vehicle structures, and BMS electronics for the team's second EV.",
+      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
+      summary: "Powertrain & Braking Engineer",
       bullets: [
         "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
         "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
@@ -476,12 +463,13 @@ window.SITE_CONTENT = {
         "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
       ],
       metrics: [
-        { label: "Wheel torque gain", value: "12%" },
-        { label: "Mass reduction (suspension/drivetrain)", value: "25%" },
-        { label: "Master assembly", value: "800 parts" },
-        { label: "Formula Bharat Virtual '22", value: "3rd overall" }
+        { label: "Business Plan Presentation, Formula Bharat Virtual '22", value: "1st" },
+        { label: "Team Management, Formula Bharat Virtual '22", value: "2nd" },
+        { label: "Engineering Design Report, Formula Bharat Virtual '22", value: "3rd" },
+        { label: "Overall, Electric Teams — Formula Bharat Virtual '22", value: "3rd" }
       ],
       links: [
+        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },

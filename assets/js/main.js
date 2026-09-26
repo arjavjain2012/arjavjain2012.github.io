@@ -223,7 +223,9 @@
   $("#modalClose").addEventListener("click", closeModal);
   $("#modalBackdrop").addEventListener("click", closeModal);
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.hidden) closeModal();
+    if (e.key === "Escape" && !modal.hidden) {
+      if (stack.length > 1) popView(); else closeModal();
+    }
   });
 
   const makeTile = (html, onOpen, cls) => {
@@ -254,28 +256,59 @@
 
   function projectDetail(p) {
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    const filterable = subs.length > 0 && subs.every((s) => s.category);
     const box = el("div", "detail");
     box.innerHTML = `
       <div class="detail-hero${p.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}"${p.heroPosition ? ` style="object-position: ${esc(p.heroPosition)}"` : ""}></div>
       <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
-      <div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}<span class="ptag">${esc(p.context)}</span></div>
+      ${(!filterable && !p.hideTagsRow && (p.tags.length || p.context)) ? `<div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}${p.context ? `<span class="ptag">${esc(p.context)}</span>` : ""}</div>` : ""}
       ${metricsRow(p.metrics)}
     `;
     if (subs.length) {
-      const h = el("h4", "detail-sub", "Disciplines &amp; sub-projects — open one for the full detail");
+      const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
+      box.appendChild(el("h4", "detail-sub", headingText));
+
       const grid = el("div", "tile-grid");
-      subs.forEach((s) => {
-        grid.appendChild(makeTile(`
-          <div class="tile-image"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
-          <div class="tile-body">
-            <h3>${esc(s.title)}</h3>
-            <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
-            <div class="tile-cta">Open detail →</div>
-          </div>`, () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) })));
-      });
-      box.appendChild(h); box.appendChild(grid);
+      const renderGrid = (activeCat) => {
+        grid.innerHTML = "";
+        const visible = filterable ? subs.filter((s) => s.category === activeCat) : subs;
+        visible.forEach((s) => {
+          grid.appendChild(makeTile(`
+            <div class="tile-image"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
+            <div class="tile-body">
+              <h3>${esc(s.title)}</h3>
+              <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+              <div class="tile-cta">Open detail →</div>
+            </div>`, () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) })));
+        });
+      };
+
+      if (filterable) {
+        let activeCat = null;
+        const filterRow = el("div", "project-tags proj-filter-row");
+        const buttons = p.tags.map((cat) => {
+          const btn = el("span", "ptag ptag-filter", esc(cat));
+          btn.tabIndex = 0;
+          btn.setAttribute("role", "button");
+          filterRow.appendChild(btn);
+          return btn;
+        });
+        buttons.forEach((btn, i) => {
+          const onActivate = () => {
+            const cat = p.tags[i];
+            activeCat = activeCat === cat ? null : cat;
+            buttons.forEach((b, j) => b.classList.toggle("ptag-active", p.tags[j] === activeCat));
+            renderGrid(activeCat);
+          };
+          btn.addEventListener("click", onActivate);
+          btn.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
+        });
+        box.appendChild(filterRow);
+      }
+      renderGrid(null);
+      box.appendChild(grid);
     } else {
       const h = el("h4", "detail-sub", "Development highlights");
       const ul = el("ul", "detail-list", p.bullets.map((b) => `<li>${esc(b)}</li>`).join(""));
