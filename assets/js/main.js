@@ -540,7 +540,7 @@
   const BG_DRAWINGS = [
     { section: "experience", image: "motor-mount-front.png", top: 60, right: -40, width: 620, rotate: -6 },
     { section: "experience", image: "front-upright-front.png", bottom: 10, left: -40, width: 580, rotate: 4 },
-    { section: "fsae", image: "chassis-tubes-side.png", bottom: -340, right: -40, width: 760, rotate: -3 },
+    { section: "fsae", image: "chassis-tubes-side.png", bottom: -340, right: -40, width: 760, rotate: 60, flipV: true },
     { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
     { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
     { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35, opacity: 0.22 },
@@ -560,7 +560,7 @@
     img.setAttribute("aria-hidden", "true");
     img.style.width = d.width + "px";
     ["top", "bottom", "left", "right"].forEach((k) => { if (d[k] !== undefined) img.style[k] = d[k] + "px"; });
-    img.style.transform = `rotate(${d.rotate}deg)`;
+    img.style.transform = `${d.flipV ? "scaleY(-1) " : ""}rotate(${d.rotate}deg)`;
     if (d.opacity !== undefined) img.style.opacity = d.opacity;
     host.appendChild(img);
   });
