@@ -98,7 +98,7 @@
   const statStrip = $("#statStrip");
   const pubStat = el("button", "stat stat-clickable");
   pubStat.type = "button";
-  pubStat.innerHTML = `<div class="stat-value">${allPubs.length}</div><div class="stat-label">publications — click for details</div>`;
+  pubStat.innerHTML = `<div class="stat-value">${allPubs.length}</div><div class="stat-label">Publications — click for details</div>`;
   statStrip.appendChild(pubStat);
 
   const statPopover = $("#statPopover");
@@ -543,8 +543,8 @@
     { section: "fsae", image: "chassis-tubes-side.png", bottom: -340, right: -40, width: 760, rotate: -3 },
     { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
     { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
-    { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35 },
-    { section: "projects", image: "front-wing-profile.png", bottom: 10, right: -40, width: 340, rotate: 5 },
+    { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35, opacity: 0.22 },
+    { section: "projects", image: "front-wing-profile.png", top: 1115, right: 0, width: 340, rotate: 5 },
     { section: "projects", image: "rack-pinion-side.png", bottom: -35, left: -40, width: 700, rotate: 3 },
     { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4 },
     { section: "toolkit", image: "steering-wheel-front.png", bottom: 10, left: -40, width: 640, rotate: -5 },
@@ -561,6 +561,7 @@
     img.style.width = d.width + "px";
     ["top", "bottom", "left", "right"].forEach((k) => { if (d[k] !== undefined) img.style[k] = d[k] + "px"; });
     img.style.transform = `rotate(${d.rotate}deg)`;
+    if (d.opacity !== undefined) img.style.opacity = d.opacity;
     host.appendChild(img);
   });
 
