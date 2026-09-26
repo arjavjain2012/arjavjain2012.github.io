@@ -221,8 +221,9 @@ header.nav {
   pointer-events: none;
   overflow: hidden;
 }
-.hero-blueprint { display: flex; align-items: flex-end; justify-content: flex-end; }
-.hero-blueprint img { width: min(1100px, 92%); height: auto; opacity: 0.55; margin: 0 2% 40px 0; }
+.hero-blueprint { display: flex; align-items: flex-start; justify-content: flex-end; }
+.hero-blueprint img { width: min(420px, 30%); height: auto; opacity: 0.6; margin: 96px 3% 0 0; }
+@media (max-width: 900px) { .hero-blueprint { display: none; } }
 .bp-line { fill: none; stroke: var(--text-dim); stroke-width: 1.5; opacity: 0.55; }
 .bp-dash { stroke-dasharray: 6 7; }
 .bp-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; fill: var(--text-faint); }
