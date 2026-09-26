@@ -471,7 +471,7 @@ window.SITE_CONTENT = {
       org: "Innovate'22 Hackathon, Daimler India Commercial Vehicles",
       context: "Competition",
       period: "Aug 2022",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/best-workplace.webp",
       tags: ["Structures & Composites"],
       summary: "24-hour hackathon redesigning a long-haul truck driver's cabin with drivers and cabin experts.",
       bullets: [
@@ -489,7 +489,7 @@ window.SITE_CONTENT = {
       org: "Inter IIT Tech Meet 10.0 (JLR Problem Statement)",
       context: "Competition",
       period: "Mar 2022",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/jlr-bonnet.png",
       tags: ["Electronics & Controls"],
       summary: "Gold medal-winning actuation system, designed both mathematically and mechanically, to power a car's bonnet.",
       bullets: [
@@ -507,7 +507,7 @@ window.SITE_CONTENT = {
       org: "Cognizance (Annual Technical Festival, IIT Roorkee)",
       context: "Competition",
       period: "Mar 2022",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/pedalthon.png",
       tags: ["Structures & Composites"],
       summary: "Designed a commercial electric bicycle from scratch for last-mile deliveries, leading a 5-member team.",
       bullets: [
@@ -525,7 +525,7 @@ window.SITE_CONTENT = {
       org: "Inter IIT Tech Meet 9.0 (Bosch Problem Statement)",
       context: "Competition",
       period: "Mar 2021",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/bosch-ev.png",
       tags: ["Vehicle Dynamics & Simulation"],
       summary: "Gold medal-winning performance baselining and powertrain design for an electric ultralight commercial vehicle.",
       bullets: [
@@ -543,7 +543,7 @@ window.SITE_CONTENT = {
       org: "Tech4Heritage Hackathon, Sapio Analytics",
       context: "Competition",
       period: "Sep 2020 – Oct 2020",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/rejuvenation-heritage.webp",
       tags: ["Data Science & Machine Learning"],
       summary: "1st-place hackathon project restoring depleted Ajanta and Ellora cave paintings with GAN-based inpainting.",
       bullets: [
@@ -562,7 +562,7 @@ window.SITE_CONTENT = {
       org: "Model Club, B.I.T. Sindri",
       context: "Competition",
       period: "Aug 2020",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/nav-ujjwal.png",
       tags: ["Structures & Composites"],
       summary: "Designed an autonomous drone to transport essentials to differently-abled groups, including its carbon-fiber frame.",
       bullets: [
