@@ -543,7 +543,7 @@
     { section: "fsae", image: "chassis-tubes-side.png", bottom: -340, right: -40, width: 760, rotate: -3 },
     { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
     { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
-    { section: "projects", image: "jack-front.png", top: 60, left: -40, width: 480, rotate: -4 },
+    { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35 },
     { section: "projects", image: "front-wing-profile.png", bottom: 10, right: -40, width: 340, rotate: 5 },
     { section: "projects", image: "rack-pinion-side.png", bottom: -35, left: -40, width: 700, rotate: 3 },
     { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4 },
