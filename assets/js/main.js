@@ -197,7 +197,7 @@
   let stack = [];
   function paintModal() {
     const v = stack[stack.length - 1];
-    modalCrumbs.textContent = stack.map((s) => s.crumb).join("  /  ");
+    modalCrumbs.textContent = stack.length > 1 ? stack.map((s) => s.crumb).join("  /  ") : "";
     modalBack.style.visibility = stack.length > 1 ? "visible" : "hidden";
     modalBody.innerHTML = "";
     modalBody.appendChild(v.render());
@@ -291,7 +291,7 @@
 
   function toolBadge(t) {
     return t.logo
-      ? `<div class="tool-badge" title="${esc(t.name)}"><img src="${esc(t.logo)}" alt="${esc(t.name)}" loading="lazy"></div>`
+      ? `<div class="tool-badge" title="${esc(t.name)}"><img src="${esc(t.logo)}" alt="${esc(t.name)}"></div>`
       : `<div class="tool-badge tool-badge-text">${esc(t.name)}</div>`;
   }
 

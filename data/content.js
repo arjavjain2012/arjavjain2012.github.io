@@ -383,7 +383,7 @@ window.SITE_CONTENT = {
       ],
       links: [],
       tools: [
-        { name: "SolidWorks" }
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" }
       ]
     },
     {
@@ -427,7 +427,7 @@ window.SITE_CONTENT = {
       ],
       links: [],
       tools: [
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" }
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
       ]
     },
     {
@@ -452,7 +452,7 @@ window.SITE_CONTENT = {
       ],
       links: [],
       tools: [
-        { name: "SolidWorks" },
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
         { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
       ]
     },
@@ -535,8 +535,8 @@ window.SITE_CONTENT = {
       ],
       links: [],
       tools: [
-        { name: "SolidWorks" },
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" },
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" },
         { name: "Arduino", logo: "assets/img/tools/arduino.svg" }
       ]
     },
@@ -590,7 +590,7 @@ window.SITE_CONTENT = {
       ],
       links: [],
       tools: [
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.svg" }
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
       ]
     },
     {

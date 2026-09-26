@@ -659,6 +659,6 @@ body.modal-open { overflow: hidden; }
   border: 1px solid var(--line);
   border-radius: 4px;
 }
-.tool-badge img { height: 22px; width: auto; display: block; }
+.tool-badge img { height: 22px; width: auto; max-width: none; display: block; }
 .tool-badge-text { color: #1a1a1a; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
 @media (max-width: 620px) { .modal-body { padding: 20px 18px 48px; } .modal-bar { padding: 10px 14px; } }
