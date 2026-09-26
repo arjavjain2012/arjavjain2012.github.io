@@ -855,12 +855,10 @@ window.SITE_CONTENT = {
       logo: "assets/img/logos/log9.png",
       productImage: "assets/img/products/log9-rapidx8000-internal.jpg",
       productCaption: "RapidX 8000 — internal module assembly",
-      product: "RapidX",
       role: "Industrial Design Intern, RapidX",
       location: "Bengaluru, India",
       period: "May 2022 – Jul 2022",
       summary: "10-week summer internship focused on building LTO fast-charge battery packs aimed at retrofitting India's small commercial EV fleet.",
-      wideSummary: true,
       bullets: [
         "Designed pack hardware for RapidX, a fast-charging lithium-titanate (LTO) battery for 2W, 3W, and 4W commercial vehicles.",
         "Designed C101 busbars, an IP67 enclosure, and cell packaging for a 368 V, 40 Ah LTO pack retrofitted to the Tata Ace LCV.",
