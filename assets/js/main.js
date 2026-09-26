@@ -384,7 +384,7 @@
           <div class="exp-org-line">${esc(e.org)}</div>
         </div>
       </div>
-      <p class="detail-summary">${esc(e.summary || "")}</p>
+      <p class="detail-summary${e.wideSummary ? " detail-summary-wide" : ""}">${esc(e.summary || "")}</p>
       ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
       ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
     `;

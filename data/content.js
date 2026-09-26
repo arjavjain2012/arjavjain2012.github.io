@@ -674,7 +674,7 @@ window.SITE_CONTENT = {
       role: "Intern — System Integration & Test Engineer, Energy Products",
       location: "Palo Alto, CA, USA",
       period: "May 2026 – Aug 2026",
-      summary: "Root-caused a thermal runaway and validated derate strategy on a grid-scale energy product across its full qualification envelope.",
+      summary: "13-week summer internship at Tesla Energy focused on Powerwall thermal regression testing.",
       bullets: [
         "Root-caused a DC-DC power stage thermal runaway and built a lumped thermal network correlated to onboard PCB-NTC within 1°C.",
         "Developed and validated a live load/ambient-based derate strategy, preserving 96% rated output at 40°C across a -20°C to 50°C qualification sweep.",
@@ -734,7 +734,7 @@ window.SITE_CONTENT = {
       role: "Graduate EV-Powertrain Engineer Trainee, HV Systems",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
-      summary: "Two-year graduate program: initiated a carbon-negative range-extender concept and led production-intent thermal, mechanical, and electronics design of a solid-state contactor.",
+      summary: "2-year graduate program with the HV-Systems team, focused on building advanced electromechanical products for future JLR BEVs.",
       bullets: [
         "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
         "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
@@ -841,7 +841,8 @@ window.SITE_CONTENT = {
       role: "Industrial Design Intern, RapidX",
       location: "Bengaluru, India",
       period: "May 2022 – Jul 2022",
-      summary: "Mechanical packaging for a 368V/40Ah LTO fast-charge battery architecture aimed at retrofitting India's small commercial EV fleet.",
+      summary: "10-week summer internship focused on building LTO fast-charge battery packs aimed at retrofitting India's small commercial EV fleet.",
+      wideSummary: true,
       bullets: [
         "Designed pack hardware for RapidX, a fast-charging lithium-titanate (LTO) battery for 2W, 3W, and 4W commercial vehicles.",
         "Designed C101 busbars, an IP67 enclosure, and cell packaging for a 368 V, 40 Ah LTO pack retrofitted to the Tata Ace LCV.",
