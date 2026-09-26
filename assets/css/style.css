@@ -659,22 +659,21 @@ body.modal-open { overflow: hidden; }
 .detail-sub { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 30px 0 14px; }
 .detail-list { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; max-width: 820px; }
 .detail .metric-row { margin: 16px 0 0; }
-.jlr-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 36px; }
-.jlr-quad-hero, .jlr-quad-achievements { min-width: 0; }
-.jlr-quad-hero .jlr-quad-heroimg { margin-bottom: 18px; }
-.jlr-quad-hero .jlr-quad-heroimg img { aspect-ratio: 4 / 3; }
-.jlr-quad-achievements .detail-sub { margin-top: 0; }
-.jlr-quad-projects { grid-column: 1 / -1; }
-.jlr-proj-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start; }
-.jlr-proj-col { display: flex; flex-direction: column; min-width: 0; }
-.jlr-quad-card.jlr-quad-open { border-color: var(--accent); }
-.jlr-quad-cta { color: var(--accent); }
-.jlr-quad-detail { margin-top: 12px; padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--line); border-top: 2px solid var(--accent); }
-.jlr-quad-detail .detail-list { font-size: 13.5px; max-width: none; }
-@media (max-width: 900px) {
-  .jlr-quad { grid-template-columns: 1fr; }
-  .jlr-proj-row { grid-template-columns: 1fr; }
+.jlr-proj-card.jlr-proj-selected { border-color: var(--accent); }
+.jlr-proj-card.jlr-proj-selected .jlr-proj-cta { color: var(--accent); }
+.jlr-proj-fulldetail {
+  position: relative; margin-top: 24px; background: var(--bg-card); border: 1px solid var(--accent);
+  padding: 26px 48px 26px 26px; max-width: 820px;
 }
+.jlr-proj-fulldetail .jlr-detail-close {
+  position: absolute; top: 14px; right: 14px; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 1px solid var(--line); border-radius: 3px;
+  color: var(--text-dim); font-size: 13px; line-height: 1; cursor: pointer;
+}
+.jlr-proj-fulldetail .jlr-detail-close:hover { border-color: var(--accent); color: var(--accent); }
+.jlr-detail-title { font-family: var(--display); font-weight: 500; font-size: 20px; margin: 0 0 10px; }
+.jlr-proj-fulldetail .detail-summary { font-size: 14.5px; }
 .tools-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .tool-badge {
   height: 40px;

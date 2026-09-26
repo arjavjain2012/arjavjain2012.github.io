@@ -373,27 +373,23 @@
 
   function expDetail(e, linkedProject) {
     const box = el("div", "detail");
-    if (e.subProjects && e.subProjects.length) {
-      const quad = el("div", "jlr-quad");
-
-      const heroQ = el("div", "jlr-quad-hero");
-      heroQ.innerHTML = `
-        <div class="detail-hero jlr-quad-heroimg"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
-        <div class="exp-title-block">
-          ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
-          <div class="exp-title-text">
-            <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
-            <h2 class="detail-title">${esc(e.role)}</h2>
-            <div class="exp-org-line">${esc(e.org)}</div>
-          </div>
+    box.innerHTML = `
+      <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
+      <div class="exp-title-block">
+        ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
+        <div class="exp-title-text">
+          <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
+          <h2 class="detail-title">${esc(e.role)}</h2>
+          <div class="exp-org-line">${esc(e.org)}</div>
         </div>
-        <p class="detail-summary">${esc(e.summary || "")}</p>
-      `;
-      quad.appendChild(heroQ);
-
-      const achQ = el("div", "jlr-quad-achievements");
+      </div>
+      <p class="detail-summary">${esc(e.summary || "")}</p>
+      ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
+      ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
+    `;
+    if (e.subProjects && e.subProjects.length) {
       if (e.achievements && e.achievements.length) {
-        achQ.appendChild(el("h4", "detail-sub", "Achievements"));
+        box.appendChild(el("h4", "detail-sub", "Achievements"));
         const aul = el("ul", "award-list");
         e.achievements.forEach((a) => {
           const li = el("li", "award-item");
@@ -403,62 +399,59 @@
           `;
           aul.appendChild(li);
         });
-        achQ.appendChild(aul);
+        box.appendChild(aul);
       }
-      quad.appendChild(achQ);
 
-      const projQ = el("div", "jlr-quad-projects");
-      projQ.appendChild(el("h4", "detail-sub", "Projects"));
-      const projRow = el("div", "jlr-proj-row");
-      e.subProjects.forEach((p) => {
-        const col = el("div", "jlr-proj-col");
-        const card = el("article", "tile project-tile jlr-quad-card");
+      box.appendChild(el("h4", "detail-sub", "Projects"));
+      const projRow = el("div", "tile-grid jlr-proj-row");
+      const fullDetail = el("div", "jlr-proj-fulldetail");
+      fullDetail.hidden = true;
+      fullDetail.innerHTML = `<button type="button" class="jlr-detail-close" aria-label="Close project detail">✕</button><div class="jlr-detail-content"></div>`;
+      const detailContent = fullDetail.querySelector(".jlr-detail-content");
+
+      let activeId = null;
+      const cards = e.subProjects.map((p) => {
+        const card = el("article", "tile project-tile jlr-proj-card");
+        card.dataset.id = p.id;
         card.tabIndex = 0;
         card.setAttribute("role", "button");
-        card.setAttribute("aria-expanded", "false");
         card.innerHTML = `
           <div class="tile-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
           <div class="tile-body">
             <h3>${esc(p.title)}</h3>
             <p class="tile-summary">${esc(p.summary || "")}</p>
-            <div class="tile-cta jlr-quad-cta">Expand ↓</div>
+            <div class="tile-cta jlr-proj-cta">View details →</div>
           </div>`;
-        const detail = el("div", "jlr-quad-detail");
-        detail.hidden = true;
-        detail.innerHTML = `<ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
-        const cta = card.querySelector(".jlr-quad-cta");
-        const toggle = () => {
-          const open = card.classList.toggle("jlr-quad-open");
-          detail.hidden = !open;
-          card.setAttribute("aria-expanded", String(open));
-          cta.textContent = open ? "Collapse ↑" : "Expand ↓";
-          if (open) col.scrollIntoView({ behavior: "smooth", block: "center" });
-        };
-        card.addEventListener("click", toggle);
-        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); } });
-        col.appendChild(card);
-        col.appendChild(detail);
-        projRow.appendChild(col);
+        projRow.appendChild(card);
+        return card;
       });
-      projQ.appendChild(projRow);
-      quad.appendChild(projQ);
 
-      box.appendChild(quad);
+      const setActive = (id) => {
+        activeId = id;
+        cards.forEach((c) => c.classList.toggle("jlr-proj-selected", c.dataset.id === id));
+        if (id) {
+          const p = e.subProjects.find((sp) => sp.id === id);
+          detailContent.innerHTML = `
+            <h3 class="jlr-detail-title">${esc(p.title)}</h3>
+            ${p.summary ? `<p class="detail-summary">${esc(p.summary)}</p>` : ""}
+            <ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+          `;
+          fullDetail.hidden = false;
+          fullDetail.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          fullDetail.hidden = true;
+        }
+      };
+      cards.forEach((card) => {
+        const onActivate = () => setActive(activeId === card.dataset.id ? null : card.dataset.id);
+        card.addEventListener("click", onActivate);
+        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
+      });
+      fullDetail.querySelector(".jlr-detail-close").addEventListener("click", () => setActive(null));
+
+      box.appendChild(projRow);
+      box.appendChild(fullDetail);
     } else {
-      box.innerHTML = `
-        <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
-        <div class="exp-title-block">
-          ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
-          <div class="exp-title-text">
-            <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
-            <h2 class="detail-title">${esc(e.role)}</h2>
-            <div class="exp-org-line">${esc(e.org)}</div>
-          </div>
-        </div>
-        <p class="detail-summary">${esc(e.summary || "")}</p>
-        ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
-        ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
-      `;
       box.appendChild(el("h4", "detail-sub", "Development highlights"));
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));
     }
