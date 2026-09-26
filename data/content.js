@@ -297,7 +297,7 @@ window.SITE_CONTENT = {
       org: "Applied Heat Transfer Course Project, UofI",
       context: "Research",
       period: "Jan 2026 – May 2026",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/cold-plate-ml.webp",
       tags: ["Thermal & Energy Systems"],
       summary: "Multi-objective CFD optimization of an EV battery cold plate, sped up with a machine-learned surrogate model.",
       bullets: [
