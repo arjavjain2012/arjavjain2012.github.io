@@ -373,26 +373,27 @@
 
   function expDetail(e, linkedProject) {
     const box = el("div", "detail");
-    box.innerHTML = `
-      <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
-      <div class="exp-title-block">
-        ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
-        <div class="exp-title-text">
-          <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
-          <h2 class="detail-title">${esc(e.role)}</h2>
-          <div class="exp-org-line">${esc(e.org)}</div>
-        </div>
-      </div>
-      <p class="detail-summary">${esc(e.summary || "")}</p>
-      ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
-      ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
-    `;
     if (e.subProjects && e.subProjects.length) {
-      const workspace = el("div", "jlr-workspace");
+      const quad = el("div", "jlr-quad");
 
-      const mainCard = el("div", "jlr-main-card");
+      const heroQ = el("div", "jlr-quad-hero");
+      heroQ.innerHTML = `
+        <div class="detail-hero jlr-quad-heroimg"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
+        <div class="exp-title-block">
+          ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
+          <div class="exp-title-text">
+            <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
+            <h2 class="detail-title">${esc(e.role)}</h2>
+            <div class="exp-org-line">${esc(e.org)}</div>
+          </div>
+        </div>
+        <p class="detail-summary">${esc(e.summary || "")}</p>
+      `;
+      quad.appendChild(heroQ);
+
+      const achQ = el("div", "jlr-quad-achievements");
       if (e.achievements && e.achievements.length) {
-        mainCard.appendChild(el("h4", "detail-sub", "Achievements"));
+        achQ.appendChild(el("h4", "detail-sub", "Achievements"));
         const aul = el("ul", "award-list");
         e.achievements.forEach((a) => {
           const li = el("li", "award-item");
@@ -402,62 +403,62 @@
           `;
           aul.appendChild(li);
         });
-        mainCard.appendChild(aul);
+        achQ.appendChild(aul);
       }
-      workspace.appendChild(mainCard);
+      quad.appendChild(achQ);
 
-      const picker = el("div", "jlr-picker");
-      picker.appendChild(el("div", "detail-sub jlr-picker-label", "Projects"));
-      const stage = el("div", "jlr-stage");
-      const detailCard = el("div", "jlr-detail-card");
-      detailCard.hidden = true;
-      detailCard.innerHTML = `<button type="button" class="jlr-detail-close" aria-label="Close project detail">✕</button><div class="jlr-detail-content"></div>`;
-      const detailContent = detailCard.querySelector(".jlr-detail-content");
-
-      let activeId = null;
-      const floats = e.subProjects.map((p, i) => {
-        const card = el("div", "jlr-float-card");
-        card.style.setProperty("--i", i);
-        card.dataset.id = p.id;
+      const projQ = el("div", "jlr-quad-projects");
+      projQ.appendChild(el("h4", "detail-sub", "Projects"));
+      const projRow = el("div", "jlr-proj-row");
+      e.subProjects.forEach((p) => {
+        const col = el("div", "jlr-proj-col");
+        const card = el("article", "tile project-tile jlr-quad-card");
         card.tabIndex = 0;
         card.setAttribute("role", "button");
+        card.setAttribute("aria-expanded", "false");
         card.innerHTML = `
-          <div class="jlr-float-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
-          <div class="jlr-float-title">${esc(p.title)}</div>
-        `;
-        stage.appendChild(card);
-        return card;
+          <div class="tile-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
+          <div class="tile-body">
+            <h3>${esc(p.title)}</h3>
+            <p class="tile-summary">${esc(p.summary || "")}</p>
+            <div class="tile-cta jlr-quad-cta">Expand ↓</div>
+          </div>`;
+        const detail = el("div", "jlr-quad-detail");
+        detail.hidden = true;
+        detail.innerHTML = `<ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
+        const cta = card.querySelector(".jlr-quad-cta");
+        const toggle = () => {
+          const open = card.classList.toggle("jlr-quad-open");
+          detail.hidden = !open;
+          card.setAttribute("aria-expanded", String(open));
+          cta.textContent = open ? "Collapse ↑" : "Expand ↓";
+          if (open) col.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+        card.addEventListener("click", toggle);
+        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); } });
+        col.appendChild(card);
+        col.appendChild(detail);
+        projRow.appendChild(col);
       });
+      projQ.appendChild(projRow);
+      quad.appendChild(projQ);
 
-      const setActive = (id) => {
-        activeId = id;
-        floats.forEach((c) => c.classList.toggle("jlr-float-selected", c.dataset.id === id));
-        if (id) {
-          const p = e.subProjects.find((sp) => sp.id === id);
-          detailContent.innerHTML = `
-            <h3 class="jlr-detail-title">${esc(p.title)}</h3>
-            ${p.summary ? `<p class="detail-summary jlr-detail-summary">${esc(p.summary)}</p>` : ""}
-            <ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-          `;
-          detailCard.hidden = false;
-          workspace.classList.add("jlr-active");
-        } else {
-          detailCard.hidden = true;
-          workspace.classList.remove("jlr-active");
-        }
-      };
-      floats.forEach((card) => {
-        const onActivate = () => setActive(activeId === card.dataset.id ? null : card.dataset.id);
-        card.addEventListener("click", onActivate);
-        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
-      });
-      detailCard.querySelector(".jlr-detail-close").addEventListener("click", () => setActive(null));
-
-      stage.appendChild(detailCard);
-      picker.appendChild(stage);
-      workspace.appendChild(picker);
-      box.appendChild(workspace);
+      box.appendChild(quad);
     } else {
+      box.innerHTML = `
+        <div class="detail-hero"><img src="${esc(e.productImage || e.logo || "assets/img/placeholder-project.svg")}" alt="${esc(e.org)}"></div>
+        <div class="exp-title-block">
+          ${e.logo ? `<img class="exp-logo-big" src="${esc(e.logo)}" alt="${esc(e.org)} logo">` : ""}
+          <div class="exp-title-text">
+            <div class="exp-duration">${esc(e.period)} · ${esc(e.location)}</div>
+            <h2 class="detail-title">${esc(e.role)}</h2>
+            <div class="exp-org-line">${esc(e.org)}</div>
+          </div>
+        </div>
+        <p class="detail-summary">${esc(e.summary || "")}</p>
+        ${e.product ? `<div class="project-tags"><span class="ptag">${esc(e.product)}</span></div>` : ""}
+        ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
+      `;
       box.appendChild(el("h4", "detail-sub", "Development highlights"));
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));
     }
