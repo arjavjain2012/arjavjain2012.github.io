@@ -388,8 +388,11 @@
       ${linkedProject ? metricsRow(linkedProject.metrics) : ""}
     `;
     if (e.subProjects && e.subProjects.length) {
+      const workspace = el("div", "jlr-workspace");
+
+      const mainCard = el("div", "jlr-main-card");
       if (e.achievements && e.achievements.length) {
-        box.appendChild(el("h4", "detail-sub", "Achievements"));
+        mainCard.appendChild(el("h4", "detail-sub", "Achievements"));
         const aul = el("ul", "award-list");
         e.achievements.forEach((a) => {
           const li = el("li", "award-item");
@@ -399,36 +402,61 @@
           `;
           aul.appendChild(li);
         });
-        box.appendChild(aul);
+        mainCard.appendChild(aul);
       }
-      box.appendChild(el("h4", "detail-sub", "Projects"));
-      const projGrid = el("div", "tile-grid jlr-projects");
-      e.subProjects.forEach((p) => {
-        const card = el("article", "tile project-tile jlr-proj-tile");
+      workspace.appendChild(mainCard);
+
+      const picker = el("div", "jlr-picker");
+      picker.appendChild(el("div", "detail-sub jlr-picker-label", "Projects"));
+      const stage = el("div", "jlr-stage");
+      const detailCard = el("div", "jlr-detail-card");
+      detailCard.hidden = true;
+      detailCard.innerHTML = `<button type="button" class="jlr-detail-close" aria-label="Close project detail">✕</button><div class="jlr-detail-content"></div>`;
+      const detailContent = detailCard.querySelector(".jlr-detail-content");
+
+      let activeId = null;
+      const floats = e.subProjects.map((p, i) => {
+        const card = el("div", "jlr-float-card");
+        card.style.setProperty("--i", i);
+        card.dataset.id = p.id;
         card.tabIndex = 0;
         card.setAttribute("role", "button");
-        card.setAttribute("aria-expanded", "false");
         card.innerHTML = `
-          <div class="tile-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
-          <div class="tile-body">
-            <h3>${esc(p.title)}</h3>
-            <p class="tile-summary">${esc(p.summary || "")}</p>
-            <div class="tile-cta jlr-proj-cta">Expand →</div>
-            <ul class="detail-list jlr-proj-detail" hidden>${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-          </div>`;
-        const cta = card.querySelector(".jlr-proj-cta");
-        const panel = card.querySelector(".jlr-proj-detail");
-        const toggle = () => {
-          const open = card.classList.toggle("jlr-proj-open");
-          panel.hidden = !open;
-          card.setAttribute("aria-expanded", String(open));
-          cta.textContent = open ? "Collapse ↑" : "Expand →";
-        };
-        card.addEventListener("click", toggle);
-        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); } });
-        projGrid.appendChild(card);
+          <div class="jlr-float-image"><img src="${esc(p.image || "assets/img/placeholder-project.svg")}" alt="${esc(p.title)}" loading="lazy"></div>
+          <div class="jlr-float-title">${esc(p.title)}</div>
+        `;
+        stage.appendChild(card);
+        return card;
       });
-      box.appendChild(projGrid);
+
+      const setActive = (id) => {
+        activeId = id;
+        floats.forEach((c) => c.classList.toggle("jlr-float-selected", c.dataset.id === id));
+        if (id) {
+          const p = e.subProjects.find((sp) => sp.id === id);
+          detailContent.innerHTML = `
+            <h3 class="jlr-detail-title">${esc(p.title)}</h3>
+            ${p.summary ? `<p class="detail-summary jlr-detail-summary">${esc(p.summary)}</p>` : ""}
+            <ul class="detail-list">${p.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+          `;
+          detailCard.hidden = false;
+          workspace.classList.add("jlr-active");
+        } else {
+          detailCard.hidden = true;
+          workspace.classList.remove("jlr-active");
+        }
+      };
+      floats.forEach((card) => {
+        const onActivate = () => setActive(activeId === card.dataset.id ? null : card.dataset.id);
+        card.addEventListener("click", onActivate);
+        card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
+      });
+      detailCard.querySelector(".jlr-detail-close").addEventListener("click", () => setActive(null));
+
+      stage.appendChild(detailCard);
+      picker.appendChild(stage);
+      workspace.appendChild(picker);
+      box.appendChild(workspace);
     } else {
       box.appendChild(el("h4", "detail-sub", "Development highlights"));
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));

@@ -696,16 +696,16 @@ window.SITE_CONTENT = {
         "Led production-intent mechanical and thermal design of a solid-state contactor rejecting 24 W/cm², at a 2.9 vibration safety factor."
       ],
       achievements: [
-        { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global — CH4 REEV concept", date: "2024" },
-        { title: "5 Internal Invention Disclosures Filed", org: "DC-link capacitor pre-charging, REEV, and charge-depletion control", date: "2024–25" },
+        { title: "1st Runner-Up, JLR Graduate Innovation Challenge", org: "86 teams, 442 graduates, global — CH4 REEV concept", date: "2025" },
+        { title: "5 Internal Invention Disclosures Filed", org: "DC-link capacitor pre-charging, REEV, and charge-depletion control", date: "2023–25" },
         { title: '"Exceptional Creator" Recognition', org: "Twice awarded by JLR — FY24 and FY25", date: "2024, 2025" },
-        { title: "Ashorne Hill Graduate Program", org: "Completed JLR's leadership, stakeholder management, and project-execution program", date: "2023–25" }
+        { title: "Ashorne Hill Graduate Program", org: "Completed JLR's leadership, stakeholder management, and project-execution program", date: "2024–25" }
       ],
       subProjects: [
         {
           id: "ssc",
           title: "Solid-State Contactor (SSC)",
-          image: "assets/img/products/jlr-ssc-contactor.jpg",
+          image: "assets/img/products/jlr-ssc-contactor.webp",
           summary: "Production-intent thermal, mechanical, and electronics design of a 1500 V solid-state contactor, from cold-plate concept to prototype.",
           bullets: [
             "Led production-intent mechanical and thermal design of the solid-state contactor (SSC), taking it from packaging concept to prototype via DFM.",
@@ -719,7 +719,7 @@ window.SITE_CONTENT = {
         {
           id: "reev",
           title: "Range-Extended EV (CH4 REEV)",
-          image: "assets/img/products/jlr-reev-concept.jpg",
+          image: "assets/img/products/jlr-reev-concept.webp",
           summary: "A carbon-negative, fugitive-CH4 range-extended EV concept — cryogenic storage, charge-depletion control, and 36% more range.",
           bullets: [
             "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
@@ -730,7 +730,7 @@ window.SITE_CONTENT = {
         {
           id: "xhev",
           title: "xHEV Powerpack",
-          image: "assets/img/products/jlr-xhev-powerpack.jpg",
+          image: "assets/img/products/jlr-xhev-powerpack.png",
           summary: "Boundary diagrams, DFMEA, and ISO 26262 safety analysis for the xHEV powerpack, plus bonnet-actuator position control.",
           bullets: [
             "Built a boundary diagram, interface analysis, and DFMEA for the xHEV powerpack, cutting high-risk RPNs 26% via design actions.",
