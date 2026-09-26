@@ -255,7 +255,7 @@
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     const box = el("div", "detail");
     box.innerHTML = `
-      <div class="detail-hero"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
+      <div class="detail-hero${p.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
       <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
@@ -291,7 +291,7 @@
 
   function projectTile(p) {
     return makeTile(`
-      <div class="tile-image"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+      <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(p.period)}</span></div>
         <h3>${esc(p.title)}</h3>

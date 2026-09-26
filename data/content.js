@@ -526,6 +526,7 @@ window.SITE_CONTENT = {
       context: "Competition",
       period: "Mar 2021",
       image: "assets/img/projects/bosch-ev.png",
+      imageFit: "contain",
       tags: ["Vehicle Dynamics & Simulation"],
       summary: "Gold medal-winning performance baselining and powertrain design for an electric ultralight commercial vehicle.",
       bullets: [

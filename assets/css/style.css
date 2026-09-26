@@ -456,8 +456,11 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 }
 .thesis-level-tile { margin-bottom: 6px; }
 .detail-hero.thesis-detail-hero img { object-fit: contain; background: #fff; }
+.detail-hero.detail-hero-contain img { object-fit: contain; background: #fff; }
 .tile-image.thesis-tile-image { background: #fff; }
 .tile-image.thesis-tile-image img { object-fit: contain; }
+.tile-image.tile-image-contain { background: #fff; }
+.tile-image.tile-image-contain img { object-fit: contain; }
 .pub-block { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
 .pub-block-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px; }
 .pub-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
