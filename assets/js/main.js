@@ -437,6 +437,7 @@
 
     const card = el("article", "thesis-card");
     card.innerHTML = `
+      ${t.image ? `<div class="thesis-image"><img src="${esc(t.image)}" alt="${esc(t.title)}" loading="lazy"></div>` : ""}
       <div class="thesis-level">${esc(t.level)}</div>
       <h3 class="thesis-title">${esc(t.title)}</h3>
       <div class="thesis-org">${esc(t.org)}</div>

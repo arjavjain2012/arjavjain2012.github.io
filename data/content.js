@@ -79,6 +79,7 @@ window.SITE_CONTENT = {
       title: "Holistic Rack-to-Processor Power & Thermal Co-Design for Ultra-High-Density Data Centers Using Dynamic System-Level Modeling",
       org: "Energy Transport Research Lab, University of Illinois Urbana-Champaign",
       period: "Jan 2026 – Present",
+      image: "assets/img/projects/ms-thesis.png",
       summary: "System-level thermal-hydraulic modeling of a 200 kW liquid-cooled AI rack, from full physics down to a real-time reduced-order model.",
       bullets: [
         "Built a transient chip-to-ambient thermal-hydraulic model of a 200 kW liquid-cooled AI rack, integrating CPU, GPU, PSU, SSD, and 14 CDUs.",
@@ -98,13 +99,6 @@ window.SITE_CONTENT = {
           status: "In progress",
           url: "— add publication details —",
           isPlaceholder: true
-        },
-        {
-          title: "Techno-Economic and Life-Cycle Assessment of Carbon-Negative Hydrogen via Direct Reforming of Raw Biogas with Integrated CO₂ Capture and Storage",
-          venue: "University of Illinois Urbana-Champaign",
-          status: "In progress",
-          url: "— add publication details —",
-          isPlaceholder: true
         }
       ]
     },
@@ -114,6 +108,7 @@ window.SITE_CONTENT = {
       title: "Autoignition and Knock in n-Heptane Combustion at High Temperatures using 2D-DNS",
       org: "Mechanical & Industrial Engineering Dept., IIT Roorkee",
       period: "Jul 2022 – Jul 2024",
+      image: "assets/img/projects/bs-thesis.png",
       summary: "Direct numerical simulation of engine knock, proposing a new framework that unifies knock-timing and autoignition-mode prediction.",
       bullets: [
         "Ran 2D DNS of SI engine end-gas knock in n-heptane at 3 engine-like conditions, resolving to 3.9 micron cells with adaptive mesh refinement.",

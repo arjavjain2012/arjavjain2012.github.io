@@ -451,6 +451,14 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   border-left: 3px solid var(--teal);
   padding: 28px;
 }
+.thesis-image {
+  margin: -28px -28px 20px -28px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+.thesis-image img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .thesis-level {
   display: inline-block;
   font-family: var(--mono);
