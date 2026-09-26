@@ -420,38 +420,52 @@
   });
 
   /* ---------------- Thesis & Publications ---------------- */
-  const thesisGrid = $("#thesisGrid");
-  (C.theses || []).forEach((t) => {
-    const pubsHtml = (t.publications || []).map((p) => {
-      if (isBlankPlaceholder(p.title)) {
-        return `<li class="pub-item pub-placeholder">
-          <span class="needs-input">— add publication details —</span>
-        </li>`;
-      }
-      const isLink = !isBlankPlaceholder(p.url);
-      return `<li class="pub-item">
-        <div class="pub-title">${isLink ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a>` : esc(p.title)}</div>
-        <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
-      </li>`;
-    }).join("");
+  const pubListHtml = (pubs) => (pubs || []).map((p) => {
+    if (isBlankPlaceholder(p.title)) {
+      return `<li class="pub-item pub-placeholder"><span class="needs-input">— add publication details —</span></li>`;
+    }
+    const isLink = !isBlankPlaceholder(p.url);
+    return `<li class="pub-item">
+      <div class="pub-title">${isLink ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} →</a>` : esc(p.title)}</div>
+      <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
+    </li>`;
+  }).join("");
 
-    const card = el("article", "thesis-card");
-    card.innerHTML = `
-      ${t.image ? `<div class="thesis-image"><img src="${esc(t.image)}" alt="${esc(t.title)}" loading="lazy"></div>` : ""}
+  function thesisDetail(t) {
+    const box = el("div", "detail");
+    box.innerHTML = `
+      ${t.image ? `<div class="detail-hero thesis-detail-hero"><img src="${esc(t.image)}" alt="${esc(t.title)}"></div>` : ""}
       <div class="thesis-level">${esc(t.level)}</div>
-      <h3 class="thesis-title">${esc(t.title)}</h3>
-      <div class="thesis-org">${esc(t.org)}</div>
-      <div class="exp-meta thesis-meta"><span>${esc(t.period)}</span></div>
-      <p class="thesis-summary">${esc(t.summary)}</p>
-      <ul class="exp-bullets">${t.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${t.metrics && t.metrics.length ? `<div class="metric-row exp-metric-row">${t.metrics.map(metricHtml).join("")}</div>` : ""}
+      <div class="detail-kicker">${esc(t.period)} · ${esc(t.org)}</div>
+      <h2 class="detail-title">${esc(t.title)}</h2>
+      <p class="detail-summary">${esc(t.summary)}</p>
+      ${metricsRow(t.metrics)}
+      <h4 class="detail-sub">Development highlights</h4>
+      <ul class="detail-list">${t.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
       <div class="pub-block">
         <div class="pub-block-label">Publications</div>
-        <ul class="pub-list">${pubsHtml}</ul>
+        <ul class="pub-list">${pubListHtml(t.publications) || `<li class="pub-item pub-placeholder"><span class="needs-input">— add publication details —</span></li>`}</ul>
       </div>
     `;
-    thesisGrid.appendChild(card);
-  });
+    return box;
+  }
+
+  function thesisTile(t) {
+    return makeTile(`
+      <div class="tile-image"><img src="${esc(t.image || "assets/img/placeholder-project.svg")}" alt="${esc(t.title)}" loading="lazy"></div>
+      <div class="tile-body">
+        <div class="project-meta"><span>${esc(t.period)}</span></div>
+        <div class="thesis-level thesis-level-tile">${esc(t.level)}</div>
+        <h3>${esc(t.title)}</h3>
+        <div class="project-org">${esc(t.org)}</div>
+        <p class="tile-summary">${esc(t.summary)}</p>
+        <div class="hl-row">${highlightChips(t)}</div>
+        <div class="tile-cta">View thesis →</div>
+      </div>`, () => pushView({ crumb: shortTitle(t.title), render: () => thesisDetail(t) }), "project-tile");
+  }
+
+  const thesisGrid = $("#thesisGrid");
+  (C.theses || []).forEach((t) => thesisGrid.appendChild(thesisTile(t)));
 
   /* ---------------- Leadership ---------------- */
   const leadershipTimeline = $("#leadershipTimeline");

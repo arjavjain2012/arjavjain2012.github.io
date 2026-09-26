@@ -443,22 +443,6 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 
 
 /* ---------- Thesis & Publications ---------- */
-.thesis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-.thesis-card {
-  position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--teal);
-  padding: 28px;
-}
-.thesis-image {
-  margin: -28px -28px 20px -28px;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-bottom: 1px solid var(--line);
-  background: #fff;
-}
-.thesis-image img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .thesis-level {
   display: inline-block;
   font-family: var(--mono);
@@ -470,10 +454,8 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   padding: 4px 10px;
   margin-bottom: 14px;
 }
-.thesis-title { margin: 0 0 8px; font-size: clamp(17px, 2vw, 19px); line-height: 1.35; }
-.thesis-org { color: var(--text-dim); font-size: 13.5px; margin-bottom: 10px; }
-.thesis-meta { margin-bottom: 16px; }
-.thesis-summary { color: var(--text-dim); font-size: 14px; margin: 0 0 14px; }
+.thesis-level-tile { margin-bottom: 6px; }
+.thesis-detail-hero img { object-fit: contain; background: #fff; }
 .pub-block { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
 .pub-block-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px; }
 .pub-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
@@ -484,7 +466,6 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .pub-meta { font-family: var(--mono); font-size: 11.5px; color: var(--text-faint); }
 .pub-status { color: var(--placeholder); }
 .pub-placeholder { text-align: center; color: var(--placeholder); font-family: var(--mono); font-size: 12.5px; }
-@media (max-width: 860px) { .thesis-grid { grid-template-columns: 1fr; } }
 
 /* ---------- Education / Awards ---------- */
 .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
