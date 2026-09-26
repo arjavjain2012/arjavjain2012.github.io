@@ -465,6 +465,131 @@ window.SITE_CONTENT = {
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
+    {
+      id: "best-workplace",
+      title: "Best Workplace for Drivers",
+      org: "Innovate'22 Hackathon, Daimler India Commercial Vehicles",
+      context: "Competition",
+      period: "Aug 2022",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Structures & Composites"],
+      summary: "24-hour hackathon redesigning a long-haul truck driver's cabin with drivers and cabin experts.",
+      bullets: [
+        "Ideated an improved drivers' cabin for long-haul trucks with direct input from drivers and cabin experts in a 24-hour event.",
+        "Devised a system package to raise driver performance by lowering overall in-cabin NVH levels."
+      ],
+      metrics: [
+        { label: "Result", value: "2nd Runner-up, Innovate'22" }
+      ],
+      links: []
+    },
+    {
+      id: "jlr-bonnet",
+      title: "JLR's Powered Bonnet for Electric Vehicles",
+      org: "Inter IIT Tech Meet 10.0 (JLR Problem Statement)",
+      context: "Competition",
+      period: "Mar 2022",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Electronics & Controls"],
+      summary: "Gold medal-winning actuation system, designed both mathematically and mechanically, to power a car's bonnet.",
+      bullets: [
+        "Devised a system, both mathematically and mechanically, to actuate the bonnet of a car.",
+        "Performed actuator selection calculations and built a model of all physical actuating components."
+      ],
+      metrics: [
+        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 10.0" }
+      ],
+      links: []
+    },
+    {
+      id: "pedalthon",
+      title: "Pedalthon — Commercial Electric Bicycle",
+      org: "Cognizance (Annual Technical Festival, IIT Roorkee)",
+      context: "Competition",
+      period: "Mar 2022",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Structures & Composites"],
+      summary: "Designed a commercial electric bicycle from scratch for last-mile deliveries, leading a 5-member team.",
+      bullets: [
+        "Led the 5-member team representing the institute, securing 1st runner-up at Pedalthon.",
+        "Designed a commercial electric bicycle from scratch for last-mile delivery use cases."
+      ],
+      metrics: [
+        { label: "Result", value: "1st Runner-up, Pedalthon" }
+      ],
+      links: []
+    },
+    {
+      id: "bosch-ev",
+      title: "BOSCH's Electric Vehicle Simulation Challenge",
+      org: "Inter IIT Tech Meet 9.0 (Bosch Problem Statement)",
+      context: "Competition",
+      period: "Mar 2021",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Vehicle Dynamics & Simulation"],
+      summary: "Gold medal-winning performance baselining and powertrain design for an electric ultralight commercial vehicle.",
+      bullets: [
+        "Worked on performance baselining and powertrain design of an electric ultralight commercial vehicle.",
+        "Mathematically modeled powertrain sizing and built forward-integrated powertrain models for the vehicle."
+      ],
+      metrics: [
+        { label: "Result", value: "Gold Medal, Inter IIT Tech Meet 9.0" }
+      ],
+      links: []
+    },
+    {
+      id: "rejuvenation-heritage",
+      title: "Rejuvenation of Heritage — Restoring Ajanta & Ellora Paintings",
+      org: "Tech4Heritage Hackathon, Sapio Analytics",
+      context: "Competition",
+      period: "Sep 2020 – Oct 2020",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Data Science & Machine Learning"],
+      summary: "1st-place hackathon project restoring depleted Ajanta and Ellora cave paintings with GAN-based inpainting.",
+      bullets: [
+        "Developed a model to restore old, depleted paintings from the Ajanta and Ellora caves.",
+        "Built a training dataset by overlaying randomly augmented graphic defects on ancient paintings and texturing with NST.",
+        "Implemented inpainting with mask segmentation and a GAN model."
+      ],
+      metrics: [
+        { label: "Result", value: "1st Place, Tech4Heritage Hackathon" }
+      ],
+      links: []
+    },
+    {
+      id: "nav-ujjwal",
+      title: "Nav Ujjwal E-Innovation Hackathon — Autonomous Aid Drone",
+      org: "Model Club, B.I.T. Sindri",
+      context: "Competition",
+      period: "Aug 2020",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Structures & Composites"],
+      summary: "Designed an autonomous drone to transport essentials to differently-abled groups, including its carbon-fiber frame.",
+      bullets: [
+        "Worked on the design of an autonomous drone to transport essentials to differently-abled groups.",
+        "Designed and assembled all components, including its sandwich-structured carbon-fiber frame."
+      ],
+      metrics: [
+        { label: "Result", value: "1st Runner-up, Nav Ujjwal E-Innovation Hackathon" }
+      ],
+      links: []
+    },
+    {
+      id: "rc-car",
+      title: "RC-Operated Nitro Engine Car",
+      org: "SAE IIT Roorkee Chapter",
+      context: "Student Project",
+      period: "Nov 2019 – Feb 2020",
+      image: "assets/img/placeholder-project.svg",
+      tags: ["Structures & Composites"],
+      summary: "Designed, simulated, and assembled a nitro-engine RC car from scratch, replicating full-scale automotive systems.",
+      bullets: [
+        "Studied the working of different automotive systems and replicated them in the form of a nitro-engine RC car.",
+        "Designed and simulated the chassis to ensure mechanical robustness under operating loads.",
+        "Assembled all components onto the chassis and evaluated on-track performance."
+      ],
+      links: []
+    },
   ],
 
   // Formal paid roles only — sorted most-recent-first by start date.
