@@ -325,17 +325,12 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Sep 2025 – Present",
       image: "assets/img/projects/iem26.webp",
-      tags: ["Vehicle Dynamics & Simulation"],
-      summary: "Driver-in-the-loop simulation for UIUC's current FSAE Electric build.",
-      bullets: [
-        "Built a driver-in-the-loop simulator in Vi-DriveSim on a Vi-CarRealTime vehicle model, correlating to on-car telemetry within 5%."
-      ],
-      metrics: [
-        { label: "Telemetry correlation", value: "within 5%" },
-        { label: "Competition result", value: "", isPlaceholder: true }
-      ],
+      heroPosition: "50% 78%",
+      tags: ["Vehicle Dynamics & Simulation", "3rd in Engineering Design — FSAEM 2026"],
+      summary: "Powertrain and Vehicle Dynamics Engineer",
+      bullets: [],
       links: [
-        { label: "Team site", url: "— add Illini Electric Motorsports link —", isPlaceholder: true },
+        { label: "Team site", url: "https://www.illinielectricmotorsports.com/" },
         { label: "Project write-up / demo video", url: "— add link —", isPlaceholder: true }
       ]
     },
