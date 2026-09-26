@@ -222,7 +222,7 @@ header.nav {
   overflow: hidden;
 }
 .hero-blueprint { display: flex; align-items: flex-start; justify-content: flex-end; }
-.hero-blueprint img { width: min(420px, 30%); height: auto; opacity: 0.6; margin: 96px 3% 0 0; }
+.hero-blueprint img { width: min(520px, 36%); height: auto; opacity: 0.6; margin: 80px 2% 0 0; }
 @media (max-width: 900px) { .hero-blueprint { display: none; } }
 .bp-line { fill: none; stroke: var(--text-dim); stroke-width: 1.5; opacity: 0.55; }
 .bp-dash { stroke-dasharray: 6 7; }
