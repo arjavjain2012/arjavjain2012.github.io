@@ -534,9 +534,9 @@ window.SITE_CONTENT = {
         "Proposed an active seat-suspension system for load-adaptive damping against road harshness, completing the N-V-H solution set within an estimated ₹19,000 component cost."
       ],
       metrics: [
+        { label: "Result", value: "2nd Runner-up, Innovate'22" },
         { label: "Noise reduction", value: "up to 43%" },
-        { label: "Vibration reduction", value: "up to 33%" },
-        { label: "Result", value: "2nd Runner-up, Innovate'22" }
+        { label: "Vibration reduction", value: "up to 33%" }
       ],
       links: [
         { label: "Final report", url: "assets/docs/best-workplace-report.pptx" }
@@ -589,10 +589,10 @@ window.SITE_CONTENT = {
         "Built GPS/GSM vehicle tracking on Arduino, simulated in Proteus, and validated the disc-brake tyre-slip model to a 205m stopping distance — all within a ₹75,000 total build cost."
       ],
       metrics: [
+        { label: "Result", value: "1st Runner-up, Pedalthon" },
         { label: "Design range", value: "170 km" },
         { label: "Battery savings from regen", value: "78.6%" },
-        { label: "Total build cost", value: "₹75,000" },
-        { label: "Result", value: "1st Runner-up, Pedalthon" }
+        { label: "Total build cost", value: "₹75,000" }
       ],
       links: [
         { label: "Final report", url: "assets/docs/pedalthon-report.pptx" }
@@ -673,9 +673,9 @@ window.SITE_CONTENT = {
         "Trained a MobileNetSSD model in TensorFlow for real-time gate/obstacle detection, converting bounding-box geometry into a reference point for a PID-based navigation and collision-avoidance controller."
       ],
       metrics: [
+        { label: "Result", value: "1st Runner-up, Nav Ujjwal E-Innovation Hackathon" },
         { label: "Payload capacity", value: "up to 3.5 kg" },
-        { label: "Flight time", value: "20–35 min" },
-        { label: "Result", value: "1st Runner-up, Nav Ujjwal E-Innovation Hackathon" }
+        { label: "Flight time", value: "20–35 min" }
       ],
       links: [
         { label: "Final report", url: "assets/docs/nav-ujjwal-report.pptx" }
