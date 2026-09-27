@@ -925,12 +925,14 @@ window.SITE_CONTENT = {
     }
   ],
 
+  // Shown as one large photo spanning the full Leadership timeline.
+  leadershipPhoto: "assets/img/leadership/iitr-motorsports-team-silverstone.jpg",
+
   leadership: [
     {
       role: "Mechanical Head, Powertrain & Braking Head",
       org: "IIT Roorkee Motorsports",
       period: "Apr 2022 – Apr 2023",
-      image: "assets/img/leadership/iitr-motorsports-team-silverstone.jpg",
       bullets: [
         "Led 50+ members across 8 sub-divisions on a £33K budget, owning design, fabrication, and full-vehicle integration of the electric car.",
         "Set season targets for reliability, competitiveness, and manufacturability, restructuring the design process across every vertical.",
