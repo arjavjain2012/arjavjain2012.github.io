@@ -44,9 +44,9 @@ window.SITE_CONTENT = {
     // (e.g. a future meta-description). The site renders `hookLines` below
     // instead so the 3 sentences sit on 3 close-to-equal-width lines rather
     // than wrapping wherever the browser feels like.
-    hook: "I design multi-physics hardware that keeps every constraint in balance. Five Formula Student years, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
+    hook: "I design multi-physics hardware that keeps every constraint in balance. Four Formula Student years, two years at JLR and a summer at Tesla taught me performance lives in that balance. Every design since has been faster than the last.",
     hookLines: [
-      "I design multi-physics hardware that keeps every constraint in balance. Five",
+      "I design multi-physics hardware that keeps every constraint in balance. Four",
       "Formula Student years, two years at JLR and a summer at Tesla taught me",
       "performance lives in that balance. Every design since has been faster than the last."
     ],
@@ -56,7 +56,7 @@ window.SITE_CONTENT = {
     // delete `isPlaceholder: true` on each one you complete.
     stats: [
       { value: "2+", label: "Years of work experience", link: "#experience" },
-      { value: "5+", label: "Years in FSAE", link: "#fsae" },
+      { value: "4+", label: "Years in FSAE", link: "#fsae" },
       { value: "50+", label: "Engineers led", link: "#leadership" }
     ]
   },
@@ -108,7 +108,7 @@ window.SITE_CONTENT = {
       title: "Autoignition and Knock in n-Heptane Combustion at High Temperatures using 2D-DNS",
       org: "Combustion Theory & Modeling Lab, IIT Roorkee",
       period: "Jul 2022 – Jul 2024",
-      image: "assets/img/projects/bs-thesis.png",
+      image: "assets/img/projects/bs-thesis-poster-photo.jpg",
       summary: "Direct numerical simulation of engine knock, proposing a new framework that unifies knock-timing and autoignition-mode prediction.",
       bullets: [
         "Ran 2D DNS of SI engine end-gas knock in n-heptane at 3 engine-like conditions, resolving to 3.9 micron cells with adaptive mesh refinement.",
@@ -410,115 +410,6 @@ window.SITE_CONTENT = {
       ]
     },
     {
-      id: "rmse23",
-      title: "RMSE'23 — Formula Student Electric Vehicle",
-      org: "IIT Roorkee Motorsports, IITR",
-      context: "Formula Student",
-      period: "Apr 2022 – Jul 2023",
-      image: "assets/img/projects/rmse23.jpg",
-      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
-      summary: "Mechanical Head and Powertrain & Braking Head",
-      metrics: [
-        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" },
-        { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
-        { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
-      ],
-      links: [
-        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
-      ]
-    },
-    {
-      id: "dorle",
-      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
-      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee — Independent Project, in collaboration with Dorle Controls, Michigan",
-      context: "Industry",
-      period: "Jan 2022 – May 2022",
-      image: "assets/img/projects/dorle.png",
-      imageFit: "contain",
-      tags: ["Vehicle Dynamics & Simulation"],
-      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
-      bullets: [
-        "Led a 5-person team building a 14-DOF full-vehicle model in MATLAB/Simulink from first-principles equations, split across powertrain/braking, ride, handling, and suspension subsystems.",
-        "Owned the powertrain & braking subsystem: modeled the electric powertrain and hydraulic brakes with 2D lookup tables for motor efficiency, outputting wheel torque, battery SOC, and motor power from driver throttle/brake inputs.",
-        "Implemented racing-line optimization using the minimum-curvature method to generate time-optimal trajectories for a specific circuit.",
-        "Integrated all subsystems through a shared tyre sub-block outputting tire forces, moments, and wheel speeds, then validated the full model against constant-velocity and acceleration test cases."
-      ],
-      metrics: [
-        { label: "Model fidelity", value: "14-DOF" },
-        { label: "Optimization method", value: "Minimum curvature" }
-      ],
-      links: [
-        { label: "Final report", url: "assets/docs/dorle-report.pptx" }
-      ],
-      tools: [
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
-      ]
-    },
-    {
-      id: "turbojet-nozzle",
-      title: "Flow Analysis & Optimization of a Supersonic Turbojet Intake and Nozzle",
-      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee (Guide: Prof. Ankit Bansal)",
-      context: "Research",
-      period: "Sep 2021 – Nov 2021",
-      image: "assets/img/projects/turbojet-nozzle.png",
-      tags: ["Combustion & Powertrain Research", "Thermal & Energy Systems"],
-      summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
-      bullets: [
-        "Examined the Method of Characteristics for designing shock-free, isentropic supersonic flow nozzles.",
-        "Modeled a 2D axisymmetric converging-diverging nozzle in SolidWorks and ran density-based, inviscid ANSYS Fluent CFD, refining a hex-dominant mesh from 5mm to 0.1–0.5mm elements (11,770 nodes) to resolve the shock structure.",
-        "Analyzed a spiked supersonic intake at Mach 1, 2, and 3 free-stream conditions, and identified over- and under-expanded regimes on the nozzle by sweeping outlet back-pressure.",
-        "Evaluated how exit and ambient pressure affect nozzle expansion behavior for supersonic flight up to Mach 2."
-      ],
-      metrics: [
-        { label: "Design method", value: "Method of Characteristics" },
-        { label: "Max flight speed studied", value: "Mach 3 (intake)" },
-        { label: "Mesh refinement", value: "5mm → 0.1–0.5mm" }
-      ],
-      links: [
-        { label: "Final report", url: "assets/docs/turbojet-nozzle-report.pptx" }
-      ],
-      tools: [
-        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
-        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
-      ]
-    },
-    {
-      id: "rmse21",
-      title: "RMSE'21 — Formula Student Electric Vehicle",
-      org: "IIT Roorkee Motorsports, IITR",
-      context: "Formula Student",
-      period: "Jan 2021 – Dec 2021",
-      image: "assets/img/projects/rmse21.jpg",
-      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
-      summary: "Powertrain & Braking Engineer",
-      bullets: [
-        "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
-        "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
-        "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
-        "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
-        "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge.",
-        "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
-        "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
-        "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
-        "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks.",
-        "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
-        "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault.",
-        "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor.",
-        "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
-      ],
-      metrics: [
-        { label: "Business Plan Presentation, Formula Bharat Virtual '22", value: "1st" },
-        { label: "Team Management, Formula Bharat Virtual '22", value: "2nd" },
-        { label: "Engineering Design Report, Formula Bharat Virtual '22", value: "3rd" },
-        { label: "Overall, Electric Teams — Formula Bharat Virtual '22", value: "3rd" }
-      ],
-      links: [
-        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
-      ]
-    },
-    {
       id: "best-workplace",
       title: "Best Workplace for Drivers",
       org: "Innovate'22 Hackathon, Daimler India Commercial Vehicles",
@@ -541,6 +432,25 @@ window.SITE_CONTENT = {
       ],
       links: [
         { label: "Final report", url: "assets/docs/best-workplace-report.pptx" }
+      ]
+    },
+    {
+      id: "rmse23",
+      title: "RMSE'23 — Formula Student Electric Vehicle",
+      org: "IIT Roorkee Motorsports, IITR",
+      context: "Formula Student",
+      period: "Apr 2022 – Jul 2023",
+      image: "assets/img/projects/rmse23.jpg",
+      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
+      summary: "Mechanical Head and Powertrain & Braking Head",
+      metrics: [
+        { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" },
+        { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
+        { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
+      ],
+      links: [
+        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
+        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
     {
@@ -604,6 +514,61 @@ window.SITE_CONTENT = {
       ]
     },
     {
+      id: "dorle",
+      title: "Bespoke 14-DOF Full-Vehicle Analytical Model",
+      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee — Independent Project, in collaboration with Dorle Controls, Michigan",
+      context: "Industry",
+      period: "Jan 2022 – May 2022",
+      image: "assets/img/projects/dorle.png",
+      imageFit: "contain",
+      tags: ["Vehicle Dynamics & Simulation"],
+      summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
+      bullets: [
+        "Led a 5-person team building a 14-DOF full-vehicle model in MATLAB/Simulink from first-principles equations, split across powertrain/braking, ride, handling, and suspension subsystems.",
+        "Owned the powertrain & braking subsystem: modeled the electric powertrain and hydraulic brakes with 2D lookup tables for motor efficiency, outputting wheel torque, battery SOC, and motor power from driver throttle/brake inputs.",
+        "Implemented racing-line optimization using the minimum-curvature method to generate time-optimal trajectories for a specific circuit.",
+        "Integrated all subsystems through a shared tyre sub-block outputting tire forces, moments, and wheel speeds, then validated the full model against constant-velocity and acceleration test cases."
+      ],
+      metrics: [
+        { label: "Model fidelity", value: "14-DOF" },
+        { label: "Optimization method", value: "Minimum curvature" }
+      ],
+      links: [
+        { label: "Final report", url: "assets/docs/dorle-report.pptx" }
+      ],
+      tools: [
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
+      ]
+    },
+    {
+      id: "turbojet-nozzle",
+      title: "Flow Analysis & Optimization of a Supersonic Turbojet Intake and Nozzle",
+      org: "Mechanical & Industrial Engineering Dept., IIT Roorkee (Guide: Prof. Ankit Bansal)",
+      context: "Research",
+      period: "Sep 2021 – Nov 2021",
+      image: "assets/img/projects/turbojet-nozzle.png",
+      tags: ["Combustion & Powertrain Research", "Thermal & Energy Systems"],
+      summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
+      bullets: [
+        "Examined the Method of Characteristics for designing shock-free, isentropic supersonic flow nozzles.",
+        "Modeled a 2D axisymmetric converging-diverging nozzle in SolidWorks and ran density-based, inviscid ANSYS Fluent CFD, refining a hex-dominant mesh from 5mm to 0.1–0.5mm elements (11,770 nodes) to resolve the shock structure.",
+        "Analyzed a spiked supersonic intake at Mach 1, 2, and 3 free-stream conditions, and identified over- and under-expanded regimes on the nozzle by sweeping outlet back-pressure.",
+        "Evaluated how exit and ambient pressure affect nozzle expansion behavior for supersonic flight up to Mach 2."
+      ],
+      metrics: [
+        { label: "Design method", value: "Method of Characteristics" },
+        { label: "Max flight speed studied", value: "Mach 3 (intake)" },
+        { label: "Mesh refinement", value: "5mm → 0.1–0.5mm" }
+      ],
+      links: [
+        { label: "Final report", url: "assets/docs/turbojet-nozzle-report.pptx" }
+      ],
+      tools: [
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
+        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
+      ]
+    },
+    {
       id: "bosch-ev",
       title: "BOSCH's Electric Vehicle Simulation Challenge",
       org: "Inter IIT Tech Meet 9.0 (Bosch Problem Statement)",
@@ -629,6 +594,41 @@ window.SITE_CONTENT = {
       ],
       tools: [
         { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
+      ]
+    },
+    {
+      id: "rmse21",
+      title: "RMSE'21 — Formula Student Electric Vehicle",
+      org: "IIT Roorkee Motorsports, IITR",
+      context: "Formula Student",
+      period: "Jan 2021 – Dec 2021",
+      image: "assets/img/projects/rmse21.jpg",
+      tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
+      summary: "Powertrain & Braking Engineer",
+      bullets: [
+        "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
+        "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
+        "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
+        "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
+        "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge.",
+        "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
+        "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
+        "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
+        "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks.",
+        "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
+        "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault.",
+        "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor.",
+        "Placed 1st in the Business Plan event, 3rd in Engineering Design, and 3rd overall at Formula Bharat Virtual '22 (EV category)."
+      ],
+      metrics: [
+        { label: "Business Plan Presentation, Formula Bharat Virtual '22", value: "1st" },
+        { label: "Team Management, Formula Bharat Virtual '22", value: "2nd" },
+        { label: "Engineering Design Report, Formula Bharat Virtual '22", value: "3rd" },
+        { label: "Overall, Electric Teams — Formula Bharat Virtual '22", value: "3rd" }
+      ],
+      links: [
+        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
+        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
     {
