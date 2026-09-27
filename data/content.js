@@ -131,14 +131,29 @@ window.SITE_CONTENT = {
         {
           title: "Conference Presentation",
           venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
-          url: "assets/docs/bs-thesis-presentation.pptx"
+          url: "assets/docs/bs-thesis-presentation.pptx",
+          hideFromHero: true
         },
         {
           title: "Conference Poster",
           venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
-          url: "assets/docs/bs-thesis-poster.pptx"
+          url: "assets/docs/bs-thesis-poster.pptx",
+          hideFromHero: true
         }
       ]
+    }
+  ],
+
+  // Standalone research publications not tied to either thesis — counted
+  // in the hero's Publications stat and shown in its popover, but not
+  // attached to a Thesis & Publications card.
+  independentPublications: [
+    {
+      title: "Beyond Biogas Upgrading: Techno-Economic and Life-Cycle Assessment of Carbon-Negative Hydrogen via Direct Reforming of Raw Biogas with Integrated CO₂ Capture and Storage",
+      venue: "University of Illinois Urbana-Champaign",
+      status: "In progress",
+      url: "— add publication details —",
+      isPlaceholder: true
     }
   ],
 

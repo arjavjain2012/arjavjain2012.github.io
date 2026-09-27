@@ -100,8 +100,8 @@
   // Box 1 is generated from the Thesis & Publications data, not authored by
   // hand — it's always accurate and doubles as a click-to-expand summary.
   const allPubs = (C.theses || []).flatMap((t) =>
-    (t.publications || []).map((p) => ({ ...p, thesisTitle: t.title, thesisLevel: t.level }))
-  );
+    (t.publications || []).filter((p) => !p.hideFromHero).map((p) => ({ ...p, thesisTitle: t.title, thesisLevel: t.level }))
+  ).concat((C.independentPublications || []).map((p) => ({ ...p, thesisLevel: p.level || "Independent Research" })));
   const statStrip = $("#statStrip");
   const pubStat = el("button", "stat stat-clickable");
   pubStat.type = "button";
