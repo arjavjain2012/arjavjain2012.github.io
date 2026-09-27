@@ -57,7 +57,7 @@ window.SITE_CONTENT = {
     stats: [
       { value: "2+", label: "Years of work experience", link: "#experience" },
       { value: "5+", label: "Years in FSAE", link: "#fsae" },
-      { value: "", label: "— add a stat —", isPlaceholder: true }
+      { value: "50+", label: "Engineers led", link: "#leadership" }
     ]
   },
 
