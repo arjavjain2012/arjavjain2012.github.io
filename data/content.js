@@ -692,13 +692,21 @@ window.SITE_CONTENT = {
       org: "SAE IIT Roorkee Chapter",
       context: "Student Project",
       period: "Nov 2019 – Feb 2020",
-      image: "assets/img/placeholder-project.svg",
+      image: "assets/img/projects/rc-car.png",
+      imageFit: "contain",
       tags: ["Structures & Composites"],
-      summary: "Designed, simulated, and assembled a nitro-engine RC car from scratch, replicating full-scale automotive systems.",
+      summary: "Designed and fabricated a 4WD nitro-engine RC car from scratch, engineering a custom chassis and a ball-joint-free steering mechanism to replicate full-scale automotive systems.",
       bullets: [
-        "Studied the working of different automotive systems and replicated them in the form of a nitro-engine RC car.",
-        "Designed and simulated the chassis to ensure mechanical robustness under operating loads.",
-        "Assembled all components onto the chassis and evaluated on-track performance."
+        "Redesigned the chassis from a 2mm carbon-graphite reference to a 3mm Aluminium 6061 sheet, adding corner reinforcement and bent-side bumpers to cut longitudinal torsion, then cut, drilled, and slot-drilled it by hand to mount every driveline and servo component.",
+        "Engineered a steering linkage that eliminates ball-and-socket joints entirely, splitting each link into a threaded rod, a pivot housing, and a freely-oscillating universal-joint-inspired member to reproduce the same two degrees of freedom with simpler, more reliable fabrication.",
+        "Built the driveline around a 3cc O.S. 18TZ nitro engine (2.28 BHP @ 30,500 RPM, 83.1 oz-in @ 25,850 RPM) through a 2-speed nylon gearbox (1:2.4 / 1:1.5) and centrifugal clutch, driving a 4WD layout with dual differentials and dog-bone/CV-joint half-shafts.",
+        "Assembled double-wishbone suspension with oil-damped coil springs and fiberglass disc brakes, welded a 3mm mild-steel sedan body, and tuned and tested the finished car to a 60 km/h top speed and 0–50 km/h in 3.5 s."
+      ],
+      metrics: [
+        { label: "Top speed", value: "60 km/h" },
+        { label: "0-50 km/h acceleration", value: "3.5 s" },
+        { label: "Kerb weight", value: "5 kg" },
+        { label: "Total build cost", value: "₹16,618" }
       ],
       links: []
     },
