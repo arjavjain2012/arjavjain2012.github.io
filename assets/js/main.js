@@ -210,20 +210,26 @@
     modalBody.appendChild(v.render());
     $(".modal-panel").scrollTop = 0;
   }
+  // Push a history entry per open card level, so the mobile back gesture /
+  // browser back button (which fires `popstate`) closes one card level at a
+  // time instead of navigating away from the site entirely.
   function pushView(view) {
     stack.push(view);
     modal.hidden = false;
     document.body.classList.add("modal-open");
+    history.pushState({ modalDepth: stack.length }, "");
     paintModal();
   }
   function closeModal() {
+    if (modal.hidden) return;
     modal.hidden = true;
     document.body.classList.remove("modal-open");
+    const depth = stack.length;
     stack = [];
+    if (depth) history.go(-depth);
   }
   function popView() {
-    stack.pop();
-    if (stack.length) paintModal(); else closeModal();
+    history.back();
   }
   modalBack.addEventListener("click", popView);
   $("#modalClose").addEventListener("click", closeModal);
@@ -231,6 +237,19 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.hidden) {
       if (stack.length > 1) popView(); else closeModal();
+    }
+  });
+  window.addEventListener("popstate", (e) => {
+    const depth = (e.state && e.state.modalDepth) || 0;
+    if (depth > 0 && depth <= stack.length) {
+      stack.length = depth;
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+      paintModal();
+    } else {
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+      stack = [];
     }
   });
 
