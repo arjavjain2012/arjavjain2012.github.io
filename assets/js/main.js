@@ -266,16 +266,14 @@
     const box = el("div", "detail");
     box.innerHTML = `
       <div class="detail-hero${p.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}"${p.heroPosition ? ` style="object-position: ${esc(p.heroPosition)}"` : ""}></div>
-      <div class="project-boxes-row">
-        ${metricsRow(p.metrics)}
-        ${(() => {
-          const catTags = p.tags.filter((t) => PROJECT_FILTER_CATEGORIES.some((c) => c.tag === t));
-          return (!filterable && !p.hideTagsRow && catTags.length) ? `<div class="project-tags">${catTags.map((t) => `<span class="ptag ptag-category">${esc(t)}</span>`).join("")}</div>` : "";
-        })()}
-      </div>
+      ${(() => {
+        const catTags = p.tags.filter((t) => PROJECT_FILTER_CATEGORIES.some((c) => c.tag === t));
+        return (!filterable && !p.hideTagsRow && catTags.length) ? `<div class="project-tags">${catTags.map((t) => `<span class="ptag ptag-category">${esc(t)}</span>`).join("")}</div>` : "";
+      })()}
       <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
+      ${metricsRow(p.metrics)}
     `;
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";

@@ -424,9 +424,6 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .ptag-filter:hover { border-color: var(--accent); color: var(--accent); }
 .ptag-filter.ptag-active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb, 220, 90, 60), 0.08); }
 .ptag-category { border-color: var(--accent); color: var(--accent); }
-.project-boxes-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 14px; }
-.project-boxes-row .metric-row { margin-top: 0; }
-.project-boxes-row .project-tags { margin: 0; }
 
 .metric-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 .metric {
@@ -439,10 +436,10 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .metric-value.placeholder { color: var(--placeholder); font-size: 12px; border-bottom: 1px dashed var(--placeholder); display: inline-block; }
 .metric-label { font-size: 10.5px; color: var(--text-faint); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.03em; }
 
-.project-links { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
-.project-links a { font-family: var(--mono); font-size: 12px; text-decoration: none; color: var(--text-dim); border-bottom: 1px dotted var(--line); }
-.project-links a.placeholder { color: var(--placeholder); border-bottom-color: var(--placeholder); }
-.project-links a:hover { color: var(--teal); }
+.project-links { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.project-links a { font-family: var(--mono); font-size: 12px; text-decoration: none; color: var(--accent); border: 1px solid var(--accent); border-radius: var(--radius); padding: 6px 10px; transition: background 0.15s; }
+.project-links a:hover { background: rgba(var(--accent-rgb, 220, 90, 60), 0.08); }
+.project-links a.placeholder { color: var(--placeholder); border-color: var(--placeholder); }
 
 /* ---------- Experience ---------- */
 .timeline { display: flex; flex-direction: column; }
