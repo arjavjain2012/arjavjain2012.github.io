@@ -139,6 +139,12 @@ window.SITE_CONTENT = {
           venue: "41st International Symposium on Combustion (ISOC'26), Kyoto",
           url: "assets/docs/bs-thesis-poster.pptx",
           hideFromHero: true
+        },
+        {
+          title: "Bachelor's Thesis (BTP) Report",
+          venue: "Mechanical & Industrial Engineering Dept., IIT Roorkee",
+          url: "assets/docs/bs-thesis-btp-report.docx",
+          hideFromHero: true
         }
       ]
     }
@@ -318,7 +324,9 @@ window.SITE_CONTENT = {
         { label: "Surrogate accuracy (pressure drop)", value: "R² 0.92" },
         { label: "Optimal design point", value: "0.05 K/W, 0.0055 W pump" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/cold-plate-ml-report.pdf" }
+      ],
       tools: [
         { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" },
         { name: "Python", logo: "assets/img/tools/python.svg" },
@@ -366,7 +374,10 @@ window.SITE_CONTENT = {
         { label: "Temperature range measured", value: "1030–2184 K" },
         { label: "OH mole fraction range", value: "0.0006–0.043" }
       ],
-      links: []
+      links: [
+        { label: "Final report", url: "assets/docs/combustion-lab-report.pdf" },
+        { label: "Video report", url: "assets/docs/combustion-lab-video-report.pptx" }
+      ]
     },
     {
       id: "magnesium-wheels",
@@ -388,7 +399,9 @@ window.SITE_CONTENT = {
         { label: "Tooling lead time / cost saved", value: "54% / 49.6%" },
         { label: "Dimensional conformance", value: "within 0.5 mm" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/magnesium-wheels-report.pptx" }
+      ],
       tools: [
         { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" }
       ]
@@ -432,7 +445,9 @@ window.SITE_CONTENT = {
         { label: "Model fidelity", value: "14-DOF" },
         { label: "Optimization method", value: "Minimum curvature" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/dorle-report.pptx" }
+      ],
       tools: [
         { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
       ]
@@ -457,7 +472,9 @@ window.SITE_CONTENT = {
         { label: "Max flight speed studied", value: "Mach 3 (intake)" },
         { label: "Mesh refinement", value: "5mm → 0.1–0.5mm" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/turbojet-nozzle-report.pptx" }
+      ],
       tools: [
         { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
         { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
@@ -518,7 +535,9 @@ window.SITE_CONTENT = {
         { label: "Vibration reduction", value: "up to 33%" },
         { label: "Result", value: "2nd Runner-up, Innovate'22" }
       ],
-      links: []
+      links: [
+        { label: "Final report", url: "assets/docs/best-workplace-report.pptx" }
+      ]
     },
     {
       id: "jlr-bonnet",
@@ -541,7 +560,9 @@ window.SITE_CONTENT = {
         { label: "Score", value: "142 / 150" },
         { label: "Bill of materials", value: "< ₹20,000" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/jlr-bonnet-report.pptx" }
+      ],
       tools: [
         { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
         { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" },
@@ -569,7 +590,9 @@ window.SITE_CONTENT = {
         { label: "Total build cost", value: "₹75,000" },
         { label: "Result", value: "1st Runner-up, Pedalthon" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/pedalthon-report.pptx" }
+      ],
       tools: [
         { name: "Arduino", logo: "assets/img/tools/arduino.svg" },
         { name: "Proteus", logo: "assets/img/tools/proteus.svg" }
@@ -596,7 +619,9 @@ window.SITE_CONTENT = {
         { label: "Battery size reduction", value: "22% (60.9→47.5 kWh)" },
         { label: "Motor efficiency", value: "96% peak" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/bosch-ev-report.pptx" }
+      ],
       tools: [
         { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
       ]
@@ -619,7 +644,9 @@ window.SITE_CONTENT = {
       metrics: [
         { label: "Result", value: "1st Place, Tech4Heritage Hackathon" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/rejuvenation-heritage-report.pptx" }
+      ],
       tools: [
         { name: "Python", logo: "assets/img/tools/python.svg" }
       ]
@@ -645,7 +672,9 @@ window.SITE_CONTENT = {
         { label: "Flight time", value: "20–35 min" },
         { label: "Result", value: "1st Runner-up, Nav Ujjwal E-Innovation Hackathon" }
       ],
-      links: [],
+      links: [
+        { label: "Final report", url: "assets/docs/nav-ujjwal-report.pptx" }
+      ],
       tools: [
         { name: "TensorFlow", logo: "assets/img/tools/tensorflow.svg" },
         { name: "ROS", logo: "assets/img/tools/ros.svg" },
