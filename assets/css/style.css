@@ -423,6 +423,10 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .ptag-filter { cursor: pointer; transition: border-color 0.15s, color 0.15s; }
 .ptag-filter:hover { border-color: var(--accent); color: var(--accent); }
 .ptag-filter.ptag-active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb, 220, 90, 60), 0.08); }
+.ptag-category { border-color: var(--accent); color: var(--accent); }
+.project-boxes-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 14px; }
+.project-boxes-row .metric-row { margin-top: 0; }
+.project-boxes-row .project-tags { margin: 0; }
 
 .metric-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 .metric {

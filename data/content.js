@@ -305,7 +305,7 @@ window.SITE_CONTENT = {
       org: "Applied Heat Transfer Course Project, UofI",
       context: "Research",
       period: "Jan 2026 – May 2026",
-      image: "assets/img/projects/cold-plate-ml.webp",
+      image: "assets/img/projects/cold-plate-ml-wide.jpg",
       tags: ["Thermal & Energy Systems"],
       summary: "Multi-objective CFD optimization of an EV battery cold plate, sped up with a machine-learned surrogate model.",
       bullets: [
@@ -353,7 +353,7 @@ window.SITE_CONTENT = {
       context: "Research",
       period: "Sep 2025 – Dec 2025",
       image: "assets/img/projects/combustion-lab.jpg",
-      tags: ["Combustion & Powertrain Research"],
+      tags: ["Combustion & Powertrain Research", "Thermal & Energy Systems"],
       summary: "Laser/optical diagnostics to map OH radical temperature and concentration inside small flames.",
       bullets: [
         "Built a UV broadband absorption spectroscopy (BAS) rig around a 310nm LED source, a 1.54m Czerny-Turner spectrometer, and an Andor iDus CCD, wavelength-calibrated against an Hg lamp.",
@@ -420,7 +420,7 @@ window.SITE_CONTENT = {
       period: "Jan 2022 – May 2022",
       image: "assets/img/projects/dorle.png",
       imageFit: "contain",
-      tags: ["Vehicle Dynamics & Simulation", "Electronics & Controls"],
+      tags: ["Vehicle Dynamics & Simulation"],
       summary: "Built a full-vehicle handling model from scratch and used it to validate racing-line optimization and control-system logic.",
       bullets: [
         "Led a 5-person team building a 14-DOF full-vehicle model in MATLAB/Simulink from first-principles equations, split across powertrain/braking, ride, handling, and suspension subsystems.",
@@ -444,7 +444,7 @@ window.SITE_CONTENT = {
       context: "Research",
       period: "Sep 2021 – Nov 2021",
       image: "assets/img/projects/turbojet-nozzle.png",
-      tags: ["Combustion & Powertrain Research"],
+      tags: ["Combustion & Powertrain Research", "Thermal & Energy Systems"],
       summary: "Compressible-flow design study of a supersonic engine intake and nozzle using the Method of Characteristics and CFD.",
       bullets: [
         "Examined the Method of Characteristics for designing shock-free, isentropic supersonic flow nozzles.",
@@ -504,8 +504,8 @@ window.SITE_CONTENT = {
       org: "Innovate'22 Hackathon, Daimler India Commercial Vehicles",
       context: "Competition",
       period: "Aug 2022",
-      image: "assets/img/projects/best-workplace.webp",
-      tags: ["Structures & Composites"],
+      image: "assets/img/projects/best-workplace-wide.jpg",
+      tags: ["Electronics & Controls"],
       summary: "24-hour hackathon redesigning a long-haul truck driver's cabin with drivers and cabin experts.",
       bullets: [
         "Ran a weighted decision matrix across candidate cabin problems (ventilation, fatigue, seating, theft) to prioritize a Noise-Vibration-Harshness (N-V-H) redesign, backed by a driver survey and literature on fatigue-linked accident risk.",
@@ -528,7 +528,7 @@ window.SITE_CONTENT = {
       period: "Mar 2022",
       image: "assets/img/projects/jlr-bonnet.png",
       imageFit: "contain",
-      tags: ["Electronics & Controls"],
+      tags: ["Structures & Composites", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Gold medal-winning actuation system, designed both mathematically and mechanically, to power a car's bonnet.",
       bullets: [
         "Benchmarked existing powered-tailgate mechanisms and selected direct linear actuation over a slider-crank design for fewer parts and lower friction loss, using 2 Ti Motion TA23 linear actuators driven by an Arduino UNO and Cytron motor driver.",
@@ -555,7 +555,7 @@ window.SITE_CONTENT = {
       context: "Competition",
       period: "Mar 2022",
       image: "assets/img/projects/pedalthon.png",
-      tags: ["Structures & Composites"],
+      tags: ["Structures & Composites", "Electronics & Controls"],
       summary: "Designed a commercial electric bicycle from scratch for last-mile deliveries, leading a 5-member team.",
       bullets: [
         "Led 5-member team BLAZZE to design a 141 kg-payload-rated electric cargo bicycle with a tubular Al 6061-T6 space frame, two 57.5 L storage boxes, and a 170 km design range.",
@@ -583,7 +583,7 @@ window.SITE_CONTENT = {
       period: "Mar 2021",
       image: "assets/img/projects/bosch-ev.png",
       imageFit: "contain",
-      tags: ["Vehicle Dynamics & Simulation"],
+      tags: ["Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Gold medal-winning performance baselining and powertrain design for an electric ultralight commercial vehicle.",
       bullets: [
         "Selected the Ultra-Light Commercial Vehicle (B2B) segment and baselined performance targets (800 kg payload, 300 km range, 75 km/h top speed) from market and use-case analysis.",
@@ -607,8 +607,8 @@ window.SITE_CONTENT = {
       org: "Tech4Heritage Hackathon, Sapio Analytics",
       context: "Competition",
       period: "Sep 2020 – Oct 2020",
-      image: "assets/img/projects/rejuvenation-heritage.webp",
-      tags: ["Data Science & Machine Learning"],
+      image: "assets/img/projects/rejuvenation-heritage-wide.jpg",
+      tags: ["Data Science & Machine Learning", "Vehicle Dynamics & Simulation"],
       summary: "1st-place hackathon project restoring depleted Ajanta and Ellora cave paintings with GAN-based inpainting.",
       bullets: [
         "Curated a training dataset of Indian heritage artwork, standardizing images to 500×500px and synthesizing damage via a custom apply_distortion() function to model realistic patch loss without unrealistic binary (B&W) masks.",
@@ -632,7 +632,7 @@ window.SITE_CONTENT = {
       period: "Aug 2020",
       image: "assets/img/projects/nav-ujjwal.png",
       imageFit: "contain",
-      tags: ["Structures & Composites"],
+      tags: ["Structures & Composites", "Electronics & Controls"],
       summary: "Designed an autonomous drone to transport essentials to differently-abled groups, including its carbon-fiber frame.",
       bullets: [
         "Co-designed an autonomous multi-rotor (Team Excelsior) capable of both no-contact last-mile delivery and indoor autonomous navigation, built around a CFRP-sandwich-panel central pod with 3D-printed arms — 2.3 kg empty, up to 3.5 kg payload, 20–35 min flight time.",

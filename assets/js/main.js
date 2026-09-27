@@ -268,9 +268,11 @@
       <div class="detail-hero${p.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}"${p.heroPosition ? ` style="object-position: ${esc(p.heroPosition)}"` : ""}></div>
       <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
-      ${metricsRow(p.metrics)}
       <p class="detail-summary">${esc(p.summary)}</p>
-      ${(!filterable && !p.hideTagsRow && (p.tags.length || p.context)) ? `<div class="project-tags">${p.tags.map((t) => `<span class="ptag">${esc(t)}</span>`).join("")}${p.context ? `<span class="ptag">${esc(p.context)}</span>` : ""}</div>` : ""}
+      <div class="project-boxes-row">
+        ${metricsRow(p.metrics)}
+        ${(!filterable && !p.hideTagsRow && (p.tags.length || p.context)) ? `<div class="project-tags">${p.tags.map((t) => `<span class="ptag${PROJECT_FILTER_CATEGORIES.some((c) => c.tag === t) ? " ptag-category" : ""}">${esc(t)}</span>`).join("")}${p.context ? `<span class="ptag">${esc(p.context)}</span>` : ""}</div>` : ""}
+      </div>
     `;
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
