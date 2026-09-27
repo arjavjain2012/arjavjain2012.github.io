@@ -951,7 +951,7 @@ window.SITE_CONTENT = {
 
   education: [
     {
-      school: "University of Illinois at Urbana-Champaign",
+      school: "University of Illinois at Urbana-Champaign (UIUC)",
       degree: "M.S., Mechanical Engineering",
       score: "GPA 4.0 / 4.0",
       period: "Expected May 2027",
@@ -969,7 +969,7 @@ window.SITE_CONTENT = {
       ]
     },
     {
-      school: "Indian Institute of Technology Roorkee",
+      school: "Indian Institute of Technology Roorkee (IIT Roorkee)",
       degree: "B.Tech., Mechanical Engineering",
       score: "CGPA 8.685 / 10.0",
       period: "Jul 2023",
