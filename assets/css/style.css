@@ -69,6 +69,11 @@
   filter: brightness(0);
   opacity: 0.85;
 }
+/* Background line-art sketches are white-on-transparent too, so they
+   vanish against a light page background — force them black instead. */
+:root[data-theme="light"] .bg-drawing {
+  filter: brightness(0);
+}
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
