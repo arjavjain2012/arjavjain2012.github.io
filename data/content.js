@@ -276,7 +276,7 @@ window.SITE_CONTENT = {
         gallery: [{ image: "assets/img/toolkit/matlab-dorle-simulink.png", caption: "Full-vehicle ride model in Simulink" }] },
       { name: "Vehicle Simulation", caption: "Full-vehicle dynamics simulation on a virtual test track", image: "assets/img/toolkit/vehicle-sim-carmaker.png",
         tools: ["CarMaker", "Vi-CarRealTime", "Vi-DriveSim", "VI-grade (SuspensionGen)", "KISSsoft", "OptimumLap", "Pacejka MF 5.2"],
-        gallery: [] },
+        gallery: [{ image: "assets/img/toolkit/vehicle-sim-endurance-telemetry.webp", caption: "Endurance lap replay with driver-demand channels" }] },
       { name: "Electronics & Code", caption: "Battery management system PCB and firmware", image: "assets/img/toolkit/electronics-bms-pcb.jpeg",
         tools: ["Altium", "LTspice", "PSpice", "Python", "C / C++"],
         gallery: [{ image: "assets/img/toolkit/electronics-bms-schematic.jpeg", caption: "BMS schematic in Altium" }, { image: "assets/img/toolkit/electronics-pcb-3d.png", caption: "3D PCB render" }, { image: "assets/img/toolkit/electronics-bench-test.jpeg", caption: "Firmware bring-up on the battery pack" }, { image: "assets/img/toolkit/electronics-ltspice.png", caption: "Op-amp circuit simulation in LTspice" }] }
