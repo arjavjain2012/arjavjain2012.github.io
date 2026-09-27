@@ -311,7 +311,8 @@ window.SITE_CONTENT = {
       org: "Applied Heat Transfer Course Project, UofI",
       context: "Research",
       period: "Jan 2026 – May 2026",
-      image: "assets/img/projects/cold-plate-ml-wide.jpg",
+      image: "assets/img/projects/cold-plate-ml.webp",
+      imageFit: "contain",
       tags: ["Thermal & Energy Systems"],
       summary: "Multi-objective CFD optimization of an EV battery cold plate, sped up with a machine-learned surrogate model.",
       bullets: [
@@ -386,6 +387,7 @@ window.SITE_CONTENT = {
       context: "Research",
       period: "Feb 2023 – May 2023",
       image: "assets/img/projects/magnesium-wheels.png",
+      imageFit: "contain",
       tags: ["Structures & Composites"],
       summary: "Lightweighting a cast wheel and proving out rapid tooling to cut cost and lead time for low-volume casting.",
       bullets: [
@@ -521,7 +523,8 @@ window.SITE_CONTENT = {
       org: "Innovate'22 Hackathon, Daimler India Commercial Vehicles",
       context: "Competition",
       period: "Aug 2022",
-      image: "assets/img/projects/best-workplace-wide.jpg",
+      image: "assets/img/projects/best-workplace.webp",
+      imageFit: "contain",
       tags: ["Electronics & Controls"],
       summary: "24-hour hackathon redesigning a long-haul truck driver's cabin with drivers and cabin experts.",
       bullets: [
@@ -576,6 +579,7 @@ window.SITE_CONTENT = {
       context: "Competition",
       period: "Mar 2022",
       image: "assets/img/projects/pedalthon.png",
+      imageFit: "contain",
       tags: ["Structures & Composites", "Electronics & Controls"],
       summary: "Designed a commercial electric bicycle from scratch for last-mile deliveries, leading a 5-member team.",
       bullets: [
@@ -632,7 +636,8 @@ window.SITE_CONTENT = {
       org: "Tech4Heritage Hackathon, Sapio Analytics",
       context: "Competition",
       period: "Sep 2020 – Oct 2020",
-      image: "assets/img/projects/rejuvenation-heritage-wide.jpg",
+      image: "assets/img/projects/rejuvenation-heritage.webp",
+      imageFit: "contain",
       tags: ["Data Science & Machine Learning", "Vehicle Dynamics & Simulation"],
       summary: "1st-place hackathon project restoring depleted Ajanta and Ellora cave paintings with GAN-based inpainting.",
       bullets: [
