@@ -403,7 +403,7 @@
       <h2 class="detail-title">${esc(item.name)}</h2>
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
       <h4 class="detail-sub">Evidence</h4>
-      <div class="tile-grid">${(item.gallery || []).map((g) => `
+      <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
         <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
     `;
     return box;
