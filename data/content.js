@@ -264,7 +264,7 @@ window.SITE_CONTENT = {
     software: [
       { name: "CAD & Design", caption: "Concept car and V6 engine surfacing", image: "assets/img/toolkit/cad-render-car.jpg",
         tools: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD"],
-        gallery: [{ image: "assets/img/toolkit/cad-bike.jpg", caption: "Downhill mountain bike frame concept" }, { image: "assets/img/toolkit/cad-v6-engine.png", caption: "V6 engine assembly" }] },
+        gallery: [{ image: "assets/img/toolkit/cad-bike.jpg", caption: "Downhill mountain bike frame concept" }, { image: "assets/img/toolkit/cad-v6-engine.png", caption: "V6 engine assembly" }, { image: "assets/img/toolkit/cad-vehicle-wiring-harness.png", caption: "Full-vehicle wiring harness routing" }, { image: "assets/img/toolkit/cad-bms-enclosure.png", caption: "Battery enclosure assembly" }] },
       { name: "FEA & Structures", caption: "FSAE space-frame chassis deformation study", image: "assets/img/toolkit/fea-chassis-deformation.png",
         tools: ["ANSYS Workbench", "ANSYS Mechanical", "ANSYS ACP", "Abaqus", "NASTRAN"],
         gallery: [{ image: "assets/img/toolkit/fea-chassis-deformation-2.png", caption: "Chassis total deformation under torsion load" }, { image: "assets/img/toolkit/fea-upright-stress.png", caption: "Upright equivalent (von-Mises) stress" }] },
