@@ -71,7 +71,8 @@
 }
 /* Background line-art sketches are white-on-transparent too, so they
    vanish against a light page background — force them black instead. */
-:root[data-theme="light"] .bg-drawing {
+:root[data-theme="light"] .bg-drawing,
+:root[data-theme="light"] .hero-blueprint img {
   filter: brightness(0);
 }
 
@@ -593,7 +594,7 @@ footer {
   position: absolute;
   bottom: 14px;
   right: 14px;
-  background: #18191b;
+  background: var(--bg);
   border: 1px solid var(--line);
   padding: 4px 8px;
   font-family: var(--mono);
