@@ -632,10 +632,13 @@
     const item = el("div", "tl-item");
     item.innerHTML = `
       <div class="tl-period">${esc(l.period)}</div>
-      <div>
-        <h3 class="tl-role">${esc(l.role)}</h3>
-        <div class="tl-org">${esc(l.org)}</div>
-        <ul>${l.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      <div class="tl-body${l.image ? " tl-body-with-image" : ""}">
+        <div class="tl-text">
+          <h3 class="tl-role">${esc(l.role)}</h3>
+          <div class="tl-org">${esc(l.org)}</div>
+          <ul>${l.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+        </div>
+        ${l.image ? `<img class="tl-image" src="${esc(l.image)}" alt="${esc(l.role)}" loading="lazy">` : ""}
       </div>
     `;
     leadershipTimeline.appendChild(item);
