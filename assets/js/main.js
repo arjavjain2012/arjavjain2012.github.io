@@ -404,7 +404,7 @@
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
       <h4 class="detail-sub">Evidence</h4>
       <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
-        <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
+        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
     `;
     return box;
   }
@@ -412,7 +412,7 @@
     const grid = $(gridSel);
     (items || []).forEach((it) => {
       grid.appendChild(makeTile(`
-        <div class="tile-image"><img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"></div>
+        <div class="tile-image${it.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"></div>
         <div class="tile-body">
           <h3>${esc(it.name)}</h3>
           <div class="tile-caption ${isBlankPlaceholder(it.caption) ? "needs-input" : ""}">${esc(it.caption)}</div>
@@ -669,12 +669,12 @@
     awardList.appendChild(li);
   });
 
-  /* ---------------- Skills ---------------- */
-  const skillsGrid = $("#skillsGrid");
-  C.skills.forEach((cat) => {
-    const block = el("div", "skill-cat");
-    block.innerHTML = `<h4>${esc(cat.category)}</h4><div class="skill-items">${cat.items.map((i) => `<span class="skill-item">${esc(i)}</span>`).join("")}</div>`;
-    skillsGrid.appendChild(block);
+  /* ---------------- Learnings ---------------- */
+  const learningsGrid = $("#learningsGrid");
+  (C.learnings || []).forEach((l) => {
+    const block = el("div", "learning-item");
+    block.innerHTML = `<h4>${esc(l.title)}</h4><p>${esc(l.text)}</p>`;
+    learningsGrid.appendChild(block);
   });
 
   /* ---------------- Decorative background drawings ---------------- */
@@ -697,7 +697,7 @@
     { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4 },
     { section: "toolkit", image: "steering-wheel-front.png", bottom: 10, left: -40, width: 640, rotate: -5 },
     { section: "toolkit", image: "rear-upright-front.png", top: 290, right: -40, width: 420, rotate: 5 },
-    { section: "skills", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4 }
+    { section: "learnings", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4 }
   ];
   BG_DRAWINGS.forEach((d) => {
     const host = $("#" + d.section);

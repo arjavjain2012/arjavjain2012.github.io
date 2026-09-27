@@ -272,8 +272,9 @@ window.SITE_CONTENT = {
         tools: ["Ansys Fluent", "Ansys Icepak", "Star-CCM+", "ParaView", "VisIT"],
         gallery: [{ image: "assets/img/toolkit/cfd-battery-icepak.png", caption: "Battery pack thermal model in Icepak" }, { image: "assets/img/toolkit/cfd-brake-disc-thermal.png", caption: "Brake disc transient thermal analysis" }] },
       { name: "MATLAB / Simulink", caption: "EV powertrain and ride-model simulations", image: "assets/img/toolkit/matlab-bosch-ev-simulink.png",
+        imageFit: "contain",
         tools: ["MATLAB", "Simulink", "Simscape", "Stateflow"],
-        gallery: [{ image: "assets/img/toolkit/matlab-dorle-simulink.png", caption: "Full-vehicle ride model in Simulink" }] },
+        gallery: [{ image: "assets/img/toolkit/matlab-dorle-simulink.png", caption: "Full-vehicle ride model in Simulink" }, { image: "assets/img/toolkit/matlab-longitudinal-braking-model.png", caption: "Longitudinal braking model" }] },
       { name: "Vehicle Simulation", caption: "Full-vehicle dynamics simulation on a virtual test track", image: "assets/img/toolkit/vehicle-sim-carmaker.png",
         tools: ["CarMaker", "Vi-CarRealTime", "Vi-DriveSim", "VI-grade (SuspensionGen)", "KISSsoft", "OptimumLap", "Pacejka MF 5.2"],
         gallery: [{ image: "assets/img/toolkit/vehicle-sim-endurance-telemetry.webp", caption: "Endurance lap replay with driver-demand channels" }] },
@@ -1007,8 +1008,6 @@ window.SITE_CONTENT = {
     { title: "Chanakya UG Fellowship", org: "Research grant — E-bicycle for last-mile food delivery", date: "Spring 2022" }
   ],
 
-  skills: [
-    { category: "Standards & Methods", items: ["ISO 26262 (HARA, ASIL D)", "DFMEA", "GD&T (ASME Y14.5)", "IEC 60664-1", "ISO 16750-3", "ISO 6469-3", "BS 8888", "Tolerance stack-up"] },
-    { category: "Certifications & Languages", items: ["TÜV SÜD Level 2 & 3 — HV Live Working (EV/HEV)", "English", "Hindi", "German (B1 → B2)"] }
-  ]
+  // Short reflective takeaways. Each entry: { title, text }.
+  learnings: []
 };
