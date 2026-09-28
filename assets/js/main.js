@@ -297,16 +297,6 @@
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
       ${metricsRow(p.metrics)}
-      ${p.writeup ? `
-      <h4 class="detail-sub">Overview</h4>
-      <p class="detail-summary">${esc(p.writeup.overview)}</p>
-      <h4 class="detail-sub">Approach</h4>
-      <p class="detail-summary">${esc(p.writeup.approach)}</p>
-      <h4 class="detail-sub">Technical Achievements</h4>
-      <ul class="detail-list">${p.writeup.achievements.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
-      <h4 class="detail-sub">Tools Used</h4>
-      <div class="skill-items">${p.writeup.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
-      ${p.writeup.note ? `<p class="writeup-flag">${esc(p.writeup.note)}</p>` : ""}` : ""}
     `;
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
