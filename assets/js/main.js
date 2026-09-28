@@ -302,7 +302,7 @@
         const catTags = p.tags.filter((t) => PROJECT_FILTER_CATEGORIES.some((c) => c.tag === t));
         return (!filterable && !p.hideTagsRow && catTags.length) ? `<div class="project-tags">${catTags.map((t) => `<span class="ptag ptag-category">${esc(t)}</span>`).join("")}</div>` : "";
       })()}
-      <div class="detail-kicker">${esc(p.period)} · ${esc(p.org)}</div>
+      <div class="detail-kicker">${esc(p.period)} · ${p.orgLink ? `<a href="${esc(p.orgLink)}" target="_blank" rel="noopener">${esc(p.org)} →</a>` : esc(p.org)}</div>
       <h2 class="detail-title">${esc(p.title)}</h2>
       <p class="detail-summary">${esc(p.summary)}</p>
       ${metricsRow(p.metrics)}
@@ -314,7 +314,7 @@
       const grid = el("div", "tile-grid");
       const renderGrid = (activeCat) => {
         grid.innerHTML = "";
-        const visible = filterable ? subs.filter((s) => s.category === activeCat) : subs;
+        const visible = (filterable && activeCat) ? subs.filter((s) => s.category === activeCat) : subs;
         visible.forEach((s) => {
           grid.appendChild(makeTile(`
             <div class="tile-image"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>

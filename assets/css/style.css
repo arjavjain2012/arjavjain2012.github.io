@@ -676,6 +676,8 @@ body.modal-open { overflow: hidden; }
 .detail-hero { border: 1px solid var(--line); margin-bottom: 20px; }
 .detail-hero img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; display: block; }
 .detail-kicker { font-family: var(--mono); font-size: 12px; color: var(--teal); margin: 14px 0 8px; }
+.detail-kicker a { color: var(--teal); text-decoration: none; border-bottom: 1px dotted var(--teal); }
+.detail-kicker a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .detail-title { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.2; margin: 0 0 12px; }
 .detail-summary { color: var(--text-dim); font-size: 16px; margin: 0 0 14px; }
 .detail-sub { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 30px 0 14px; }

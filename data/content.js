@@ -661,6 +661,7 @@ window.SITE_CONTENT = {
       id: "iem26",
       title: "IEM'26 — Formula Student Electric Vehicle",
       org: "Illini Electric Motorsports, UofI",
+      orgLink: "https://www.illinielectricmotorsports.com/",
       context: "Formula Student",
       period: "Sep 2025 – Present",
       image: "assets/img/projects/iem26.webp",
@@ -671,10 +672,6 @@ window.SITE_CONTENT = {
       bullets: [],
       metrics: [
         { label: "Engineering Design, FSAEM 2026", value: "3rd" }
-      ],
-      links: [
-        { label: "Team site", url: "https://www.illinielectricmotorsports.com/" },
-        { label: "Project write-up / demo video", url: "— add link —", isPlaceholder: true }
       ]
     },
     {
@@ -759,6 +756,7 @@ window.SITE_CONTENT = {
       id: "rmse23",
       title: "RMSE'23 — Formula Student Electric Vehicle",
       org: "IIT Roorkee Motorsports, IITR",
+      orgLink: "https://motorsports.iitr.ac.in/",
       context: "Formula Student",
       period: "Apr 2022 – Jul 2023",
       image: "assets/img/projects/rmse23.jpg",
@@ -768,10 +766,6 @@ window.SITE_CONTENT = {
         { label: "FSUK'23 Engineering Design", value: "1st, Asian teams" },
         { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
         { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
-      ],
-      links: [
-        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
     {
@@ -921,6 +915,7 @@ window.SITE_CONTENT = {
       id: "rmse21",
       title: "RMSE'21 — Formula Student Electric Vehicle",
       org: "IIT Roorkee Motorsports, IITR",
+      orgLink: "https://motorsports.iitr.ac.in/",
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
@@ -946,10 +941,6 @@ window.SITE_CONTENT = {
         { label: "Team Management, Formula Bharat Virtual '22", value: "2nd" },
         { label: "Engineering Design Report, Formula Bharat Virtual '22", value: "3rd" },
         { label: "Overall, Electric Teams — Formula Bharat Virtual '22", value: "3rd" }
-      ],
-      links: [
-        { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
-        { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
       ]
     },
     {
