@@ -170,39 +170,46 @@ window.SITE_CONTENT = {
   subprojects: {
     rmse23: [
       {
-        id: "motor-inverter-loss-model", title: "Motor & Inverter Loss Modeling for Cooling-Duty Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        id: "motor-inverter-loss-model", title: "Motor & Inverter Loss Modeling for Cooling-Duty Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-motor-loss-profile.png",
         highlights: ["2 kW cooling duty set from a transient Simulink loss model"],
         writeup: {
           overview: "Sized the powertrain cooling duty for RMSE'23 by modeling how much heat the motor and inverter actually reject over a full endurance run, rather than sizing to a generic worst case.",
-          approach: "Built a transient Simulink model of the coolant loop driven by motor and inverter loss maps over the endurance drive cycle, integrating instantaneous losses to arrive at a duty-cycle-representative heat load rather than a single peak-power number.",
+          approach: "Built a transient Simulink model of the coolant loop driven by motor and inverter loss maps (recomputed every 0.025s from the EMRAX 228's efficiency map and an assumed 95% inverter efficiency) over the endurance drive cycle, integrating instantaneous losses to arrive at a duty-cycle-representative heat load — 1.13 kW average motor loss and 0.8 kW average inverter loss — rather than a single peak-power number. The resulting duty also confirmed a single radiator was sufficient, cutting the two-radiator setup carried over from RMSE'19 and saving roughly 2.5 kg plus the extra routing.",
           achievements: [
-            "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty, driving a transient Simulink model of the coolant loop."
+            "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty (1.13 kW motor + 0.8 kW inverter), driving a transient Simulink model of the coolant loop.",
+            "Showed a single radiator met the cooling requirement, eliminating RMSE'19's redundant second radiator for a ~2.5 kg mass and routing saving."
           ],
           tools: ["MATLAB / Simulink"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-emrax228-efficiency-map.png", caption: "EMRAX 228 efficiency map used to drive the instantaneous motor-loss model" }
+        ]
       },
       {
-        id: "radiator-pump-fan-sizing", title: "Radiator, Pump & Fan Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        id: "radiator-pump-fan-sizing", title: "Radiator, Pump & Fan Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-radiator-photo.png",
         highlights: ["Coolant inlet held under 50°C motor / 65°C inverter limits"],
         writeup: {
           overview: "Translated the 2 kW cooling duty into a physical radiator, pump, and fan selection that keeps the motor and inverter within their thermal limits.",
-          approach: "Sized the radiator core by NTU-effectiveness analysis against the target heat rejection, then selected a pump and fan combination to hit the required coolant flow rate at the resulting pressure drop, holding coolant inlet temperature under the 50°C motor and 65°C inverter limits.",
+          approach: "Sized the radiator core by NTU-effectiveness analysis against the target heat rejection, simulating several off-the-shelf cross-flow single-pass radiators in MATLAB and settling on a Bajaj Pulsar NS200 motorcycle radiator for its effectiveness-to-frontal-area ratio. A Minbea R200A fan and GRI INTG3 570 pump were then selected against the resulting duct pressure drop and required flow rate, and the full loop was modeled in Simulink with transport-delay blocks between motor, controller, and radiator to track coolant temperature at 0.025s resolution.",
           achievements: [
-            "Sized the radiator, pump, and fan by NTU-effectiveness analysis, holding coolant inlet under the 50°C motor and 65°C inverter limits."
+            "Sized the radiator, pump, and fan by NTU-effectiveness analysis, holding coolant inlet under the 50°C motor and 65°C inverter limits.",
+            "Selected a single Bajaj Pulsar NS200 radiator, a Minbea R200A fan, and a GRI INTG3 570 pump, achieving 38.4°C average motor-inlet and 41.3°C average inverter-inlet coolant temperature — well inside the 50°C/65°C limits."
           ],
           tools: ["MATLAB", "NTU-effectiveness method"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-fan-pressure-flow-curve.png", caption: "Calculated duct pressure-drop curve overlaid on the fan's rated pressure/flow curve" }
+        ]
       },
       {
-        id: "coolant-loop-bench-validation", title: "Coolant Loop Bench Validation", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        id: "coolant-loop-bench-validation", title: "Coolant Loop Bench Validation", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-coolant-bench-test-rig.png",
         highlights: ["Validated to 136 kPa at 7.5 LPM on an instrumented bench"],
         writeup: {
           overview: "Closed the loop on the cooling-system design by validating the radiator and loop pressure-drop model against a physical bench build before committing to on-car packaging.",
-          approach: "Built an instrumented bench replicating the loop's plumbing and flow path, driving it at the design flow rate and measuring pressure drop and radiator heat rejection against the model's predictions.",
+          approach: "Built an MDF-framed instrumented bench replicating the loop's plumbing and flow path (sized to the model's 136 kPa / 7.5 LPM design point), driving it with a bench fan and measuring water/air flow rate and inlet/outlet temperatures at four points to back-calculate the radiator's overall heat-transfer coefficient against the NTU model's prediction. Full in-car validation (logging motor/inverter temperature through dynamic-event runs) was planned but not completed within the season, so the bench remained the primary correlation point.",
           achievements: [
-            "Validated loop pressure drop and radiator performance on an instrumented bench against a 136 kPa, 7.5 LPM operating point."
+            "Validated loop pressure drop and radiator performance on an instrumented bench against a 136 kPa, 7.5 LPM operating point.",
+            "Measured the radiator's overall heat-transfer coefficient on the bench to within 13% of the NTU-effectiveness model's prediction."
           ],
           tools: ["Instrumented flow bench", "Pressure/flow instrumentation"]
         },
@@ -226,17 +233,21 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "generative-design-wing-mounts-pedals", title: "Generative Design for Wing Mounts & Pedals", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
+        id: "generative-design-wing-mounts-pedals", title: "Generative Design for Wing Mounts & Pedals", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-wing-mount-cad.png",
         highlights: ["1.2 kg saved via generative design and topology optimization"],
         writeup: {
           overview: "Cut mass out of two secondary structural parts — the aero wing mounts and the brake/accelerator pedals — using optimization-driven design rather than a straight carry-over shape.",
-          approach: "Applied generative design (loaded with the actual mounting and aero loads) to the additively-manufactured wing mounts, and ran topology optimization on the CNC-machined pedals against pedal-load cases, in both cases removing material outside the load path while keeping the mounting interfaces fixed.",
+          approach: "Applied generative design (loaded with the actual mounting and aero loads) to the front and rear wing mounts, and replaced the prior car's I-beam pedal cross-section with a triangulated, topology-optimized geometry for the brake and accelerator pedals, in both cases removing material outside the load path while keeping the mounting interfaces fixed. Both were machined from Al 6061-T6 hard-anodized stock and validated by FEA before cutting.",
           achievements: [
-            "Applied generative design to additively manufactured wing mounts and topology optimization to CNC pedals, saving 1.2 kg combined versus the prior straight-carryover parts."
+            "Applied generative design to the wing mounts and topology optimization to the CNC pedals, saving 1.2 kg combined versus the prior straight-carryover parts.",
+            "Replaced the prior I-beam pedal cross-section with a triangulated Al 6061-T6 design, landing at 159 g (brake pedal) and 219 g (pedal mount) at a minimum FOS of ~1.04."
           ],
           tools: ["Generative design", "Topology optimization", "Additive manufacturing", "CNC machining"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-wing-mount-fea.jpg", caption: "Wing mount FEA under a 438 N load case" },
+          { image: "assets/img/subprojects/rmse23-brake-pedal-fea-safety-factor.png", caption: "Triangulated brake pedal — factor-of-safety FEA result" }
+        ]
       },
       {
         id: "bodywork-composite-selection", title: "Bodywork & Wing Composite Material Selection", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-nose-cone.jpg",
@@ -276,11 +287,12 @@ window.SITE_CONTENT = {
         highlights: ["CNC-MDF and wire-cut foam moulds, vacuum-bagged layups"],
         writeup: {
           overview: "Built the tooling and manufacturing process for every composite part on the car, then validated the aero package's simulated performance against physical test data.",
-          approach: "Moulds were produced by whichever process best matched the part's geometry — CNC, VMC, and Carvey machining for hard tooling, and 3D-printed split moulds glued together for complex organic shapes like the wings — then every layup was vacuum-bagged, with PU foam used to join adjacent composite panels for added strength. To validate the aero surfaces, a scaled 3D-printed model of one wing was tested in a wind tunnel and its measured lift coefficient compared against the CFD prediction.",
+          approach: "Moulds were produced by whichever process best matched the part's geometry — CNC, VMC, and Carvey machining for hard tooling, and 3D-printed split moulds glued together for complex organic shapes like the wings — then every layup was vacuum-bagged, with PU foam used to join adjacent composite panels for added strength. Fibre orientation was chosen per part rather than defaulted to a single layup: 0° fibres for parts loaded in one direction, 90° cross-plies added against buckling, and ±45° pairs where a part saw torsion, following classical composite-design practice. Sandwich parts like the motor-controller mount used a 10mm PU-foam core between two 430 GSM carbon-fibre hand-layup skins; smaller 3D-printed-mould parts (HVD mount, damper covers, rack cover, shroud) used a single 430 GSM ply over a PLA or foam core. To validate the aero surfaces, a scaled 3D-printed model of one wing was tested in a wind tunnel and its measured lift coefficient compared against the CFD prediction.",
           achievements: [
             "Built CNC-MDF and wire-cut foam moulds, vacuum-bagged every layup, and ran three-point bend and perimeter shear testing.",
             "Cross-validated the aero package by wind-tunnel testing a 3D-printed scale wing model against its CFD-predicted lift coefficient.",
-            "Joined split 3D-printed mould segments and adjacent composite panels with PU foam for added strength and a repeatable, low-cost tooling process."
+            "Joined split 3D-printed mould segments and adjacent composite panels with PU foam for added strength and a repeatable, low-cost tooling process.",
+            "Set fibre orientation per part (0°/90°/±45°) by load case, building sandwich panels from 430 GSM carbon fibre over PU-foam or PLA cores for parts like the motor-controller mount, HVD mount, damper covers, and shroud."
           ],
           tools: ["CNC / VMC / Carvey machining", "3D printing", "Vacuum bagging & wet layup", "Wind tunnel testing"]
         },
@@ -289,65 +301,71 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "optimumlap-powertrain-sizing", title: "OptimumLap Traction-Limited Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        id: "optimumlap-powertrain-sizing", title: "OptimumLap Traction-Limited Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-power-sensitivity-curves.png",
         highlights: ["65 kW powertrain target set from traction-limited lap simulation"],
         writeup: {
           overview: "Set the powertrain's power target for RMSE'23 from lap-time sensitivity rather than an arbitrary spec, so the motor choice matched what the tyres could actually put down.",
-          approach: "Built OptimumLap point-mass simulations running at the tyre traction limit across the competition track set, then swept motor power to generate power-sensitivity curves showing the marginal lap-time return of each additional kW.",
+          approach: "Computed the tyre's maximum traction-limited torque from its friction data, CG height, mass distribution, and longitudinal load transfer, then used it to reshape the motor's characteristic curve into a traction-limited curve at each candidate power rating. Feeding these modified curves into OptimumLap (drive ratio fixed at 1, to isolate motor power as the only variable) produced power-sensitivity curves for both the endurance and autocross events across three aero configurations, run on the FSAE Hockenheimring circuit.",
           achievements: [
-            "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain."
+            "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain.",
+            "Swept endurance and autocross lap time against motor power across three aerodynamic configurations (no device, wings only, full package) to confirm the power target held regardless of aero package."
           ],
           tools: ["OptimumLap"]
         },
         gallery: []
       },
       {
-        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling & Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling & Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-tyre-mu-slip-comparison.png",
         highlights: ["Pacejka MF 5.2 models built from TTC data"],
         writeup: {
           overview: "Converted raw Tyre Testing Consortium (TTC) data into usable tyre models to drive tyre selection and every downstream vehicle-dynamics simulation.",
-          approach: "Processed TTC data (across load, pressure, camber, and slip sweeps) into Pacejka MF 5.2 magic-formula tyre models, then compared candidate tyres directly on traction, braking mu, and operating temperature using the fitted models rather than raw data tables.",
+          approach: "Processed TTC data (across load, pressure, camber, and slip sweeps) into Pacejka MF 5.2 magic-formula tyre models at the selected 10 psi operating pressure, then compared four shortlisted 13-inch tyres — Hoosier R25B 20.5/7.0 and 20.5/6.0, Avon A92, and Goodyear D2704 — directly on longitudinal/lateral traction, peak-force response time, and operating temperature using the fitted models rather than raw data tables.",
           achievements: [
-            "Processed TTC tyre data into Pacejka MF 5.2 models, driving tyre selection on traction, braking mu, and operating temperature."
+            "Processed TTC tyre data into Pacejka MF 5.2 models, driving tyre selection on traction, braking mu, and operating temperature.",
+            "Selected the Hoosier R25B 20.5/7.0 for its combined acceleration/cornering traction, fastest peak lateral-force response, and lowest operating temperature among four shortlisted tyres.",
+            "Flagged the selected tyre's above-average camber-induced force drop-off to the suspension team, driving a minimum-camber-change kinematic target for the suspension design."
           ],
           tools: ["Pacejka MF 5.2", "TTC (Tyre Testing Consortium) data"]
         },
         gallery: []
       },
       {
-        id: "lltd-neutral-steer", title: "LLTD Tuning for Neutral Steer", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        id: "lltd-neutral-steer", title: "LLTD Tuning for Neutral Steer", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-lltd-understeer-sweep.png",
         highlights: ["47-53 LLTD selected for neutral steer"],
         writeup: {
-          overview: "Set the car's lateral load transfer distribution (LLTD) target from a quantified understeer-gradient study rather than carried-over suspension settings.",
-          approach: "Modeled understeer gradient as a function of LLTD in a constant-radius cornering test, sweeping front/rear roll-stiffness distribution to find the balance point closest to neutral steer while remaining stable across the lateral-acceleration range.",
+          overview: "Set the car's lateral load transfer distribution (LLTD) target from a quantified understeer-gradient study rather than carried-over suspension settings — the first year the team set LLTD this way instead of by convention.",
+          approach: "Built a constant-radius cornering test program in MATLAB sweeping front LLTD from 43% to 60%, plotting the resulting understeer gradient against lateral acceleration for each split to find the front/rear balance point closest to neutral steer while remaining stable across the full lateral-acceleration range.",
           achievements: [
-            "Modeled understeer gradient against lateral load transfer distribution in constant-radius tests, setting 47-53 LLTD for neutral steer."
+            "Modeled understeer gradient against lateral load transfer distribution in constant-radius tests, setting 47-53 LLTD for neutral steer.",
+            "Swept front LLTD from 43% to 60% in a constant-radius test program, finding 47% front gave near-zero understeer while remaining the most stable split across the lateral-acceleration range."
           ],
           tools: ["MATLAB"]
         },
         gallery: []
       },
       {
-        id: "brake-bias-sizing", title: "Tyre-Slip Braking Model & Brake Bias Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        id: "brake-bias-sizing", title: "Tyre-Slip Braking Model & Brake Bias Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-wilwood-caliper-photo.jpg",
         highlights: ["Brake bias of 3.1 set from a Simulink tyre-slip model"],
         writeup: {
-          overview: "Sized the braking system's front/rear bias and hardware from first principles rather than a rule-of-thumb split.",
-          approach: "Built a Simulink tyre-slip braking model taking pedal position, pedal ratio, balance-bar bias, and master-cylinder/caliper piston areas as inputs, computing longitudinal slip and the resulting frictional force at each tyre to find the bias that lets front and rear lock together at the tyre's traction limit.",
+          overview: "Sized the braking system's front/rear bias and hardware from first principles rather than a rule-of-thumb split, while cutting the pedal force needed for wheel lockup from RMSE'19's 500 N (400 N on RMSE'21) down to 300 N.",
+          approach: "Built a Simulink tyre-slip braking model taking pedal position, pedal ratio, balance-bar bias, and master-cylinder/caliper piston areas as inputs, computing longitudinal slip via the Pacejka tyre model and the resulting frictional force at each tyre to find the bias that lets front and rear lock together at the tyre's traction limit. The calculated 3.1 bias was matched in hardware with Wilwood compact remote-flange master cylinders (0.625\" bore front / 1.125\" bore rear) and a Wilwood DynaPro Single caliper (120-9689-LP, 44.4mm piston) running BP-20 pads (μ ≈ 0.45) and DOT 4 fluid, with fine bias adjustment via a balance-bar spherical bearing.",
           achievements: [
-            "Built a Simulink tyre-slip braking model to set brake bias at 3.1 and size the master cylinder and caliper combination."
+            "Built a Simulink tyre-slip braking model to set brake bias at 3.1 and size the master cylinder and caliper combination.",
+            "Matched the 3.1 bias in hardware with Wilwood master cylinders (0.625\"/1.125\" bore) and a Wilwood DynaPro Single caliper, cutting the wheel-lockup pedal-force target to 300 N."
           ],
           tools: ["MATLAB / Simulink"]
         },
         gallery: []
       },
       {
-        id: "lv-power-distribution-card", title: "LV Power Distribution Card", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
+        id: "lv-power-distribution-card", title: "LV Power Distribution Card", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-relay-pcb-layout.png",
         highlights: ["360 W LV power card at 92% efficiency"],
         writeup: {
           overview: "Designed the car's central low-voltage power distribution, sized to the full electrical load of the VCU, sensors, relays, and cooling auxiliaries.",
-          approach: "Estimated total LV load across every subsystem (control PCBs, brake light, shutdown circuitry, DAQ/sensors, accumulator and motor/MCU cooling fans and pump), then designed a power distribution card converting the LV battery voltage down through the loads at a targeted efficiency, alongside dedicated APPS, brake-plausibility, and DAQ boards.",
+          approach: "Estimated total LV load across every subsystem — roughly 4 A on the 5V/control bus (VCU, dashboard, DAQ, discharge/TSAL circuitry), 14 A on the 24V thermal bus (dominated by the accumulator, motor, and MCU cooling fans and pumps), and 2 A on the shutdown-circuit bus (precharge/AIR/discharge relays) — then designed a power distribution card converting the LV battery voltage down through the loads at a targeted efficiency, alongside dedicated Power Card, Control Card, BSPD, Relay, and DAQ boards.",
           achievements: [
-            "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards."
+            "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards.",
+            "Sized the LV distribution to a ~20 A total load dominated by the 24V thermal bus (accumulator, motor, and MCU cooling fans and pumps), split across dedicated Power Card, Control Card, BSPD, Relay, and DAQ boards."
           ],
           tools: ["Altium", "LTspice"]
         },
@@ -358,22 +376,24 @@ window.SITE_CONTENT = {
         highlights: ["Bench-verified implausibility and shutdown behavior before scrutineering"],
         writeup: {
           overview: "Took the electronics boards from layout to a scrutineering-ready state, closing out the FS rules checks before the car reached technical inspection.",
-          approach: "Laid out and assembled the LV/DAQ boards, then bench-tested each one to deliberately trigger implausibility and shutdown fault conditions and confirm the response matched FS rule requirements before the car was presented for scrutineering.",
+          approach: "Laid out and assembled the LV/DAQ boards, then bench-tested each one to deliberately trigger implausibility and shutdown fault conditions and confirm the response matched FS rule requirements before the car was presented for scrutineering. The standalone BSPD board's implausibility logic (motor power ≥5 kW with hard braking sustained past 500ms) was first validated in NI Multisim, then confirmed on the bench, including its 15-second auto-reset behavior.",
           achievements: [
-            "Laid out, assembled, and bench-tested the boards, verifying implausibility and shutdown behavior against FS rules before scrutineering."
+            "Laid out, assembled, and bench-tested the boards, verifying implausibility and shutdown behavior against FS rules before scrutineering.",
+            "Validated the BSPD's 500ms hard-braking-under-power implausibility trip and 15-second auto-reset, in simulation and then on the bench, ahead of technical inspection."
           ],
           tools: ["Bench power supplies & multimeter", "Oscilloscope"]
         },
         gallery: []
       },
       {
-        id: "harness-coolant-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
+        id: "harness-coolant-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-coolant-hose-routing-cad.png",
         highlights: ["Bend radii and service access validated in CAD"],
         writeup: {
           overview: "Routed the full vehicle wiring harness and coolant lines in CAD before manufacturing, rather than routing them by hand on the car.",
-          approach: "Modeled harness and coolant-line paths in CAD alongside the rest of the vehicle assembly, checking minimum bend radii against cable/hose specifications and confirming every connector and service point remained accessible with the bodywork installed.",
+          approach: "Modeled harness and coolant-line paths in CAD alongside the rest of the vehicle assembly, checking minimum bend radii against cable/hose specifications and confirming every connector and service point remained accessible with the bodywork installed. Coolant hose lengths (680mm motor controller-to-radiator, 770mm radiator-to-pump, 85mm pump-to-motor, 365mm motor-to-controller — 1900mm total) were fixed by this routing before being fed into the thermal model. HV wiring used XLPE copper-core, silicone, and marine-grade cable; LV wiring used Phoenix M12 and Samtec cable assemblies.",
           achievements: [
-            "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access."
+            "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access.",
+            "Fixed coolant hose routing to a 1900mm total run (680/770/85/365mm segments) before it fed into the thermal model, and selected HV/LV wiring (XLPE, silicone, and marine-grade for HV; Phoenix M12 and Samtec for LV) to match."
           ],
           tools: ["SolidWorks (CAD harness routing)"]
         },
