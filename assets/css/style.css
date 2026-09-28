@@ -265,9 +265,9 @@ header.nav {
   margin: 0;
 }
 .hero-sub {
+  font-family: var(--sans);
   font-size: clamp(15px, 1.8vw, 17px);
-  color: var(--text);
-  opacity: 0.8;
+  color: color-mix(in srgb, var(--text) 82%, var(--bg));
   line-height: 1.6;
   max-width: 820px;
   margin: 0 0 36px;
@@ -367,8 +367,8 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   gap: 56px;
   align-items: stretch;
 }
-.about-text p { color: var(--text); opacity: 0.8; margin: 0 0 18px; font-size: 16px; line-height: 1.65; }
-.about-text p:first-child { color: var(--text); opacity: 1; font-size: 18px; line-height: 1.55; }
+.about-text p { color: color-mix(in srgb, var(--text) 82%, var(--bg)); margin: 0 0 18px; font-size: 16px; line-height: 1.65; }
+.about-text p:first-child { color: var(--text); font-size: 18px; line-height: 1.55; }
 .auth-col { display: flex; flex-direction: column; gap: 14px; height: 100%; }
 .id-block {
   border: 1px solid var(--line);
@@ -720,12 +720,17 @@ body.modal-open { overflow: hidden; }
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .reveal.reveal-visible { opacity: 1; transform: none; }
-.reveal-rule { transform-origin: left center; transform: scaleX(0); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-rule { transform-origin: left center; transform: scaleX(0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal-rule.reveal-visible { transform: scaleX(1); }
+/* Awards section's current pace was called out as already right — pinned
+   here so the slower default above doesn't change it too. */
+.award-item.reveal {
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
 .bg-drawing { transition: transform 0.2s linear; }
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-rule { opacity: 1; transform: none; transition: none; }

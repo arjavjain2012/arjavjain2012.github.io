@@ -774,9 +774,10 @@
     staggerContainers.forEach((sel) => {
       const container = $(sel);
       if (!container) return;
+      const step = sel === "#awardList" ? 45 : 70; // awards' current pace was called out as already right
       Array.from(container.children).forEach((child, i) => {
         child.classList.add("reveal");
-        child.style.transitionDelay = Math.min(i, 6) * 45 + "ms";
+        child.style.transitionDelay = Math.min(i, 6) * step + "ms";
       });
     });
 
