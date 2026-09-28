@@ -367,6 +367,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   gap: 56px;
   align-items: stretch;
 }
+.about-text { max-width: 670px; }
 .about-text p { color: color-mix(in srgb, var(--text) 82%, var(--bg)); margin: 0 0 18px; font-size: 16px; line-height: 1.65; }
 .about-text p:first-child { color: var(--text); font-size: 18px; line-height: 1.55; }
 .auth-col { display: flex; flex-direction: column; gap: 14px; height: 100%; }
