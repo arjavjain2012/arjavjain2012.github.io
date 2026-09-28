@@ -793,11 +793,11 @@
 
     if (reduceMotion) return; // CSS already renders these at full opacity, no observer needed
 
+    // Toggles both ways (not just once) so scrolling back up resets a
+    // section's cards, and scrolling down into them again replays the reveal.
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("reveal-visible");
-        observer.unobserve(entry.target);
+        entry.target.classList.toggle("reveal-visible", entry.isIntersecting);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
 
