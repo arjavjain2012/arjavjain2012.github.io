@@ -472,6 +472,21 @@ window.SITE_CONTENT = {
         { label: "FSUK'23 Cost & Manufacturing", value: "2nd, Asian teams" },
         { label: "MathWorks Modeling Award", value: "1st, Formula Bharat '23" }
       ],
+      writeup: {
+        overview: "RMSE'23 was IIT Roorkee Motorsports' return to in-person competition at Formula Student UK 2023, Silverstone, placing 1st among Asian teams in Engineering Design and 2nd in Cost & Manufacturing. As Mechanical Head, I owned chassis, aerodynamics, powertrain cooling, and electronics design across the car.",
+        approach: "Chassis design started from the RMSE'19 baseline — high mass, a poor 40F/60R distribution, and manufacturing defects — with explicit targets to cut mass and hit 50F/50R. Suspension nodes came from the VD team; unneeded tubes near the front and rear hoops were removed and the wheels shifted rearward to hit the mass-distribution target, while a more inclined driver position (set from ergonomic-jig testing) lowered CG height. Torsional stiffness was targeted at 1800 N·m/deg from an LLTD/roll-stiffness analysis and validated with a hybrid beam-quadrilateral ANSYS model of the chassis and floor closeouts, both alone and combined. Aero followed the same simulate-then-validate process: OptimumLap point-mass sweeps first confirmed that raising Cl was worth the Cd penalty, then front and rear wing airfoils (Selig S1223, multi-element) were optimized by angle of attack in ANSYS Fluent 2D/3D CFD before a 3D-printed scale-model wind-tunnel test cross-checked the simulated lift coefficient. Composite parts — floor closeouts, wings, bodywork, and the steering wheel — were sized by classical lamination theory and Tsai-Wu failure checks in ANSYS ACP, then manufactured from CNC-MDF and wire-cut foam moulds via vacuum-bagged wet layup.",
+        achievements: [
+          "Raised chassis torsional stiffness 30% to 1755 N·m/° (vs. an 1800 N·m/° target) with CFRP floor closeouts, correlated between an ANSYS beam-quadrilateral FEA model and physical twist-rig testing.",
+          "Shifted mass distribution from RMSE'19's 40F/60R baseline toward 50F/50R by removing hoop-area tubing and moving the wheels rearward, while lowering CG through a more inclined driver position.",
+          "Designed and CFD-validated a 3-element front wing (147→167 N downforce with footplates added, 34–36 N drag) and 3-element rear wing (115.6→120 N downforce, 37–39 N drag) using Selig S1223 airfoils, cross-checked against a wind-tunnel test on a 3D-printed scale model.",
+          "Applied generative design to additively manufactured wing mounts and topology optimization to CNC pedals, saving 1.2 kg; sized CFRP sandwich laminates to a 1.3 FOS at 40g via Tsai-Wu checks in ANSYS ACP.",
+          "Modeled motor and inverter losses over the endurance cycle to set a 2 kW cooling duty, sizing the radiator, pump, and fan by NTU-effectiveness analysis and validating on an instrumented bench to 136 kPa at 7.5 LPM.",
+          "Set a 65 kW powertrain target from OptimumLap traction-limited lap simulation and Pacejka MF 5.2 tyre models, targeting 47–53 LLTD for neutral steer and a 3.1 brake bias.",
+          "Designed a 360 W, 92%-efficient LV power distribution card plus APPS, brake-plausibility, and DAQ boards, bench-verified before scrutineering."
+        ],
+        tools: ["ANSYS Mechanical", "ANSYS ACP", "ANSYS Fluent", "MATLAB / Simulink", "OptimumLap", "Pacejka MF 5.2", "SolidWorks", "Autodesk Inventor", "CNC / wire-cut / 3D printing", "Vacuum bagging & wet layup", "Wind tunnel testing"],
+        note: "Detailed supporting documentation was only available for the chassis and aerodynamics work above (Structures section). The powertrain-cooling, vehicle-dynamics, and electronics achievements are carried from resume records — no dedicated supporting document for those subsystems was found for this car."
+      },
       links: [
         { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
@@ -650,6 +665,22 @@ window.SITE_CONTENT = {
         { label: "Engineering Design Report, Formula Bharat Virtual '22", value: "3rd" },
         { label: "Overall, Electric Teams — Formula Bharat Virtual '22", value: "3rd" }
       ],
+      writeup: {
+        overview: "RMSE'21 was IIT Roorkee Motorsports' entry to Formula Bharat Virtual 2022, a fully virtual engineering-design competition run in place of on-track events. As Powertrain & Braking Head, I owned drivetrain, braking, vehicle dynamics, and accumulator/BMS design across the car, backed by four Formula-Bharat Engineering Design Supporting Documents (Driver Interface, Low Voltage, Powertrain, and Vehicle Dynamics) plus a dedicated CG and mass-distribution study.",
+        approach: "Design started from a clean-sheet vehicle architecture: a 50/50 weight distribution and a narrower track/wheelbase were chosen from lap-time simulation to favor the tight, technical FSAE autocross and endurance circuits over straight-line acceleration. Suspension hardpoints, anti-Ackermann steering geometry (validated against TTC tyre slip-angle data), and damper/ride-frequency selection were all derived from a purpose-built MATLAB CG/mass-distribution tool and a half-car ride model rather than carried over by feel. On the powertrain side, lap-time simulation at the tyre traction limit sized the motor and drove gear-ratio, chain, bearing, and drivetrain-mount selection, all cross-checked by FEA and bearing-life calculations. The accumulator was rebuilt around pre-assembled Energus/Sony-VTC6 modules specifically to fix the previous car's packaging and harnessing problems, sized by a wheel-to-well Simulink model and validated by 40g/20g FEA and Ansys Icepak thermal simulation. Braking, BMS, precharge, and shutdown-circuit logic were modeled in Simulink and NI Multisim before hardware was built, and validated against FSAE rules (BSPD implausibility timing, TSAL/discharge behavior) by simulation before scrutineering.",
+        achievements: [
+          "Selected an EMRAX 228 PMSM motor (derated to 80 kW, 17% more powerful than the smaller 208 alternative) through a 3.615:1 chain reduction (13T/47T sprockets), sized from OptimumLap power-sensitivity curves run at the tyre traction limit.",
+          "Designed a 132s6p Energus/Sony-VTC6 accumulator (8 segments of 1s6p modules) with a BQ76PL455A-based passive-balancing BMS on a Teensy 4.1 master, validated to 2.1–4.1 FOS under 40g/20g FEA loading and cooled from 72.4°C (no cooling) to under 60°C in Ansys Icepak.",
+          "Selected a Torsen limited-slip differential (4.5:1 torque-bias ratio) and Hoosier 20.5/7.0-13 tyres from TTC tyre data, targeting a 47/53 front/rear LLTD for neutral steer.",
+          "Designed an anti-Ackermann steering geometry validated against tyre slip-angle data, cutting the tie-rod UV-joint angle from 60° to under 40° versus the prior car and reducing steering torque via a 130 mm steering-arm length and 16 mm pinion radius.",
+          "Selected a DNM Burner RCP2S damper and optimized ride frequencies (3.3 Hz front / 3.5 Hz rear) with a half-car model against pitch, response-time, and ride-height targets.",
+          "Reduced brake pedal force for wheel lockup from 500 N to 300 N, sizing Wilwood calipers and master cylinders to a 3.13 front/rear brake bias via a MATLAB/Simulink tyre-slip braking model.",
+          "Designed a 360 W LV power architecture (24 V battery stepped to 12 V/5 V/3.3 V) and the full VCU shutdown chain (BSPD, latching IMD/BMS relays, precharge/AIR control, TSAL discharge circuitry), validated in NI Multisim before hardware bring-up.",
+          "Built a Teensy-based CAN/UART DAQ (11-bit CAN at 500 kHz, under 60% bus load) logging wheel speed, IMU, GPS, thermopile, and ride-height sensor data to an SD card with a steering-wheel LCD display."
+        ],
+        tools: ["MATLAB / Simulink", "OptimumLap", "NI Multisim", "Ansys Icepak", "ANSYS (FEA)", "SolidWorks", "V-Susp", "Pacejka MF tyre modeling", "Teensy 4.0 / 4.1", "CAN bus (SN65HVD233DR)", "bq76PL455A BMS IC"],
+        note: "No dedicated Structures/chassis supporting document exists for this car in the available records — the chassis was carried over largely unchanged from RMSE'19, so no separate structural design documentation was produced."
+      },
       links: [
         { label: "Team site", url: "https://motorsports.iitr.ac.in/" },
         { label: "Technical report / photos", url: "— add link —", isPlaceholder: true }
