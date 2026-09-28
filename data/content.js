@@ -975,7 +975,6 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
-      imageFit: "contain",
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Powertrain & Braking Engineer",
       bullets: [
