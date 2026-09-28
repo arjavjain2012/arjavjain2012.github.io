@@ -399,7 +399,7 @@ window.SITE_CONTENT = {
         highlights: ["1.2 kW rejected, cells held under 60°C at 10C peak discharge"],
         writeup: {
           overview: "Designed the accumulator's forced-air cooling system to keep every module under its safe operating temperature through a full endurance run at peak discharge.",
-          approach: "Modeled cell heat generation from Joule heating at the endurance-run discharge current, then built an Ansys Icepak CFD model of the accumulator container's internal airflow (cooling air entering through OEM-defined gaps between modules) to size the fan count and airflow needed to hold cells under the 60°C limit — first confirming that natural convection alone was insufficient before sizing the active fan-cooling solution.",
+          approach: "Modeled cell heat generation from Joule heating at the endurance-run discharge current (~2 W/cell at a 10 A safety-factored average), then built a transient Ansys Icepak CFD model of the accumulator container's internal airflow (cooling air entering through OEM-defined gaps between modules) to size the fan count and airflow needed to hold cells under the 60°C limit — first confirming that natural convection alone was insufficient before sizing the active fan-cooling solution.",
           achievements: [
             "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge.",
             "Showed natural convection alone was insufficient (72.4°C average cell temperature), justifying the 3-fan forced-air design that held cells under the 60°C target."
@@ -446,7 +446,7 @@ window.SITE_CONTENT = {
         highlights: ["First mode placed above 3x powertrain excitation"],
         writeup: {
           overview: "Designed the accumulator enclosure and its mounting brackets to survive both crash-level structural loads and everyday vibration without resonating with the powertrain.",
-          approach: "Placed the enclosure's first structural mode above 3x the powertrain's excitation frequency to avoid resonance, verified by modal FEA, while separately validating the container walls against 40g longitudinal, 40g lateral, and 20g vertical crash load cases per the FB21 rulebook's EV5.5 accumulator-container requirements.",
+          approach: "Placed the enclosure's first structural mode above 3x the powertrain's excitation frequency to avoid resonance, verified by modal FEA, while separately validating the container walls against 40g longitudinal, 40g lateral, and 20g vertical crash load cases per the FB21 rulebook's EV5.5 accumulator-container requirements. The steel-clip fix let the AISI 1020 carbon-steel container walls drop from 2.5 mm (prior car) to 1.5 mm this year without exceeding the load-case stress limits, with segment casings and other fittings 3D-printed in fire-retardant ABS.",
           achievements: [
             "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
             "Validated the container structure to 2.1–4.1 factor of safety under 40g longitudinal, 40g lateral, and 20g vertical FEA load cases per the FB21 rulebook."
@@ -477,10 +477,11 @@ window.SITE_CONTENT = {
         highlights: ["538V/18Ah pack sized via a well-to-wheel model"],
         writeup: {
           overview: "Sized the accumulator pack and its supporting high-voltage hardware from a full well-to-wheel energy model rather than a rough capacity guess.",
-          approach: "Modeled the drive cycle's energy demand from the wheels back through the drivetrain, motor, and pack to size total pack capacity, then selected NMC cells (prioritizing manufacturability and safety after the prior car's packaging/harnessing problems), AIRs, HV fusing, and a harness designed to ISO 6469-3.",
+          approach: "Modeled the drive cycle's energy demand from the wheels back through the drivetrain, motor, and pack to size total pack capacity, then selected NMC cells (prioritizing manufacturability and safety after the prior car's packaging/harnessing problems), AIRs, HV fusing, and a harness designed to ISO 6469-3. The pack was split into 6 segments of 22 cell-modules each, arranged as a single row per segment (rather than two parallel rows of 11) specifically to simplify bus-bar routing and let segments connect over Radlock HV connectors.",
           achievements: [
             "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
-            "Selected pre-assembled NMC cylindrical-cell modules over cheaper cell-only options specifically to fix the prior car's accumulator assembly and packaging problems."
+            "Selected pre-assembled NMC cylindrical-cell modules over cheaper cell-only options specifically to fix the prior car's accumulator assembly and packaging problems, despite their roughly 2x cost.",
+            "Segmented the pack into 6 single-row (22s6p) segments joined by Radlock HV connectors, minimizing bus-bar and wiring complexity."
           ],
           tools: ["MATLAB (well-to-wheel energy model)", "OptimumLap"]
         },
@@ -493,10 +494,11 @@ window.SITE_CONTENT = {
         highlights: ["7% lap-time gain from simulated ABS/TC"],
         writeup: {
           overview: "Quantified the lap-time value of adding ABS and traction control before committing engineering time to build them, using the same longitudinal tyre-slip modeling approach the team used for brake-bias sizing.",
-          approach: "Simulated longitudinal tyre slip through braking and acceleration events, comparing lap time with and without simulated ABS/TC intervention to quantify the benefit before hardware and control-logic development. The same tyre-slip vehicle-state model was used to size the pedal box: a 3.4 pedal ratio and 0.55F/0.45R brake bias against Wilwood calipers and dual master cylinders, targeting full wheel lockup at a 400 N pedal force.",
+          approach: "Simulated longitudinal tyre slip through braking and acceleration events, comparing lap time with and without simulated ABS/TC intervention to quantify the benefit before hardware and control-logic development. The same tyre-slip vehicle-state model was used to size the pedal box: a 3.4 pedal ratio and 0.55F/0.45R brake bias against a Wilwood 120-9689-LP caliper and Wilwood 260-10371 (front) / 260-10376 (rear) master cylinders, targeting full wheel lockup at a 400 N pedal force — down from 500 N on the prior car, per driver feedback.",
           achievements: [
             "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
-            "Used the same tyre-slip vehicle-state model to finalize a 3.4 pedal ratio and 0.55F/0.45R brake bias, braking from 20 m/s to 0 in 1.2s."
+            "Used the same tyre-slip vehicle-state model to finalize a 3.4 pedal ratio and 0.55F/0.45R brake bias, braking from 20 m/s to 0 in 1.2s.",
+            "Cut the target wheel-lockup pedal force from 500 N to 400 N versus the prior car, based on driver feedback."
           ],
           tools: ["MATLAB / Simulink"]
         },
@@ -509,11 +511,12 @@ window.SITE_CONTENT = {
         highlights: ["12% wheel-torque gain from tyre-slip-model-driven selection"],
         writeup: {
           overview: "Selected the motor, differential, and final drive ratio as a matched set from tyre-slip and lap-time modeling, rather than sizing each in isolation.",
-          approach: "Sized the motor from OptimumLap power-sensitivity curves run at the tyre traction limit (selecting an EMRAX 228 derated to 80 kW), paired it with a BAMOCAR PG D3 400-700 field-oriented controller sized to the motor's peak/continuous current, and picked a Torsen limited-slip differential over a spool for its dynamic torque-biasing during cornering. The gear ratio was then swept against the traction-limit and dynamic-event targets to land on a 3.615:1 chain reduction.",
+          approach: "Sized the motor from OptimumLap power-sensitivity curves run at the tyre traction limit, finding a minimum 70 kW peak / 45 kW continuous requirement, then chose an EMRAX 228 derated to 80 kW over the cheaper, lighter EMRAX 208 specifically so the motor could be derated harder for a longer service life and reused on future cars. It was paired with a BAMOCAR PG D3 400-700 field-oriented controller — recommended by EMRAX itself and rated to 400 A peak / 200 A continuous, comfortably above the motor's own 340 A / 160 A ratings — and a Torsen limited-slip differential, chosen over both a spool and a Drexler clutch-type LSD since the Torsen's gear-based torque biasing needs no wearing friction discs. The gear ratio was then swept against the traction-limit and dynamic-event targets to land on a 3.615:1 chain reduction, with the chain and mount bearings sized against the resulting loads.",
           achievements: [
             "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
-            "Selected an EMRAX 228 motor (derated to 80 kW) with a BAMOCAR PG D3 400-700 controller, and a Torsen limited-slip differential (4.5:1 torque-bias ratio) over a spool for dynamic cornering performance.",
-            "Landed on a 3.615:1 chain reduction (13T/47T sprockets), validated by bearing-life and chain-tension calculations."
+            "Selected an EMRAX 228 motor (derated to 80 kW) with a BAMOCAR PG D3 400-700 controller, and a Torsen limited-slip differential (4.5:1 torque-bias ratio) over a spool and a clutch-type LSD for maintenance-free dynamic cornering performance.",
+            "Landed on a 3.615:1 chain reduction (13T/47T sprockets, TIDC 428 chain), sized to a 13.6 kN peak chain load (1.5x shock factor) against the chain's 19.3 kN rating.",
+            "Sized motor- and differential-mount bearings (S6204-2RSR, S6307-2RSR) to a 3.6M-revolution expected life against a 3,000 km duty cycle."
           ],
           tools: ["OptimumLap", "MATLAB"]
         },
@@ -529,10 +532,11 @@ window.SITE_CONTENT = {
         highlights: ["Passive-balancing segment BMS feeding the shutdown circuit"],
         writeup: {
           overview: "Designed the per-segment battery-monitoring boards that feed cell-voltage and thermistor data into the accumulator's fault-latching shutdown path.",
-          approach: "Built segment BMS boards with passive cell balancing, each monitoring its segment's cell voltages and temperatures and feeding any undervoltage, overvoltage, overheating, or communication fault directly into the shutdown circuit's latching logic, with daisy-chain communication between segments isolated from their differing ground potentials by DC-blocking capacitors and TVS diodes.",
+          approach: "Built segment BMS boards with passive cell balancing around the bq76PL455A-Q1 (a 14-bit SAR-ADC monitoring IC), two per 22-cell module — each covering 11 cells and 8 temperature sensors — feeding any undervoltage, overvoltage, overheating, or communication fault directly into the shutdown circuit's latching logic. HV current is sensed through an isolated AMC1200 differential amplifier across a 1.1 mΩ shunt sized for ±250 A, and a MOSFET-based reverse-polarity protection circuit guards the board's own supply. Daisy-chain communication between segments (running at 4 Mb/s over twisted pair) is isolated from their differing ground potentials by DC-blocking capacitors and TVS diodes, with an ISO7741 digital isolator separating the HV-side AMS from the LV-side DAQ.",
           achievements: [
-            "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
-            "Isolated daisy-chain communication between segments at different ground potentials using DC-blocking capacitors and TVS diodes for noise immunity."
+            "Built segment BMS boards around the bq76PL455A-Q1 (14-bit SAR ADC) with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
+            "Designed isolated HV current sensing (AMC1200 differential amplifier, 1.1 mΩ shunt sized for ±250 A) and MOSFET-based reverse-polarity protection onto the same boards.",
+            "Isolated 4 Mb/s daisy-chain communication between segments at different ground potentials using DC-blocking capacitors, TVS diodes, and an ISO7741 digital isolator for noise immunity."
           ],
           tools: ["Altium", "UART / daisy-chain communication"]
         },
@@ -542,12 +546,13 @@ window.SITE_CONTENT = {
       },
       {
         id: "precharge-discharge-circuitry", title: "Pre-Charge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-precharge-air-schematic.png",
-        highlights: ["AIRs close at 95% of DC bus voltage"],
+        highlights: ["AIRs close at 90% of DC bus voltage"],
         writeup: {
           overview: "Designed the circuitry that safely energizes and de-energizes the DC link, protecting the AIRs and downstream electronics from inrush current and fault conditions.",
-          approach: "Designed pre-charge control logic that closes the AIRs only once the DC-link capacitor has charged to 95% of DC bus voltage (monitored via a signal from the motor controller), and RC discharge circuitry that actively de-energizes the DC link the instant any fault is detected.",
+          approach: "Designed pre-charge control logic that closes the AIRs only once the motor-controller-side DC-link capacitor has charged to 90% of DC bus voltage — detected by comparators comparing a scaled battery-voltage signal against the motor-controller voltage, isolated across the HV/LV boundary by an optocoupler — and RC discharge circuitry that actively de-energizes the DC link the instant any fault is detected. Flyback diodes across the AIR and pre-charge relay coils protect the switching MOSFETs, and the control logic was validated against the FB21 rulebook's EV4.10 AIR/pre-charge requirements.",
           achievements: [
-            "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault."
+            "Designed pre-charge and RC discharge circuitry, closing the AIRs at 90% of DC bus voltage and de-energizing the DC link on any fault.",
+            "Validated the AIR/pre-charge relay control logic against the FB21 rulebook's EV4.10 requirements, using flyback-diode-protected relay switching."
           ],
           tools: ["Altium", "LTspice"]
         },
@@ -558,10 +563,11 @@ window.SITE_CONTENT = {
         highlights: ["Latched BSPD, IMD, and BMS fault stages around an insulation monitor"],
         writeup: {
           overview: "Wired the vehicle's safety-critical shutdown circuit — the path that has to open reliably on any implausibility, isolation, or battery fault.",
-          approach: "Built three latching relay stages — Brake System Plausibility Device (BSPD, checking for hard-braking-under-power implausibility via a Hall-effect current sensor and brake-pressure sensor into a 500ms delay and D-flip-flop latch), an isolation-monitoring relay latch, and a BMS fault latch — all wired in series ahead of the shutdown buttons, inertia switch, and HVD interlock, and validated the logic in circuit simulation before hardware bring-up.",
+          approach: "Built three latching relay stages — Brake System Plausibility Device (BSPD, checking for hard-braking-under-power implausibility via an HK200T03 Hall-effect current sensor and an M3041 brake-pressure sensor into a 500ms delay and D-flip-flop latch), an isolation-monitoring relay latch, and a BMS fault latch — all wired in series ahead of the shutdown buttons, inertia switch, and HVD interlock. The IMD and BMS stages use latching relays that hold their tripped state in a SET/RESET memory coil rather than a powered logic latch, so a fault stays flagged through a power cycle. Logic was validated in circuit simulation before hardware bring-up.",
           achievements: [
             "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor.",
-            "Validated the BSPD implausibility logic (500ms hard-braking-under-power detection with a 10s auto-reset) in circuit simulation before hardware bring-up."
+            "Built the BSPD implausibility check (motor power > 5 kW with hard braking) from an HK200T03 current sensor and M3041 pressure sensor into window comparators, a 500ms delay, and a D-flip-flop latch with a 10s auto-reset.",
+            "Used SET/RESET latching relays for the IMD and BMS fault stages so a tripped fault survives a power cycle until deliberately cleared."
           ],
           tools: ["NI Multisim", "Altium"]
         },
