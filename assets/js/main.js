@@ -752,5 +752,85 @@
 
   /* ---------------- Footer ---------------- */
   $("#footerText").textContent = `© ${new Date().getFullYear()} ${C.meta.name}`;
+
+  /* ---------------- Scroll reveal ---------------- */
+  // Fades + rises section headings and grid/list cards into place as they
+  // cross into view, and staggers siblings within a grid so they cascade
+  // rather than popping in together. Anything inside the modal system is
+  // left alone — it's opened deliberately, not scrolled to.
+  (function initScrollReveal() {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    document.querySelectorAll(".section-head").forEach((head) => {
+      head.querySelector(".section-title")?.classList.add("reveal");
+      head.querySelector(".section-rule")?.classList.add("reveal-rule");
+    });
+
+    const staggerContainers = [
+      "#expList", "#fsaeGrid", "#thesisGrid", "#projectGrid",
+      "#softwareGrid", "#manufacturingGrid", "#leadershipTimeline",
+      "#eduList", "#awardList", "#learningsGrid"
+    ];
+    staggerContainers.forEach((sel) => {
+      const container = $(sel);
+      if (!container) return;
+      Array.from(container.children).forEach((child, i) => {
+        child.classList.add("reveal");
+        child.style.transitionDelay = Math.min(i, 6) * 70 + "ms";
+      });
+    });
+
+    const heroBits = [".hero-name-block", ".hero-sub", ".stat-strip-wrap"];
+    heroBits.forEach((sel, i) => {
+      const node = $(sel);
+      if (!node) return;
+      node.classList.add("reveal");
+      node.style.transitionDelay = i * 90 + "ms";
+    });
+
+    $("#aboutText")?.classList.add("reveal");
+    $(".auth-col")?.classList.add("reveal");
+
+    if (reduceMotion) return; // CSS already renders these at full opacity, no observer needed
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("reveal-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    document.querySelectorAll(".reveal, .reveal-rule").forEach((node) => observer.observe(node));
+  })();
+
+  /* ---------------- Parallax: hero sketch + section background drawings ---------------- */
+  (function initParallax() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const heroImg = document.querySelector(".hero-blueprint img");
+    const drawings = Array.from(document.querySelectorAll(".bg-drawing"));
+    if (!heroImg && !drawings.length) return;
+
+    drawings.forEach((d) => { d.dataset.baseTransform = d.style.transform || ""; });
+
+    let ticking = false;
+    function update() {
+      if (heroImg) heroImg.style.transform = `translateY(${window.scrollY * 0.12}px)`;
+      drawings.forEach((d) => {
+        const rect = d.getBoundingClientRect();
+        const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+        const drift = Math.max(-24, Math.min(24, center * -0.04));
+        d.style.transform = `${d.dataset.baseTransform} translateY(${drift}px)`;
+      });
+      ticking = false;
+    }
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    update();
+  })();
 })();
 

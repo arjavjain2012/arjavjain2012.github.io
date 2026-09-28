@@ -713,4 +713,20 @@ body.modal-open { overflow: hidden; }
 }
 .tool-badge img { height: 22px; width: auto; max-width: none; display: block; }
 .tool-badge-text { color: #1a1a1a; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
+
+/* ---------- Scroll-reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible { opacity: 1; transform: none; }
+.reveal-rule { transform-origin: left center; transform: scaleX(0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-rule.reveal-visible { transform: scaleX(1); }
+.bg-drawing { transition: transform 0.2s linear; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-rule { opacity: 1; transform: none; transition: none; }
+  .bg-drawing { transition: none; }
+}
 @media (max-width: 620px) { .modal-body { padding: 20px 18px 48px; } .modal-bar { padding: 10px 14px; } }
