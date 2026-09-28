@@ -406,7 +406,10 @@ window.SITE_CONTENT = {
           ],
           tools: ["Ansys Icepak"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-accumulator-sidepod-airflow.png", caption: "Sidepod inlet air routed through the chassis to the accumulator container" },
+          { image: "assets/img/subprojects/rmse21-accumulator-vent-airflow-diagram.png", caption: "Cooling air path through the OEM module vents" }
+        ]
       },
       {
         id: "parametric-suspension-cad", title: "Parametric Suspension CAD from VD Hardpoints", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-hardpoint-sketch.png",
@@ -422,17 +425,21 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "suspension-mass-reduction", title: "Suspension & Drivetrain Mass Reduction", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
+        id: "suspension-mass-reduction", title: "Suspension & Drivetrain Mass Reduction", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-rear-suspension-assembly.jpg",
         highlights: ["25% mass cut at a 1.2 Goodman fatigue FOS"],
         writeup: {
           overview: "Cut mass from the suspension and drivetrain members without giving up fatigue margin, by sizing every member to its actual worst-case load rather than a uniform safety factor.",
-          approach: "Sized suspension and drivetrain members against worst-case cornering and braking load cases, targeting a 1.2 Goodman fatigue factor of safety as the sizing constraint rather than a static-only check, allowing thinner sections wherever fatigue (not yield) wasn't the limiting failure mode.",
+          approach: "Sized suspension and drivetrain members against worst-case cornering and braking load cases, targeting a 1.2 Goodman fatigue factor of safety as the sizing constraint rather than a static-only check, allowing thinner sections wherever fatigue (not yield) wasn't the limiting failure mode. Final CAD FEA on the A-arms, uprights, brackets, rockers, and hubs (AISI 4130 steel and Al 6061/7075 T6) confirmed a minimum factor of safety of 2.5 across the assembly.",
           achievements: [
-            "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS."
+            "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
+            "Validated final component masses and FOS by material (AISI 4130 A-arms, Al 6061/7075 T6 uprights, brackets, rockers, and hubs) against the sizing targets."
           ],
           tools: ["Goodman fatigue analysis", "FEA"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-front-suspension-assembly.jpg", caption: "Front suspension assembly — upright, rockers, and pushrod" },
+          { image: "assets/img/subprojects/rmse21-front-upright-render.jpg", caption: "Front upright, sized to a 1.2 Goodman fatigue FOS" }
+        ]
       },
       {
         id: "accumulator-enclosure-modal", title: "Accumulator Enclosure & Bracket Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-battery-module-bms.png",
@@ -447,7 +454,8 @@ window.SITE_CONTENT = {
           tools: ["ANSYS (modal & static FEA)"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-accumulator-fea-stress.png", caption: "Accumulator container structural FEA under 40g loading" }
+          { image: "assets/img/subprojects/rmse21-accumulator-fea-stress.png", caption: "Accumulator container structural FEA under 40g loading" },
+          { image: "assets/img/subprojects/rmse21-accumulator-steel-clip.jpg", caption: "Steel spacer clips added between cell rows, cutting peak stress from 762 to 141 MPa" }
         ]
       },
       {
@@ -474,22 +482,27 @@ window.SITE_CONTENT = {
             "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
             "Selected pre-assembled NMC cylindrical-cell modules over cheaper cell-only options specifically to fix the prior car's accumulator assembly and packaging problems."
           ],
-          tools: ["MATLAB (well-to-wheel energy model)"]
+          tools: ["MATLAB (well-to-wheel energy model)", "OptimumLap"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-optimumlap-drive-cycle-map.png", caption: "OptimumLap drive-cycle speed map used to size the pack's energy demand" }
+        ]
       },
       {
-        id: "abs-tc-slip-model", title: "ABS & Traction Control from a Tyre-Slip Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        id: "abs-tc-slip-model", title: "ABS & Traction Control from a Tyre-Slip Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-wilwood-caliper.png",
         highlights: ["7% lap-time gain from simulated ABS/TC"],
         writeup: {
           overview: "Quantified the lap-time value of adding ABS and traction control before committing engineering time to build them, using the same longitudinal tyre-slip modeling approach the team used for brake-bias sizing.",
-          approach: "Simulated longitudinal tyre slip through braking and acceleration events, comparing lap time with and without simulated ABS/TC intervention to quantify the benefit before hardware and control-logic development.",
+          approach: "Simulated longitudinal tyre slip through braking and acceleration events, comparing lap time with and without simulated ABS/TC intervention to quantify the benefit before hardware and control-logic development. The same tyre-slip vehicle-state model was used to size the pedal box: a 3.4 pedal ratio and 0.55F/0.45R brake bias against Wilwood calipers and dual master cylinders, targeting full wheel lockup at a 400 N pedal force.",
           achievements: [
-            "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain."
+            "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
+            "Used the same tyre-slip vehicle-state model to finalize a 3.4 pedal ratio and 0.55F/0.45R brake bias, braking from 20 m/s to 0 in 1.2s."
           ],
           tools: ["MATLAB / Simulink"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-wilwood-master-cylinder.png", caption: "Wilwood dual master cylinders sized from the tyre-slip pedal-force model" }
+        ]
       },
       {
         id: "motor-diff-gear-selection", title: "Motor, Differential & Gear Ratio Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-bamocar-spec-table.jpg",
@@ -505,7 +518,10 @@ window.SITE_CONTENT = {
           tools: ["OptimumLap", "MATLAB"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-motor-loss-chart.png", caption: "Simulated motor loss over an endurance run, used for powertrain sizing" }
+          { image: "assets/img/subprojects/rmse21-motor-loss-chart.png", caption: "Simulated motor loss over an endurance run, used for powertrain sizing" },
+          { image: "assets/img/subprojects/rmse21-emrax228-motor-photo.png", caption: "EMRAX 228 MV motor, the selected 80 kW-derated PMSM" },
+          { image: "assets/img/subprojects/rmse21-bamocar-controller-photo.png", caption: "UNITEK BAMOCAR PG D3 field-oriented motor controller" },
+          { image: "assets/img/subprojects/rmse21-torsen-differential-render.png", caption: "JTEKT Torsen limited-slip differential, selected over a spool for dynamic torque biasing" }
         ]
       },
       {
@@ -549,7 +565,10 @@ window.SITE_CONTENT = {
           ],
           tools: ["NI Multisim", "Altium"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-bspd-current-sensor.png", caption: "Hall-effect current sensor feeding the BSPD implausibility check" },
+          { image: "assets/img/subprojects/rmse21-brake-pressure-sensor.png", caption: "Brake-pressure sensor feeding the BSPD implausibility check" }
+        ]
       }
     ],
     iem26: [
