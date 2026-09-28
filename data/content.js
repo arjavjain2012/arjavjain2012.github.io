@@ -406,15 +406,20 @@ window.SITE_CONTENT = {
         highlights: ["AISI 4130 discs sized for 300-450°C endurance"],
         writeup: {
           overview: "Sized the brake disc material and geometry to survive the thermal load of a full endurance run rather than to strength alone — moving from a solid disc, which warped under uneven heating and caused inconsistent pad contact, to a floating design that lets the rotor expand freely relative to the hub.",
-          approach: "Modeled brake disc temperature rise and convective heat loss over a 300s representative drive cycle in Simulink (heat input from friction-force/tangential-velocity/partition-coefficient, convective loss from a Reynolds/Nusselt correlation against vehicle speed), then selected AISI 4130 steel (normalized at 870°C) discs sized to operate within a 300-450°C endurance range without excessive thermal fade or warping. The floating design uses 8 bobbins with a 1mm float allowance per side, secured by M8 circlips, to carry force from the outer slotted (for convective cooling) disc to the inner hub while allowing that thermal expansion; the design was validated by both transient thermal and structural FEA (18.8 kN peak brake-pad clamping force).",
+          approach: "Built a Simulink thermal model — a Heat-In block (friction heat input as a function of vehicle speed, deceleration, and a rotor/pad partition coefficient) feeding into a Heat-Loss block (convective loss from a Reynolds/Prandtl/Nusselt correlation against vehicle speed) integrated over time — to predict rotor temperature over a 300s representative endurance drive cycle, then selected AISI 4130 steel (normalized at 870°C) discs sized to operate within the resulting 300-450°C range without excessive thermal fade or warping. The governing test case was a 3g constant-retardation stop from 100 km/h (1.619s of braking, heat flux decaying as 39301.5–4275.18t W and convective coefficient as 51.85–32.026t W/m²°C, then zero once stopped). The floating design uses 8 bobbins with a 1mm float allowance per side, secured by M8 circlips, to carry force from the outer slotted (for convective cooling) disc to the inner hub while allowing that thermal expansion; the design was validated by both transient thermal FEA (438.6°C peak temperature, 1.54 W/mm² peak heat flux) and structural FEA (18.8 kN peak brake-pad clamping force).",
           achievements: [
             "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
-            "Moved from a solid disc (which warped and caused inconsistent pad contact) to a floating design — 8 bobbins with a 1mm float allowance, secured by M8 circlips — validated by transient thermal and structural FEA."
+            "Moved from a solid disc (which warped and caused inconsistent pad contact) to a floating design — 8 bobbins with a 1mm float allowance, secured by M8 circlips — validated by transient thermal and structural FEA.",
+            "Validated the thermal model against a 3g/100 km/h-to-0 braking test case in transient thermal FEA, confirming a 438.6°C peak rotor temperature and 1.54 W/mm² peak heat flux against the 300-450°C design range."
           ],
           tools: ["MATLAB / Simulink", "ANSYS (transient thermal & structural FEA)"]
         },
         gallery: [
+          { image: "assets/img/subprojects/rmse21-brake-disc-simulink-model.png", caption: "Simulink thermal model — heat input, convective heat loss, and temperature integration", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-brake-disc-temperature-vs-time.png", caption: "Simulated rotor temperature over a 300s endurance drive cycle", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21-brake-disc-convective-heat-loss.png", caption: "Simulink convective heat-loss profile over a 300s endurance drive cycle", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-brake-disc-fea-temperature-contour.png", caption: "Transient thermal FEA — temperature contour (438.6°C peak)", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-brake-disc-fea-heat-flux.png", caption: "Transient thermal FEA — total heat flux distribution (1.54 W/mm² peak)", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21-brake-disc-structural-fea.png", caption: "Structural FEA boundary conditions on the floating disc", imageFit: "contain" }
         ]
       },
