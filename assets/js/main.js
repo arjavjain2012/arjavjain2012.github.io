@@ -775,9 +775,16 @@
       const container = $(sel);
       if (!container) return;
       const step = sel === "#awardList" ? 45 : 70; // awards' current pace was called out as already right
+      // Multi-column CSS grids (project/tile/learnings grids) repeat the
+      // stagger every row instead of running it once across the whole grid --
+      // otherwise rows past the first couple all land on the same clamped
+      // delay and pop in together instead of cascading like earlier rows.
+      const gtc = getComputedStyle(container).gridTemplateColumns;
+      const cols = gtc && gtc !== "none" ? gtc.split(" ").filter(Boolean).length : 0;
       Array.from(container.children).forEach((child, i) => {
         child.classList.add("reveal");
-        child.style.transitionDelay = Math.min(i, 6) * step + "ms";
+        const cycleIndex = cols > 1 ? i % cols : Math.min(i, 6);
+        child.style.transitionDelay = cycleIndex * step + "ms";
       });
     });
 
