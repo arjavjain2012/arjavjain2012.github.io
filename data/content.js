@@ -402,17 +402,21 @@ window.SITE_CONTENT = {
     ],
     rmse21: [
       {
-        id: "brake-disc-thermal", title: "Brake Disc Thermal Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        id: "brake-disc-thermal", title: "Brake Disc Thermal Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21-brake-disc-render.png", imageFit: "contain",
         highlights: ["AISI 4130 discs sized for 300-450°C endurance"],
         writeup: {
-          overview: "Sized the brake disc material and geometry to survive the thermal load of a full endurance run rather than to strength alone.",
-          approach: "Modeled brake disc temperature rise and convective heat loss over a 300s representative drive cycle, then selected AISI 4130 steel discs sized to operate within a 300-450°C endurance range without excessive thermal fade or warping.",
+          overview: "Sized the brake disc material and geometry to survive the thermal load of a full endurance run rather than to strength alone — moving from a solid disc, which warped under uneven heating and caused inconsistent pad contact, to a floating design that lets the rotor expand freely relative to the hub.",
+          approach: "Modeled brake disc temperature rise and convective heat loss over a 300s representative drive cycle in Simulink (heat input from friction-force/tangential-velocity/partition-coefficient, convective loss from a Reynolds/Nusselt correlation against vehicle speed), then selected AISI 4130 steel (normalized at 870°C) discs sized to operate within a 300-450°C endurance range without excessive thermal fade or warping. The floating design uses 8 bobbins with a 1mm float allowance per side, secured by M8 circlips, to carry force from the outer slotted (for convective cooling) disc to the inner hub while allowing that thermal expansion; the design was validated by both transient thermal and structural FEA (18.8 kN peak brake-pad clamping force).",
           achievements: [
-            "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance."
+            "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
+            "Moved from a solid disc (which warped and caused inconsistent pad contact) to a floating design — 8 bobbins with a 1mm float allowance, secured by M8 circlips — validated by transient thermal and structural FEA."
           ],
-          tools: ["MATLAB"]
+          tools: ["MATLAB / Simulink", "ANSYS (transient thermal & structural FEA)"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-brake-disc-convective-heat-loss.png", caption: "Simulink convective heat-loss profile over a 300s endurance drive cycle", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-brake-disc-structural-fea.png", caption: "Structural FEA boundary conditions on the floating disc", imageFit: "contain" }
+        ]
       },
       {
         id: "accumulator-forced-air-cooling", title: "Forced-Air Accumulator Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21-accumulator-icepak-model.png", imageFit: "contain",
