@@ -170,7 +170,7 @@ window.SITE_CONTENT = {
   subprojects: {
     rmse23: [
       {
-        id: "motor-inverter-loss-model", title: "Motor & Inverter Loss Modeling for Cooling-Duty Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-motor-loss-profile.png",
+        id: "motor-inverter-loss-model", title: "Motor & Inverter Loss Modeling for Cooling-Duty Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-motor-loss-profile.png", imageFit: "contain",
         highlights: ["2 kW cooling duty set from a transient Simulink loss model"],
         writeup: {
           overview: "Sized the powertrain cooling duty for RMSE'23 by modeling how much heat the motor and inverter actually reject over a full endurance run, rather than sizing to a generic worst case.",
@@ -186,7 +186,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "radiator-pump-fan-sizing", title: "Radiator, Pump & Fan Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-radiator-photo.png",
+        id: "radiator-pump-fan-sizing", title: "Radiator, Pump & Fan Sizing", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23-radiator-photo.png", imageFit: "contain",
         highlights: ["Coolant inlet held under 50°C motor / 65°C inverter limits"],
         writeup: {
           overview: "Translated the 2 kW cooling duty into a physical radiator, pump, and fan selection that keeps the motor and inverter within their thermal limits.",
@@ -216,7 +216,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "chassis-torsional-stiffness", title: "Chassis Torsional Stiffness & Floor Closeouts", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-chassis-cross-section.png",
+        id: "chassis-torsional-stiffness", title: "Chassis Torsional Stiffness & Floor Closeouts", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-chassis-cross-section.png", imageFit: "contain",
         highlights: ["+30% torsional stiffness to 1755 N·m/°, FEA-correlated to twist-rig testing"],
         writeup: {
           overview: "RMSE'23's chassis started from the RMSE'19 baseline — heavy, poorly mass-distributed (40F/60R), and difficult to manufacture — with an explicit target to cut mass, hit 50F/50R distribution, and raise torsional stiffness through bonded CFRP floor closeouts rather than more steel tube.",
@@ -229,7 +229,7 @@ window.SITE_CONTENT = {
           tools: ["ANSYS Mechanical", "Twist-rig testing"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse23-chassis-deflection-table.png", caption: "Chassis vs. chassis+floor-closeout deflection at each validation point" }
+          { image: "assets/img/subprojects/rmse23-chassis-deflection-table.png", caption: "Chassis vs. chassis+floor-closeout deflection at each validation point", imageFit: "contain" }
         ]
       },
       {
@@ -245,8 +245,8 @@ window.SITE_CONTENT = {
           tools: ["Generative design", "Topology optimization", "Additive manufacturing", "CNC machining"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse23-wing-mount-fea.jpg", caption: "Wing mount FEA under a 438 N load case" },
-          { image: "assets/img/subprojects/rmse23-brake-pedal-fea-safety-factor.png", caption: "Triangulated brake pedal — factor-of-safety FEA result" }
+          { image: "assets/img/subprojects/rmse23-wing-mount-fea.jpg", caption: "Wing mount FEA under a 438 N load case", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse23-brake-pedal-fea-safety-factor.png", caption: "Triangulated brake pedal — factor-of-safety FEA result", imageFit: "contain" }
         ]
       },
       {
@@ -268,7 +268,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "cfrp-laminate-sizing", title: "CFRP Sandwich Laminate Sizing", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-full-vehicle-cfd-pressure.png",
+        id: "cfrp-laminate-sizing", title: "CFRP Sandwich Laminate Sizing", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-full-vehicle-cfd-pressure.png", imageFit: "contain",
         highlights: ["1.3 FOS at 40g via Tsai-Wu checks"],
         writeup: {
           overview: "Sized the CFRP sandwich laminates used across the car's composite parts to a quantified structural margin rather than a carried-over layup schedule.",
@@ -279,7 +279,7 @@ window.SITE_CONTENT = {
           tools: ["ANSYS ACP", "Classical lamination theory", "Tsai-Wu failure criterion"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse23-velocity-contour.png", caption: "Full-vehicle CFD velocity contour used to cross-check aero loads on composite panels" }
+          { image: "assets/img/subprojects/rmse23-velocity-contour.png", caption: "Full-vehicle CFD velocity contour used to cross-check aero loads on composite panels", imageFit: "contain" }
         ]
       },
       {
@@ -301,7 +301,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "optimumlap-powertrain-sizing", title: "OptimumLap Traction-Limited Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-power-sensitivity-curves.png",
+        id: "optimumlap-powertrain-sizing", title: "OptimumLap Traction-Limited Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-power-sensitivity-curves.png", imageFit: "contain",
         highlights: ["65 kW powertrain target set from traction-limited lap simulation"],
         writeup: {
           overview: "Set the powertrain's power target for RMSE'23 from lap-time sensitivity rather than an arbitrary spec, so the motor choice matched what the tyres could actually put down.",
@@ -315,7 +315,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling & Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-tyre-mu-slip-comparison.png",
+        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling & Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-tyre-mu-slip-comparison.png", imageFit: "contain",
         highlights: ["Pacejka MF 5.2 models built from TTC data"],
         writeup: {
           overview: "Converted raw Tyre Testing Consortium (TTC) data into usable tyre models to drive tyre selection and every downstream vehicle-dynamics simulation.",
@@ -330,7 +330,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "lltd-neutral-steer", title: "LLTD Tuning for Neutral Steer", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-lltd-understeer-sweep.png",
+        id: "lltd-neutral-steer", title: "LLTD Tuning for Neutral Steer", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-lltd-understeer-sweep.png", imageFit: "contain",
         highlights: ["47-53 LLTD selected for neutral steer"],
         writeup: {
           overview: "Set the car's lateral load transfer distribution (LLTD) target from a quantified understeer-gradient study rather than carried-over suspension settings — the first year the team set LLTD this way instead of by convention.",
@@ -344,7 +344,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "brake-bias-sizing", title: "Tyre-Slip Braking Model & Brake Bias Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-wilwood-caliper-photo.jpg",
+        id: "brake-bias-sizing", title: "Tyre-Slip Braking Model & Brake Bias Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23-wilwood-caliper-photo.jpg", imageFit: "contain",
         highlights: ["Brake bias of 3.1 set from a Simulink tyre-slip model"],
         writeup: {
           overview: "Sized the braking system's front/rear bias and hardware from first principles rather than a rule-of-thumb split, while cutting the pedal force needed for wheel lockup from RMSE'19's 500 N (400 N on RMSE'21) down to 300 N.",
@@ -358,7 +358,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "lv-power-distribution-card", title: "LV Power Distribution Card", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-relay-pcb-layout.png",
+        id: "lv-power-distribution-card", title: "LV Power Distribution Card", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-relay-pcb-layout.png", imageFit: "contain",
         highlights: ["360 W LV power card at 92% efficiency"],
         writeup: {
           overview: "Designed the car's central low-voltage power distribution, sized to the full electrical load of the VCU, sensors, relays, and cooling auxiliaries.",
@@ -386,7 +386,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "harness-coolant-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-coolant-hose-routing-cad.png",
+        id: "harness-coolant-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23-coolant-hose-routing-cad.png", imageFit: "contain",
         highlights: ["Bend radii and service access validated in CAD"],
         writeup: {
           overview: "Routed the full vehicle wiring harness and coolant lines in CAD before manufacturing, rather than routing them by hand on the car.",
@@ -415,7 +415,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "accumulator-forced-air-cooling", title: "Forced-Air Accumulator Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21-accumulator-icepak-model.png",
+        id: "accumulator-forced-air-cooling", title: "Forced-Air Accumulator Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21-accumulator-icepak-model.png", imageFit: "contain",
         highlights: ["1.2 kW rejected, cells held under 60°C at 10C peak discharge"],
         writeup: {
           overview: "Designed the accumulator's forced-air cooling system to keep every module under its safe operating temperature through a full endurance run at peak discharge.",
@@ -428,11 +428,11 @@ window.SITE_CONTENT = {
         },
         gallery: [
           { image: "assets/img/subprojects/rmse21-accumulator-sidepod-airflow.png", caption: "Sidepod inlet air routed through the chassis to the accumulator container" },
-          { image: "assets/img/subprojects/rmse21-accumulator-vent-airflow-diagram.png", caption: "Cooling air path through the OEM module vents" }
+          { image: "assets/img/subprojects/rmse21-accumulator-vent-airflow-diagram.png", caption: "Cooling air path through the OEM module vents", imageFit: "contain" }
         ]
       },
       {
-        id: "parametric-suspension-cad", title: "Parametric Suspension CAD from VD Hardpoints", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-hardpoint-sketch.png",
+        id: "parametric-suspension-cad", title: "Parametric Suspension CAD from VD Hardpoints", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-hardpoint-sketch.png", imageFit: "contain",
         highlights: ["Uprights, rockers, and A-arms regenerated across 14 kinematic iterations"],
         writeup: {
           overview: "Built the suspension CAD to update automatically as the vehicle-dynamics hardpoints iterated, rather than re-drawing components by hand for every geometry change.",
@@ -445,7 +445,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "suspension-mass-reduction", title: "Suspension & Drivetrain Mass Reduction", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-rear-suspension-assembly.jpg",
+        id: "suspension-mass-reduction", title: "Suspension & Drivetrain Mass Reduction", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-rear-suspension-assembly.jpg", imageFit: "contain",
         highlights: ["25% mass cut at a 1.2 Goodman fatigue FOS"],
         writeup: {
           overview: "Cut mass from the suspension and drivetrain members without giving up fatigue margin, by sizing every member to its actual worst-case load rather than a uniform safety factor.",
@@ -462,7 +462,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "accumulator-enclosure-modal", title: "Accumulator Enclosure & Bracket Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-battery-module-bms.png",
+        id: "accumulator-enclosure-modal", title: "Accumulator Enclosure & Bracket Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-battery-module-bms.png", imageFit: "contain",
         highlights: ["First mode placed above 3x powertrain excitation"],
         writeup: {
           overview: "Designed the accumulator enclosure and its mounting brackets to survive both crash-level structural loads and everyday vibration without resonating with the powertrain.",
@@ -479,7 +479,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "master-cad-assembly", title: "Full-Vehicle Master CAD Assembly", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-cg-matlab-script.png",
+        id: "master-cad-assembly", title: "Full-Vehicle Master CAD Assembly", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-master-cad-assembly.jpg", imageFit: "contain",
         highlights: ["800-part master assembly with full clearance/interference checks"],
         writeup: {
           overview: "Owned the single source-of-truth CAD assembly that every subsystem's parts had to fit into, catching packaging conflicts before they reached manufacturing.",
@@ -490,10 +490,12 @@ window.SITE_CONTENT = {
           ],
           tools: ["SolidWorks (master assembly)", "MATLAB"]
         },
-        gallery: []
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-cg-matlab-script.png", caption: "MATLAB tool for visually setting component CG position against a vehicle profile image", imageFit: "contain" }
+        ]
       },
       {
-        id: "wheel-to-wheel-pack-sizing", title: "Well-to-Wheel Power Pack Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-cell-comparison-table.png",
+        id: "wheel-to-wheel-pack-sizing", title: "Well-to-Wheel Power Pack Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-cell-comparison-table.png", imageFit: "contain",
         highlights: ["538V/18Ah pack sized via a well-to-wheel model"],
         writeup: {
           overview: "Sized the accumulator pack and its supporting high-voltage hardware from a full well-to-wheel energy model rather than a rough capacity guess.",
@@ -510,7 +512,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "abs-tc-slip-model", title: "ABS & Traction Control from a Tyre-Slip Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-wilwood-caliper.png",
+        id: "abs-tc-slip-model", title: "ABS & Traction Control from a Tyre-Slip Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-wilwood-caliper.png", imageFit: "contain",
         highlights: ["7% lap-time gain from simulated ABS/TC"],
         writeup: {
           overview: "Quantified the lap-time value of adding ABS and traction control before committing engineering time to build them, using the same longitudinal tyre-slip modeling approach the team used for brake-bias sizing.",
@@ -523,11 +525,11 @@ window.SITE_CONTENT = {
           tools: ["MATLAB / Simulink"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-wilwood-master-cylinder.png", caption: "Wilwood dual master cylinders sized from the tyre-slip pedal-force model" }
+          { image: "assets/img/subprojects/rmse21-wilwood-master-cylinder.png", caption: "Wilwood dual master cylinders sized from the tyre-slip pedal-force model", imageFit: "contain" }
         ]
       },
       {
-        id: "motor-diff-gear-selection", title: "Motor, Differential & Gear Ratio Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-bamocar-spec-table.jpg",
+        id: "motor-diff-gear-selection", title: "Motor, Differential & Gear Ratio Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-bamocar-spec-table.jpg", imageFit: "contain",
         highlights: ["12% wheel-torque gain from tyre-slip-model-driven selection"],
         writeup: {
           overview: "Selected the motor, differential, and final drive ratio as a matched set from tyre-slip and lap-time modeling, rather than sizing each in isolation.",
@@ -541,14 +543,14 @@ window.SITE_CONTENT = {
           tools: ["OptimumLap", "MATLAB"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-motor-loss-chart.png", caption: "Simulated motor loss over an endurance run, used for powertrain sizing" },
-          { image: "assets/img/subprojects/rmse21-emrax228-motor-photo.png", caption: "EMRAX 228 MV motor, the selected 80 kW-derated PMSM" },
+          { image: "assets/img/subprojects/rmse21-motor-loss-chart.png", caption: "Simulated motor loss over an endurance run, used for powertrain sizing", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-emrax228-motor-photo.png", caption: "EMRAX 228 MV motor, the selected 80 kW-derated PMSM", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21-bamocar-controller-photo.png", caption: "UNITEK BAMOCAR PG D3 field-oriented motor controller" },
           { image: "assets/img/subprojects/rmse21-torsen-differential-render.png", caption: "JTEKT Torsen limited-slip differential, selected over a spool for dynamic torque biasing" }
         ]
       },
       {
-        id: "segment-bms-boards", title: "Segment BMS Boards", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-battery-module-bms.png",
+        id: "segment-bms-boards", title: "Segment BMS Boards", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-battery-module-bms.png", imageFit: "contain",
         highlights: ["Passive-balancing segment BMS feeding the shutdown circuit"],
         writeup: {
           overview: "Designed the per-segment battery-monitoring boards that feed cell-voltage and thermistor data into the accumulator's fault-latching shutdown path.",
@@ -561,11 +563,11 @@ window.SITE_CONTENT = {
           tools: ["Altium", "UART / daisy-chain communication"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-bms-daisy-chain-schematic.png", caption: "Daisy-chain communication isolation between BMS segments" }
+          { image: "assets/img/subprojects/rmse21-bms-daisy-chain-schematic.png", caption: "Daisy-chain communication isolation between BMS segments", imageFit: "contain" }
         ]
       },
       {
-        id: "precharge-discharge-circuitry", title: "Pre-Charge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-precharge-air-schematic.png",
+        id: "precharge-discharge-circuitry", title: "Pre-Charge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-precharge-air-schematic.png", imageFit: "contain",
         highlights: ["AIRs close at 90% of DC bus voltage"],
         writeup: {
           overview: "Designed the circuitry that safely energizes and de-energizes the DC link, protecting the AIRs and downstream electronics from inrush current and fault conditions.",
@@ -579,7 +581,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "shutdown-circuit-latching", title: "Latched Shutdown Circuit (BSPD/IMD/BMS)", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-imd-latching-circuit.png",
+        id: "shutdown-circuit-latching", title: "Latched Shutdown Circuit (BSPD/IMD/BMS)", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-imd-latching-circuit.png", imageFit: "contain",
         highlights: ["Latched BSPD, IMD, and BMS fault stages around an insulation monitor"],
         writeup: {
           overview: "Wired the vehicle's safety-critical shutdown circuit — the path that has to open reliably on any implausibility, isolation, or battery fault.",
@@ -592,8 +594,8 @@ window.SITE_CONTENT = {
           tools: ["NI Multisim", "Altium"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21-bspd-current-sensor.png", caption: "Hall-effect current sensor feeding the BSPD implausibility check" },
-          { image: "assets/img/subprojects/rmse21-brake-pressure-sensor.png", caption: "Brake-pressure sensor feeding the BSPD implausibility check" }
+          { image: "assets/img/subprojects/rmse21-bspd-current-sensor.png", caption: "Hall-effect current sensor feeding the BSPD implausibility check", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21-brake-pressure-sensor.png", caption: "Brake-pressure sensor feeding the BSPD implausibility check", imageFit: "contain" }
         ]
       }
     ],
@@ -630,28 +632,28 @@ window.SITE_CONTENT = {
     software: [
       { name: "CAD & Design", caption: "Concept car and V6 engine surfacing", image: "assets/img/toolkit/cad-render-car.jpg",
         tools: ["CATIA 3DEXPERIENCE", "PTC Creo", "SOLIDWORKS", "Siemens NX", "Autodesk Fusion", "AutoCAD"],
-        gallery: [{ image: "assets/img/toolkit/cad-bike.jpg", caption: "Downhill mountain bike frame concept" }, { image: "assets/img/toolkit/cad-v6-engine.png", caption: "V6 engine assembly" }, { image: "assets/img/toolkit/cad-vehicle-wiring-harness.jpg", caption: "Full-vehicle wiring harness routing" }, { image: "assets/img/toolkit/cad-bms-enclosure.png", caption: "Battery enclosure assembly" }] },
+        gallery: [{ image: "assets/img/toolkit/cad-bike.jpg", caption: "Downhill mountain bike frame concept" }, { image: "assets/img/toolkit/cad-v6-engine.png", caption: "V6 engine assembly" }, { image: "assets/img/toolkit/cad-vehicle-wiring-harness.jpg", caption: "Full-vehicle wiring harness routing" }, { image: "assets/img/toolkit/cad-bms-enclosure.png", caption: "Battery enclosure assembly", imageFit: "contain" }] },
       { name: "FEA & Structures", caption: "FSAE space-frame chassis deformation study", image: "assets/img/toolkit/fea-chassis-deformation.png",
         tools: ["ANSYS Workbench", "ANSYS Mechanical", "ANSYS ACP", "Abaqus", "NASTRAN"],
-        gallery: [{ image: "assets/img/toolkit/fea-chassis-deformation-2.png", caption: "Chassis total deformation under torsion load" }, { image: "assets/img/toolkit/fea-upright-stress.png", caption: "Upright equivalent (von-Mises) stress" }, { image: "assets/img/toolkit/fea-cfrp-sandwich-panel-acp.png", caption: "ANSYS ACP total deformation of a CFRP sandwich panel" }] },
+        gallery: [{ image: "assets/img/toolkit/fea-chassis-deformation-2.png", caption: "Chassis total deformation under torsion load" }, { image: "assets/img/toolkit/fea-upright-stress.png", caption: "Upright equivalent (von-Mises) stress" }, { image: "assets/img/toolkit/fea-cfrp-sandwich-panel-acp.png", caption: "ANSYS ACP total deformation of a CFRP sandwich panel", imageFit: "contain" }] },
       { name: "CFD & Thermal", caption: "EV cold-plate conjugate heat transfer", image: "assets/img/toolkit/cfd-coldplate-thermal.png",
         tools: ["Ansys Fluent", "Ansys Icepak", "Star-CCM+", "ParaView", "VisIT"],
         gallery: [{ image: "assets/img/toolkit/cfd-battery-icepak.png", caption: "Battery pack thermal model in Icepak" }, { image: "assets/img/toolkit/cfd-brake-disc-thermal.png", caption: "Brake disc transient thermal analysis" }] },
       { name: "MATLAB / Simulink", caption: "EV powertrain and ride-model simulations", image: "assets/img/toolkit/matlab-bosch-ev-simulink.png",
         imageFit: "contain",
         tools: ["MATLAB", "Simulink", "Simscape", "Stateflow"],
-        gallery: [{ image: "assets/img/toolkit/matlab-dorle-simulink.png", caption: "Full-vehicle ride model in Simulink" }, { image: "assets/img/toolkit/matlab-longitudinal-braking-model.png", caption: "Longitudinal braking model" }] },
+        gallery: [{ image: "assets/img/toolkit/matlab-dorle-simulink.png", caption: "Full-vehicle ride model in Simulink", imageFit: "contain" }, { image: "assets/img/toolkit/matlab-longitudinal-braking-model.png", caption: "Longitudinal braking model", imageFit: "contain" }] },
       { name: "Vehicle Simulation", caption: "Full-vehicle dynamics simulation on a virtual test track", image: "assets/img/toolkit/vehicle-sim-carmaker.png",
         tools: ["CarMaker", "Vi-CarRealTime", "Vi-DriveSim", "VI-grade (SuspensionGen)", "KISSsoft", "OptimumLap", "Pacejka MF 5.2"],
         gallery: [{ image: "assets/img/toolkit/vehicle-sim-endurance-telemetry.webp", caption: "Endurance lap replay with driver-demand channels" }] },
       { name: "Electronics & Code", caption: "Battery management system PCB and firmware", image: "assets/img/toolkit/electronics-bms-pcb.jpeg",
         tools: ["Altium", "LTspice", "PSpice", "Python", "C / C++", "PCAN-Explorer"],
-        gallery: [{ image: "assets/img/toolkit/electronics-bms-schematic.jpeg", caption: "BMS schematic in Altium" }, { image: "assets/img/toolkit/electronics-pcb-3d.png", caption: "3D PCB render" }, { image: "assets/img/toolkit/electronics-bench-test.jpeg", caption: "Firmware bring-up on the battery pack" }, { image: "assets/img/toolkit/electronics-ltspice.png", caption: "Op-amp circuit simulation in LTspice" }, { image: "assets/img/toolkit/electronics-pcan-j1939.png", caption: "J1939 CAN bus analysis in PCAN-Explorer" }] }
+        gallery: [{ image: "assets/img/toolkit/electronics-bms-schematic.jpeg", caption: "BMS schematic in Altium" }, { image: "assets/img/toolkit/electronics-pcb-3d.png", caption: "3D PCB render", imageFit: "contain" }, { image: "assets/img/toolkit/electronics-bench-test.jpeg", caption: "Firmware bring-up on the battery pack" }, { image: "assets/img/toolkit/electronics-ltspice.png", caption: "Op-amp circuit simulation in LTspice", imageFit: "contain" }, { image: "assets/img/toolkit/electronics-pcan-j1939.png", caption: "J1939 CAN bus analysis in PCAN-Explorer", imageFit: "contain" }] }
     ],
     manufacturing: [
       { name: "CNC & Machining", caption: "Sheet-metal laser cutting", image: "assets/img/toolkit/cnc-laser-cutting.png",
         tools: ["3-axis CNC", "Lathe", "Laser cutting", "Water-jet cutting"],
-        gallery: [{ image: "assets/img/toolkit/cnc-carvey-router.png", caption: "Desktop CNC routing" }, { image: "assets/img/toolkit/cnc-gcode.png", caption: "Post-processed G-code toolpath" }] },
+        gallery: [{ image: "assets/img/toolkit/cnc-carvey-router.png", caption: "Desktop CNC routing" }, { image: "assets/img/toolkit/cnc-gcode.png", caption: "Post-processed G-code toolpath", imageFit: "contain" }] },
       { name: "Composites", caption: "CFRP monocoque vacuum-bagged for cure", image: "assets/img/toolkit/composite-vacuum-bagging.jpg",
         tools: ["CFRP wet layup", "Vacuum bagging", "CNC-MDF & wire-cut foam moulds"],
         gallery: [] },
@@ -661,9 +663,9 @@ window.SITE_CONTENT = {
       { name: "Additive Manufacturing", caption: "FDM printing on an Ultimaker 2 Extended+", image: "assets/img/toolkit/additive-3d-printing.png",
         tools: ["FDM", "SLA", "SLS", "Generative design"],
         gallery: [] },
-      { name: "Welding & Fabrication", caption: "TIG welding an FSAE space-frame chassis", image: "assets/img/toolkit/welding-tig.jpg",
+      { name: "Welding & Fabrication", caption: "TIG welding an FSAE space-frame chassis", image: "assets/img/toolkit/welding-tig.jpg", imageFit: "contain",
         tools: ["TIG", "MIG", "Sheet metal", "Soldering"],
-        gallery: [{ image: "assets/img/toolkit/welding-spot-weld.png", caption: "Spot-welding battery pack tabs" }, { image: "assets/img/toolkit/welding-soldering.jpeg", caption: "Soldering a BMS board" }] },
+        gallery: [{ image: "assets/img/toolkit/welding-spot-weld.png", caption: "Spot-welding battery pack tabs", imageFit: "contain" }, { image: "assets/img/toolkit/welding-soldering.jpeg", caption: "Soldering a BMS board" }] },
       { name: "Metrology & Test", caption: "3D-scanning a chassis for as-built correlation", image: "assets/img/toolkit/metrology-3d-scan.jpg",
         tools: ["CMM", "3D scanning", "Thermocouple & strain-gauge instrumentation", "DAQ", "CAN bus analysis (DBC, PCAN)", "Oscilloscope"],
         gallery: [{ image: "assets/img/toolkit/metrology-torsion-rig.png", caption: "Torsion test rig" }, { image: "assets/img/toolkit/metrology-ergonomics.png", caption: "Driver ergonomics test setup" }, { image: "assets/img/toolkit/metrology-wind-tunnel.png", caption: "DIY wind tunnel setup" }, { image: "assets/img/toolkit/metrology-3point-bend.png", caption: "3-point bend test on a CFRP coupon" }] }
@@ -964,6 +966,7 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
+      imageFit: "contain",
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Powertrain & Braking Engineer",
       bullets: [

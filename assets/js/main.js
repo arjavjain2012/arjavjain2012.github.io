@@ -317,7 +317,7 @@
         const visible = (filterable && activeCat) ? subs.filter((s) => s.category === activeCat) : subs;
         visible.forEach((s) => {
           grid.appendChild(makeTile(`
-            <div class="tile-image"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
+            <div class="tile-image${s.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
             <div class="tile-body">
               <h3>${esc(s.title)}</h3>
               <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
