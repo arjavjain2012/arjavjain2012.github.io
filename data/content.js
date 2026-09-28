@@ -254,6 +254,30 @@ window.SITE_CONTENT = {
         ],
         metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2 (Goodman)" }, { label: "Master assembly", value: "800 parts" }]
       }
+    ],
+    iem26: [
+      {
+        id: "vehicle-sim",
+        title: "Full-Vehicle Simulation & Driver-in-the-Loop Development",
+        image: "assets/img/subprojects/iem26-dil-rig.jpeg",
+        imageFit: "contain",
+        highlights: ["Vi-CarRealTime model correlated to on-car replay data", "Driver-in-the-loop rig for setup and controls tuning"],
+        bullets: [
+          "Built and correlated a full-vehicle Vi-CarRealTime model (aero, mass, suspension kinematics, powertrain, tyres) against on-car position and velocity data from standardized track testing, replaying logged runs until simulated traces matched physical data.",
+          "Stood up a driver-in-the-loop rig (Vi-DriveSim on a Fanatec CSL DD wheelbase and ClubSport pedals) running the correlated vehicle model with torque vectoring integrated, tracing competition courses from vehicle position data for realistic driver testing.",
+          "Tuned the simulation's surface-mu and driver-controller response against real driver inputs, holding path deviation under a 1 m corridor (max 77 cm on a 2.5 m-wide competition track) for solver validation.",
+          "Used the DiL rig to validate and calibrate traction-control logic, exposing a torque-ceiling jitter bug and a throttle-enable threshold misread that were causing unintended torque spikes, then re-tuned for cleaner slip control and balance.",
+          "Ran DiL driver training and roll-stiffness setup sweeps on virtual autocross and skidpad courses, picking the setup with the best average lap time and lateral acceleration before committing it to the physical car."
+        ],
+        metrics: [
+          { label: "Path deviation (solver validation)", value: "< 1 m (max 77 cm)" },
+          { label: "DiL hardware", value: "Fanatec CSL DD + ClubSport" }
+        ],
+        gallery: [
+          { image: "assets/img/subprojects/iem26-vehicle-sim-replay.webp", caption: "Endurance replay with driver-demand channels" },
+          { image: "assets/img/subprojects/iem26-carrealtime-model.png", caption: "Vi-CarRealTime full-vehicle model configuration" }
+        ]
+      }
     ]
   },
 

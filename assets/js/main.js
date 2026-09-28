@@ -269,12 +269,16 @@
   function subDetail(p, s) {
     const box = el("div", "detail");
     box.innerHTML = `
-      <div class="detail-hero"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>
+      <div class="detail-hero${s.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>
       <div class="detail-kicker">${esc(p.title)}</div>
       <h2 class="detail-title">${esc(s.title)}</h2>
       ${metricsRow(s.metrics)}
       <h4 class="detail-sub">Development highlights</h4>
       <ul class="detail-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${(s.gallery && s.gallery.length) ? `
+      <h4 class="detail-sub">Gallery</h4>
+      <div class="tile-grid">${s.gallery.map((g) => `
+        <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
     `;
     return box;
   }
