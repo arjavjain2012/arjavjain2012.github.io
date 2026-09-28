@@ -776,7 +776,7 @@
       if (!container) return;
       Array.from(container.children).forEach((child, i) => {
         child.classList.add("reveal");
-        child.style.transitionDelay = Math.min(i, 6) * 70 + "ms";
+        child.style.transitionDelay = Math.min(i, 6) * 45 + "ms";
       });
     });
 
@@ -799,7 +799,7 @@
       entries.forEach((entry) => {
         entry.target.classList.toggle("reveal-visible", entry.isIntersecting);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0.01, rootMargin: "0px 0px 150px 0px" });
 
     document.querySelectorAll(".reveal, .reveal-rule").forEach((node) => observer.observe(node));
   })();
