@@ -273,8 +273,17 @@
       <div class="detail-kicker">${esc(p.title)}</div>
       <h2 class="detail-title">${esc(s.title)}</h2>
       ${metricsRow(s.metrics)}
+      ${s.writeup ? `
+      <h4 class="detail-sub">Overview</h4>
+      <p class="detail-summary">${esc(s.writeup.overview)}</p>
+      <h4 class="detail-sub">Approach</h4>
+      <p class="detail-summary">${esc(s.writeup.approach)}</p>
+      <h4 class="detail-sub">Technical Achievements</h4>
+      <ul class="detail-list">${s.writeup.achievements.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
+      <h4 class="detail-sub">Tools Used</h4>
+      <div class="skill-items">${s.writeup.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>` : `
       <h4 class="detail-sub">Development highlights</h4>
-      <ul class="detail-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      <ul class="detail-list">${(s.bullets || []).map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`}
       ${(s.gallery && s.gallery.length) ? `
       <h4 class="detail-sub">Gallery</h4>
       <div class="tile-grid">${s.gallery.map((g) => `

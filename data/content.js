@@ -170,89 +170,386 @@ window.SITE_CONTENT = {
   subprojects: {
     rmse23: [
       {
-        id: "chassis", title: "Chassis & Composite Structures", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
-        highlights: ["+30% torsional stiffness, to 1755 N·m/°", "1.3 FOS at 40g, Tsai-Wu checked in ANSYS ACP"],
-        bullets: [
-          "Raised chassis torsional stiffness 30% to 1755 N·m/° with CFRP floor closeouts, correlated between FEA and twist-rig tests.",
-          "Applied generative design to additively manufactured wing mounts and topology optimization to CNC pedals, saving 1.2 kg.",
-          "Selected fabric, resin, and core, and set ply orientation and stacking for the bodywork, wings, floor closeouts, and steering wheel.",
-          "Sized CFRP sandwich laminates by classical lamination theory, holding a 1.3 FOS at 40g load with Tsai-Wu checks in ANSYS ACP.",
-          "Built CNC-MDF and wire-cut foam moulds, vacuum-bagged every layup, and ran three-point bend and perimeter shear testing."
-        ],
-        metrics: [{ label: "Torsional stiffness", value: "1755 N·m/° (+30%)" }, { label: "Mass saved (mounts/pedals)", value: "1.2 kg" }, { label: "Laminate FOS", value: "1.3 @ 40g" }]
+        id: "motor-inverter-loss-model", title: "Motor & Inverter Loss Modeling for Cooling-Duty Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        highlights: ["2 kW cooling duty set from a transient Simulink loss model"],
+        writeup: {
+          overview: "Sized the powertrain cooling duty for RMSE'23 by modeling how much heat the motor and inverter actually reject over a full endurance run, rather than sizing to a generic worst case.",
+          approach: "Built a transient Simulink model of the coolant loop driven by motor and inverter loss maps over the endurance drive cycle, integrating instantaneous losses to arrive at a duty-cycle-representative heat load rather than a single peak-power number.",
+          achievements: [
+            "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty, driving a transient Simulink model of the coolant loop."
+          ],
+          tools: ["MATLAB / Simulink"]
+        },
+        gallery: []
       },
       {
-        id: "dynamics", title: "Vehicle Dynamics & Lap-Time Simulation", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
-        highlights: ["65 kW powertrain set via OptimumLap", "Pacejka MF 5.2 tyre models from TTC data"],
-        bullets: [
-          "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain.",
-          "Processed TTC tyre data into Pacejka MF 5.2 models, driving tyre selection on traction, braking mu, and operating temperature.",
-          "Modeled understeer gradient against lateral load transfer distribution in constant-radius tests, setting 47-53 LLTD for neutral steer.",
-          "Built a Simulink tyre-slip braking model to set brake bias at 3.1 and size the master cylinder and caliper combination."
-        ],
-        metrics: [{ label: "Powertrain set", value: "65 kW" }, { label: "LLTD target", value: "47-53" }, { label: "Brake bias", value: "3.1" }]
+        id: "radiator-pump-fan-sizing", title: "Radiator, Pump & Fan Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        highlights: ["Coolant inlet held under 50°C motor / 65°C inverter limits"],
+        writeup: {
+          overview: "Translated the 2 kW cooling duty into a physical radiator, pump, and fan selection that keeps the motor and inverter within their thermal limits.",
+          approach: "Sized the radiator core by NTU-effectiveness analysis against the target heat rejection, then selected a pump and fan combination to hit the required coolant flow rate at the resulting pressure drop, holding coolant inlet temperature under the 50°C motor and 65°C inverter limits.",
+          achievements: [
+            "Sized the radiator, pump, and fan by NTU-effectiveness analysis, holding coolant inlet under the 50°C motor and 65°C inverter limits."
+          ],
+          tools: ["MATLAB", "NTU-effectiveness method"]
+        },
+        gallery: []
       },
       {
-        id: "aero-thermal", title: "Powertrain Cooling", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
-        highlights: ["2 kW heat duty modeled over endurance cycle", "Bench-validated to 136 kPa, 7.5 LPM"],
-        bullets: [
-          "Modeled motor and inverter losses over the endurance cycle to set a 2 kW heat duty, driving a transient Simulink model of the coolant loop.",
-          "Sized the radiator, pump, and fan by NTU-effectiveness analysis, holding coolant inlet under the 50°C motor and 65°C inverter limits.",
-          "Validated loop pressure drop and radiator performance on an instrumented bench against a 136 kPa, 7.5 LPM operating point."
-        ],
-        metrics: [{ label: "Heat duty", value: "2 kW" }, { label: "Bench operating point", value: "136 kPa, 7.5 LPM" }]
+        id: "coolant-loop-bench-validation", title: "Coolant Loop Bench Validation", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        highlights: ["Validated to 136 kPa at 7.5 LPM on an instrumented bench"],
+        writeup: {
+          overview: "Closed the loop on the cooling-system design by validating the radiator and loop pressure-drop model against a physical bench build before committing to on-car packaging.",
+          approach: "Built an instrumented bench replicating the loop's plumbing and flow path, driving it at the design flow rate and measuring pressure drop and radiator heat rejection against the model's predictions.",
+          achievements: [
+            "Validated loop pressure drop and radiator performance on an instrumented bench against a 136 kPa, 7.5 LPM operating point."
+          ],
+          tools: ["Instrumented flow bench", "Pressure/flow instrumentation"]
+        },
+        gallery: []
       },
       {
-        id: "electronics", title: "LV Electronics & Harness", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
-        highlights: ["LV power card: 360 W at 92% efficiency", "Bench-verified before scrutineering"],
-        bullets: [
-          "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards.",
-          "Laid out, assembled, and bench-tested the boards, verifying implausibility and shutdown behavior against FS rules before scrutineering.",
-          "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access."
-        ],
-        metrics: [{ label: "LV power card", value: "360 W @ 92%" }]
+        id: "chassis-torsional-stiffness", title: "Chassis Torsional Stiffness & Floor Closeouts", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-chassis-cross-section.png",
+        highlights: ["+30% torsional stiffness to 1755 N·m/°, FEA-correlated to twist-rig testing"],
+        writeup: {
+          overview: "RMSE'23's chassis started from the RMSE'19 baseline — heavy, poorly mass-distributed (40F/60R), and difficult to manufacture — with an explicit target to cut mass, hit 50F/50R distribution, and raise torsional stiffness through bonded CFRP floor closeouts rather than more steel tube.",
+          approach: "Suspension nodes came from the VD team; tubes near the front and rear hoops that weren't load-bearing were removed and the wheels shifted rearward to hit the mass-distribution target, while a more inclined driver position (from ergonomic-jig testing) lowered CG height. Torsional stiffness was targeted at 1800 N·m/deg from an LLTD/roll-stiffness analysis, then validated with a hybrid beam-quadrilateral ANSYS model of the chassis, run both alone and combined with the floor closeouts, and cross-checked against physical twist-rig deflection measurements.",
+          achievements: [
+            "Raised chassis torsional stiffness 30% to 1755 N·m/° (vs. an 1800 N·m/° target) with CFRP floor closeouts, correlated between FEA and twist-rig tests.",
+            "Quantified the floor closeouts' contribution directly: FEA showed stiffness at the P3 reference point rising from 1350 to 1755 N·m/° once the closeouts were added.",
+            "Shifted mass distribution from RMSE'19's 40F/60R baseline toward 50F/50R by removing hoop-area tubing and moving the wheels rearward."
+          ],
+          tools: ["ANSYS Mechanical", "Twist-rig testing"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-chassis-deflection-table.png", caption: "Chassis vs. chassis+floor-closeout deflection at each validation point" }
+        ]
+      },
+      {
+        id: "generative-design-wing-mounts-pedals", title: "Generative Design for Wing Mounts & Pedals", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
+        highlights: ["1.2 kg saved via generative design and topology optimization"],
+        writeup: {
+          overview: "Cut mass out of two secondary structural parts — the aero wing mounts and the brake/accelerator pedals — using optimization-driven design rather than a straight carry-over shape.",
+          approach: "Applied generative design (loaded with the actual mounting and aero loads) to the additively-manufactured wing mounts, and ran topology optimization on the CNC-machined pedals against pedal-load cases, in both cases removing material outside the load path while keeping the mounting interfaces fixed.",
+          achievements: [
+            "Applied generative design to additively manufactured wing mounts and topology optimization to CNC pedals, saving 1.2 kg combined versus the prior straight-carryover parts."
+          ],
+          tools: ["Generative design", "Topology optimization", "Additive manufacturing", "CNC machining"]
+        },
+        gallery: []
+      },
+      {
+        id: "bodywork-composite-selection", title: "Bodywork & Wing Composite Material Selection", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-nose-cone.jpg",
+        highlights: ["Fabric, resin, and core selection across bodywork, wings, floor closeouts, and steering wheel"],
+        writeup: {
+          overview: "Selected the composite layup — fabric, resin, and core — and ply orientation for every major composite part on the car: bodywork (nose cone, side pods, rear body), front and rear wings, floor closeouts, and the steering wheel.",
+          approach: "Bodywork surfacing was sculpted in Autodesk Inventor for the smoothest possible transitions to minimize drag, with the nose cone shaped for head-up airflow into the front wing, side pods sized to shroud the radiator/fan on one side and duct cooling air into the accumulator on the other, and the rear body split lengthwise to assemble around the chassis while keeping dampers exposed for waterproofing. Front and rear wings used Selig S1223 airfoils in multi-element configurations, with angle of attack, gap, and overlap optimized in ANSYS Fluent 2D/3D CFD before final geometry was locked.",
+          achievements: [
+            "Selected fabric, resin, and core, and set ply orientation and stacking for the bodywork, wings, floor closeouts, and steering wheel.",
+            "Designed and CFD-validated a 3-element front wing (147→167 N downforce with footplates added, 34–36 N drag) and 3-element rear wing (115.6→120 N downforce, 37–39 N drag) using Selig S1223 airfoils.",
+            "Shaped the nose cone, side pods, and rear body in Autodesk Inventor for minimum-curvature airflow, with side pods doubling as radiator/fan shrouding and accumulator cooling ducts."
+          ],
+          tools: ["ANSYS Fluent", "Autodesk Inventor", "Airfoil Tools (2D airfoil libraries)"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-side-pods.jpg", caption: "Final side-pod CAD design" },
+          { image: "assets/img/subprojects/rmse23-front-wing-cfd-pressure.png", caption: "Front wing CFD static pressure contour" }
+        ]
+      },
+      {
+        id: "cfrp-laminate-sizing", title: "CFRP Sandwich Laminate Sizing", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-full-vehicle-cfd-pressure.png",
+        highlights: ["1.3 FOS at 40g via Tsai-Wu checks"],
+        writeup: {
+          overview: "Sized the CFRP sandwich laminates used across the car's composite parts to a quantified structural margin rather than a carried-over layup schedule.",
+          approach: "Used classical lamination theory to compute the stiffness and strength of each candidate sandwich layup, then checked ply-by-ply failure against the Tsai-Wu criterion under the governing 40g load case for each part in ANSYS ACP.",
+          achievements: [
+            "Sized CFRP sandwich laminates by classical lamination theory, holding a 1.3 FOS at 40g load with Tsai-Wu checks in ANSYS ACP."
+          ],
+          tools: ["ANSYS ACP", "Classical lamination theory", "Tsai-Wu failure criterion"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-velocity-contour.png", caption: "Full-vehicle CFD velocity contour used to cross-check aero loads on composite panels" }
+        ]
+      },
+      {
+        id: "composite-manufacturing-moulds", title: "Composite Mould Manufacturing & Coupon Testing", category: "Structures & Composites", image: "assets/img/subprojects/rmse23-mould-3d-print.jpg",
+        highlights: ["CNC-MDF and wire-cut foam moulds, vacuum-bagged layups"],
+        writeup: {
+          overview: "Built the tooling and manufacturing process for every composite part on the car, then validated the aero package's simulated performance against physical test data.",
+          approach: "Moulds were produced by whichever process best matched the part's geometry — CNC, VMC, and Carvey machining for hard tooling, and 3D-printed split moulds glued together for complex organic shapes like the wings — then every layup was vacuum-bagged, with PU foam used to join adjacent composite panels for added strength. To validate the aero surfaces, a scaled 3D-printed model of one wing was tested in a wind tunnel and its measured lift coefficient compared against the CFD prediction.",
+          achievements: [
+            "Built CNC-MDF and wire-cut foam moulds, vacuum-bagged every layup, and ran three-point bend and perimeter shear testing.",
+            "Cross-validated the aero package by wind-tunnel testing a 3D-printed scale wing model against its CFD-predicted lift coefficient.",
+            "Joined split 3D-printed mould segments and adjacent composite panels with PU foam for added strength and a repeatable, low-cost tooling process."
+          ],
+          tools: ["CNC / VMC / Carvey machining", "3D printing", "Vacuum bagging & wet layup", "Wind tunnel testing"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse23-wind-tunnel-test.png", caption: "Wind-tunnel validation of a 3D-printed scale wing model" }
+        ]
+      },
+      {
+        id: "optimumlap-powertrain-sizing", title: "OptimumLap Traction-Limited Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["65 kW powertrain target set from traction-limited lap simulation"],
+        writeup: {
+          overview: "Set the powertrain's power target for RMSE'23 from lap-time sensitivity rather than an arbitrary spec, so the motor choice matched what the tyres could actually put down.",
+          approach: "Built OptimumLap point-mass simulations running at the tyre traction limit across the competition track set, then swept motor power to generate power-sensitivity curves showing the marginal lap-time return of each additional kW.",
+          achievements: [
+            "Built OptimumLap point-mass simulations at the tyre traction limit, generating power sensitivity curves that set a 65 kW powertrain."
+          ],
+          tools: ["OptimumLap"]
+        },
+        gallery: []
+      },
+      {
+        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling & Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["Pacejka MF 5.2 models built from TTC data"],
+        writeup: {
+          overview: "Converted raw Tyre Testing Consortium (TTC) data into usable tyre models to drive tyre selection and every downstream vehicle-dynamics simulation.",
+          approach: "Processed TTC data (across load, pressure, camber, and slip sweeps) into Pacejka MF 5.2 magic-formula tyre models, then compared candidate tyres directly on traction, braking mu, and operating temperature using the fitted models rather than raw data tables.",
+          achievements: [
+            "Processed TTC tyre data into Pacejka MF 5.2 models, driving tyre selection on traction, braking mu, and operating temperature."
+          ],
+          tools: ["Pacejka MF 5.2", "TTC (Tyre Testing Consortium) data"]
+        },
+        gallery: []
+      },
+      {
+        id: "lltd-neutral-steer", title: "LLTD Tuning for Neutral Steer", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["47-53 LLTD selected for neutral steer"],
+        writeup: {
+          overview: "Set the car's lateral load transfer distribution (LLTD) target from a quantified understeer-gradient study rather than carried-over suspension settings.",
+          approach: "Modeled understeer gradient as a function of LLTD in a constant-radius cornering test, sweeping front/rear roll-stiffness distribution to find the balance point closest to neutral steer while remaining stable across the lateral-acceleration range.",
+          achievements: [
+            "Modeled understeer gradient against lateral load transfer distribution in constant-radius tests, setting 47-53 LLTD for neutral steer."
+          ],
+          tools: ["MATLAB"]
+        },
+        gallery: []
+      },
+      {
+        id: "brake-bias-sizing", title: "Tyre-Slip Braking Model & Brake Bias Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["Brake bias of 3.1 set from a Simulink tyre-slip model"],
+        writeup: {
+          overview: "Sized the braking system's front/rear bias and hardware from first principles rather than a rule-of-thumb split.",
+          approach: "Built a Simulink tyre-slip braking model taking pedal position, pedal ratio, balance-bar bias, and master-cylinder/caliper piston areas as inputs, computing longitudinal slip and the resulting frictional force at each tyre to find the bias that lets front and rear lock together at the tyre's traction limit.",
+          achievements: [
+            "Built a Simulink tyre-slip braking model to set brake bias at 3.1 and size the master cylinder and caliper combination."
+          ],
+          tools: ["MATLAB / Simulink"]
+        },
+        gallery: []
+      },
+      {
+        id: "lv-power-distribution-card", title: "LV Power Distribution Card", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
+        highlights: ["360 W LV power card at 92% efficiency"],
+        writeup: {
+          overview: "Designed the car's central low-voltage power distribution, sized to the full electrical load of the VCU, sensors, relays, and cooling auxiliaries.",
+          approach: "Estimated total LV load across every subsystem (control PCBs, brake light, shutdown circuitry, DAQ/sensors, accumulator and motor/MCU cooling fans and pump), then designed a power distribution card converting the LV battery voltage down through the loads at a targeted efficiency, alongside dedicated APPS, brake-plausibility, and DAQ boards.",
+          achievements: [
+            "Designed an LV power distribution card delivering 360 W at 92% efficiency, alongside APPS, brake-plausibility, and DAQ boards."
+          ],
+          tools: ["Altium", "LTspice"]
+        },
+        gallery: []
+      },
+      {
+        id: "board-bringup-scrutineering", title: "Board Bring-Up & Scrutineering Validation", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
+        highlights: ["Bench-verified implausibility and shutdown behavior before scrutineering"],
+        writeup: {
+          overview: "Took the electronics boards from layout to a scrutineering-ready state, closing out the FS rules checks before the car reached technical inspection.",
+          approach: "Laid out and assembled the LV/DAQ boards, then bench-tested each one to deliberately trigger implausibility and shutdown fault conditions and confirm the response matched FS rule requirements before the car was presented for scrutineering.",
+          achievements: [
+            "Laid out, assembled, and bench-tested the boards, verifying implausibility and shutdown behavior against FS rules before scrutineering."
+          ],
+          tools: ["Bench power supplies & multimeter", "Oscilloscope"]
+        },
+        gallery: []
+      },
+      {
+        id: "harness-coolant-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
+        highlights: ["Bend radii and service access validated in CAD"],
+        writeup: {
+          overview: "Routed the full vehicle wiring harness and coolant lines in CAD before manufacturing, rather than routing them by hand on the car.",
+          approach: "Modeled harness and coolant-line paths in CAD alongside the rest of the vehicle assembly, checking minimum bend radii against cable/hose specifications and confirming every connector and service point remained accessible with the bodywork installed.",
+          achievements: [
+            "Routed the vehicle harness and coolant lines in CAD, validating bend radii and service access."
+          ],
+          tools: ["SolidWorks (CAD harness routing)"]
+        },
+        gallery: []
       }
     ],
     rmse21: [
       {
-        id: "powertrain", title: "Powertrain, Tyres & Lap-Time Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
-        highlights: ["12% wheel-torque gain", "Longitudinal tyre-slip ABS/TC model"],
-        bullets: [
-          "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
-          "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain.",
-          "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3."
-        ],
-        metrics: [{ label: "Wheel torque gain", value: "12%" }, { label: "Lap-time gain (ABS/TC)", value: "7%" }, { label: "Pack", value: "538V / 18Ah" }]
+        id: "brake-disc-thermal", title: "Brake Disc Thermal Sizing", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
+        highlights: ["AISI 4130 discs sized for 300-450°C endurance"],
+        writeup: {
+          overview: "Sized the brake disc material and geometry to survive the thermal load of a full endurance run rather than to strength alone.",
+          approach: "Modeled brake disc temperature rise and convective heat loss over a 300s representative drive cycle, then selected AISI 4130 steel discs sized to operate within a 300-450°C endurance range without excessive thermal fade or warping.",
+          achievements: [
+            "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance."
+          ],
+          tools: ["MATLAB"]
+        },
+        gallery: []
       },
       {
-        id: "aero", title: "Brake & Accumulator Thermal", category: "Thermal & Energy Systems", image: "assets/img/placeholder-project.svg",
-        highlights: ["AISI 4130 discs sized for 300-450°C", "1.2 kW forced-air accumulator cooling"],
-        bullets: [
-          "Modeled brake-disc temperature and convective loss over a 300s drive cycle, sizing AISI 4130 discs for 300-450°C endurance.",
-          "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge."
-        ],
-        metrics: [{ label: "Disc endurance range", value: "300-450°C" }, { label: "Accumulator cooling", value: "1.2 kW rejected" }]
+        id: "accumulator-forced-air-cooling", title: "Forced-Air Accumulator Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21-accumulator-icepak-model.png",
+        highlights: ["1.2 kW rejected, cells held under 60°C at 10C peak discharge"],
+        writeup: {
+          overview: "Designed the accumulator's forced-air cooling system to keep every module under its safe operating temperature through a full endurance run at peak discharge.",
+          approach: "Modeled cell heat generation from Joule heating at the endurance-run discharge current, then built an Ansys Icepak CFD model of the accumulator container's internal airflow (cooling air entering through OEM-defined gaps between modules) to size the fan count and airflow needed to hold cells under the 60°C limit — first confirming that natural convection alone was insufficient before sizing the active fan-cooling solution.",
+          achievements: [
+            "Modeled forced-air accumulator cooling in Icepak, rejecting 1.2 kW to hold cells under 60°C at a 10C peak discharge.",
+            "Showed natural convection alone was insufficient (72.4°C average cell temperature), justifying the 3-fan forced-air design that held cells under the 60°C target."
+          ],
+          tools: ["Ansys Icepak"]
+        },
+        gallery: []
       },
       {
-        id: "battery", title: "Electronics & BMS", category: "Electronics & Controls", image: "assets/img/placeholder-project.svg",
-        highlights: ["Segment BMS on bq79616, passive balancing", "Latched shutdown circuit (BSPD/IMD/BMS)"],
-        bullets: [
-          "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
-          "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault.",
-          "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor."
-        ],
-        metrics: [{ label: "Pre-charge close-in", value: "95% DC bus" }]
+        id: "parametric-suspension-cad", title: "Parametric Suspension CAD from VD Hardpoints", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-hardpoint-sketch.png",
+        highlights: ["Uprights, rockers, and A-arms regenerated across 14 kinematic iterations"],
+        writeup: {
+          overview: "Built the suspension CAD to update automatically as the vehicle-dynamics hardpoints iterated, rather than re-drawing components by hand for every geometry change.",
+          approach: "Drove upright, rocker, and A-arm geometry directly from the VD team's hardpoint coordinate tables, so that each kinematic iteration (from hardpoint selection, steering geometry, and actuation-geometry studies) could regenerate the full parametric suspension assembly without manual rework.",
+          achievements: [
+            "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations."
+          ],
+          tools: ["SolidWorks (parametric/equation-driven CAD)"]
+        },
+        gallery: []
       },
       {
-        id: "controls", title: "Structures & Full-Vehicle CAD", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
-        highlights: ["25% mass cut at 1.2 Goodman FOS", "800-part master assembly, 14 kinematic iterations"],
-        bullets: [
-          "Built fully parametric CAD driven by VD hardpoints, regenerating uprights, rockers, and A-arms across 14 kinematic iterations.",
-          "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS.",
-          "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
-          "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks."
-        ],
-        metrics: [{ label: "Mass reduction", value: "25%" }, { label: "Fatigue safety factor", value: "1.2 (Goodman)" }, { label: "Master assembly", value: "800 parts" }]
+        id: "suspension-mass-reduction", title: "Suspension & Drivetrain Mass Reduction", category: "Structures & Composites", image: "assets/img/placeholder-project.svg",
+        highlights: ["25% mass cut at a 1.2 Goodman fatigue FOS"],
+        writeup: {
+          overview: "Cut mass from the suspension and drivetrain members without giving up fatigue margin, by sizing every member to its actual worst-case load rather than a uniform safety factor.",
+          approach: "Sized suspension and drivetrain members against worst-case cornering and braking load cases, targeting a 1.2 Goodman fatigue factor of safety as the sizing constraint rather than a static-only check, allowing thinner sections wherever fatigue (not yield) wasn't the limiting failure mode.",
+          achievements: [
+            "Cut suspension and drivetrain mass 25% by sizing members to worst-case cornering and braking loads at a 1.2 Goodman fatigue FOS."
+          ],
+          tools: ["Goodman fatigue analysis", "FEA"]
+        },
+        gallery: []
+      },
+      {
+        id: "accumulator-enclosure-modal", title: "Accumulator Enclosure & Bracket Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-battery-module-bms.png",
+        highlights: ["First mode placed above 3x powertrain excitation"],
+        writeup: {
+          overview: "Designed the accumulator enclosure and its mounting brackets to survive both crash-level structural loads and everyday vibration without resonating with the powertrain.",
+          approach: "Placed the enclosure's first structural mode above 3x the powertrain's excitation frequency to avoid resonance, verified by modal FEA, while separately validating the container walls against 40g longitudinal, 40g lateral, and 20g vertical crash load cases per the FB21 rulebook's EV5.5 accumulator-container requirements.",
+          achievements: [
+            "Designed the accumulator enclosure and brackets to place the first mode above 3x powertrain excitation, verified by modal FEA.",
+            "Validated the container structure to 2.1–4.1 factor of safety under 40g longitudinal, 40g lateral, and 20g vertical FEA load cases per the FB21 rulebook."
+          ],
+          tools: ["ANSYS (modal & static FEA)"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-accumulator-fea-stress.png", caption: "Accumulator container structural FEA under 40g loading" }
+        ]
+      },
+      {
+        id: "master-cad-assembly", title: "Full-Vehicle Master CAD Assembly", category: "Structures & Composites", image: "assets/img/subprojects/rmse21-cg-matlab-script.png",
+        highlights: ["800-part master assembly with full clearance/interference checks"],
+        writeup: {
+          overview: "Owned the single source-of-truth CAD assembly that every subsystem's parts had to fit into, catching packaging conflicts before they reached manufacturing.",
+          approach: "Integrated all ~800 parts across every subsystem into one master assembly, running clearance and interference checks at each major design freeze. Mass distribution and CG height — critical inputs shared across VD, powertrain sizing, and tyre selection — were tracked through a purpose-built MATLAB tool that let each component's position be set visually on a vehicle profile image rather than estimated per-subsystem, cutting the compounding errors of the team's older spreadsheet-only method.",
+          achievements: [
+            "Owned the full-vehicle master CAD assembly, integrating 800 parts across all subsystems with clearance and interference checks.",
+            "Replaced subsystem-level mass/CG estimation with a part-by-part MATLAB tool, letting individual component positions be set visually against a vehicle profile image for more accurate CG height and mass-distribution tracking."
+          ],
+          tools: ["SolidWorks (master assembly)", "MATLAB"]
+        },
+        gallery: []
+      },
+      {
+        id: "wheel-to-wheel-pack-sizing", title: "Well-to-Wheel Power Pack Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-cell-comparison-table.png",
+        highlights: ["538V/18Ah pack sized via a well-to-wheel model"],
+        writeup: {
+          overview: "Sized the accumulator pack and its supporting high-voltage hardware from a full well-to-wheel energy model rather than a rough capacity guess.",
+          approach: "Modeled the drive cycle's energy demand from the wheels back through the drivetrain, motor, and pack to size total pack capacity, then selected NMC cells (prioritizing manufacturability and safety after the prior car's packaging/harnessing problems), AIRs, HV fusing, and a harness designed to ISO 6469-3.",
+          achievements: [
+            "Devised a well-to-wheel model to size the 538V/18Ah power pack, and selected NMC cells, AIRs, HV fusing, and harness to ISO 6469-3.",
+            "Selected pre-assembled NMC cylindrical-cell modules over cheaper cell-only options specifically to fix the prior car's accumulator assembly and packaging problems."
+          ],
+          tools: ["MATLAB (well-to-wheel energy model)"]
+        },
+        gallery: []
+      },
+      {
+        id: "abs-tc-slip-model", title: "ABS & Traction Control from a Tyre-Slip Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/placeholder-project.svg",
+        highlights: ["7% lap-time gain from simulated ABS/TC"],
+        writeup: {
+          overview: "Quantified the lap-time value of adding ABS and traction control before committing engineering time to build them, using the same longitudinal tyre-slip modeling approach the team used for brake-bias sizing.",
+          approach: "Simulated longitudinal tyre slip through braking and acceleration events, comparing lap time with and without simulated ABS/TC intervention to quantify the benefit before hardware and control-logic development.",
+          achievements: [
+            "Simulated ABS and traction control from a longitudinal tyre-slip model, showing a 7% lap-time gain."
+          ],
+          tools: ["MATLAB / Simulink"]
+        },
+        gallery: []
+      },
+      {
+        id: "motor-diff-gear-selection", title: "Motor, Differential & Gear Ratio Selection", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21-bamocar-spec-table.jpg",
+        highlights: ["12% wheel-torque gain from tyre-slip-model-driven selection"],
+        writeup: {
+          overview: "Selected the motor, differential, and final drive ratio as a matched set from tyre-slip and lap-time modeling, rather than sizing each in isolation.",
+          approach: "Sized the motor from OptimumLap power-sensitivity curves run at the tyre traction limit (selecting an EMRAX 228 derated to 80 kW), paired it with a BAMOCAR PG D3 400-700 field-oriented controller sized to the motor's peak/continuous current, and picked a Torsen limited-slip differential over a spool for its dynamic torque-biasing during cornering. The gear ratio was then swept against the traction-limit and dynamic-event targets to land on a 3.615:1 chain reduction.",
+          achievements: [
+            "Selected the motor, differential, and gear ratio from tyre-slip models, gaining 12% wheel torque.",
+            "Selected an EMRAX 228 motor (derated to 80 kW) with a BAMOCAR PG D3 400-700 controller, and a Torsen limited-slip differential (4.5:1 torque-bias ratio) over a spool for dynamic cornering performance.",
+            "Landed on a 3.615:1 chain reduction (13T/47T sprockets), validated by bearing-life and chain-tension calculations."
+          ],
+          tools: ["OptimumLap", "MATLAB"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-motor-loss-chart.png", caption: "Simulated motor loss over an endurance run, used for powertrain sizing" }
+        ]
+      },
+      {
+        id: "segment-bms-boards", title: "Segment BMS Boards", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-battery-module-bms.png",
+        highlights: ["Passive-balancing segment BMS feeding the shutdown circuit"],
+        writeup: {
+          overview: "Designed the per-segment battery-monitoring boards that feed cell-voltage and thermistor data into the accumulator's fault-latching shutdown path.",
+          approach: "Built segment BMS boards with passive cell balancing, each monitoring its segment's cell voltages and temperatures and feeding any undervoltage, overvoltage, overheating, or communication fault directly into the shutdown circuit's latching logic, with daisy-chain communication between segments isolated from their differing ground potentials by DC-blocking capacitors and TVS diodes.",
+          achievements: [
+            "Built segment BMS boards using bq79616 with passive balancing, feeding cell-voltage and thermistor faults to the shutdown circuit.",
+            "Isolated daisy-chain communication between segments at different ground potentials using DC-blocking capacitors and TVS diodes for noise immunity."
+          ],
+          tools: ["Altium", "UART / daisy-chain communication"]
+        },
+        gallery: [
+          { image: "assets/img/subprojects/rmse21-bms-daisy-chain-schematic.png", caption: "Daisy-chain communication isolation between BMS segments" }
+        ]
+      },
+      {
+        id: "precharge-discharge-circuitry", title: "Pre-Charge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-precharge-air-schematic.png",
+        highlights: ["AIRs close at 95% of DC bus voltage"],
+        writeup: {
+          overview: "Designed the circuitry that safely energizes and de-energizes the DC link, protecting the AIRs and downstream electronics from inrush current and fault conditions.",
+          approach: "Designed pre-charge control logic that closes the AIRs only once the DC-link capacitor has charged to 95% of DC bus voltage (monitored via a signal from the motor controller), and RC discharge circuitry that actively de-energizes the DC link the instant any fault is detected.",
+          achievements: [
+            "Designed pre-charge and RC discharge circuitry, closing the AIRs at 95% of DC bus voltage and de-energizing the DC link on any fault."
+          ],
+          tools: ["Altium", "LTspice"]
+        },
+        gallery: []
+      },
+      {
+        id: "shutdown-circuit-latching", title: "Latched Shutdown Circuit (BSPD/IMD/BMS)", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21-imd-latching-circuit.png",
+        highlights: ["Latched BSPD, IMD, and BMS fault stages around an insulation monitor"],
+        writeup: {
+          overview: "Wired the vehicle's safety-critical shutdown circuit — the path that has to open reliably on any implausibility, isolation, or battery fault.",
+          approach: "Built three latching relay stages — Brake System Plausibility Device (BSPD, checking for hard-braking-under-power implausibility via a Hall-effect current sensor and brake-pressure sensor into a 500ms delay and D-flip-flop latch), an isolation-monitoring relay latch, and a BMS fault latch — all wired in series ahead of the shutdown buttons, inertia switch, and HVD interlock, and validated the logic in circuit simulation before hardware bring-up.",
+          achievements: [
+            "Wired the shutdown circuit with latched BSPD, IMD, and BMS stages around a Bender IR155 insulation monitor.",
+            "Validated the BSPD implausibility logic (500ms hard-braking-under-power detection with a 10s auto-reset) in circuit simulation before hardware bring-up."
+          ],
+          tools: ["NI Multisim", "Altium"]
+        },
+        gallery: []
       }
     ],
     iem26: [
