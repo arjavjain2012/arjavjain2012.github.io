@@ -807,7 +807,7 @@
       entries.forEach((entry) => {
         entry.target.classList.toggle("reveal-visible", entry.isIntersecting);
       });
-    }, { threshold: 0.01, rootMargin: "0px 0px 150px 0px" });
+    }, { threshold: 0.01, rootMargin: "0px" });
 
     document.querySelectorAll(".reveal, .reveal-rule").forEach((node) => observer.observe(node));
   })();
