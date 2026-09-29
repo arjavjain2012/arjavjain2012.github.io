@@ -388,19 +388,44 @@
       </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
   }
 
+  // Search blob per project: its own title/org/summary/bullets/tags, plus
+  // (for FSAE cars) every sub-project's title/highlights/category, so
+  // searching e.g. "brake bias" surfaces the car it's nested inside without
+  // ever pulling sub-projects out into their own listing.
+  function projectSearchText(p) {
+    const own = [p.title, p.org, p.summary, p.context, ...(p.bullets || []), ...(p.tags || [])];
+    const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    subs.forEach((s) => { own.push(s.title, s.category, ...(s.highlights || [])); });
+    return own.filter(Boolean).join(" ").toLowerCase();
+  }
+
   function renderProjects() {
+    const searchIndex = new Map();
+    C.projects.forEach((p) => searchIndex.set(p.id, projectSearchText(p)));
+    let searchQuery = "";
+    const matchesSearch = (p) => !searchQuery || searchIndex.get(p.id).includes(searchQuery);
+
+    const noResultsNode = (query) => {
+      const n = el("p", "search-empty", `No projects match "${esc(query)}".`);
+      return n;
+    };
+
     // Formula Student projects (context: "Formula Student") render in the
     // dedicated FSAE section instead of here, so each project appears once.
-    fsaeGrid.innerHTML = "";
-    C.projects.forEach((p) => {
-      if (p.context === "Formula Student") fsaeGrid.appendChild(projectTile(p));
-    });
+    const fsaeCars = C.projects.filter((p) => p.context === "Formula Student");
+    const renderFsae = () => {
+      fsaeGrid.innerHTML = "";
+      const visible = fsaeCars.filter(matchesSearch);
+      if (!visible.length) { fsaeGrid.appendChild(noResultsNode(searchQuery)); return; }
+      visible.forEach((p) => fsaeGrid.appendChild(projectTile(p)));
+    };
 
     const featured = C.projects.filter((p) => p.context !== "Formula Student");
     let activeFilter = null;
     const renderFeatured = () => {
       projectGrid.innerHTML = "";
-      const visible = activeFilter ? featured.filter((p) => (p.tags || []).includes(activeFilter)) : featured;
+      const visible = featured.filter((p) => (!activeFilter || (p.tags || []).includes(activeFilter)) && matchesSearch(p));
+      if (!visible.length) { projectGrid.appendChild(noResultsNode(searchQuery)); return; }
       visible.forEach((p) => projectGrid.appendChild(projectTile(p)));
     };
 
@@ -423,7 +448,31 @@
       btn.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
     });
     projectGrid.parentNode.insertBefore(bar, projectGrid);
+    renderFsae();
     renderFeatured();
+
+    /* ---- nav search bar: filters FSAE cars + Featured Projects together ---- */
+    const searchInput = $("#projectSearch");
+    const searchClear = $("#projectSearchClear");
+    if (searchInput) {
+      let debounceTimer;
+      const applyQuery = (raw) => {
+        searchQuery = raw.trim().toLowerCase();
+        searchClear.hidden = !searchQuery;
+        renderFsae();
+        renderFeatured();
+      };
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(debounceTimer);
+        const val = e.target.value;
+        debounceTimer = setTimeout(() => applyQuery(val), 120);
+      });
+      searchClear.addEventListener("click", () => {
+        searchInput.value = "";
+        searchInput.focus();
+        applyQuery("");
+      });
+    }
   }
   renderProjects();
 

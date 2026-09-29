@@ -160,12 +160,54 @@ header.nav {
   align-items: center;
   justify-content: space-between;
 }
+.nav-left { display: flex; align-items: center; gap: 20px; min-width: 0; flex: 1; }
 .nav-mark {
   display: flex;
   align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .nav-logo-mark { height: 26px; width: auto; display: block; }
+.nav-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0 10px;
+  height: 32px;
+  flex: 1 1 auto;
+  min-width: 70px;
+  max-width: 230px;
+  transition: border-color 0.15s;
+}
+.nav-search:focus-within { border-color: var(--accent); }
+.nav-search-icon { width: 14px; height: 14px; flex-shrink: 0; color: var(--text-faint); }
+.nav-search-input {
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  min-width: 0;
+  width: 100%;
+}
+.nav-search-input::placeholder { color: var(--text-faint); }
+.nav-search-input::-webkit-search-cancel-button { display: none; }
+.nav-search-clear {
+  appearance: none;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px;
+  flex-shrink: 0;
+}
+.nav-search-clear:hover { color: var(--accent); }
 .nav-right { display: flex; align-items: center; gap: 22px; }
 .nav-links {
   display: flex;
@@ -221,7 +263,15 @@ header.nav {
     display: inline-flex; align-items: center; justify-content: center;
     width: 36px; height: 36px; background: none; border: 1px solid var(--line);
     color: var(--text); font-family: var(--mono); cursor: pointer;
+    flex-shrink: 0;
   }
+  .nav-search { max-width: none; }
+}
+@media (max-width: 480px) {
+  .nav-search { min-width: 0; max-width: 34px; padding: 0 8px; overflow: hidden; }
+  .nav-search:focus-within { max-width: none; flex: 1 1 auto; }
+  .nav-search-input { opacity: 0; width: 0; transition: opacity 0.1s; }
+  .nav-search:focus-within .nav-search-input { opacity: 1; width: 100%; }
 }
 
 /* ---------- Hero ---------- */
@@ -429,6 +479,7 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
 .ptag { font-family: var(--mono); font-size: 10.5px; padding: 3px 8px; border: 1px solid var(--line); color: var(--text-dim); border-radius: var(--radius); }
 .proj-filter-row { margin: 14px 0 20px; }
 .project-filter-bar { margin: -8px 0 28px; }
+.search-empty { grid-column: 1 / -1; color: var(--text-faint); font-family: var(--mono); font-size: 13px; padding: 24px 0; text-align: center; }
 .ptag-filter { cursor: pointer; transition: border-color 0.15s, color 0.15s; }
 .ptag-filter:hover { border-color: var(--accent); color: var(--accent); }
 .ptag-filter.ptag-active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb, 220, 90, 60), 0.08); }
