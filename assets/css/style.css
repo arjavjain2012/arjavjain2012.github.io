@@ -705,10 +705,15 @@ footer {
 
 /* Hover preview of an FSAE car's sub-projects: a blurred full-screen scrim
    (purely visual — never intercepts clicks, so the tile underneath stays
-   clickable) plus a floating panel of clickable image cards. The hovered
-   tile is lifted above the scrim (z-index only — no visual change of its
-   own) so it paints on top of the blur/dim and stays crisp while every
-   other tile behind the scrim is blurred and dimmed. */
+   clickable) plus a floating panel of clickable image cards. `section` has
+   its own `position:relative; z-index:0`, which creates a stacking context
+   that traps a plain z-index bump on the tile — it would only out-rank
+   other tiles inside that same section, never a backdrop appended to
+   <body>. So instead of elevating the real tile, a static, pointer-events:
+   none clone of it is appended to <body> (same stacking root as the
+   backdrop) and kept positioned over the original via `subproj-hover-clone`
+   — it paints above the scrim and stays crisp while the real tile
+   underneath (along with every other tile) blurs and dims. */
 .subproj-overlay-backdrop {
   position: fixed;
   inset: 0;
@@ -721,7 +726,12 @@ footer {
   transition: opacity 0.18s ease;
 }
 .subproj-overlay-backdrop.visible { opacity: 1; }
-.project-tile.subproj-hover-active { position: relative; z-index: 151; }
+.subproj-hover-clone {
+  position: fixed;
+  z-index: 151;
+  margin: 0;
+  pointer-events: none;
+}
 .subproj-overlay-panel {
   position: fixed;
   top: 50%;
@@ -761,16 +771,18 @@ footer {
 .subproj-overlay-item:hover img, .subproj-overlay-item:focus-visible img { transform: scale(1.06); }
 .subproj-overlay-item-title {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 18px 10px 8px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
-  color: #fff;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--accent);
   font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.3;
-  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.35;
 }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }

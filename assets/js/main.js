@@ -404,17 +404,51 @@
     const panel = el("div", "subproj-overlay-panel");
     document.body.appendChild(backdrop);
     document.body.appendChild(panel);
-    subprojectOverlay = { backdrop, panel, hideTimer: null, activeTile: null };
-    const clearActiveTile = () => {
-      if (subprojectOverlay.activeTile) {
-        subprojectOverlay.activeTile.classList.remove("subproj-hover-active");
-        subprojectOverlay.activeTile = null;
-      }
+    const state = { backdrop, panel, hideTimer: null, clone: null, reposition: null };
+    // `section` establishes its own stacking context (position:relative;
+    // z-index:0), so bumping the real tile's z-index only out-ranks other
+    // tiles inside that same section — it never rises above a backdrop
+    // appended to <body>. A static clone at the body level sidesteps that:
+    // it shares the backdrop's stacking root, so its own z-index actually
+    // compares against it and it paints crisp on top.
+    const positionClone = () => {
+      if (!state.clone || !state.activeTile) return;
+      const r = state.activeTile.getBoundingClientRect();
+      Object.assign(state.clone.style, { top: r.top + "px", left: r.left + "px", width: r.width + "px", height: r.height + "px" });
     };
-    const cancelHide = () => { if (subprojectOverlay.hideTimer) { clearTimeout(subprojectOverlay.hideTimer); subprojectOverlay.hideTimer = null; } };
+    const setActiveTile = (tile) => {
+      clearActiveTile();
+      const clone = tile.cloneNode(true);
+      // Strip the scroll-reveal classes: the clone is never registered with
+      // the reveal IntersectionObserver, so if it kept a pre-reveal
+      // ("reveal" without "reveal-visible") state it would stay stuck at
+      // that state's offset/opacity forever instead of showing normally.
+      clone.classList.remove("reveal", "reveal-visible", "reveal-rule");
+      clone.classList.add("subproj-hover-clone");
+      clone.removeAttribute("tabindex");
+      clone.removeAttribute("role");
+      clone.setAttribute("aria-hidden", "true");
+      document.body.appendChild(clone);
+      state.clone = clone;
+      state.activeTile = tile;
+      positionClone();
+      window.addEventListener("scroll", positionClone, true);
+      window.addEventListener("resize", positionClone);
+      state.reposition = positionClone;
+    };
+    const clearActiveTile = () => {
+      if (state.reposition) {
+        window.removeEventListener("scroll", state.reposition, true);
+        window.removeEventListener("resize", state.reposition);
+        state.reposition = null;
+      }
+      if (state.clone) { state.clone.remove(); state.clone = null; }
+      state.activeTile = null;
+    };
+    const cancelHide = () => { if (state.hideTimer) { clearTimeout(state.hideTimer); state.hideTimer = null; } };
     const scheduleHide = () => {
       cancelHide();
-      subprojectOverlay.hideTimer = setTimeout(() => {
+      state.hideTimer = setTimeout(() => {
         backdrop.classList.remove("visible");
         panel.classList.remove("visible");
         clearActiveTile();
@@ -422,10 +456,9 @@
     };
     panel.addEventListener("mouseenter", cancelHide);
     panel.addEventListener("mouseleave", scheduleHide);
-    subprojectOverlay.cancelHide = cancelHide;
-    subprojectOverlay.scheduleHide = scheduleHide;
-    subprojectOverlay.clearActiveTile = clearActiveTile;
-    return subprojectOverlay;
+    Object.assign(state, { cancelHide, scheduleHide, setActiveTile, clearActiveTile });
+    subprojectOverlay = state;
+    return state;
   }
   function attachSubprojectHoverPreview(tile, p, subs) {
     const openSub = (s) => {
@@ -440,9 +473,7 @@
     const show = () => {
       const o = getSubprojectOverlay();
       o.cancelHide();
-      if (o.activeTile && o.activeTile !== tile) o.activeTile.classList.remove("subproj-hover-active");
-      o.activeTile = tile;
-      tile.classList.add("subproj-hover-active");
+      o.setActiveTile(tile);
       o.panel.innerHTML = `
         <div class="subproj-overlay-title">${esc(p.title)} — sub-projects</div>
         <div class="subproj-overlay-list">${subs.map((s, i) => `
