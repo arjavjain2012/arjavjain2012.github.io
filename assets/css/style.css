@@ -742,6 +742,14 @@ footer {
   transform-origin: center bottom;
   transition: transform 0.15s ease-out;
 }
+/* These cards also carry .reveal (scroll-in) now, which — same selector
+   specificity as the plain .subproj-card rule above, so whichever comes
+   later in the file wins outright, not merges — would otherwise replace
+   the fast 0.15s dock-hover transition with .reveal's 0.7s one, making the
+   hover-follow magnify feel laggy. The extra specificity here keeps the
+   dock hover snappy while letting the opacity fade run at the slower,
+   reveal-matching pace. */
+.subproj-card.reveal { transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out; }
 .subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .subproj-card-title {

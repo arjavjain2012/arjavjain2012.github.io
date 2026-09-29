@@ -265,7 +265,11 @@
     });
     document.body.appendChild(clone);
   }
-  const MORPH_TRANSITION = "top 0.4s cubic-bezier(0.22, 1, 0.36, 1), left 0.4s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
+  const MORPH_DURATION = 0.4;
+  const MORPH_TRANSITION = `top ${MORPH_DURATION}s cubic-bezier(0.22, 1, 0.36, 1), left ${MORPH_DURATION}s cubic-bezier(0.22, 1, 0.36, 1), width ${MORPH_DURATION}s cubic-bezier(0.22, 1, 0.36, 1), height ${MORPH_DURATION}s cubic-bezier(0.22, 1, 0.36, 1)`;
+  // Same duration/easing as the clone's grow/shrink, so the detail box's
+  // own fade always finishes at the exact instant the thumbnail lands.
+  const PANEL_FADE_TRANSITION = `opacity ${MORPH_DURATION}s cubic-bezier(0.22, 1, 0.36, 1)`;
   function growClone(clone, fromRect, toRect) {
     placeMorphClone(clone, fromRect);
     void clone.offsetWidth; // force layout so the "from" state above paints before the "to" state below animates it away
@@ -299,26 +303,32 @@
   function morphOpen(view) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
-    panel.style.opacity = "1";
+    panel.style.transform = "none";
+    panel.style.visibility = "visible";
     const primaryTarget = primaryMorphTargetRect(modalBody);
     if (!view.originRect || !view.originClone || !primaryTarget) {
-      panel.style.visibility = "visible";
+      panel.style.opacity = "1";
       return;
     }
-    panel.style.visibility = "hidden";
+    panel.style.opacity = "0";
+    panel.style.pointerEvents = "none";
     growClone(view.originClone, view.originRect, primaryTarget);
     const secondaryTarget = view.secondaryRect && view.secondaryClone ? secondaryMorphTargetRect(modalBody) : null;
     if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
+    void panel.offsetWidth; // force layout so the opacity:0 above paints before the fade-in below animates it away
+    panel.style.transition = PANEL_FADE_TRANSITION;
+    panel.style.opacity = "1";
     setTimeout(() => {
-      panel.style.visibility = "visible";
+      panel.style.pointerEvents = "";
       view.originClone.remove();
       if (view.secondaryClone) view.secondaryClone.remove();
-    }, 420);
+    }, MORPH_DURATION * 1000 + 20);
   }
   // Mirrors morphOpen: the clone(s) reappear already grown into their hero
-  // image's current spot (a hard cut away from the real panel, not a fade)
-  // and shrink back to their card's thumbnail slot, so the detail visibly
-  // collapses back into the exact card it came from.
+  // image's current spot and shrink back to their card's thumbnail slot
+  // while the detail box fades out at the same pace, both finishing
+  // together, so the detail visibly collapses back into the card it came
+  // from instead of just disappearing.
   function morphClose(view, onDone) {
     if (!view || !view.originRect || !view.originClone) { onDone(); return; }
     const panel = $(".modal-panel");
@@ -327,7 +337,9 @@
     if (!primarySource) { onDone(); return; }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
-    panel.style.visibility = "hidden";
+    panel.style.pointerEvents = "none";
+    panel.style.transition = PANEL_FADE_TRANSITION;
+    panel.style.opacity = "0";
     growClone(view.originClone, primarySource, view.originRect);
     if (view.secondaryClone) {
       const secondarySource = secondaryMorphTargetRect(modalBody);
@@ -338,8 +350,9 @@
       if (view.secondaryClone) view.secondaryClone.remove();
       backdrop.style.transition = "";
       backdrop.style.opacity = "";
+      panel.style.pointerEvents = "";
       onDone();
-    }, 400);
+    }, MORPH_DURATION * 1000);
   }
   function closeModal() {
     if (modal.hidden) return;
@@ -371,9 +384,12 @@
       modal.hidden = false;
       document.body.classList.add("modal-open");
       paintModal();
-      // morphClose() left the panel hidden (visibility, not opacity — no
-      // fade); bring it straight back for the level we've returned to.
-      $(".modal-panel").style.visibility = "visible";
+      // morphClose() left the panel faded out and non-interactive; bring it
+      // straight back for the level we've returned to.
+      const panel = $(".modal-panel");
+      panel.style.transition = "none";
+      panel.style.opacity = "1";
+      panel.style.pointerEvents = "";
     } else {
       modal.hidden = true;
       document.body.classList.remove("modal-open");
@@ -1085,19 +1101,21 @@
       });
     });
 
-    // FSAE rows get their own finer-grained sequence instead of the generic
-    // per-row handling above: the car tile appears first, then each of its
-    // discipline groups cascades in right after it, one row at a time — a
-    // single continuous reveal down the row rather than the whole row (car
-    // + every group) fading in as one block.
+    // FSAE rows get the same per-card cascade as Featured Projects: the car
+    // tile appears first, then each discipline group's own cards reveal one
+    // at a time (not the whole group as a single block) — and, matching
+    // Featured Projects' own per-row reset (cycleIndex = i % cols above),
+    // each group's cards restart their stagger from 0 rather than
+    // continuing to count up across the whole row, so one discipline's
+    // cards finish cascading before the next discipline's begin.
     document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
-      let i = 0;
       const carTile = row.querySelector(".project-tile");
-      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; i = 1; }
+      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; }
       row.querySelectorAll(".fsae-category-group").forEach((group) => {
-        group.classList.add("reveal");
-        group.style.transitionDelay = i * 90 + "ms";
-        i++;
+        group.querySelectorAll(".subproj-card").forEach((card, i) => {
+          card.classList.add("reveal");
+          card.style.transitionDelay = i * 70 + "ms";
+        });
       });
     });
 
