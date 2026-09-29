@@ -775,9 +775,16 @@ footer {
    side by side need more than the standard panel width. */
 .modal-panel.modal-panel-wide { width: min(1560px, 100%); }
 .sub-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+/* Same --bg used by every other opened card site-wide (.detail:not(.sub-
+   detail)) — not --bg-card. The car box nests a full projectDetail() output
+   (its own plain .detail div, which already gets --bg from that rule), so
+   giving the box itself --bg-card left the box's own padding one color and
+   its nested content a different one, with a visible seam between them;
+   the project box, with no such nested wrapper, only ever showed the box
+   color, so the two sides of this view mismatched each other too. */
 .sub-detail-car-box, .sub-detail-project {
   min-width: 0;
-  background: var(--bg-card);
+  background: var(--bg);
   border: 1px solid var(--line);
   padding: 24px;
 }
@@ -785,11 +792,11 @@ footer {
 /* imageFit:"contain" images (kept uncropped rather than cover-cropped)
    letterbox on white everywhere else on the site, which reads fine against
    a page that's mostly white/neutral around it — but inside these two dark
-   navy boxes it shows up as a jarring white block. Match the letterbox to
-   the box's own surface here instead. */
+   boxes it shows up as a jarring white block. Match the letterbox to the
+   box's own surface here instead. */
 .sub-detail .detail-hero-contain img,
 .sub-detail .gallery-item-contain img,
-.sub-detail .tile-image-contain { background: var(--bg-card); }
+.sub-detail .tile-image-contain { background: var(--bg); }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }
 .tile-grid-compact .tile-body { padding: 12px 14px 14px; gap: 6px; }
