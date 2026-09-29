@@ -266,9 +266,22 @@
   const metricsRow = (ms) => ms && ms.length ? `<div class="metric-row">${ms.map(metricHtml).join("")}</div>` : "";
   const shortTitle = (s) => s.length > 32 ? s.slice(0, 30) + "…" : s;
 
+  // Sub-project detail: the parent car stays visible as a compact card on
+  // the left (1/3 width) so the viewer never loses that context, while the
+  // sub-project's own write-up runs alongside it on the right (2/3 width).
   function subDetail(p, s) {
-    const box = el("div", "detail");
-    box.innerHTML = `
+    const box = el("div", "detail sub-detail");
+    const carCard = makeTile(`
+      <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+      <div class="tile-body">
+        <div class="project-meta"><span>${esc(p.period)}</span></div>
+        <h3>${esc(p.title)}</h3>
+        <div class="project-org">${esc(p.org)}</div>
+        <div class="tile-cta">View full car →</div>
+      </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile sub-detail-car");
+
+    const projectCol = el("div", "sub-detail-project");
+    projectCol.innerHTML = `
       <div class="detail-hero${s.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>
       <div class="detail-kicker">${esc(p.title)}</div>
       <h2 class="detail-title">${esc(s.title)}</h2>
@@ -289,6 +302,9 @@
       <div class="tile-grid">${s.gallery.map((g) => `
         <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
     `;
+
+    box.appendChild(carCard);
+    box.appendChild(projectCol);
     return box;
   }
 
@@ -376,8 +392,7 @@
   }
 
   function projectTile(p) {
-    const subs = (C.subprojects && C.subprojects[p.id]) || [];
-    const tile = makeTile(`
+    return makeTile(`
       <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(p.period)}</span></div>
@@ -387,139 +402,27 @@
         <div class="hl-row">${highlightChips(p)}</div>
         <div class="tile-cta">View project →</div>
       </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
-    if (subs.length) attachSubprojectHoverPreview(tile, p, subs);
-    return tile;
   }
 
-  // Hover preview: hovering a car tile floats a blurred-backdrop panel
-  // listing its sub-projects (thumbnail + title) so a viewer can see what
-  // was done inside it without opening it — without dispersing sub-projects
-  // into their own section or touching the grid/section layout. Clicking an
-  // item opens the car's detail view and then, on top of it, that specific
-  // sub-project's detail, preserving the existing click-through hierarchy.
-  let subprojectOverlay = null;
-  function getSubprojectOverlay() {
-    if (subprojectOverlay) return subprojectOverlay;
-    const backdrop = el("div", "subproj-overlay-backdrop");
-    const panel = el("div", "subproj-overlay-panel");
-    document.body.appendChild(backdrop);
-    document.body.appendChild(panel);
-    const state = { backdrop, panel, hideTimer: null, clone: null, reposition: null, fromTransform: null };
-    // `section` establishes its own stacking context (position:relative;
-    // z-index:0), so bumping the real tile's z-index only out-ranks other
-    // tiles inside that same section — it never rises above a backdrop
-    // appended to <body>. A static clone at the body level sidesteps that:
-    // it shares the backdrop's stacking root, so its own z-index actually
-    // compares against it and it paints crisp on top.
-    const positionClone = () => {
-      if (!state.clone || !state.activeTile) return;
-      const r = state.activeTile.getBoundingClientRect();
-      Object.assign(state.clone.style, { top: r.top + "px", left: r.left + "px", width: r.width + "px", height: r.height + "px" });
-    };
-    const setActiveTile = (tile) => {
-      clearActiveTile();
-      const clone = tile.cloneNode(true);
-      // Strip the scroll-reveal classes: the clone is never registered with
-      // the reveal IntersectionObserver, so if it kept a pre-reveal
-      // ("reveal" without "reveal-visible") state it would stay stuck at
-      // that state's offset/opacity forever instead of showing normally.
-      clone.classList.remove("reveal", "reveal-visible", "reveal-rule");
-      clone.classList.add("subproj-hover-clone");
-      clone.removeAttribute("tabindex");
-      clone.removeAttribute("role");
-      clone.setAttribute("aria-hidden", "true");
-      document.body.appendChild(clone);
-      state.clone = clone;
-      state.activeTile = tile;
-      positionClone();
-      window.addEventListener("scroll", positionClone, true);
-      window.addEventListener("resize", positionClone);
-      state.reposition = positionClone;
-    };
-    const clearActiveTile = () => {
-      if (state.reposition) {
-        window.removeEventListener("scroll", state.reposition, true);
-        window.removeEventListener("resize", state.reposition);
-        state.reposition = null;
-      }
-      if (state.clone) { state.clone.remove(); state.clone = null; }
-      state.activeTile = null;
-    };
-    const cancelHide = () => { if (state.hideTimer) { clearTimeout(state.hideTimer); state.hideTimer = null; } };
-    const scheduleHide = () => {
-      cancelHide();
-      state.hideTimer = setTimeout(() => {
-        backdrop.classList.remove("visible");
-        panel.classList.remove("visible");
-        // Shrink back toward wherever it grew from, mirroring the pop-in.
-        if (state.fromTransform) panel.style.transform = state.fromTransform;
-        clearActiveTile();
-      }, 150);
-    };
-    panel.addEventListener("mouseenter", cancelHide);
-    panel.addEventListener("mouseleave", scheduleHide);
-    Object.assign(state, { cancelHide, scheduleHide, setActiveTile, clearActiveTile });
-    subprojectOverlay = state;
-    return state;
-  }
-  function attachSubprojectHoverPreview(tile, p, subs) {
-    const openSub = (s) => {
-      const o = getSubprojectOverlay();
-      o.cancelHide();
-      o.backdrop.classList.remove("visible");
-      o.panel.classList.remove("visible");
-      o.clearActiveTile();
-      pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) });
-      pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) });
-    };
-    const show = () => {
-      const o = getSubprojectOverlay();
-      o.cancelHide();
-      o.setActiveTile(tile);
-      o.panel.innerHTML = `
-        <div class="subproj-overlay-title">${esc(p.title)} — sub-projects</div>
-        <div class="subproj-overlay-list">${subs.map((s, i) => `
-          <button type="button" class="subproj-overlay-item" data-i="${i}">
-            <img src="${esc(s.image)}" alt="" loading="lazy">
-            <span class="subproj-overlay-item-title">${esc(s.title)}</span>
-          </button>`).join("")}</div>`;
-      o.panel.querySelectorAll(".subproj-overlay-item").forEach((btn, i) => {
-        btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
+  // FSAE row: the car tile on the left with its sub-projects dispersed as
+  // image cards to the right, so a viewer can see what was done inside a
+  // car without opening it — without touching the FSAE section's own
+  // vertical order or pulling sub-projects into the Featured Projects grid.
+  function fsaeCarRow(p) {
+    const row = el("div", "fsae-row");
+    row.appendChild(projectTile(p));
+    const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    if (subs.length) {
+      const grid = el("div", "subproj-card-grid");
+      subs.forEach((s) => {
+        grid.appendChild(makeTile(`
+          <img src="${esc(s.image)}" alt="" loading="lazy">
+          <span class="subproj-card-title">${esc(s.title)}</span>`,
+          () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }), "subproj-card"));
       });
-      // Anchor the panel's grow-in (and, symmetrically, its shrink-back-out
-      // on hide) to the hovered car's own position, so it reads as popping
-      // out of that car rather than just fading in at screen center. The
-      // transform is set directly as inline style, as a single translate()
-      // with everything pre-resolved to plain pixel numbers in JS — both a
-      // CSS custom property and a calc() read inside scale()/translate()
-      // silently failed to apply in this environment's browser (each left
-      // the element showing its plain fallback/previous value instead of
-      // the one actually set), so nothing here can depend on the engine
-      // evaluating var() or calc() inside a transform function argument.
-      const tileRect = tile.getBoundingClientRect();
-      const scale = Math.max(0.15, Math.min(0.9,
-        Math.min(tileRect.width / o.panel.offsetWidth, tileRect.height / o.panel.offsetHeight)));
-      // translate(-50%, -50%) on this element is exactly -offsetWidth/2,
-      // -offsetHeight/2 in resolved pixels; folding it in here up front is
-      // what keeps the whole expression down to one plain-pixel translate().
-      const fromX = (tileRect.left + tileRect.width / 2) - window.innerWidth / 2 - o.panel.offsetWidth / 2;
-      const fromY = (tileRect.top + tileRect.height / 2) - window.innerHeight / 2 - o.panel.offsetHeight / 2;
-      o.fromTransform = `translate(${fromX}px, ${fromY}px) scale(${scale})`;
-      if (!o.panel.classList.contains("visible")) {
-        o.panel.style.transform = o.fromTransform;
-        void o.panel.offsetWidth; // force layout so the "from" state above paints before the "visible" class flips it to the end state
-      }
-      o.backdrop.classList.add("visible");
-      o.panel.classList.add("visible");
-      // Plain resolved pixels here too, to match the "from" state's units —
-      // equivalent to translate(-50%, -50%) scale(1) for this element.
-      o.panel.style.transform = `translate(${-o.panel.offsetWidth / 2}px, ${-o.panel.offsetHeight / 2}px) scale(1)`;
-    };
-    const hide = () => getSubprojectOverlay().scheduleHide();
-    tile.addEventListener("mouseenter", show);
-    tile.addEventListener("mouseleave", hide);
-    tile.addEventListener("focusin", show);
-    tile.addEventListener("focusout", hide);
+      row.appendChild(grid);
+    }
+    return row;
   }
 
   // Search blob per project: its own title/org/summary/bullets/tags, plus
@@ -551,7 +454,7 @@
       fsaeGrid.innerHTML = "";
       const visible = fsaeCars.filter(matchesSearch);
       if (!visible.length) { fsaeGrid.appendChild(noResultsNode(searchQuery)); return; }
-      visible.forEach((p) => fsaeGrid.appendChild(projectTile(p)));
+      visible.forEach((p) => fsaeGrid.appendChild(fsaeCarRow(p)));
     };
 
     const featured = C.projects.filter((p) => p.context !== "Formula Student");
