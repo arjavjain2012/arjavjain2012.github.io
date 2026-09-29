@@ -710,22 +710,20 @@ footer {
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: 1fr; } }
-.fsae-subprojects { display: flex; flex-direction: column; gap: 18px; }
-/* One row per discipline (the same 4 filters used for Featured Projects);
-   the label sits at the row's right end, cards flow/wrap on the left. */
-.fsae-category-row { display: flex; align-items: center; gap: 18px; }
-.fsae-category-cards { display: flex; flex-wrap: wrap; gap: 14px; flex: 1; }
-.fsae-category-label {
-  flex-shrink: 0;
-  text-align: right;
-  white-space: nowrap;
+.fsae-subprojects { display: flex; flex-direction: column; gap: 22px; }
+/* One heading + one single-line (never-wrapping, scrolls if it overflows)
+   row of cards per discipline — the same 4 filters used for Featured
+   Projects. */
+.fsae-category-group { min-width: 0; }
+.fsae-category-heading {
+  margin: 0 0 10px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-faint);
 }
-@media (max-width: 640px) { .fsae-category-row { flex-wrap: wrap; } .fsae-category-label { text-align: left; } }
+.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
 .subproj-card { position: relative; width: 160px; flex: 0 0 auto; aspect-ratio: 16 / 10; overflow: hidden; padding: 0; }
 .subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease; }
 .subproj-card:hover img, .subproj-card:focus-visible img { transform: scale(1.06); }
@@ -745,18 +743,20 @@ footer {
   line-height: 1.35;
 }
 
-/* Sub-project detail (modal): two separate, unconnected boxes — the parent
-   car as a compact card on the left (1/3) and the sub-project write-up in
-   its own bordered box on the right (2/3) — so context on which car this
-   belongs to is never lost, without merging the two into one block. */
-.sub-detail { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
-.sub-detail-project {
+/* Sub-project detail (modal): two independent, unconnected boxes of equal
+   width — the parent car's full detail on the left, the sub-project's own
+   write-up on the right. The panel itself widens for this view only
+   (.modal-panel-wide, toggled in paintModal) since two full detail boxes
+   side by side need more than the standard panel width. */
+.modal-panel.modal-panel-wide { width: min(1560px, 100%); }
+.sub-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.sub-detail-car-box, .sub-detail-project {
   min-width: 0;
   background: var(--bg-card);
   border: 1px solid var(--line);
   padding: 24px;
 }
-@media (max-width: 860px) { .sub-detail { grid-template-columns: 1fr; } }
+@media (max-width: 980px) { .sub-detail { grid-template-columns: 1fr; } }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }
 .tile-grid-compact .tile-body { padding: 12px 14px 14px; gap: 6px; }

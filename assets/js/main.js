@@ -207,65 +207,114 @@
     modalCrumbs.textContent = stack.length > 1 ? stack.map((s) => s.crumb).join("  /  ") : "";
     modalBack.style.visibility = stack.length > 1 ? "visible" : "hidden";
     modalBody.innerHTML = "";
-    modalBody.appendChild(v.render());
+    const rendered = v.render();
+    modalBody.appendChild(rendered);
+    // The car+project split view needs more than the standard panel width
+    // to give each of its two boxes real room.
+    $(".modal-panel").classList.toggle("modal-panel-wide", rendered.classList.contains("sub-detail"));
     $(".modal-panel").scrollTop = 0;
   }
   // Push a history entry per open card level, so the mobile back gesture /
   // browser back button (which fires `popstate`) closes one card level at a
   // time instead of navigating away from the site entirely. `originTile`,
-  // when given, is the card that was clicked to get here — it drives the
-  // "grow out of that card" open animation below.
+  // when given, is the card that was clicked to get here — a snapshot of it
+  // is kept on the view so both the open animation and, later, the matching
+  // close animation can reuse it.
   function pushView(view, originTile) {
-    const originRect = originTile ? originTile.getBoundingClientRect() : null;
+    view.originRect = originTile ? originTile.getBoundingClientRect() : null;
+    view.originClone = originTile ? cloneForMorph(originTile) : null;
     stack.push(view);
     modal.hidden = false;
     document.body.classList.add("modal-open");
     history.pushState({ modalDepth: stack.length }, "");
     paintModal();
-    animateModalExpand(originRect);
+    morphOpen(view.originRect, view.originClone);
   }
-  // Grows the modal panel from the clicked card's own position/size into
-  // its resting layout, on every push (top-level or nested), so opening any
-  // card anywhere reads as that card expanding into its detail view. The
-  // transform is a single translate() built from plain resolved pixel
-  // numbers rather than CSS var()/calc() inside the function arguments —
-  // both silently failed to apply in this environment's browser (the
-  // resulting transition kept using the pre-JS fallback value instead of
-  // the one actually set), so nothing here depends on the engine evaluating
-  // var()/calc() inside a transform argument.
-  function animateModalExpand(originRect) {
+  // A card-click morph, not a box fading in: the clicked card's own clone
+  // grows from its exact slot to cover the viewport while dissolving, as
+  // the real (simple opacity-only) panel fades in underneath — cheap to
+  // animate since only the small clone is ever scaled, never the full
+  // detail content, which is what made the previous full-panel scale
+  // noticeably glitchy on image/text-heavy views.
+  function cloneForMorph(tile) {
+    const clone = tile.cloneNode(true);
+    clone.classList.remove("reveal", "reveal-visible", "reveal-rule");
+    clone.removeAttribute("tabindex");
+    clone.removeAttribute("role");
+    clone.setAttribute("aria-hidden", "true");
+    return clone;
+  }
+  function placeMorphClone(clone, rect) {
+    Object.assign(clone.style, {
+      position: "fixed", margin: "0", zIndex: "201", pointerEvents: "none",
+      top: rect.top + "px", left: rect.left + "px", width: rect.width + "px", height: rect.height + "px",
+      transformOrigin: "top left", transition: "none", opacity: "1",
+      transform: "translate(0px, 0px) scale(1)"
+    });
+    document.body.appendChild(clone);
+  }
+  function morphOpen(originRect, originClone) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
-    if (!originRect) {
-      panel.style.transform = "none";
-      panel.style.opacity = "0";
+    panel.style.transform = "none";
+    panel.style.opacity = "0";
+    if (!originRect || !originClone) {
       void panel.offsetWidth;
-      panel.style.transition = "opacity 0.22s ease";
+      panel.style.transition = "opacity 0.25s ease";
       panel.style.opacity = "1";
       return;
     }
-    const panelRect = panel.getBoundingClientRect();
-    const scale = Math.max(0.08, Math.min(0.96,
-      Math.min(originRect.width / panelRect.width, originRect.height / panelRect.height)));
-    const fromX = (originRect.left + originRect.width / 2) - (panelRect.left + panelRect.width / 2);
-    const fromY = (originRect.top + originRect.height / 2) - (panelRect.top + panelRect.height / 2);
-    panel.style.opacity = "0";
-    panel.style.transform = `translate(${fromX}px, ${fromY}px) scale(${scale})`;
-    void panel.offsetWidth; // force layout so the "from" state above paints before the transition below animates it away
-    panel.style.transition = "transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease";
+    placeMorphClone(originClone, originRect);
+    void originClone.offsetWidth; // force layout so the placed-at-rect state above paints before the grow below animates it away
+    const growTransform = `translate(${-originRect.left}px, ${-originRect.top}px) scale(${window.innerWidth / originRect.width}, ${window.innerHeight / originRect.height})`;
+    originClone.style.transition = "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease 0.1s";
+    originClone.style.transform = growTransform;
+    originClone.style.opacity = "0";
+    panel.style.transition = "opacity 0.3s ease 0.08s";
     panel.style.opacity = "1";
-    panel.style.transform = "translate(0px, 0px) scale(1)";
+    setTimeout(() => originClone.remove(), 420);
+  }
+  // Mirrors morphOpen: the same card clone re-appears already "grown" to
+  // cover the viewport, then shrinks back into its slot while fading back
+  // in, as the real panel fades out — the detail visibly collapsing back
+  // into the card it came from, instead of just disappearing.
+  function morphClose(originRect, originClone, onDone) {
+    const panel = $(".modal-panel");
+    const backdrop = $(".modal-backdrop");
+    if (!originRect || !originClone) { onDone(); return; }
+    placeMorphClone(originClone, originRect);
+    originClone.style.transform = `translate(${-originRect.left}px, ${-originRect.top}px) scale(${window.innerWidth / originRect.width}, ${window.innerHeight / originRect.height})`;
+    originClone.style.opacity = "0";
+    void originClone.offsetWidth;
+    panel.style.transition = "opacity 0.26s ease";
+    panel.style.opacity = "0";
+    backdrop.style.transition = "opacity 0.3s ease";
+    backdrop.style.opacity = "0";
+    originClone.style.transition = "transform 0.34s cubic-bezier(0.3, 0, 0.2, 1), opacity 0.22s ease 0.08s";
+    originClone.style.transform = "translate(0px, 0px) scale(1)";
+    originClone.style.opacity = "1";
+    setTimeout(() => {
+      originClone.remove();
+      backdrop.style.transition = "";
+      backdrop.style.opacity = "";
+      onDone();
+    }, 340);
   }
   function closeModal() {
     if (modal.hidden) return;
-    modal.hidden = true;
-    document.body.classList.remove("modal-open");
+    const top = stack[stack.length - 1];
     const depth = stack.length;
-    stack = [];
-    if (depth) history.go(-depth);
+    const finish = () => {
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+      stack = [];
+      if (depth) history.go(-depth);
+    };
+    morphClose(top && top.originRect, top && top.originClone, finish);
   }
   function popView() {
-    history.back();
+    const top = stack[stack.length - 1];
+    morphClose(top && top.originRect, top && top.originClone, () => history.back());
   }
   modalBack.addEventListener("click", popView);
   $("#modalClose").addEventListener("click", closeModal);
@@ -282,6 +331,16 @@
       modal.hidden = false;
       document.body.classList.add("modal-open");
       paintModal();
+      // The panel was left faded out by morphClose(); bring it back for the
+      // level we've returned to (a plain fade — no clone here, since this
+      // is a return to already-open content, not a fresh card click).
+      const panel = $(".modal-panel");
+      panel.style.transition = "none";
+      panel.style.transform = "none";
+      panel.style.opacity = "0";
+      void panel.offsetWidth;
+      panel.style.transition = "opacity 0.25s ease";
+      panel.style.opacity = "1";
     } else {
       modal.hidden = true;
       document.body.classList.remove("modal-open");
@@ -302,19 +361,13 @@
   const metricsRow = (ms) => ms && ms.length ? `<div class="metric-row">${ms.map(metricHtml).join("")}</div>` : "";
   const shortTitle = (s) => s.length > 32 ? s.slice(0, 30) + "…" : s;
 
-  // Sub-project detail: the parent car stays visible as a compact card on
-  // the left (1/3 width) so the viewer never loses that context, while the
-  // sub-project's own write-up runs alongside it on the right (2/3 width).
+  // Sub-project detail: two independent boxes side by side — the left one
+  // is the parent car's own full detail (reusing projectDetail(p) as-is,
+  // disciplines grid and all), the right one is the sub-project's write-up.
   function subDetail(p, s) {
     const box = el("div", "detail sub-detail");
-    const carCard = makeTile(`
-      <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
-      <div class="tile-body">
-        <div class="project-meta"><span>${esc(p.period)}</span></div>
-        <h3>${esc(p.title)}</h3>
-        <div class="project-org">${esc(p.org)}</div>
-        <div class="tile-cta">View full car →</div>
-      </div>`, (tile) => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }, tile), "project-tile sub-detail-car");
+    const carBox = el("div", "sub-detail-car-box");
+    carBox.appendChild(projectDetail(p));
 
     const projectCol = el("div", "sub-detail-project");
     projectCol.innerHTML = `
@@ -339,7 +392,7 @@
         <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
     `;
 
-    box.appendChild(carCard);
+    box.appendChild(carBox);
     box.appendChild(projectCol);
     return box;
   }
@@ -441,21 +494,23 @@
   }
 
   // FSAE row: the car tile on the left with its sub-projects dispersed to
-  // the right, grouped into one row per discipline (the same 4 filters used
-  // for Featured Projects, labelled at the row's right end) — so a viewer
-  // can see what was done inside a car, organized by discipline, without
-  // opening it and without touching the FSAE section's own vertical order
-  // or pulling sub-projects into the Featured Projects grid.
+  // the right, grouped under one heading per discipline (the same 4 filters
+  // used for Featured Projects), each group's cards kept to a single
+  // (scrollable, never wrapping) line — so a viewer can see what was done
+  // inside a car, organized by discipline, without opening it and without
+  // touching the FSAE section's own vertical order or pulling sub-projects
+  // into the Featured Projects grid.
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
     row.appendChild(projectTile(p));
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
-      const rows = el("div", "fsae-subprojects");
+      const groups = el("div", "fsae-subprojects");
       PROJECT_FILTER_CATEGORIES.forEach((cat) => {
         const inCategory = subs.filter((s) => s.category === cat.tag);
         if (!inCategory.length) return;
-        const catRow = el("div", "fsae-category-row");
+        const group = el("div", "fsae-category-group");
+        group.appendChild(el("h5", "fsae-category-heading", esc(cat.label)));
         const cards = el("div", "fsae-category-cards");
         inCategory.forEach((s) => {
           cards.appendChild(makeTile(`
@@ -463,11 +518,10 @@
             <span class="subproj-card-title">${esc(s.title)}</span>`,
             (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile), "subproj-card"));
         });
-        catRow.appendChild(cards);
-        catRow.appendChild(el("div", "fsae-category-label", esc(cat.label)));
-        rows.appendChild(catRow);
+        group.appendChild(cards);
+        groups.appendChild(group);
       });
-      row.appendChild(rows);
+      row.appendChild(groups);
     }
     return row;
   }
