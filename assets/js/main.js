@@ -286,14 +286,17 @@
   // in document order), so a sub-project opened from *inside* a car's own
   // grid — not the FSAE dispersed cards, which pass a secondary tile and
   // never hit this path — grew into the car's hero instead of its own.
-  // Toolkit tiles have no hero at all; their thumbnail's real landing spot
-  // is the first cell of the "Evidence" gallery (see toolkitDetail()).
-  // Returns null if this view has nowhere for the clone to land, in which
-  // case the caller skips the clone animation entirely.
+  // Toolkit tiles have no target at all: their layout puts kicker/title/
+  // skills before the "Evidence" gallery, so the tile's own image (the
+  // gallery's first cell) sits far down/across the panel — morphing into it
+  // meant a long cross-panel travel that made the thumbnail feel like an
+  // afterthought next to the title, not the thing that "opened". These fall
+  // through to the plain-fade path below instead of forcing a bad morph.
+  // Returns null if this view has nowhere good for the clone to land, in
+  // which case the caller skips the clone animation entirely.
   function primaryMorphTargetRect(root) {
-    const el = root.querySelector(".sub-detail-project .detail-hero")
-      || root.querySelector(".toolkit-detail .gallery-item:first-of-type")
-      || root.querySelector(".detail-hero");
+    if (root.querySelector(".toolkit-detail")) return null;
+    const el = root.querySelector(".sub-detail-project .detail-hero") || root.querySelector(".detail-hero");
     return el ? el.getBoundingClientRect() : null;
   }
   function secondaryMorphTargetRect(root) {
@@ -305,49 +308,49 @@
     panel.style.transition = "none";
     panel.style.transform = "none";
     panel.style.visibility = "visible";
-    const primaryTarget = primaryMorphTargetRect(modalBody);
-    if (!view.originRect || !view.originClone || !primaryTarget) {
-      panel.style.opacity = "1";
-      return;
-    }
     panel.style.opacity = "0";
     panel.style.pointerEvents = "none";
-    growClone(view.originClone, view.originRect, primaryTarget);
-    const secondaryTarget = view.secondaryRect && view.secondaryClone ? secondaryMorphTargetRect(modalBody) : null;
-    if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
+    // Cards with nowhere sensible to land (toolkit tiles — see
+    // primaryMorphTargetRect) just get the plain fade below, no clone.
+    const primaryTarget = view.originRect && view.originClone ? primaryMorphTargetRect(modalBody) : null;
+    if (primaryTarget) {
+      growClone(view.originClone, view.originRect, primaryTarget);
+      const secondaryTarget = view.secondaryRect && view.secondaryClone ? secondaryMorphTargetRect(modalBody) : null;
+      if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
+    }
     void panel.offsetWidth; // force layout so the opacity:0 above paints before the fade-in below animates it away
     panel.style.transition = PANEL_FADE_TRANSITION;
     panel.style.opacity = "1";
     setTimeout(() => {
       panel.style.pointerEvents = "";
-      view.originClone.remove();
+      if (view.originClone) view.originClone.remove();
       if (view.secondaryClone) view.secondaryClone.remove();
     }, MORPH_DURATION * 1000 + 20);
   }
-  // Mirrors morphOpen: the clone(s) reappear already grown into their hero
-  // image's current spot and shrink back to their card's thumbnail slot
-  // while the detail box fades out at the same pace, both finishing
-  // together, so the detail visibly collapses back into the card it came
-  // from instead of just disappearing.
+  // Mirrors morphOpen: the clone(s) (when there are any) reappear already
+  // grown into their hero image's current spot and shrink back to their
+  // card's thumbnail slot while the detail box fades out at the same pace,
+  // both finishing together, so the detail visibly collapses back into the
+  // card it came from instead of just disappearing.
   function morphClose(view, onDone) {
-    if (!view || !view.originRect || !view.originClone) { onDone(); return; }
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
-    const primarySource = primaryMorphTargetRect(modalBody);
-    if (!primarySource) { onDone(); return; }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
     panel.style.pointerEvents = "none";
     panel.style.transition = PANEL_FADE_TRANSITION;
     panel.style.opacity = "0";
-    growClone(view.originClone, primarySource, view.originRect);
-    if (view.secondaryClone) {
-      const secondarySource = secondaryMorphTargetRect(modalBody);
-      if (secondarySource) growClone(view.secondaryClone, secondarySource, view.secondaryRect);
+    const primarySource = view && view.originRect && view.originClone ? primaryMorphTargetRect(modalBody) : null;
+    if (primarySource) {
+      growClone(view.originClone, primarySource, view.originRect);
+      if (view.secondaryClone) {
+        const secondarySource = secondaryMorphTargetRect(modalBody);
+        if (secondarySource) growClone(view.secondaryClone, secondarySource, view.secondaryRect);
+      }
     }
     setTimeout(() => {
-      view.originClone.remove();
-      if (view.secondaryClone) view.secondaryClone.remove();
+      if (view && view.originClone) view.originClone.remove();
+      if (view && view.secondaryClone) view.secondaryClone.remove();
       backdrop.style.transition = "";
       backdrop.style.opacity = "";
       panel.style.pointerEvents = "";
