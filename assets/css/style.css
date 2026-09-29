@@ -708,7 +708,7 @@ footer {
    without opening it — the section's own vertical order of cars is
    untouched, and nothing is pulled into the Featured Projects grid. */
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
-.fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
+.fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: 1fr; } }
 .fsae-subprojects { display: flex; flex-direction: column; gap: 22px; }
 /* One heading + one single-line (never-wrapping, scrolls if it overflows)

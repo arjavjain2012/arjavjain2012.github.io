@@ -230,12 +230,18 @@
     paintModal();
     morphOpen(view.originRect, view.originClone);
   }
-  // A card-click morph, not a box fading in: the clicked card's own clone
-  // grows from its exact slot to cover the viewport while dissolving, as
-  // the real (simple opacity-only) panel fades in underneath — cheap to
-  // animate since only the small clone is ever scaled, never the full
-  // detail content, which is what made the previous full-panel scale
-  // noticeably glitchy on image/text-heavy views.
+  // The clicked card itself grows into the detail view and, on close,
+  // shrinks back into place — no cross-fade between two different-looking
+  // things at any point. A clone of the exact card is resized via real
+  // width/height/top/left (not a transform scale, which stretched the
+  // thumbnail non-uniformly), so its image keeps its own crop the whole
+  // time via object-fit — it just reveals more of the box as it grows,
+  // the same way any responsive image does when its container resizes.
+  // Once the clone has fully grown to the real panel's own box, the two are
+  // swapped with a hard cut (no fade): the panel is already sitting exactly
+  // inside the space the clone just finished filling, so the swap reads as
+  // that same card now showing its full detail, not as one thing replacing
+  // another.
   function cloneForMorph(tile) {
     const clone = tile.cloneNode(true);
     clone.classList.remove("reveal", "reveal-visible", "reveal-rule");
@@ -248,57 +254,59 @@
     Object.assign(clone.style, {
       position: "fixed", margin: "0", zIndex: "201", pointerEvents: "none",
       top: rect.top + "px", left: rect.left + "px", width: rect.width + "px", height: rect.height + "px",
-      transformOrigin: "top left", transition: "none", opacity: "1",
-      transform: "translate(0px, 0px) scale(1)"
+      overflow: "hidden", transition: "none"
     });
     document.body.appendChild(clone);
   }
+  const MORPH_TRANSITION = "top 0.4s cubic-bezier(0.22, 1, 0.36, 1), left 0.4s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
   function morphOpen(originRect, originClone) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
     panel.style.transform = "none";
-    panel.style.opacity = "0";
+    panel.style.opacity = "1";
     if (!originRect || !originClone) {
-      void panel.offsetWidth;
-      panel.style.transition = "opacity 0.25s ease";
-      panel.style.opacity = "1";
+      panel.style.visibility = "visible";
       return;
     }
+    panel.style.visibility = "hidden";
+    const panelRect = panel.getBoundingClientRect();
     placeMorphClone(originClone, originRect);
     void originClone.offsetWidth; // force layout so the placed-at-rect state above paints before the grow below animates it away
-    const growTransform = `translate(${-originRect.left}px, ${-originRect.top}px) scale(${window.innerWidth / originRect.width}, ${window.innerHeight / originRect.height})`;
-    originClone.style.transition = "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease 0.1s";
-    originClone.style.transform = growTransform;
-    originClone.style.opacity = "0";
-    panel.style.transition = "opacity 0.3s ease 0.08s";
-    panel.style.opacity = "1";
-    setTimeout(() => originClone.remove(), 420);
+    originClone.style.transition = MORPH_TRANSITION;
+    originClone.style.top = panelRect.top + "px";
+    originClone.style.left = panelRect.left + "px";
+    originClone.style.width = panelRect.width + "px";
+    originClone.style.height = panelRect.height + "px";
+    setTimeout(() => {
+      panel.style.visibility = "visible";
+      originClone.remove();
+    }, 400);
   }
-  // Mirrors morphOpen: the same card clone re-appears already "grown" to
-  // cover the viewport, then shrinks back into its slot while fading back
-  // in, as the real panel fades out — the detail visibly collapsing back
-  // into the card it came from, instead of just disappearing.
+  // Mirrors morphOpen: the clone reappears already grown to the panel's own
+  // box (a hard cut away from the real panel, not a fade) and shrinks back
+  // to the card's original slot, so the detail visibly collapses back into
+  // the exact card it came from.
   function morphClose(originRect, originClone, onDone) {
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
     if (!originRect || !originClone) { onDone(); return; }
-    placeMorphClone(originClone, originRect);
-    originClone.style.transform = `translate(${-originRect.left}px, ${-originRect.top}px) scale(${window.innerWidth / originRect.width}, ${window.innerHeight / originRect.height})`;
-    originClone.style.opacity = "0";
+    const panelRect = panel.getBoundingClientRect();
+    placeMorphClone(originClone, panelRect);
+    panel.style.visibility = "hidden";
     void originClone.offsetWidth;
-    panel.style.transition = "opacity 0.26s ease";
-    panel.style.opacity = "0";
-    backdrop.style.transition = "opacity 0.3s ease";
+    backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
-    originClone.style.transition = "transform 0.34s cubic-bezier(0.3, 0, 0.2, 1), opacity 0.22s ease 0.08s";
-    originClone.style.transform = "translate(0px, 0px) scale(1)";
-    originClone.style.opacity = "1";
+    originClone.style.transition = MORPH_TRANSITION;
+    originClone.style.top = originRect.top + "px";
+    originClone.style.left = originRect.left + "px";
+    originClone.style.width = originRect.width + "px";
+    originClone.style.height = originRect.height + "px";
     setTimeout(() => {
       originClone.remove();
       backdrop.style.transition = "";
       backdrop.style.opacity = "";
       onDone();
-    }, 340);
+    }, 380);
   }
   function closeModal() {
     if (modal.hidden) return;
@@ -331,16 +339,9 @@
       modal.hidden = false;
       document.body.classList.add("modal-open");
       paintModal();
-      // The panel was left faded out by morphClose(); bring it back for the
-      // level we've returned to (a plain fade — no clone here, since this
-      // is a return to already-open content, not a fresh card click).
-      const panel = $(".modal-panel");
-      panel.style.transition = "none";
-      panel.style.transform = "none";
-      panel.style.opacity = "0";
-      void panel.offsetWidth;
-      panel.style.transition = "opacity 0.25s ease";
-      panel.style.opacity = "1";
+      // morphClose() left the panel hidden (visibility, not opacity — no
+      // fade); bring it straight back for the level we've returned to.
+      $(".modal-panel").style.visibility = "visible";
     } else {
       modal.hidden = true;
       document.body.classList.remove("modal-open");
