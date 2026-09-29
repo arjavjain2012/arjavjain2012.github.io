@@ -246,7 +246,15 @@
     if (!img) return null;
     const wrap = el("div", "morph-thumb-clone");
     wrap.setAttribute("aria-hidden", "true");
-    wrap.appendChild(img.cloneNode(true));
+    const imgClone = img.cloneNode(true);
+    // Match the source's own fit/background exactly (imageFit:"contain"
+    // items use object-fit:contain on a white backing, not cover) — a
+    // hardcoded object-fit here would visibly change the image's own crop
+    // at the swap instead of only the box around it changing.
+    const imgStyle = getComputedStyle(img);
+    imgClone.style.objectFit = imgStyle.objectFit;
+    imgClone.style.background = getComputedStyle(thumbnailContainer(tile)).backgroundColor;
+    wrap.appendChild(imgClone);
     return wrap;
   }
   function placeMorphClone(clone, rect) {
@@ -661,13 +669,22 @@
   /* ---------------- Software & Manufacturing showcase ---------------- */
   function toolkitDetail(kind, item) {
     const box = el("div", "detail");
+    // The tile's own main image becomes a proper .detail-hero (like every
+    // other detail view) instead of just the first cell of the evidence
+    // grid, so its thumbnail has a real hero slot to morph into —
+    // .detail-hero-compact keeps it at the tile's own 16:9 ratio rather
+    // than the standard 16:10, so growing into it doesn't change shape.
+    const restGallery = item.gallery || [];
     box.innerHTML = `
+      <div class="detail-hero detail-hero-compact${item.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(item.image)}" alt="${esc(item.name)}"></div>
+      ${!isBlankPlaceholder(item.caption) ? `<div class="tile-caption">${esc(item.caption)}</div>` : ""}
       <div class="detail-kicker">${esc(kind)}</div>
       <h2 class="detail-title">${esc(item.name)}</h2>
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
+      ${restGallery.length ? `
       <h4 class="detail-sub">Evidence</h4>
-      <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
-        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
+      <div class="tile-grid">${restGallery.map((g) => `
+        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>` : ""}
     `;
     return box;
   }
@@ -954,9 +971,7 @@
   // its section) instead of a generic corner, so placement can be tuned
   // precisely — e.g. pushed down past a grid's cards, or bled off-page.
   const BG_DRAWINGS = [
-    { section: "experience", image: "motor-mount-front.png", top: 60, right: -40, width: 620, rotate: -6 },
     { section: "experience", image: "front-upright-front.png", bottom: 10, left: -40, width: 580, rotate: 4 },
-    { section: "fsae", image: "chassis-tubes-side.png", bottom: -340, right: -40, width: 760, rotate: 60, flipV: true },
     { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
     { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
     { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35, opacity: 0.22 },
@@ -967,9 +982,7 @@
     { section: "toolkit", image: "rear-upright-front.png", top: 290, right: -40, width: 420, rotate: 5 },
     { section: "learnings", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4 }
   ];
-  BG_DRAWINGS.forEach((d) => {
-    const host = $("#" + d.section);
-    if (!host) return;
+  function placeDrawing(host, d) {
     const img = el("img", "bg-drawing");
     img.src = "assets/img/bg-drawings/" + d.image;
     img.alt = "";
@@ -979,7 +992,56 @@
     img.style.transform = `${d.flipV ? "scaleY(-1) " : ""}rotate(${d.rotate}deg)`;
     if (d.opacity !== undefined) img.style.opacity = d.opacity;
     host.appendChild(img);
+  }
+  BG_DRAWINGS.forEach((d) => {
+    const host = $("#" + d.section);
+    if (host) placeDrawing(host, d);
   });
+  // These two are pinned to specific FSAE cars, whose vertical position
+  // within the section now depends on how many sub-projects each car has —
+  // no longer a fixed spot, so they're placed relative to that car's own
+  // rendered row instead of a static section-relative offset. The elements
+  // are created immediately (so initParallax's synchronous scan below picks
+  // them up like every other .bg-drawing), but their `top` is only
+  // finalized once webfonts finish loading: measuring against the
+  // pre-webfont fallback-font layout (taller, since the custom fonts here
+  // run narrower) stranded them hundreds of pixels below the row they were
+  // meant to sit next to, once the real fonts swapped in and reflowed it.
+  function fsaeRowFor(titlePart) {
+    const fsaeSection = $("#fsae");
+    const rows = fsaeSection ? Array.from(fsaeSection.querySelectorAll(".fsae-row")) : [];
+    return rows.find((row) => {
+      const h3 = row.querySelector(".project-tile h3");
+      return h3 && h3.textContent.includes(titlePart);
+    });
+  }
+  function positionNextToFsaeRow(img, titlePart, topOffset) {
+    const fsaeSection = $("#fsae");
+    const row = fsaeRowFor(titlePart);
+    if (!img || !row || !fsaeSection) return;
+    const top = Math.round(row.getBoundingClientRect().top - fsaeSection.getBoundingClientRect().top);
+    img.style.top = top + topOffset + "px";
+  }
+  const fsaeDrawingSpecs = [
+    { titlePart: "RMSE'21", topOffset: 20, image: "chassis-tubes-side.png", right: -40, width: 760, rotate: 60, flipV: true },
+    { titlePart: "IEM'26", topOffset: 10, image: "motor-mount-front.png", right: -40, width: 620, rotate: -6 }
+  ];
+  const fsaeDrawingEls = fsaeDrawingSpecs.map((spec) => {
+    const fsaeSection = $("#fsae");
+    if (!fsaeSection) return null;
+    const img = el("img", "bg-drawing");
+    img.src = "assets/img/bg-drawings/" + spec.image;
+    img.alt = "";
+    img.setAttribute("aria-hidden", "true");
+    img.style.width = spec.width + "px";
+    img.style.right = spec.right + "px";
+    img.style.transform = `${spec.flipV ? "scaleY(-1) " : ""}rotate(${spec.rotate}deg)`;
+    fsaeSection.appendChild(img);
+    return img;
+  });
+  const positionFsaeDrawings = () => fsaeDrawingSpecs.forEach((spec, i) => positionNextToFsaeRow(fsaeDrawingEls[i], spec.titlePart, spec.topOffset));
+  positionFsaeDrawings(); // best-effort now, corrected below once fonts settle
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(positionFsaeDrawings);
 
   /* ---------------- Footer ---------------- */
   $("#footerText").textContent = `© ${new Date().getFullYear()} ${C.meta.name}`;
@@ -998,7 +1060,7 @@
     });
 
     const staggerContainers = [
-      "#expList", "#fsaeGrid", "#thesisGrid", "#projectGrid",
+      "#expList", "#thesisGrid", "#projectGrid",
       "#softwareGrid", "#manufacturingGrid", "#leadershipTimeline",
       "#eduList", "#awardList", "#learningsGrid"
     ];
@@ -1016,6 +1078,22 @@
         child.classList.add("reveal");
         const cycleIndex = cols > 1 ? i % cols : Math.min(i, 6);
         child.style.transitionDelay = cycleIndex * step + "ms";
+      });
+    });
+
+    // FSAE rows get their own finer-grained sequence instead of the generic
+    // per-row handling above: the car tile appears first, then each of its
+    // discipline groups cascades in right after it, one row at a time — a
+    // single continuous reveal down the row rather than the whole row (car
+    // + every group) fading in as one block.
+    document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
+      let i = 0;
+      const carTile = row.querySelector(".project-tile");
+      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; i = 1; }
+      row.querySelectorAll(".fsae-category-group").forEach((group) => {
+        group.classList.add("reveal");
+        group.style.transitionDelay = i * 90 + "ms";
+        i++;
       });
     });
 
