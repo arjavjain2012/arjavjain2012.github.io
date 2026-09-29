@@ -375,29 +375,6 @@
       .map((m) => `<span class="hl"><b>${esc(m.value)}</b> ${esc(m.label)}</span>`).join("");
   }
 
-  // Sub-projects preview strip: lets a viewer see, right on the main grid
-  // tile, which projects sit inside a car without opening it — while
-  // keeping the grid/section layout exactly as it is (nothing new is
-  // dispersed into its own section). Clicking a chip opens the car's
-  // detail view and then, on top of it, that specific sub-project's detail,
-  // so the click-through hierarchy (car -> sub-project) is preserved.
-  function subprojectPreviewStrip(p, subs) {
-    const openSub = (s) => {
-      pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) });
-      pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) });
-    };
-    const strip = el("div", "tile-subprojects", subs.map((s, i) => `
-      <button type="button" class="subproj-chip" data-sub-index="${i}">
-        <span class="subproj-chip-img"><img src="${esc(s.image)}" alt="" loading="lazy"></span>
-        <span class="subproj-chip-title">${esc(s.title)}</span>
-      </button>`).join(""));
-    strip.querySelectorAll(".subproj-chip").forEach((btn, i) => {
-      btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
-      btn.addEventListener("keydown", (e) => e.stopPropagation());
-    });
-    return strip;
-  }
-
   function projectTile(p) {
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     const tile = makeTile(`
@@ -410,10 +387,68 @@
         <div class="hl-row">${highlightChips(p)}</div>
         <div class="tile-cta">View project →</div>
       </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
-    if (subs.length) {
-      tile.querySelector(".tile-cta").insertAdjacentElement("beforebegin", subprojectPreviewStrip(p, subs));
-    }
+    if (subs.length) attachSubprojectHoverPreview(tile, p, subs);
     return tile;
+  }
+
+  // Hover preview: hovering a car tile floats a blurred-backdrop panel
+  // listing its sub-projects (thumbnail + title) so a viewer can see what
+  // was done inside it without opening it — without dispersing sub-projects
+  // into their own section or touching the grid/section layout. Clicking an
+  // item opens the car's detail view and then, on top of it, that specific
+  // sub-project's detail, preserving the existing click-through hierarchy.
+  let subprojectOverlay = null;
+  function getSubprojectOverlay() {
+    if (subprojectOverlay) return subprojectOverlay;
+    const backdrop = el("div", "subproj-overlay-backdrop");
+    const panel = el("div", "subproj-overlay-panel");
+    document.body.appendChild(backdrop);
+    document.body.appendChild(panel);
+    subprojectOverlay = { backdrop, panel, hideTimer: null };
+    const cancelHide = () => { if (subprojectOverlay.hideTimer) { clearTimeout(subprojectOverlay.hideTimer); subprojectOverlay.hideTimer = null; } };
+    const scheduleHide = () => {
+      cancelHide();
+      subprojectOverlay.hideTimer = setTimeout(() => {
+        backdrop.classList.remove("visible");
+        panel.classList.remove("visible");
+      }, 150);
+    };
+    panel.addEventListener("mouseenter", cancelHide);
+    panel.addEventListener("mouseleave", scheduleHide);
+    subprojectOverlay.cancelHide = cancelHide;
+    subprojectOverlay.scheduleHide = scheduleHide;
+    return subprojectOverlay;
+  }
+  function attachSubprojectHoverPreview(tile, p, subs) {
+    const openSub = (s) => {
+      const o = getSubprojectOverlay();
+      o.cancelHide();
+      o.backdrop.classList.remove("visible");
+      o.panel.classList.remove("visible");
+      pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) });
+      pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) });
+    };
+    const show = () => {
+      const o = getSubprojectOverlay();
+      o.cancelHide();
+      o.panel.innerHTML = `
+        <div class="subproj-overlay-title">${esc(p.title)} — sub-projects</div>
+        <div class="subproj-overlay-list">${subs.map((s, i) => `
+          <button type="button" class="subproj-overlay-item" data-i="${i}">
+            <span class="subproj-overlay-img"><img src="${esc(s.image)}" alt="" loading="lazy"></span>
+            <span>${esc(s.title)}</span>
+          </button>`).join("")}</div>`;
+      o.panel.querySelectorAll(".subproj-overlay-item").forEach((btn, i) => {
+        btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
+      });
+      o.backdrop.classList.add("visible");
+      o.panel.classList.add("visible");
+    };
+    const hide = () => getSubprojectOverlay().scheduleHide();
+    tile.addEventListener("mouseenter", show);
+    tile.addEventListener("mouseleave", hide);
+    tile.addEventListener("focusin", show);
+    tile.addEventListener("focusout", hide);
   }
 
   // Search blob per project: its own title/org/summary/bullets/tags, plus

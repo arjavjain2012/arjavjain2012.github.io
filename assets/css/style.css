@@ -702,26 +702,63 @@ footer {
 .hl { font-family: var(--mono); font-size: 11px; color: var(--text-dim); border: 1px solid var(--line); padding: 3px 8px; }
 .hl b { color: var(--accent); font-weight: 500; }
 .tile-hl { margin: 0; padding-left: 16px; color: var(--text-dim); font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
-.tile-subprojects { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
-.subproj-chip {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
+
+/* Hover preview of an FSAE car's sub-projects: a blurred full-screen scrim
+   (purely visual — never intercepts clicks, so the tile underneath stays
+   clickable) plus a floating panel of clickable thumbnail+title rows. */
+.subproj-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.subproj-overlay-backdrop.visible { opacity: 1; }
+.subproj-overlay-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 151;
+  transform: translate(-50%, -50%) scale(0.96);
+  background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 3px 8px 3px 3px;
-  cursor: pointer;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--text-dim);
-  transition: border-color 0.15s, color 0.15s;
+  padding: 22px;
+  width: min(440px, calc(100% - 48px));
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
-.subproj-chip:hover, .subproj-chip:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
-.subproj-chip-img { width: 30px; height: 20px; border-radius: 1px; overflow: hidden; flex-shrink: 0; background: var(--bg-raised); }
-.subproj-chip-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.subproj-chip-title { white-space: nowrap; }
+.subproj-overlay-panel.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+.subproj-overlay-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-faint); }
+.subproj-overlay-list { display: flex; flex-direction: column; gap: 8px; }
+.subproj-overlay-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: none;
+  padding: 8px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+.subproj-overlay-item:hover, .subproj-overlay-item:focus-visible { border-color: var(--accent); background: rgba(255, 255, 255, 0.04); outline: none; }
+.subproj-overlay-img { width: 64px; height: 42px; border-radius: 1px; overflow: hidden; flex-shrink: 0; background: var(--bg-raised); }
+.subproj-overlay-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }
 .tile-grid-compact .tile-body { padding: 12px 14px 14px; gap: 6px; }
