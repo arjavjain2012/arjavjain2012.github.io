@@ -276,27 +276,38 @@
     clone.style.height = toRect.height + "px";
   }
   // Where a card's thumbnail should land: its own hero image once the real
-  // view is rendered. Returns null if this view has no hero to land in
-  // (e.g. toolkit tiles), in which case the caller skips the clone
-  // animation entirely rather than growing into empty space.
-  function heroRectIn(root) {
-    const hero = root.querySelector(".detail-hero");
-    return hero ? hero.getBoundingClientRect() : null;
+  // view is rendered — checked most-specific first, since a sub-detail view
+  // has TWO .detail-hero elements (car, then sub-project) and a plain
+  // `.querySelector(".detail-hero")` always found the car's (the first one
+  // in document order), so a sub-project opened from *inside* a car's own
+  // grid — not the FSAE dispersed cards, which pass a secondary tile and
+  // never hit this path — grew into the car's hero instead of its own.
+  // Toolkit tiles have no hero at all; their thumbnail's real landing spot
+  // is the first cell of the "Evidence" gallery (see toolkitDetail()).
+  // Returns null if this view has nowhere for the clone to land, in which
+  // case the caller skips the clone animation entirely.
+  function primaryMorphTargetRect(root) {
+    const el = root.querySelector(".sub-detail-project .detail-hero")
+      || root.querySelector(".toolkit-detail .gallery-item:first-of-type")
+      || root.querySelector(".detail-hero");
+    return el ? el.getBoundingClientRect() : null;
+  }
+  function secondaryMorphTargetRect(root) {
+    const el = root.querySelector(".sub-detail-car-box .detail-hero");
+    return el ? el.getBoundingClientRect() : null;
   }
   function morphOpen(view) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
     panel.style.opacity = "1";
-    const primaryTarget = view.secondaryRect && view.secondaryClone
-      ? heroRectIn($(".sub-detail-project"))
-      : heroRectIn(modalBody);
+    const primaryTarget = primaryMorphTargetRect(modalBody);
     if (!view.originRect || !view.originClone || !primaryTarget) {
       panel.style.visibility = "visible";
       return;
     }
     panel.style.visibility = "hidden";
     growClone(view.originClone, view.originRect, primaryTarget);
-    const secondaryTarget = view.secondaryRect && view.secondaryClone ? heroRectIn($(".sub-detail-car-box")) : null;
+    const secondaryTarget = view.secondaryRect && view.secondaryClone ? secondaryMorphTargetRect(modalBody) : null;
     if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
     setTimeout(() => {
       panel.style.visibility = "visible";
@@ -312,16 +323,14 @@
     if (!view || !view.originRect || !view.originClone) { onDone(); return; }
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
-    const primarySource = view.secondaryRect && view.secondaryClone
-      ? heroRectIn($(".sub-detail-project"))
-      : heroRectIn(modalBody);
+    const primarySource = primaryMorphTargetRect(modalBody);
     if (!primarySource) { onDone(); return; }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
     panel.style.visibility = "hidden";
     growClone(view.originClone, primarySource, view.originRect);
     if (view.secondaryClone) {
-      const secondarySource = heroRectIn($(".sub-detail-car-box"));
+      const secondarySource = secondaryMorphTargetRect(modalBody);
       if (secondarySource) growClone(view.secondaryClone, secondarySource, view.secondaryRect);
     }
     setTimeout(() => {
@@ -668,23 +677,18 @@
 
   /* ---------------- Software & Manufacturing showcase ---------------- */
   function toolkitDetail(kind, item) {
-    const box = el("div", "detail");
-    // The tile's own main image becomes a proper .detail-hero (like every
-    // other detail view) instead of just the first cell of the evidence
-    // grid, so its thumbnail has a real hero slot to morph into —
-    // .detail-hero-compact keeps it at the tile's own 16:9 ratio rather
-    // than the standard 16:10, so growing into it doesn't change shape.
-    const restGallery = item.gallery || [];
+    // Original layout restored (no separate hero) — the "toolkit-detail"
+    // marker just lets the morph system (primaryMorphTargetRect) find the
+    // first evidence cell as this card's real thumbnail landing spot,
+    // without changing anything about how the view itself looks.
+    const box = el("div", "detail toolkit-detail");
     box.innerHTML = `
-      <div class="detail-hero detail-hero-compact${item.imageFit === "contain" ? " detail-hero-contain" : ""}"><img src="${esc(item.image)}" alt="${esc(item.name)}"></div>
-      ${!isBlankPlaceholder(item.caption) ? `<div class="tile-caption">${esc(item.caption)}</div>` : ""}
       <div class="detail-kicker">${esc(kind)}</div>
       <h2 class="detail-title">${esc(item.name)}</h2>
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
-      ${restGallery.length ? `
       <h4 class="detail-sub">Evidence</h4>
-      <div class="tile-grid">${restGallery.map((g) => `
-        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>` : ""}
+      <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
+        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
     `;
     return box;
   }
