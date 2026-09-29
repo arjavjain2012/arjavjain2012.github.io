@@ -404,7 +404,7 @@
     const panel = el("div", "subproj-overlay-panel");
     document.body.appendChild(backdrop);
     document.body.appendChild(panel);
-    const state = { backdrop, panel, hideTimer: null, clone: null, reposition: null };
+    const state = { backdrop, panel, hideTimer: null, clone: null, reposition: null, fromTransform: null };
     // `section` establishes its own stacking context (position:relative;
     // z-index:0), so bumping the real tile's z-index only out-ranks other
     // tiles inside that same section — it never rises above a backdrop
@@ -451,6 +451,8 @@
       state.hideTimer = setTimeout(() => {
         backdrop.classList.remove("visible");
         panel.classList.remove("visible");
+        // Shrink back toward wherever it grew from, mirroring the pop-in.
+        if (state.fromTransform) panel.style.transform = state.fromTransform;
         clearActiveTile();
       }, 150);
     };
@@ -484,8 +486,34 @@
       o.panel.querySelectorAll(".subproj-overlay-item").forEach((btn, i) => {
         btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
       });
+      // Anchor the panel's grow-in (and, symmetrically, its shrink-back-out
+      // on hide) to the hovered car's own position, so it reads as popping
+      // out of that car rather than just fading in at screen center. The
+      // transform is set directly as inline style, as a single translate()
+      // with everything pre-resolved to plain pixel numbers in JS — both a
+      // CSS custom property and a calc() read inside scale()/translate()
+      // silently failed to apply in this environment's browser (each left
+      // the element showing its plain fallback/previous value instead of
+      // the one actually set), so nothing here can depend on the engine
+      // evaluating var() or calc() inside a transform function argument.
+      const tileRect = tile.getBoundingClientRect();
+      const scale = Math.max(0.15, Math.min(0.9,
+        Math.min(tileRect.width / o.panel.offsetWidth, tileRect.height / o.panel.offsetHeight)));
+      // translate(-50%, -50%) on this element is exactly -offsetWidth/2,
+      // -offsetHeight/2 in resolved pixels; folding it in here up front is
+      // what keeps the whole expression down to one plain-pixel translate().
+      const fromX = (tileRect.left + tileRect.width / 2) - window.innerWidth / 2 - o.panel.offsetWidth / 2;
+      const fromY = (tileRect.top + tileRect.height / 2) - window.innerHeight / 2 - o.panel.offsetHeight / 2;
+      o.fromTransform = `translate(${fromX}px, ${fromY}px) scale(${scale})`;
+      if (!o.panel.classList.contains("visible")) {
+        o.panel.style.transform = o.fromTransform;
+        void o.panel.offsetWidth; // force layout so the "from" state above paints before the "visible" class flips it to the end state
+      }
       o.backdrop.classList.add("visible");
       o.panel.classList.add("visible");
+      // Plain resolved pixels here too, to match the "from" state's units —
+      // equivalent to translate(-50%, -50%) scale(1) for this element.
+      o.panel.style.transform = `translate(${-o.panel.offsetWidth / 2}px, ${-o.panel.offsetHeight / 2}px) scale(1)`;
     };
     const hide = () => getSubprojectOverlay().scheduleHide();
     tile.addEventListener("mouseenter", show);

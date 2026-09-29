@@ -737,7 +737,12 @@ footer {
   top: 50%;
   left: 50%;
   z-index: 152;
-  transform: translate(-50%, -50%) scale(0.96);
+  /* JS sets the actual "from" transform inline (a rect-anchored translate +
+     scale toward the hovered car) on each show/hide — custom properties
+     inside transform functions render unreliably in this environment's
+     browser (getComputedStyle kept resolving to the var() fallback instead
+     of the value actually set), so this is just the pre-JS/no-op fallback. */
+  transform: translate(-50%, -50%) scale(0.4);
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -750,7 +755,7 @@ footer {
   gap: 14px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: opacity 0.25s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .subproj-overlay-panel.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 .subproj-overlay-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-faint); }
