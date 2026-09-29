@@ -222,10 +222,10 @@
   // close animation can reuse it. `secondaryTile` (FSAE dispersed cards
   // only) is the adjacent car tile, which grows/shrinks alongside it.
   function pushView(view, originTile, secondaryTile) {
-    view.originRect = originTile ? originTile.getBoundingClientRect() : null;
-    view.originClone = originTile ? cloneForMorph(originTile) : null;
-    view.secondaryRect = secondaryTile ? secondaryTile.getBoundingClientRect() : null;
-    view.secondaryClone = secondaryTile ? cloneForMorph(secondaryTile) : null;
+    view.originRect = originTile ? thumbnailRect(originTile) : null;
+    view.originClone = originTile ? cloneThumbnail(originTile) : null;
+    view.secondaryRect = secondaryTile ? thumbnailRect(secondaryTile) : null;
+    view.secondaryClone = secondaryTile ? cloneThumbnail(secondaryTile) : null;
     stack.push(view);
     modal.hidden = false;
     document.body.classList.add("modal-open");
@@ -233,31 +233,27 @@
     paintModal();
     morphOpen(view);
   }
-  // The clicked card itself grows into the detail view and, on close,
-  // shrinks back into place — no cross-fade between two different-looking
-  // things at any point. A clone of the exact card is resized via real
-  // width/height/top/left (not a transform scale, which stretched the
-  // thumbnail non-uniformly), so its image keeps its own crop the whole
-  // time via object-fit — it just reveals more of the box as it grows,
-  // the same way any responsive image does when its container resizes.
-  // Once the clone has fully grown to the real panel's own box, the two are
-  // swapped with a hard cut (no fade): the panel is already sitting exactly
-  // inside the space the clone just finished filling, so the swap reads as
-  // that same card now showing its full detail, not as one thing replacing
-  // another.
-  function cloneForMorph(tile) {
-    const clone = tile.cloneNode(true);
-    clone.classList.remove("reveal", "reveal-visible", "reveal-rule");
-    clone.removeAttribute("tabindex");
-    clone.removeAttribute("role");
-    clone.setAttribute("aria-hidden", "true");
-    return clone;
+  // Only the clicked card's own thumbnail grows into its place in the
+  // detail view (its own hero image), then shrinks back on close — the
+  // card's text/body is never touched or cloned, so there's nothing to
+  // distort or reflow strangely mid-animation, and everything else in the
+  // detail view (title, text, close button) just appears around the
+  // now-settled image instead of being part of the motion.
+  const thumbnailContainer = (tile) => tile.querySelector(".tile-image") || tile;
+  const thumbnailRect = (tile) => thumbnailContainer(tile).getBoundingClientRect();
+  function cloneThumbnail(tile) {
+    const img = tile.querySelector("img");
+    if (!img) return null;
+    const wrap = el("div", "morph-thumb-clone");
+    wrap.setAttribute("aria-hidden", "true");
+    wrap.appendChild(img.cloneNode(true));
+    return wrap;
   }
   function placeMorphClone(clone, rect) {
     Object.assign(clone.style, {
       position: "fixed", margin: "0", zIndex: "201", pointerEvents: "none",
       top: rect.top + "px", left: rect.left + "px", width: rect.width + "px", height: rect.height + "px",
-      overflow: "hidden", transition: "none"
+      transition: "none"
     });
     document.body.appendChild(clone);
   }
@@ -271,79 +267,62 @@
     clone.style.width = toRect.width + "px";
     clone.style.height = toRect.height + "px";
   }
-  // For the FSAE dispersed-card case (a car tile clone alongside the
-  // sub-project clone), the sub-project targets exactly where its thumbnail
-  // sits in the detail view (not the whole right box), and the car targets
-  // the whole left box — so it reads as the thumbnail settling into place
-  // and the car expanding beside it, not a generic panel-sized growth.
-  function subprojectMorphTargets(panel) {
-    const heroEl = $(".sub-detail-project .detail-hero");
-    const carBoxEl = $(".sub-detail-car-box");
-    return {
-      hero: heroEl ? heroEl.getBoundingClientRect() : panel.getBoundingClientRect(),
-      carBox: carBoxEl ? carBoxEl.getBoundingClientRect() : panel.getBoundingClientRect()
-    };
+  // Where a card's thumbnail should land: its own hero image once the real
+  // view is rendered. Returns null if this view has no hero to land in
+  // (e.g. toolkit tiles), in which case the caller skips the clone
+  // animation entirely rather than growing into empty space.
+  function heroRectIn(root) {
+    const hero = root.querySelector(".detail-hero");
+    return hero ? hero.getBoundingClientRect() : null;
   }
   function morphOpen(view) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
-    panel.style.transform = "none";
     panel.style.opacity = "1";
-    if (!view.originRect || !view.originClone) {
+    const primaryTarget = view.secondaryRect && view.secondaryClone
+      ? heroRectIn($(".sub-detail-project"))
+      : heroRectIn(modalBody);
+    if (!view.originRect || !view.originClone || !primaryTarget) {
       panel.style.visibility = "visible";
       return;
     }
     panel.style.visibility = "hidden";
-    if (view.secondaryRect && view.secondaryClone) {
-      const t = subprojectMorphTargets(panel);
-      growClone(view.originClone, view.originRect, t.hero);
-      growClone(view.secondaryClone, view.secondaryRect, t.carBox);
-      setTimeout(() => {
-        panel.style.visibility = "visible";
-        view.originClone.remove();
-        view.secondaryClone.remove();
-      }, 420);
-      return;
-    }
-    growClone(view.originClone, view.originRect, panel.getBoundingClientRect());
+    growClone(view.originClone, view.originRect, primaryTarget);
+    const secondaryTarget = view.secondaryRect && view.secondaryClone ? heroRectIn($(".sub-detail-car-box")) : null;
+    if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
     setTimeout(() => {
       panel.style.visibility = "visible";
       view.originClone.remove();
-    }, 400);
+      if (view.secondaryClone) view.secondaryClone.remove();
+    }, 420);
   }
-  // Mirrors morphOpen: the clone(s) reappear already grown to their target
-  // box (a hard cut away from the real panel, not a fade) and shrink back
-  // to their original slot, so the detail visibly collapses back into the
-  // exact card(s) it came from.
+  // Mirrors morphOpen: the clone(s) reappear already grown into their hero
+  // image's current spot (a hard cut away from the real panel, not a fade)
+  // and shrink back to their card's thumbnail slot, so the detail visibly
+  // collapses back into the exact card it came from.
   function morphClose(view, onDone) {
+    if (!view || !view.originRect || !view.originClone) { onDone(); return; }
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
-    if (!view || !view.originRect || !view.originClone) { onDone(); return; }
+    const primarySource = view.secondaryRect && view.secondaryClone
+      ? heroRectIn($(".sub-detail-project"))
+      : heroRectIn(modalBody);
+    if (!primarySource) { onDone(); return; }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
-    if (view.secondaryRect && view.secondaryClone) {
-      const t = subprojectMorphTargets(panel);
-      panel.style.visibility = "hidden";
-      growClone(view.originClone, t.hero, view.originRect);
-      growClone(view.secondaryClone, t.carBox, view.secondaryRect);
-      setTimeout(() => {
-        view.originClone.remove();
-        view.secondaryClone.remove();
-        backdrop.style.transition = "";
-        backdrop.style.opacity = "";
-        onDone();
-      }, 400);
-      return;
-    }
-    const panelRect = panel.getBoundingClientRect();
     panel.style.visibility = "hidden";
-    growClone(view.originClone, panelRect, view.originRect);
+    growClone(view.originClone, primarySource, view.originRect);
+    if (view.secondaryClone) {
+      const secondarySource = heroRectIn($(".sub-detail-car-box"));
+      if (secondarySource) growClone(view.secondaryClone, secondarySource, view.secondaryRect);
+    }
     setTimeout(() => {
       view.originClone.remove();
+      if (view.secondaryClone) view.secondaryClone.remove();
       backdrop.style.transition = "";
       backdrop.style.opacity = "";
       onDone();
-    }, 380);
+    }, 400);
   }
   function closeModal() {
     if (modal.hidden) return;

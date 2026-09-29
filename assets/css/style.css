@@ -651,6 +651,12 @@ footer {
 }
 .tile:hover, .tile:focus-visible { border-color: var(--accent); transform: translateY(-2px); outline: none; }
 .tile-image { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--bg-raised); }
+/* Card-open morph clone: just the thumbnail image, boxed to match
+   .tile-image/.detail-hero, so only the image itself moves/resizes — the
+   card's own text/body is never touched, and the detail view's other
+   content just appears around the settled image. */
+.morph-thumb-clone { border: 1px solid var(--line); overflow: hidden; background: var(--bg-raised); }
+.morph-thumb-clone img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
 .tile:hover .tile-image img, .tile:focus-visible .tile-image img { transform: scale(1.08); }
 .tile-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
