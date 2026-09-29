@@ -375,8 +375,32 @@
       .map((m) => `<span class="hl"><b>${esc(m.value)}</b> ${esc(m.label)}</span>`).join("");
   }
 
+  // Sub-projects preview strip: lets a viewer see, right on the main grid
+  // tile, which projects sit inside a car without opening it — while
+  // keeping the grid/section layout exactly as it is (nothing new is
+  // dispersed into its own section). Clicking a chip opens the car's
+  // detail view and then, on top of it, that specific sub-project's detail,
+  // so the click-through hierarchy (car -> sub-project) is preserved.
+  function subprojectPreviewStrip(p, subs) {
+    const openSub = (s) => {
+      pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) });
+      pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) });
+    };
+    const strip = el("div", "tile-subprojects", subs.map((s, i) => `
+      <button type="button" class="subproj-chip" data-sub-index="${i}">
+        <span class="subproj-chip-img"><img src="${esc(s.image)}" alt="" loading="lazy"></span>
+        <span class="subproj-chip-title">${esc(s.title)}</span>
+      </button>`).join(""));
+    strip.querySelectorAll(".subproj-chip").forEach((btn, i) => {
+      btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
+      btn.addEventListener("keydown", (e) => e.stopPropagation());
+    });
+    return strip;
+  }
+
   function projectTile(p) {
-    return makeTile(`
+    const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    const tile = makeTile(`
       <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(p.period)}</span></div>
@@ -386,6 +410,10 @@
         <div class="hl-row">${highlightChips(p)}</div>
         <div class="tile-cta">View project →</div>
       </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
+    if (subs.length) {
+      tile.querySelector(".tile-cta").insertAdjacentElement("beforebegin", subprojectPreviewStrip(p, subs));
+    }
+    return tile;
   }
 
   // Search blob per project: its own title/org/summary/bullets/tags, plus
@@ -459,6 +487,7 @@
       const applyQuery = (raw) => {
         searchQuery = raw.trim().toLowerCase();
         searchClear.hidden = !searchQuery;
+        document.body.classList.toggle("search-active", !!searchQuery);
         renderFsae();
         renderFeatured();
       };
