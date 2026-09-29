@@ -219,16 +219,19 @@
   // time instead of navigating away from the site entirely. `originTile`,
   // when given, is the card that was clicked to get here — a snapshot of it
   // is kept on the view so both the open animation and, later, the matching
-  // close animation can reuse it.
-  function pushView(view, originTile) {
+  // close animation can reuse it. `secondaryTile` (FSAE dispersed cards
+  // only) is the adjacent car tile, which grows/shrinks alongside it.
+  function pushView(view, originTile, secondaryTile) {
     view.originRect = originTile ? originTile.getBoundingClientRect() : null;
     view.originClone = originTile ? cloneForMorph(originTile) : null;
+    view.secondaryRect = secondaryTile ? secondaryTile.getBoundingClientRect() : null;
+    view.secondaryClone = secondaryTile ? cloneForMorph(secondaryTile) : null;
     stack.push(view);
     modal.hidden = false;
     document.body.classList.add("modal-open");
     history.pushState({ modalDepth: stack.length }, "");
     paintModal();
-    morphOpen(view.originRect, view.originClone);
+    morphOpen(view);
   }
   // The clicked card itself grows into the detail view and, on close,
   // shrinks back into place — no cross-fade between two different-looking
@@ -259,50 +262,84 @@
     document.body.appendChild(clone);
   }
   const MORPH_TRANSITION = "top 0.4s cubic-bezier(0.22, 1, 0.36, 1), left 0.4s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
-  function morphOpen(originRect, originClone) {
+  function growClone(clone, fromRect, toRect) {
+    placeMorphClone(clone, fromRect);
+    void clone.offsetWidth; // force layout so the "from" state above paints before the "to" state below animates it away
+    clone.style.transition = MORPH_TRANSITION;
+    clone.style.top = toRect.top + "px";
+    clone.style.left = toRect.left + "px";
+    clone.style.width = toRect.width + "px";
+    clone.style.height = toRect.height + "px";
+  }
+  // For the FSAE dispersed-card case (a car tile clone alongside the
+  // sub-project clone), the sub-project targets exactly where its thumbnail
+  // sits in the detail view (not the whole right box), and the car targets
+  // the whole left box — so it reads as the thumbnail settling into place
+  // and the car expanding beside it, not a generic panel-sized growth.
+  function subprojectMorphTargets(panel) {
+    const heroEl = $(".sub-detail-project .detail-hero");
+    const carBoxEl = $(".sub-detail-car-box");
+    return {
+      hero: heroEl ? heroEl.getBoundingClientRect() : panel.getBoundingClientRect(),
+      carBox: carBoxEl ? carBoxEl.getBoundingClientRect() : panel.getBoundingClientRect()
+    };
+  }
+  function morphOpen(view) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
     panel.style.transform = "none";
     panel.style.opacity = "1";
-    if (!originRect || !originClone) {
+    if (!view.originRect || !view.originClone) {
       panel.style.visibility = "visible";
       return;
     }
     panel.style.visibility = "hidden";
-    const panelRect = panel.getBoundingClientRect();
-    placeMorphClone(originClone, originRect);
-    void originClone.offsetWidth; // force layout so the placed-at-rect state above paints before the grow below animates it away
-    originClone.style.transition = MORPH_TRANSITION;
-    originClone.style.top = panelRect.top + "px";
-    originClone.style.left = panelRect.left + "px";
-    originClone.style.width = panelRect.width + "px";
-    originClone.style.height = panelRect.height + "px";
+    if (view.secondaryRect && view.secondaryClone) {
+      const t = subprojectMorphTargets(panel);
+      growClone(view.originClone, view.originRect, t.hero);
+      growClone(view.secondaryClone, view.secondaryRect, t.carBox);
+      setTimeout(() => {
+        panel.style.visibility = "visible";
+        view.originClone.remove();
+        view.secondaryClone.remove();
+      }, 420);
+      return;
+    }
+    growClone(view.originClone, view.originRect, panel.getBoundingClientRect());
     setTimeout(() => {
       panel.style.visibility = "visible";
-      originClone.remove();
+      view.originClone.remove();
     }, 400);
   }
-  // Mirrors morphOpen: the clone reappears already grown to the panel's own
-  // box (a hard cut away from the real panel, not a fade) and shrinks back
-  // to the card's original slot, so the detail visibly collapses back into
-  // the exact card it came from.
-  function morphClose(originRect, originClone, onDone) {
+  // Mirrors morphOpen: the clone(s) reappear already grown to their target
+  // box (a hard cut away from the real panel, not a fade) and shrink back
+  // to their original slot, so the detail visibly collapses back into the
+  // exact card(s) it came from.
+  function morphClose(view, onDone) {
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
-    if (!originRect || !originClone) { onDone(); return; }
-    const panelRect = panel.getBoundingClientRect();
-    placeMorphClone(originClone, panelRect);
-    panel.style.visibility = "hidden";
-    void originClone.offsetWidth;
+    if (!view || !view.originRect || !view.originClone) { onDone(); return; }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
-    originClone.style.transition = MORPH_TRANSITION;
-    originClone.style.top = originRect.top + "px";
-    originClone.style.left = originRect.left + "px";
-    originClone.style.width = originRect.width + "px";
-    originClone.style.height = originRect.height + "px";
+    if (view.secondaryRect && view.secondaryClone) {
+      const t = subprojectMorphTargets(panel);
+      panel.style.visibility = "hidden";
+      growClone(view.originClone, t.hero, view.originRect);
+      growClone(view.secondaryClone, t.carBox, view.secondaryRect);
+      setTimeout(() => {
+        view.originClone.remove();
+        view.secondaryClone.remove();
+        backdrop.style.transition = "";
+        backdrop.style.opacity = "";
+        onDone();
+      }, 400);
+      return;
+    }
+    const panelRect = panel.getBoundingClientRect();
+    panel.style.visibility = "hidden";
+    growClone(view.originClone, panelRect, view.originRect);
     setTimeout(() => {
-      originClone.remove();
+      view.originClone.remove();
       backdrop.style.transition = "";
       backdrop.style.opacity = "";
       onDone();
@@ -318,11 +355,10 @@
       stack = [];
       if (depth) history.go(-depth);
     };
-    morphClose(top && top.originRect, top && top.originClone, finish);
+    morphClose(top, finish);
   }
   function popView() {
-    const top = stack[stack.length - 1];
-    morphClose(top && top.originRect, top && top.originClone, () => history.back());
+    morphClose(stack[stack.length - 1], () => history.back());
   }
   modalBack.addEventListener("click", popView);
   $("#modalClose").addEventListener("click", closeModal);
@@ -368,7 +404,7 @@
   function subDetail(p, s) {
     const box = el("div", "detail sub-detail");
     const carBox = el("div", "sub-detail-car-box");
-    carBox.appendChild(projectDetail(p));
+    carBox.appendChild(projectDetail(p, s.category));
 
     const projectCol = el("div", "sub-detail-project");
     projectCol.innerHTML = `
@@ -398,7 +434,7 @@
     return box;
   }
 
-  function projectDetail(p) {
+  function projectDetail(p, initialCategory) {
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     const filterable = subs.length > 0 && subs.every((s) => s.category);
     const box = el("div", "detail");
@@ -433,10 +469,10 @@
       };
 
       if (filterable) {
-        let activeCat = null;
+        let activeCat = p.tags.includes(initialCategory) ? initialCategory : null;
         const filterRow = el("div", "project-tags proj-filter-row");
         const buttons = p.tags.map((cat) => {
-          const btn = el("span", "ptag ptag-filter", esc(cat));
+          const btn = el("span", "ptag ptag-filter" + (cat === activeCat ? " ptag-active" : ""), esc(cat));
           btn.tabIndex = 0;
           btn.setAttribute("role", "button");
           filterRow.appendChild(btn);
@@ -453,8 +489,10 @@
           btn.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onActivate(); } });
         });
         box.appendChild(filterRow);
+        renderGrid(activeCat);
+      } else {
+        renderGrid(null);
       }
-      renderGrid(null);
       box.appendChild(grid);
     } else {
       const h = el("h4", "detail-sub", "Development highlights");
@@ -503,7 +541,8 @@
   // into the Featured Projects grid.
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
-    row.appendChild(projectTile(p));
+    const carTile = projectTile(p);
+    row.appendChild(carTile);
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
       const groups = el("div", "fsae-subprojects");
@@ -514,17 +553,41 @@
         group.appendChild(el("h5", "fsae-category-heading", esc(cat.label)));
         const cards = el("div", "fsae-category-cards");
         inCategory.forEach((s) => {
+          // Passing carTile as a second origin makes the open/close morph
+          // grow/shrink the car alongside the sub-project's own thumbnail,
+          // instead of only the clicked card, so the whole row appears to
+          // expand together into the two-box detail view.
           cards.appendChild(makeTile(`
             <img src="${esc(s.image)}" alt="" loading="lazy">
             <span class="subproj-card-title">${esc(s.title)}</span>`,
-            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile), "subproj-card"));
+            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile), "subproj-card"));
         });
         group.appendChild(cards);
         groups.appendChild(group);
+        attachDockHover(cards);
       });
       row.appendChild(groups);
     }
     return row;
+  }
+
+  // iOS/macOS dock-style magnification: the card nearest the pointer grows,
+  // with a smooth falloff to neighbors, as the pointer moves across the row.
+  function attachDockHover(cardsRow) {
+    const FALLOFF = 130, MAX_SCALE = 0.24;
+    const reset = () => {
+      cardsRow.querySelectorAll(".subproj-card").forEach((c) => { c.style.transform = ""; c.style.zIndex = ""; });
+    };
+    cardsRow.addEventListener("mousemove", (e) => {
+      cardsRow.querySelectorAll(".subproj-card").forEach((c) => {
+        const r = c.getBoundingClientRect();
+        const dist = Math.abs(e.clientX - (r.left + r.width / 2));
+        const influence = Math.max(0, 1 - dist / FALLOFF);
+        c.style.transform = influence > 0.01 ? `scale(${(1 + influence * MAX_SCALE).toFixed(3)})` : "";
+        c.style.zIndex = influence > 0.01 ? String(Math.round(influence * 100)) : "";
+      });
+    });
+    cardsRow.addEventListener("mouseleave", reset);
   }
 
   // Search blob per project: its own title/org/summary/bullets/tags, plus

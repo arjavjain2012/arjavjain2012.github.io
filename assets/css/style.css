@@ -723,10 +723,21 @@ footer {
   text-transform: uppercase;
   color: var(--text-faint);
 }
-.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
-.subproj-card { position: relative; width: 160px; flex: 0 0 auto; aspect-ratio: 16 / 10; overflow: hidden; padding: 0; }
-.subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease; }
-.subproj-card:hover img, .subproj-card:focus-visible img { transform: scale(1.06); }
+/* Extra padding-top gives the dock-hover grow (below) headroom to expand
+   into without being clipped by the row's own horizontal scroll overflow. */
+.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; padding: 24px 2px 4px; }
+.subproj-card {
+  position: relative;
+  width: 160px;
+  flex: 0 0 auto;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  padding: 0;
+  transform-origin: center bottom;
+  transition: transform 0.15s ease-out;
+}
+.subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .subproj-card-title {
   position: absolute;
   inset: 0;
@@ -794,7 +805,13 @@ body.modal-open { overflow: hidden; }
 .modal-crumbs { flex: 1; min-width: 0; font-family: var(--mono); font-size: 12px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .modal-body { padding: 28px 32px 64px; }
 .detail-hero { border: 1px solid var(--line); margin-bottom: 20px; }
-.detail-hero img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; display: block; }
+/* Same ratio as .tile-image, so a card's thumbnail and its detail hero are
+   the same shape — the open/close morph can then swap between them with no
+   visible change in the image's own proportions, only the box around it. */
+.detail-hero img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+/* Same background as .tile, so a card and its opened detail read as the
+   same surface continuing, not two different-colored things swapped in. */
+.detail:not(.sub-detail) { background: var(--bg-card); }
 .detail-kicker { font-family: var(--mono); font-size: 12px; color: var(--teal); margin: 14px 0 8px; }
 .detail-kicker a { color: var(--teal); text-decoration: none; border-bottom: 1px dotted var(--teal); }
 .detail-kicker a:hover { color: var(--accent); border-bottom-color: var(--accent); }
