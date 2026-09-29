@@ -705,7 +705,10 @@ footer {
 
 /* Hover preview of an FSAE car's sub-projects: a blurred full-screen scrim
    (purely visual — never intercepts clicks, so the tile underneath stays
-   clickable) plus a floating panel of clickable thumbnail+title rows. */
+   clickable) plus a floating panel of clickable image cards. The hovered
+   tile is lifted above the scrim (z-index only — no visual change of its
+   own) so it paints on top of the blur/dim and stays crisp while every
+   other tile behind the scrim is blurred and dimmed. */
 .subproj-overlay-backdrop {
   position: fixed;
   inset: 0;
@@ -718,47 +721,57 @@ footer {
   transition: opacity 0.18s ease;
 }
 .subproj-overlay-backdrop.visible { opacity: 1; }
+.project-tile.subproj-hover-active { position: relative; z-index: 151; }
 .subproj-overlay-panel {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 151;
+  z-index: 152;
   transform: translate(-50%, -50%) scale(0.96);
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 22px;
-  width: min(440px, calc(100% - 48px));
+  width: min(880px, calc(100% - 48px));
   max-height: 70vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
 .subproj-overlay-panel.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 .subproj-overlay-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-faint); }
-.subproj-overlay-list { display: flex; flex-direction: column; gap: 8px; }
+.subproj-overlay-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
 .subproj-overlay-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  position: relative;
+  aspect-ratio: 16 / 10;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: none;
-  padding: 8px;
+  overflow: hidden;
+  background: var(--bg-raised);
   cursor: pointer;
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--text);
-  text-align: left;
-  transition: border-color 0.15s, background 0.15s;
+  padding: 0;
+  transition: border-color 0.15s;
 }
-.subproj-overlay-item:hover, .subproj-overlay-item:focus-visible { border-color: var(--accent); background: rgba(255, 255, 255, 0.04); outline: none; }
-.subproj-overlay-img { width: 64px; height: 42px; border-radius: 1px; overflow: hidden; flex-shrink: 0; background: var(--bg-raised); }
-.subproj-overlay-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.subproj-overlay-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease; }
+.subproj-overlay-item:hover, .subproj-overlay-item:focus-visible { border-color: var(--accent); outline: none; }
+.subproj-overlay-item:hover img, .subproj-overlay-item:focus-visible img { transform: scale(1.06); }
+.subproj-overlay-item-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 10px 8px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: left;
+}
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }
 .tile-grid-compact .tile-body { padding: 12px 14px 14px; gap: 6px; }

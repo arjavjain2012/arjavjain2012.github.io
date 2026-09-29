@@ -404,19 +404,27 @@
     const panel = el("div", "subproj-overlay-panel");
     document.body.appendChild(backdrop);
     document.body.appendChild(panel);
-    subprojectOverlay = { backdrop, panel, hideTimer: null };
+    subprojectOverlay = { backdrop, panel, hideTimer: null, activeTile: null };
+    const clearActiveTile = () => {
+      if (subprojectOverlay.activeTile) {
+        subprojectOverlay.activeTile.classList.remove("subproj-hover-active");
+        subprojectOverlay.activeTile = null;
+      }
+    };
     const cancelHide = () => { if (subprojectOverlay.hideTimer) { clearTimeout(subprojectOverlay.hideTimer); subprojectOverlay.hideTimer = null; } };
     const scheduleHide = () => {
       cancelHide();
       subprojectOverlay.hideTimer = setTimeout(() => {
         backdrop.classList.remove("visible");
         panel.classList.remove("visible");
+        clearActiveTile();
       }, 150);
     };
     panel.addEventListener("mouseenter", cancelHide);
     panel.addEventListener("mouseleave", scheduleHide);
     subprojectOverlay.cancelHide = cancelHide;
     subprojectOverlay.scheduleHide = scheduleHide;
+    subprojectOverlay.clearActiveTile = clearActiveTile;
     return subprojectOverlay;
   }
   function attachSubprojectHoverPreview(tile, p, subs) {
@@ -425,18 +433,22 @@
       o.cancelHide();
       o.backdrop.classList.remove("visible");
       o.panel.classList.remove("visible");
+      o.clearActiveTile();
       pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) });
       pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) });
     };
     const show = () => {
       const o = getSubprojectOverlay();
       o.cancelHide();
+      if (o.activeTile && o.activeTile !== tile) o.activeTile.classList.remove("subproj-hover-active");
+      o.activeTile = tile;
+      tile.classList.add("subproj-hover-active");
       o.panel.innerHTML = `
         <div class="subproj-overlay-title">${esc(p.title)} — sub-projects</div>
         <div class="subproj-overlay-list">${subs.map((s, i) => `
           <button type="button" class="subproj-overlay-item" data-i="${i}">
-            <span class="subproj-overlay-img"><img src="${esc(s.image)}" alt="" loading="lazy"></span>
-            <span>${esc(s.title)}</span>
+            <img src="${esc(s.image)}" alt="" loading="lazy">
+            <span class="subproj-overlay-item-title">${esc(s.title)}</span>
           </button>`).join("")}</div>`;
       o.panel.querySelectorAll(".subproj-overlay-item").forEach((btn, i) => {
         btn.addEventListener("click", (e) => { e.stopPropagation(); openSub(subs[i]); });
