@@ -710,8 +710,23 @@ footer {
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: 1fr; } }
-.subproj-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; align-self: start; }
-.subproj-card { position: relative; aspect-ratio: 16 / 10; overflow: hidden; padding: 0; }
+.fsae-subprojects { display: flex; flex-direction: column; gap: 18px; }
+/* One row per discipline (the same 4 filters used for Featured Projects);
+   the label sits at the row's right end, cards flow/wrap on the left. */
+.fsae-category-row { display: flex; align-items: center; gap: 18px; }
+.fsae-category-cards { display: flex; flex-wrap: wrap; gap: 14px; flex: 1; }
+.fsae-category-label {
+  flex-shrink: 0;
+  text-align: right;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+@media (max-width: 640px) { .fsae-category-row { flex-wrap: wrap; } .fsae-category-label { text-align: left; } }
+.subproj-card { position: relative; width: 160px; flex: 0 0 auto; aspect-ratio: 16 / 10; overflow: hidden; padding: 0; }
 .subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease; }
 .subproj-card:hover img, .subproj-card:focus-visible img { transform: scale(1.06); }
 .subproj-card-title {
@@ -730,11 +745,17 @@ footer {
   line-height: 1.35;
 }
 
-/* Sub-project detail (modal): the parent car stays visible as a compact
-   card on the left (1/3) while the sub-project write-up runs on the right
-   (2/3), so context on which car this belongs to is never lost. */
+/* Sub-project detail (modal): two separate, unconnected boxes — the parent
+   car as a compact card on the left (1/3) and the sub-project write-up in
+   its own bordered box on the right (2/3) — so context on which car this
+   belongs to is never lost, without merging the two into one block. */
 .sub-detail { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: start; }
-.sub-detail-project { min-width: 0; }
+.sub-detail-project {
+  min-width: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 24px;
+}
 @media (max-width: 860px) { .sub-detail { grid-template-columns: 1fr; } }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }

@@ -612,6 +612,7 @@ window.SITE_CONTENT = {
       {
         id: "vehicle-sim",
         title: "Full-Vehicle Simulation & Driver-in-the-Loop Development",
+        category: "Vehicle Dynamics & Simulation",
         image: "assets/img/subprojects/iem26-dil-rig.jpeg",
         imageFit: "contain",
         highlights: ["Vi-CarRealTime model correlated to on-car replay data", "Driver-in-the-loop rig for setup and controls tuning"],

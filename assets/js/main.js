@@ -212,13 +212,49 @@
   }
   // Push a history entry per open card level, so the mobile back gesture /
   // browser back button (which fires `popstate`) closes one card level at a
-  // time instead of navigating away from the site entirely.
-  function pushView(view) {
+  // time instead of navigating away from the site entirely. `originTile`,
+  // when given, is the card that was clicked to get here — it drives the
+  // "grow out of that card" open animation below.
+  function pushView(view, originTile) {
+    const originRect = originTile ? originTile.getBoundingClientRect() : null;
     stack.push(view);
     modal.hidden = false;
     document.body.classList.add("modal-open");
     history.pushState({ modalDepth: stack.length }, "");
     paintModal();
+    animateModalExpand(originRect);
+  }
+  // Grows the modal panel from the clicked card's own position/size into
+  // its resting layout, on every push (top-level or nested), so opening any
+  // card anywhere reads as that card expanding into its detail view. The
+  // transform is a single translate() built from plain resolved pixel
+  // numbers rather than CSS var()/calc() inside the function arguments —
+  // both silently failed to apply in this environment's browser (the
+  // resulting transition kept using the pre-JS fallback value instead of
+  // the one actually set), so nothing here depends on the engine evaluating
+  // var()/calc() inside a transform argument.
+  function animateModalExpand(originRect) {
+    const panel = $(".modal-panel");
+    panel.style.transition = "none";
+    if (!originRect) {
+      panel.style.transform = "none";
+      panel.style.opacity = "0";
+      void panel.offsetWidth;
+      panel.style.transition = "opacity 0.22s ease";
+      panel.style.opacity = "1";
+      return;
+    }
+    const panelRect = panel.getBoundingClientRect();
+    const scale = Math.max(0.08, Math.min(0.96,
+      Math.min(originRect.width / panelRect.width, originRect.height / panelRect.height)));
+    const fromX = (originRect.left + originRect.width / 2) - (panelRect.left + panelRect.width / 2);
+    const fromY = (originRect.top + originRect.height / 2) - (panelRect.top + panelRect.height / 2);
+    panel.style.opacity = "0";
+    panel.style.transform = `translate(${fromX}px, ${fromY}px) scale(${scale})`;
+    void panel.offsetWidth; // force layout so the "from" state above paints before the transition below animates it away
+    panel.style.transition = "transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease";
+    panel.style.opacity = "1";
+    panel.style.transform = "translate(0px, 0px) scale(1)";
   }
   function closeModal() {
     if (modal.hidden) return;
@@ -258,8 +294,8 @@
     t.tabIndex = 0;
     t.setAttribute("role", "button");
     t.innerHTML = html;
-    t.addEventListener("click", onOpen);
-    t.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } });
+    t.addEventListener("click", () => onOpen(t));
+    t.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(t); } });
     return t;
   };
 
@@ -278,7 +314,7 @@
         <h3>${esc(p.title)}</h3>
         <div class="project-org">${esc(p.org)}</div>
         <div class="tile-cta">View full car →</div>
-      </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile sub-detail-car");
+      </div>`, (tile) => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }, tile), "project-tile sub-detail-car");
 
     const projectCol = el("div", "sub-detail-project");
     projectCol.innerHTML = `
@@ -338,7 +374,7 @@
               <h3>${esc(s.title)}</h3>
               <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
               <div class="tile-cta">Open detail →</div>
-            </div>`, () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) })));
+            </div>`, (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile)));
         });
       };
 
@@ -401,26 +437,37 @@
         <p class="tile-summary">${esc(p.summary)}</p>
         <div class="hl-row">${highlightChips(p)}</div>
         <div class="tile-cta">View project →</div>
-      </div>`, () => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }), "project-tile");
+      </div>`, (tile) => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }, tile), "project-tile");
   }
 
-  // FSAE row: the car tile on the left with its sub-projects dispersed as
-  // image cards to the right, so a viewer can see what was done inside a
-  // car without opening it — without touching the FSAE section's own
-  // vertical order or pulling sub-projects into the Featured Projects grid.
+  // FSAE row: the car tile on the left with its sub-projects dispersed to
+  // the right, grouped into one row per discipline (the same 4 filters used
+  // for Featured Projects, labelled at the row's right end) — so a viewer
+  // can see what was done inside a car, organized by discipline, without
+  // opening it and without touching the FSAE section's own vertical order
+  // or pulling sub-projects into the Featured Projects grid.
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
     row.appendChild(projectTile(p));
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
-      const grid = el("div", "subproj-card-grid");
-      subs.forEach((s) => {
-        grid.appendChild(makeTile(`
-          <img src="${esc(s.image)}" alt="" loading="lazy">
-          <span class="subproj-card-title">${esc(s.title)}</span>`,
-          () => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }), "subproj-card"));
+      const rows = el("div", "fsae-subprojects");
+      PROJECT_FILTER_CATEGORIES.forEach((cat) => {
+        const inCategory = subs.filter((s) => s.category === cat.tag);
+        if (!inCategory.length) return;
+        const catRow = el("div", "fsae-category-row");
+        const cards = el("div", "fsae-category-cards");
+        inCategory.forEach((s) => {
+          cards.appendChild(makeTile(`
+            <img src="${esc(s.image)}" alt="" loading="lazy">
+            <span class="subproj-card-title">${esc(s.title)}</span>`,
+            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile), "subproj-card"));
+        });
+        catRow.appendChild(cards);
+        catRow.appendChild(el("div", "fsae-category-label", esc(cat.label)));
+        rows.appendChild(catRow);
       });
-      row.appendChild(grid);
+      row.appendChild(rows);
     }
     return row;
   }
@@ -536,7 +583,7 @@
           <h3>${esc(it.name)}</h3>
           <div class="tile-caption ${isBlankPlaceholder(it.caption) ? "needs-input" : ""}">${esc(it.caption)}</div>
           <div class="tool-chips">${it.tools.slice(0, 4).map((t) => `<span class="mini-chip">${esc(t)}</span>`).join("")}</div>
-        </div>`, () => pushView({ crumb: it.name, render: () => toolkitDetail(kind, it) }), "tool-tile"));
+        </div>`, (tile) => pushView({ crumb: it.name, render: () => toolkitDetail(kind, it) }, tile), "tool-tile"));
     });
   }
   renderToolkit("#softwareGrid", "Software", C.toolkit && C.toolkit.software);
@@ -694,7 +741,7 @@
         <div class="hl-row">${linkedProject ? highlightChips(linkedProject) : ""}</div>
         <div class="tile-cta">View role →</div>
       </div>
-      <div class="exp-date-badge">${esc(e.period)}</div>`, () => pushView({ crumb: shortTitle(e.role), render: () => expDetail(e, linkedProject) }), "project-tile exp-tile"));
+      <div class="exp-date-badge">${esc(e.period)}</div>`, (tile) => pushView({ crumb: shortTitle(e.role), render: () => expDetail(e, linkedProject) }, tile), "project-tile exp-tile"));
   });
 
   /* ---------------- Thesis & Publications ---------------- */
@@ -739,7 +786,7 @@
         <p class="tile-summary">${esc(t.summary)}</p>
         <div class="hl-row">${highlightChips(t)}</div>
         <div class="tile-cta">View thesis →</div>
-      </div>`, () => pushView({ crumb: shortTitle(t.title), render: () => thesisDetail(t) }), "project-tile");
+      </div>`, (tile) => pushView({ crumb: shortTitle(t.title), render: () => thesisDetail(t) }, tile), "project-tile");
   }
 
   const thesisGrid = $("#thesisGrid");
