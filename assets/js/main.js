@@ -294,35 +294,50 @@
   // through to the plain-fade path below instead of forcing a bad morph.
   // Returns null if this view has nowhere good for the clone to land, in
   // which case the caller skips the clone animation entirely.
-  function primaryMorphTargetRect(root) {
+  function primaryMorphTargetEl(root) {
     if (root.querySelector(".toolkit-detail")) return null;
-    const el = root.querySelector(".sub-detail-project .detail-hero") || root.querySelector(".detail-hero");
-    return el ? el.getBoundingClientRect() : null;
+    return root.querySelector(".sub-detail-project .detail-hero") || root.querySelector(".detail-hero");
   }
-  function secondaryMorphTargetRect(root) {
-    const el = root.querySelector(".sub-detail-car-box .detail-hero");
-    return el ? el.getBoundingClientRect() : null;
+  function secondaryMorphTargetEl(root) {
+    return root.querySelector(".sub-detail-car-box .detail-hero");
   }
   function morphOpen(view) {
     const panel = $(".modal-panel");
     panel.style.transition = "none";
     panel.style.transform = "none";
     panel.style.visibility = "visible";
+    if (modalBody.querySelector(".toolkit-detail")) {
+      // Software & Manufacturing: no animation at all, the original
+      // pre-animation baseline — a thumbnail morph here always had to
+      // travel too far (see primaryMorphTargetEl), and even a plain fade
+      // still read as unwanted motion for these specifically.
+      panel.style.opacity = "1";
+      panel.style.pointerEvents = "";
+      return;
+    }
     panel.style.opacity = "0";
     panel.style.pointerEvents = "none";
-    // Cards with nowhere sensible to land (toolkit tiles — see
-    // primaryMorphTargetRect) just get the plain fade below, no clone.
-    const primaryTarget = view.originRect && view.originClone ? primaryMorphTargetRect(modalBody) : null;
-    if (primaryTarget) {
-      growClone(view.originClone, view.originRect, primaryTarget);
-      const secondaryTarget = view.secondaryRect && view.secondaryClone ? secondaryMorphTargetRect(modalBody) : null;
-      if (secondaryTarget) growClone(view.secondaryClone, view.secondaryRect, secondaryTarget);
+    const primaryEl = view.originRect && view.originClone ? primaryMorphTargetEl(modalBody) : null;
+    const secondaryEl = primaryEl && view.secondaryRect && view.secondaryClone ? secondaryMorphTargetEl(modalBody) : null;
+    // The panel's own fade-in (below) would otherwise show the real hero
+    // image fading in through the gaps the still-growing clone hasn't
+    // covered yet — a fading thumbnail visible underneath the morphing one.
+    // Hiding the hero element(s) outright and only making them visible
+    // again once the clone has fully landed keeps the fade to everything
+    // else in the box while the thumbnail itself does a clean hard cut.
+    if (primaryEl) primaryEl.style.visibility = "hidden";
+    if (secondaryEl) secondaryEl.style.visibility = "hidden";
+    if (primaryEl) {
+      growClone(view.originClone, view.originRect, primaryEl.getBoundingClientRect());
+      if (secondaryEl) growClone(view.secondaryClone, view.secondaryRect, secondaryEl.getBoundingClientRect());
     }
     void panel.offsetWidth; // force layout so the opacity:0 above paints before the fade-in below animates it away
     panel.style.transition = PANEL_FADE_TRANSITION;
     panel.style.opacity = "1";
     setTimeout(() => {
       panel.style.pointerEvents = "";
+      if (primaryEl) primaryEl.style.visibility = "";
+      if (secondaryEl) secondaryEl.style.visibility = "";
       if (view.originClone) view.originClone.remove();
       if (view.secondaryClone) view.secondaryClone.remove();
     }, MORPH_DURATION * 1000 + 20);
@@ -335,18 +350,26 @@
   function morphClose(view, onDone) {
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
+    if (modalBody.querySelector(".toolkit-detail")) {
+      onDone();
+      return;
+    }
     backdrop.style.transition = "opacity 0.34s ease";
     backdrop.style.opacity = "0";
     panel.style.pointerEvents = "none";
     panel.style.transition = PANEL_FADE_TRANSITION;
     panel.style.opacity = "0";
-    const primarySource = view && view.originRect && view.originClone ? primaryMorphTargetRect(modalBody) : null;
-    if (primarySource) {
-      growClone(view.originClone, primarySource, view.originRect);
-      if (view.secondaryClone) {
-        const secondarySource = secondaryMorphTargetRect(modalBody);
-        if (secondarySource) growClone(view.secondaryClone, secondarySource, view.secondaryRect);
-      }
+    const primaryEl = view && view.originRect && view.originClone ? primaryMorphTargetEl(modalBody) : null;
+    const secondaryEl = primaryEl && view.secondaryClone ? secondaryMorphTargetEl(modalBody) : null;
+    // Hide the real hero(es) immediately, before the panel starts fading
+    // out and the clone starts shrinking away — otherwise the fading-out
+    // hero shows through behind the departing clone, the same double-image
+    // as on open.
+    if (primaryEl) primaryEl.style.visibility = "hidden";
+    if (secondaryEl) secondaryEl.style.visibility = "hidden";
+    if (primaryEl) {
+      growClone(view.originClone, primaryEl.getBoundingClientRect(), view.originRect);
+      if (secondaryEl) growClone(view.secondaryClone, secondaryEl.getBoundingClientRect(), view.secondaryRect);
     }
     setTimeout(() => {
       if (view && view.originClone) view.originClone.remove();
@@ -1104,21 +1127,21 @@
       });
     });
 
-    // FSAE rows get the same per-card cascade as Featured Projects: the car
-    // tile appears first, then each discipline group's own cards reveal one
-    // at a time (not the whole group as a single block) — and, matching
-    // Featured Projects' own per-row reset (cycleIndex = i % cols above),
-    // each group's cards restart their stagger from 0 rather than
-    // continuing to count up across the whole row, so one discipline's
-    // cards finish cascading before the next discipline's begin.
+    // FSAE rows get a single continuous per-card cascade: the car tile
+    // appears first, then every sub-project card across all of that car's
+    // discipline groups reveals one after another (not reset per group —
+    // a per-group reset meant separate discipline rows, when several were
+    // already in the viewport together, all cascaded at once instead of
+    // one discipline finishing before the next starts). Delay resets only
+    // between different cars, matching Featured Projects' own per-row reset.
     document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
+      let i = 0;
       const carTile = row.querySelector(".project-tile");
-      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; }
-      row.querySelectorAll(".fsae-category-group").forEach((group) => {
-        group.querySelectorAll(".subproj-card").forEach((card, i) => {
-          card.classList.add("reveal");
-          card.style.transitionDelay = i * 70 + "ms";
-        });
+      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; i = 1; }
+      row.querySelectorAll(".subproj-card").forEach((card) => {
+        card.classList.add("reveal");
+        card.style.transitionDelay = i * 70 + "ms";
+        i++;
       });
     });
 
