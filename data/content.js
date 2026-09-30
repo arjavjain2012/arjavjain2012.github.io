@@ -1172,7 +1172,7 @@ window.SITE_CONTENT = {
       role: "Graduate EV-Powertrain Engineer Trainee, HV Systems",
       location: "Bengaluru, India",
       period: "Aug 2023 – Jul 2025",
-      summary: "2-year graduate program with the HV-Systems team, focused on building advanced electromechanical products for future JLR BEVs.",
+      summary: "2-year engineering position with the HV-Systems team, focused on building advanced electromechanical products for future JLR BEVs.",
       bullets: [
         "Initiated and owned a fugitive-CH4 range-extended EV concept, modeled at 36% more range and 12% less mass, carbon-negative.",
         "Filed 5 internal invention disclosures at JLR on DC-link capacitor pre-charging, the REEV, and charge-depletion control.",
