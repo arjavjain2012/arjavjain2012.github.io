@@ -596,10 +596,10 @@
           // instead of only the clicked card, so the whole row appears to
           // expand together into the two-box detail view.
           cards.appendChild(makeTile(`
-            <div class="tile-image${s.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(s.image)}" alt="" loading="lazy"></div>
-            <div class="subproj-card-caption">${esc(s.title)}</div>`,
+            <img src="${esc(s.image)}" alt="" loading="lazy">
+            <span class="subproj-card-title">${esc(s.title)}</span>`,
             (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
-            "subproj-card"));
+            "subproj-card" + (s.imageFit === "contain" ? " subproj-card-contain" : "")));
         });
         group.appendChild(cards);
         groups.appendChild(group);
