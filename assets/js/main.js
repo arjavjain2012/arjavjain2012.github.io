@@ -598,7 +598,8 @@
           cards.appendChild(makeTile(`
             <img src="${esc(s.image)}" alt="" loading="lazy">
             <span class="subproj-card-title">${esc(s.title)}</span>`,
-            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile), "subproj-card"));
+            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
+            "subproj-card" + (s.imageFit === "contain" ? " subproj-card-contain" : "")));
         });
         group.appendChild(cards);
         groups.appendChild(group);
@@ -611,8 +612,14 @@
 
   // iOS/macOS dock-style magnification: the card nearest the pointer grows,
   // with a smooth falloff to neighbors, as the pointer moves across the row.
+  // Cards also carry .reveal (scroll-in fade+rise) on this same `transform`
+  // property; setting this combined transition inline, only once the
+  // pointer actually starts moving over the row, keeps the reveal's own
+  // (slower, CSS-class-driven) entrance untouched until then, while making
+  // every hover-driven scale change afterward snap at the fast pace below.
   function attachDockHover(cardsRow) {
     const FALLOFF = 130, MAX_SCALE = 0.24;
+    const HOVER_TRANSITION = "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out";
     const reset = () => {
       cardsRow.querySelectorAll(".subproj-card").forEach((c) => { c.style.transform = ""; c.style.zIndex = ""; });
     };
@@ -621,6 +628,7 @@
         const r = c.getBoundingClientRect();
         const dist = Math.abs(e.clientX - (r.left + r.width / 2));
         const influence = Math.max(0, 1 - dist / FALLOFF);
+        c.style.transition = HOVER_TRANSITION;
         c.style.transform = influence > 0.01 ? `scale(${(1 + influence * MAX_SCALE).toFixed(3)})` : "";
         c.style.zIndex = influence > 0.01 ? String(Math.round(influence * 100)) : "";
       });
@@ -1127,21 +1135,19 @@
       });
     });
 
-    // FSAE rows get a single continuous per-card cascade: the car tile
-    // appears first, then every sub-project card across all of that car's
-    // discipline groups reveals one after another (not reset per group —
-    // a per-group reset meant separate discipline rows, when several were
-    // already in the viewport together, all cascaded at once instead of
-    // one discipline finishing before the next starts). Delay resets only
-    // between different cars, matching Featured Projects' own per-row reset.
+    // Each discipline group's card row cascades on its own, resetting the
+    // stagger delay back to 0 per group — the same pattern Featured
+    // Projects uses per grid row (cycleIndex = i % cols) — so this reads
+    // as the same animation as Featured Projects instead of one long
+    // continuous count down the whole car row.
     document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
-      let i = 0;
       const carTile = row.querySelector(".project-tile");
-      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; i = 1; }
-      row.querySelectorAll(".subproj-card").forEach((card) => {
-        card.classList.add("reveal");
-        card.style.transitionDelay = i * 70 + "ms";
-        i++;
+      if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; }
+      row.querySelectorAll(".fsae-category-cards").forEach((cardsRow) => {
+        Array.from(cardsRow.children).forEach((card, i) => {
+          card.classList.add("reveal");
+          card.style.transitionDelay = i * 70 + "ms";
+        });
       });
     });
 

@@ -732,7 +732,11 @@ footer {
 }
 /* Extra padding-top gives the dock-hover grow (below) headroom to expand
    into without being clipped by the row's own horizontal scroll overflow. */
-.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; padding: 24px 2px 4px; }
+/* overflow-y: hidden (rather than the "auto" the spec implies once
+   overflow-x is non-visible) so a card's own vertical reveal transform
+   never makes the browser treat this row as momentarily overflowing —
+   that was showing a transient scrollbar for the duration of the reveal. */
+.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 24px 2px 4px; }
 .subproj-card {
   position: relative;
   width: 160px;
@@ -743,22 +747,16 @@ footer {
   transform-origin: center bottom;
   transition: transform 0.15s ease-out;
 }
-/* These cards also carry .reveal (scroll-in) now, which — same selector
-   specificity as the plain .subproj-card rule above, so whichever comes
-   later in the file wins outright, not merges — would otherwise replace
-   the fast 0.15s dock-hover transition with .reveal's 0.7s one, making the
-   hover-follow magnify feel laggy. The extra specificity here keeps the
-   dock hover snappy while letting the opacity fade run at the slower,
-   reveal-matching pace. */
-/* No translateY here (unlike every other .reveal element) — these cards
-   sit in a horizontally-scrolling row (overflow-x: auto), and even a
-   transform-only vertical offset was making the browser treat the row as
-   momentarily overflowing, showing a scrollbar for the duration of the
-   reveal that vanished once each card settled. Opacity-only fade sidesteps
-   it entirely and still reads as a clean cascade. */
-.subproj-card.reveal { transform: none; transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out; }
 .subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* imageFit:"contain" sub-projects (nearly all of them) must not be cropped
+   to fill the 16:10 card the way a cover-fit image is — letterbox instead,
+   matching how every other tile type on the site already handles this
+   flag. Background goes on the card itself (not the img) so the morph
+   clone, which copies this container's computed background-color, picks
+   it up too. */
+.subproj-card.subproj-card-contain { background: #fff; }
+.subproj-card.subproj-card-contain img { object-fit: contain; }
 .subproj-card-title {
   position: absolute;
   inset: 0;
