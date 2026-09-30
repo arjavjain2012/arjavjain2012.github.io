@@ -497,7 +497,7 @@
         const visible = (filterable && activeCat) ? subs.filter((s) => s.category === activeCat) : subs;
         visible.forEach((s) => {
           grid.appendChild(makeTile(`
-            <div class="tile-image tile-image-subproj${s.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
+            <div class="tile-image${s.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>
             <div class="tile-body">
               <h3>${esc(s.title)}</h3>
               <ul class="tile-hl">${s.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
@@ -559,7 +559,7 @@
 
   function projectTile(p) {
     return makeTile(`
-      <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"></div>
+      <div class="tile-image${p.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"${p.heroPosition ? ` style="object-position: ${esc(p.heroPosition)}"` : ""}></div>
       <div class="tile-body">
         <div class="project-meta"><span>${esc(p.period)}</span></div>
         <h3>${esc(p.title)}</h3>

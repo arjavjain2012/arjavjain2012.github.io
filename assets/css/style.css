@@ -652,12 +652,6 @@ footer {
 }
 .tile:hover, .tile:focus-visible { border-color: var(--accent); transform: translateY(-2px); outline: none; }
 .tile-image { aspect-ratio: 2 / 1; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--bg-raised); }
-/* FSAE subproject tiles (browsed from inside a car's own "Disciplines &
-   sub-projects" grid — a second, un-dispersed entry point to the same
-   sub-projects as the .subproj-card grid) stay at the .subproj-card ratio:
-   they land on the same .sub-detail-project .detail-hero below, which is
-   pinned to match .subproj-card, not this file's new default. */
-.tile-image.tile-image-subproj { aspect-ratio: 16 / 10; }
 /* Card-open morph clone: just the thumbnail image, boxed to match
    .tile-image/.detail-hero, so only the image itself moves/resizes — the
    card's own text/body is never touched, and the detail view's other
@@ -747,7 +741,7 @@ footer {
   position: relative;
   width: 160px;
   flex: 0 0 auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   padding: 0;
   transform-origin: center bottom;
@@ -857,10 +851,6 @@ body.modal-open { overflow: hidden; }
    the same shape — the open/close morph can then swap between them with no
    visible change in the image's own proportions, only the box around it. */
 .detail-hero img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; display: block; }
-/* The FSAE subproject's own hero is the morph target for .subproj-card,
-   which stays at 16:10 — pinned here to match it, so that specific
-   thumbnail-to-hero animation keeps the exact same box shape throughout. */
-.sub-detail-project .detail-hero img { aspect-ratio: 16 / 10; }
 /* Same background as the modal's own padding area around it (.modal-panel),
    so the opened detail reads as one continuous surface with no visible seam
    where the content box would otherwise sit at a different color. */
