@@ -805,6 +805,11 @@ footer {
 .sub-detail .detail-hero-contain img,
 .sub-detail .gallery-item-contain img,
 .sub-detail .tile-image-contain { background: var(--bg); }
+/* Exception: the sub-project's own hero is exactly what the FSAE thumbnail
+   morph grows into, and that thumbnail now letterboxes on white — keeping
+   this one white too (instead of the dark match above) means the clone's
+   letterbox color never has to change mid-flight or pop at the swap. */
+.sub-detail .sub-detail-project .detail-hero-contain img { background: #fff; }
 .tile-cta { margin-top: auto; padding-top: 4px; font-family: var(--mono); font-size: 12px; color: var(--teal); }
 .tile-grid-compact .tile-image { aspect-ratio: 16 / 9; }
 .tile-grid-compact .tile-body { padding: 12px 14px 14px; gap: 6px; }
