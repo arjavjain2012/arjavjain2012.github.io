@@ -723,7 +723,7 @@ footer {
    Projects. */
 .fsae-category-group { min-width: 0; }
 .fsae-category-heading {
-  margin: 0 0 10px;
+  margin: 0 0 2px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
@@ -736,41 +736,32 @@ footer {
    overflow-x is non-visible) so a card's own vertical reveal transform
    never makes the browser treat this row as momentarily overflowing —
    that was showing a transient scrollbar for the duration of the reveal. */
-.fsae-category-cards { display: flex; flex-wrap: nowrap; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 24px 2px 4px; }
+.fsae-category-cards { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 24px 2px 4px; }
+/* Caption-below layout (display option 2): the card is a normal .tile —
+   its .tile-image crops/letterboxes the photo exactly like every other
+   tile on the site, and the title sits in a plain strip underneath rather
+   than overlaid on the image. thumbnailContainer() picks up .tile-image
+   for the morph rect, so the grow/shrink animation targets only the photo,
+   never the caption text below it. */
 .subproj-card {
   position: relative;
   width: 160px;
   flex: 0 0 auto;
-  aspect-ratio: 2 / 1;
-  overflow: hidden;
-  padding: 0;
   transform-origin: center bottom;
   transition: transform 0.15s ease-out;
 }
 .subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* imageFit:"contain" sub-projects (nearly all of them) must not be cropped
-   to fill the 16:10 card the way a cover-fit image is — letterbox instead,
-   matching how every other tile type on the site already handles this
-   flag. Background goes on the card itself (not the img) so the morph
-   clone, which copies this container's computed background-color, picks
-   it up too. */
-.subproj-card.subproj-card-contain { background: #fff; }
-.subproj-card.subproj-card-contain img { object-fit: contain; }
-.subproj-card-title {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 14px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 1.35;
+.subproj-card .tile-image { aspect-ratio: 2 / 1; }
+/* The whole-card dock-hover magnify (below) replaces the per-image hover
+   zoom every other tile gets — without this, the image would zoom inside
+   its own frame at the same time the whole card grows, a double zoom. */
+.subproj-card:hover .tile-image img, .subproj-card:focus-visible .tile-image img { transform: none; }
+.subproj-card-caption {
+  padding: 8px 10px 9px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text);
 }
 
 /* Sub-project detail (modal): two independent, unconnected boxes of equal
