@@ -347,15 +347,22 @@
   // card's thumbnail slot while the detail box fades out at the same pace,
   // both finishing together, so the detail visibly collapses back into the
   // card it came from instead of just disappearing.
-  function morphClose(view, onDone) {
+  // fullClose: true only when this close empties the whole stack (the
+  // backdrop should fade with it, revealing the real page underneath).
+  // popView() closes just the top view with a lower one still underneath,
+  // so the backdrop must stay fully opaque the whole time — fading it was
+  // briefly showing the real page through the modal on every back-navigation.
+  function morphClose(view, onDone, fullClose) {
     const panel = $(".modal-panel");
     const backdrop = $(".modal-backdrop");
     if (modalBody.querySelector(".toolkit-detail")) {
       onDone();
       return;
     }
-    backdrop.style.transition = "opacity 0.34s ease";
-    backdrop.style.opacity = "0";
+    if (fullClose) {
+      backdrop.style.transition = "opacity 0.34s ease";
+      backdrop.style.opacity = "0";
+    }
     panel.style.pointerEvents = "none";
     panel.style.transition = PANEL_FADE_TRANSITION;
     panel.style.opacity = "0";
@@ -374,8 +381,10 @@
     setTimeout(() => {
       if (view && view.originClone) view.originClone.remove();
       if (view && view.secondaryClone) view.secondaryClone.remove();
-      backdrop.style.transition = "";
-      backdrop.style.opacity = "";
+      if (fullClose) {
+        backdrop.style.transition = "";
+        backdrop.style.opacity = "";
+      }
       panel.style.pointerEvents = "";
       onDone();
     }, MORPH_DURATION * 1000);
@@ -390,10 +399,10 @@
       stack = [];
       if (depth) history.go(-depth);
     };
-    morphClose(top, finish);
+    morphClose(top, finish, true);
   }
   function popView() {
-    morphClose(stack[stack.length - 1], () => history.back());
+    morphClose(stack[stack.length - 1], () => history.back(), false);
   }
   modalBack.addEventListener("click", popView);
   $("#modalClose").addEventListener("click", closeModal);
