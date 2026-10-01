@@ -866,17 +866,56 @@ body.modal-open { overflow: hidden; }
    on the right stretching to match that combined height — a plain flex
    row with default align-items: stretch does this without explicit
    height math. Each cell is a clickable .tile (cursor, hover lift) that
-   opens its drawing full-size with the standard thumbnail morph; img
-   fills the cell via object-fit (not max-width centering) so
-   thumbnailRect/cloneThumbnail measure and copy it the same way they do
-   for every other morph-compatible tile on the site. */
+   opens its drawing in the standalone lightbox below (openCadLightbox) —
+   not the site's modal — so the card itself, and everything behind it,
+   never disappears. */
 .cad-views { display: flex; gap: 12px; margin: 22px 0; }
-.cad-cell { border: 1px solid var(--line); background: #fff; overflow: hidden; padding: 10px; }
+.cad-cell { position: relative; border: 1px solid var(--line); background: #fff; overflow: hidden; padding: 10px; }
 .cad-cell img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .cad-views-left { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
 .cad-views-left .cad-cell { aspect-ratio: 2 / 1; }
 .cad-views-front { flex: 1; min-width: 0; }
 @media (max-width: 620px) { .cad-views { flex-direction: column; } }
+.cad-zoom-badge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(12, 35, 58, 0.85);
+  border: 1px solid var(--line);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.cad-zoom-badge svg { width: 13px; height: 13px; }
+/* The lightbox itself: a transparent, full-viewport click target (click
+   outside the image closes it) — no scrim, so the page underneath is
+   never dimmed or hidden. The image and close button are the only
+   visible things, both position: fixed so they sit above everything,
+   including the modal, regardless of scroll. */
+.cad-lightbox { position: fixed; inset: 0; z-index: 300; }
+.cad-lightbox-img { position: fixed; margin: 0; display: block; z-index: 300; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
+.cad-lightbox-close {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 301;
+}
+.cad-lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
 .detail-list { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; }
 .detail .metric-row { margin: 16px 0 0; }
 .jlr-proj-card.jlr-proj-selected { border-color: var(--accent); }
