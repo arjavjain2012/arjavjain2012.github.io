@@ -490,16 +490,22 @@
     // Optional CAD orthographic views (side/top/front), shown above the
     // "Disciplines & sub-projects" section for cars that have them — side
     // and top stacked on the left, front spanning their combined height on
-    // the right via a plain flex row's default stretch.
+    // the right via a plain flex row's default stretch. Each view opens
+    // full-size with the same thumbnail-morph used everywhere else: a
+    // plain .detail-hero as the morph target is all primaryMorphTargetEl
+    // needs, so this reuses the existing open/close animation as-is.
     if (p.cadViews) {
+      const makeCadCell = (label, src, extraCls) => makeTile(
+        `<img src="${esc(src)}" alt="${esc(p.title)} — ${esc(label)} view" loading="lazy">`,
+        (tile) => pushView({ crumb: `${label} view`, render: () => cadViewDetail(p, label, src) }, tile),
+        "cad-cell" + (extraCls ? " " + extraCls : "")
+      );
       const cad = el("div", "cad-views");
-      cad.innerHTML = `
-        <div class="cad-views-left">
-          <div class="cad-cell"><img src="${esc(p.cadViews.side)}" alt="${esc(p.title)} — side view" loading="lazy"></div>
-          <div class="cad-cell"><img src="${esc(p.cadViews.top)}" alt="${esc(p.title)} — top view" loading="lazy"></div>
-        </div>
-        <div class="cad-cell cad-views-front"><img src="${esc(p.cadViews.front)}" alt="${esc(p.title)} — front view" loading="lazy"></div>
-      `;
+      const left = el("div", "cad-views-left");
+      left.appendChild(makeCadCell("Side", p.cadViews.side));
+      left.appendChild(makeCadCell("Top", p.cadViews.top));
+      cad.appendChild(left);
+      cad.appendChild(makeCadCell("Front", p.cadViews.front, "cad-views-front"));
       box.appendChild(cad);
     }
     if (subs.length) {
@@ -558,6 +564,20 @@
       const row = el("div", "tools-row", p.tools.map(toolBadge).join(""));
       box.appendChild(h); box.appendChild(row);
     }
+    return box;
+  }
+
+  // A CAD view's own expanded page: just its full drawing (contain-fit,
+  // never cropped) and a label. detail-hero-contain is the same class
+  // every other uncropped hero uses, so primaryMorphTargetEl finds it with
+  // no changes to the morph system itself.
+  function cadViewDetail(p, label, imageSrc) {
+    const box = el("div", "detail");
+    box.innerHTML = `
+      <div class="detail-hero detail-hero-contain"><img src="${esc(imageSrc)}" alt="${esc(p.title)} — ${esc(label)} view"></div>
+      <div class="detail-kicker">${esc(p.title)}</div>
+      <h2 class="detail-title">${esc(label)} view</h2>
+    `;
     return box;
   }
 

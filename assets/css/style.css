@@ -865,21 +865,17 @@ body.modal-open { overflow: hidden; }
    left (fixed ratio, so two of them stack to a predictable height), front
    on the right stretching to match that combined height — a plain flex
    row with default align-items: stretch does this without explicit
-   height math. */
+   height math. Each cell is a clickable .tile (cursor, hover lift) that
+   opens its drawing full-size with the standard thumbnail morph; img
+   fills the cell via object-fit (not max-width centering) so
+   thumbnailRect/cloneThumbnail measure and copy it the same way they do
+   for every other morph-compatible tile on the site. */
 .cad-views { display: flex; gap: 12px; margin: 22px 0; }
-.cad-cell {
-  border: 1px solid var(--line);
-  background: #fff;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
+.cad-cell { border: 1px solid var(--line); background: #fff; overflow: hidden; padding: 10px; }
+.cad-cell img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .cad-views-left { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
 .cad-views-left .cad-cell { aspect-ratio: 2 / 1; }
 .cad-views-front { flex: 1; min-width: 0; }
-.cad-views img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 @media (max-width: 620px) { .cad-views { flex-direction: column; } }
 .detail-list { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 15px; line-height: 1.65; display: flex; flex-direction: column; gap: 9px; }
 .detail .metric-row { margin: 16px 0 0; }
