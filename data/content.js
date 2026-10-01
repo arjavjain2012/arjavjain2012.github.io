@@ -729,7 +729,7 @@ window.SITE_CONTENT = {
         front: "assets/img/projects/iem26-cad-front.png"
       },
       dssFiles: [
-        { label: "Design Spec Sheet", url: "assets/docs/iem26-dss.xlsx" }
+        { label: "Design Spec Sheet", url: "assets/docs/iem26_DSS.xlsx" }
       ],
       tags: [],
       hideTagsRow: true,
@@ -830,6 +830,9 @@ window.SITE_CONTENT = {
         top: "assets/img/projects/rmse23-cad-top.png",
         front: "assets/img/projects/rmse23-cad-front.png"
       },
+      dssFiles: [
+        { label: "Design Spec Sheet", url: "assets/docs/rmse23_DSS.xlsx" }
+      ],
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Mechanical Head and Powertrain & Braking Head",
       metrics: [
@@ -990,8 +993,7 @@ window.SITE_CONTENT = {
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
       dssFiles: [
-        { label: "Design Spec Sheet — FBV 2021 (Car E04)", url: "assets/docs/rmse21-dss-fbv2021.xlsx" },
-        { label: "Design Spec Sheet — FB 2021 (Car E14)", url: "assets/docs/rmse21-dss-fb2021.xlsx" }
+        { label: "Design Spec Sheet", url: "assets/docs/rmse21_DSS.xlsx" }
       ],
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Powertrain & Braking Engineer",

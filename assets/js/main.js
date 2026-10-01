@@ -520,13 +520,14 @@
     }
     // A small floating box of downloadable reference documents (e.g. a
     // competition Design Spec Sheet) — sits right under the CAD views
-    // when there are any, or in that same spot when there aren't.
+    // when there are any, or in that same spot when there aren't. The
+    // whole box is the link (single line, no separate label row).
     if (p.dssFiles && p.dssFiles.length) {
       const dssBox = el("div", "dss-box");
-      dssBox.innerHTML = `
-        <div class="dss-box-label">Design Spec Sheet${p.dssFiles.length > 1 ? "s" : ""}</div>
-        <div class="dss-box-links">${p.dssFiles.map(linkHtml).join("")}</div>
-      `;
+      dssBox.innerHTML = p.dssFiles.map((f) => {
+        const isPh = f.isPlaceholder || isBlankPlaceholder(f.url);
+        return `<a class="dss-box-link${isPh ? " placeholder" : ""}" href="${isPh ? "#" : esc(f.url)}"${isPh ? "" : ' target="_blank" rel="noopener"'}>${esc(f.label)}</a>`;
+      }).join("");
       box.appendChild(dssBox);
     }
     if (subs.length) {
