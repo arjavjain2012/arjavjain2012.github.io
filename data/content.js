@@ -728,6 +728,9 @@ window.SITE_CONTENT = {
         top: "assets/img/projects/iem26-cad-top.webp",
         front: "assets/img/projects/iem26-cad-front.png"
       },
+      dssFiles: [
+        { label: "Design Spec Sheet", url: "assets/docs/iem26-dss.xlsx" }
+      ],
       tags: [],
       hideTagsRow: true,
       summary: "Powertrain and Vehicle Dynamics Engineer",
@@ -986,6 +989,10 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
+      dssFiles: [
+        { label: "Design Spec Sheet — FBV 2021 (Car E04)", url: "assets/docs/rmse21-dss-fbv2021.xlsx" },
+        { label: "Design Spec Sheet — FB 2021 (Car E14)", url: "assets/docs/rmse21-dss-fb2021.xlsx" }
+      ],
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Powertrain & Braking Engineer",
       bullets: [

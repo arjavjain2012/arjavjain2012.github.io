@@ -876,6 +876,13 @@ body.modal-open { overflow: hidden; }
 .cad-views-left .cad-cell { aspect-ratio: 2 / 1; }
 .cad-views-front { flex: 1; min-width: 0; }
 @media (max-width: 620px) { .cad-views { flex-direction: column; } }
+/* Small floating box of reference documents (e.g. a competition Design
+   Spec Sheet), sitting right under the CAD views. */
+.dss-box { margin: 22px 0; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-card); display: flex; flex-direction: column; gap: 8px; }
+.dss-box-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+.dss-box-links { display: flex; flex-direction: column; gap: 6px; }
+.dss-box-links a { font-family: var(--mono); font-size: 13px; color: var(--teal); text-decoration: none; }
+.dss-box-links a:hover { color: var(--accent); }
 .cad-zoom-badge {
   position: absolute;
   right: 8px;

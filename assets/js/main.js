@@ -518,6 +518,17 @@
       cad.appendChild(makeCadCell("Front", p.cadViews.front, "cad-views-front"));
       box.appendChild(cad);
     }
+    // A small floating box of downloadable reference documents (e.g. a
+    // competition Design Spec Sheet) — sits right under the CAD views
+    // when there are any, or in that same spot when there aren't.
+    if (p.dssFiles && p.dssFiles.length) {
+      const dssBox = el("div", "dss-box");
+      dssBox.innerHTML = `
+        <div class="dss-box-label">Design Spec Sheet${p.dssFiles.length > 1 ? "s" : ""}</div>
+        <div class="dss-box-links">${p.dssFiles.map(linkHtml).join("")}</div>
+      `;
+      box.appendChild(dssBox);
+    }
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
       box.appendChild(el("h4", "detail-sub", headingText));
