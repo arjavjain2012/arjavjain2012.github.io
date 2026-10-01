@@ -822,6 +822,11 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Apr 2022 – Jul 2023",
       image: "assets/img/projects/rmse23.jpg",
+      cadViews: {
+        side: "assets/img/projects/rmse23-cad-side.png",
+        top: "assets/img/projects/rmse23-cad-top.png",
+        front: "assets/img/projects/rmse23-cad-front.png"
+      },
       tags: ["Structures & Composites", "Thermal & Energy Systems", "Electronics & Controls", "Vehicle Dynamics & Simulation"],
       summary: "Mechanical Head and Powertrain & Braking Head",
       metrics: [
