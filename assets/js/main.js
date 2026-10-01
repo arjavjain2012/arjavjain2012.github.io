@@ -630,7 +630,7 @@
 
     const close = () => {
       clearTimeout(fadeInTimer);
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey, true);
       closeBtn.style.transition = "opacity 0.15s ease";
       closeBtn.style.opacity = "0";
       clone.style.top = srcRect.top + "px";
@@ -642,8 +642,17 @@
         img.style.visibility = "";
       }, MORPH * 1000);
     };
-    const onKey = (e) => { if (e.key === "Escape") close(); };
-    document.addEventListener("keydown", onKey);
+    // Capture phase + stopImmediatePropagation so this runs before (and
+    // suppresses) the site modal's own Escape handler underneath — both are
+    // listening on document, and without this, one Escape press closed the
+    // lightbox AND the modal at the same time.
+    const onKey = (e) => {
+      if (e.key !== "Escape") return;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      close();
+    };
+    document.addEventListener("keydown", onKey, true);
     closeBtn.addEventListener("click", close);
     overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
   }
