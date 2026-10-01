@@ -487,6 +487,21 @@
       <p class="detail-summary">${esc(p.summary)}</p>
       ${metricsRow(p.metrics)}
     `;
+    // Optional CAD orthographic views (side/top/front), shown above the
+    // "Disciplines & sub-projects" section for cars that have them — side
+    // and top stacked on the left, front spanning their combined height on
+    // the right via a plain flex row's default stretch.
+    if (p.cadViews) {
+      const cad = el("div", "cad-views");
+      cad.innerHTML = `
+        <div class="cad-views-left">
+          <div class="cad-cell"><img src="${esc(p.cadViews.side)}" alt="${esc(p.title)} — side view" loading="lazy"></div>
+          <div class="cad-cell"><img src="${esc(p.cadViews.top)}" alt="${esc(p.title)} — top view" loading="lazy"></div>
+        </div>
+        <div class="cad-cell cad-views-front"><img src="${esc(p.cadViews.front)}" alt="${esc(p.title)} — front view" loading="lazy"></div>
+      `;
+      box.appendChild(cad);
+    }
     if (subs.length) {
       const headingText = filterable ? "Disciplines &amp; sub-projects" : "Disciplines &amp; sub-projects — open one for the full detail";
       box.appendChild(el("h4", "detail-sub", headingText));
@@ -581,21 +596,6 @@
     const row = el("div", "fsae-row");
     const carTile = projectTile(p);
     row.appendChild(carTile);
-    const rightCol = el("div", "fsae-right-col");
-    // Optional CAD orthographic views (side/top/front), shown above the
-    // dispersed sub-project cards for cars that have them — side and top
-    // stacked on the left, front spanning their combined height on the right.
-    if (p.cadViews) {
-      const cad = el("div", "fsae-cad-views");
-      cad.innerHTML = `
-        <div class="fsae-cad-left">
-          <div class="fsae-cad-cell"><img src="${esc(p.cadViews.side)}" alt="${esc(p.title)} — side view" loading="lazy"></div>
-          <div class="fsae-cad-cell"><img src="${esc(p.cadViews.top)}" alt="${esc(p.title)} — top view" loading="lazy"></div>
-        </div>
-        <div class="fsae-cad-cell fsae-cad-front"><img src="${esc(p.cadViews.front)}" alt="${esc(p.title)} — front view" loading="lazy"></div>
-      `;
-      rightCol.appendChild(cad);
-    }
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
       const groups = el("div", "fsae-subprojects");
@@ -620,9 +620,8 @@
         groups.appendChild(group);
         attachDockHover(cards);
       });
-      rightCol.appendChild(groups);
+      row.appendChild(groups);
     }
-    if (rightCol.children.length) row.appendChild(rightCol);
     return row;
   }
 
