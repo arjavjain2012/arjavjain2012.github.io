@@ -717,6 +717,27 @@ footer {
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: 1fr; } }
+.fsae-right-col { min-width: 0; }
+/* Optional CAD orthographic views for a car, stacked above its
+   subprojects: side and top on the left (fixed ratio, so two of them
+   stack to a predictable height), front on the right stretching to match
+   that combined height — a plain flex row with default align-items:
+   stretch does this without any explicit height math. */
+.fsae-cad-views { display: flex; gap: 12px; margin-bottom: 24px; }
+.fsae-cad-left { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
+.fsae-cad-cell {
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.fsae-cad-left .fsae-cad-cell { aspect-ratio: 2 / 1; }
+.fsae-cad-front { flex: 1; min-width: 0; }
+.fsae-cad-views img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+@media (max-width: 860px) { .fsae-cad-views { flex-direction: column; } }
 .fsae-subprojects { display: flex; flex-direction: column; gap: 22px; }
 /* One heading + one single-line (never-wrapping, scrolls if it overflows)
    row of cards per discipline — the same 4 filters used for Featured

@@ -723,6 +723,11 @@ window.SITE_CONTENT = {
       period: "Sep 2025 – Present",
       image: "assets/img/projects/iem26.webp",
       heroPosition: "50% 78%",
+      cadViews: {
+        side: "assets/img/projects/iem26-cad-side.png",
+        top: "assets/img/projects/iem26-cad-top.png",
+        front: "assets/img/projects/iem26-cad-front.png"
+      },
       tags: [],
       hideTagsRow: true,
       summary: "Powertrain and Vehicle Dynamics Engineer",
