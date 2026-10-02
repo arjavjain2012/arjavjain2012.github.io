@@ -992,6 +992,11 @@ window.SITE_CONTENT = {
       context: "Formula Student",
       period: "Jan 2021 – Dec 2021",
       image: "assets/img/projects/rmse21.jpg",
+      cadViews: {
+        side: "assets/img/projects/rmse21-cad-side.png",
+        top: "assets/img/projects/rmse21-cad-top.png",
+        front: "assets/img/projects/rmse21-cad-front.png"
+      },
       dssFiles: [
         { label: "Design Spec Sheet", url: "assets/docs/rmse21_DSS.xlsx" }
       ],

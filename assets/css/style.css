@@ -876,22 +876,11 @@ body.modal-open { overflow: hidden; }
 .cad-views-left .cad-cell { aspect-ratio: 2 / 1; }
 .cad-views-front { flex: 1; min-width: 0; }
 @media (max-width: 620px) { .cad-views { flex-direction: column; } }
-/* Small floating box of reference documents (e.g. a competition Design
-   Spec Sheet), sitting right under the CAD views. The whole box is the
-   link and fills with the accent color on hover. */
-.dss-box { margin: 22px 0; display: flex; flex-direction: column; gap: 8px; }
-.dss-box-link {
-  display: block;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
-  background: var(--bg-card);
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 13px;
-  text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-.dss-box-link:hover, .dss-box-link:focus-visible { background: var(--accent); border-color: var(--accent); color: var(--bg); outline: none; }
+/* Reference documents (e.g. a competition Design Spec Sheet), sitting
+   right under the CAD views — same .project-links pill style as a
+   "Final report"-type link elsewhere, just with its own top margin since
+   it isn't following a bullet/tools list here. */
+.dss-links { margin: 22px 0 0; }
 .cad-zoom-badge {
   position: absolute;
   right: 8px;

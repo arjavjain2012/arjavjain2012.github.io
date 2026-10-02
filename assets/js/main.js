@@ -518,16 +518,14 @@
       cad.appendChild(makeCadCell("Front", p.cadViews.front, "cad-views-front"));
       box.appendChild(cad);
     }
-    // A small floating box of downloadable reference documents (e.g. a
-    // competition Design Spec Sheet) — sits right under the CAD views
-    // when there are any, or in that same spot when there aren't. The
-    // whole box is the link (single line, no separate label row).
+    // Downloadable reference documents (e.g. a competition Design Spec
+    // Sheet) — sits right under the CAD views when there are any, or in
+    // that same spot when there aren't. Reuses the exact same pill style
+    // as a project's "Final report"-type links (.project-links/linkHtml):
+    // sized to its own text, not the full card width.
     if (p.dssFiles && p.dssFiles.length) {
-      const dssBox = el("div", "dss-box");
-      dssBox.innerHTML = p.dssFiles.map((f) => {
-        const isPh = f.isPlaceholder || isBlankPlaceholder(f.url);
-        return `<a class="dss-box-link${isPh ? " placeholder" : ""}" href="${isPh ? "#" : esc(f.url)}"${isPh ? "" : ' target="_blank" rel="noopener"'}>${esc(f.label)}</a>`;
-      }).join("");
+      const dssBox = el("div", "project-links dss-links");
+      dssBox.innerHTML = p.dssFiles.map(linkHtml).join("");
       box.appendChild(dssBox);
     }
     if (subs.length) {
