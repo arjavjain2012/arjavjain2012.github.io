@@ -666,7 +666,17 @@ window.SITE_CONTENT = {
         gallery: [{ image: "assets/img/toolkit/cnc-carvey-router.png", caption: "Desktop CNC routing" }, { image: "assets/img/toolkit/cnc-gcode.png", caption: "Post-processed G-code toolpath", imageFit: "contain" }] },
       { name: "Composites", caption: "CFRP monocoque vacuum-bagged for cure", image: "assets/img/toolkit/composite-vacuum-bagging.jpg",
         tools: ["CFRP wet layup", "Vacuum bagging", "CNC-MDF & wire-cut foam moulds"],
-        gallery: [] },
+        gallery: [
+          { image: "assets/img/toolkit/composite-team-layup.jpeg", caption: "Wet-layup draping a full chassis tub, ahead of vacuum bagging" },
+          { image: "assets/img/toolkit/composite-vacuum-bag-layup.jpg", caption: "Vacuum-bagged CFRP layup, debulked and pinned before cure" },
+          { image: "assets/img/toolkit/composite-vacuum-bag-panel.jpeg", caption: "Vacuum-bagged sandwich panel with a resin/vacuum port fitting" },
+          { image: "assets/img/toolkit/composite-nosecone-demoulded.jpeg", caption: "Cured CFRP nose cone, freshly demoulded" },
+          { image: "assets/img/toolkit/composite-cfrp-bracket.jpeg", caption: "Small cured CFRP bracket, trimmed to size" },
+          { image: "assets/img/toolkit/composite-mould-segments.jpeg", caption: "Split mould segments stacked after a layup run" },
+          { image: "assets/img/toolkit/composite-gfrp-nosecone-side.jpg", caption: "Cured fiberglass nose cone — side profile" },
+          { image: "assets/img/toolkit/composite-gfrp-nosecone-vents.jpg", caption: "Fiberglass nose cone with cooling vent louvers" },
+          { image: "assets/img/toolkit/composite-gfrp-nosecone-front.jpg", caption: "Fiberglass nose cone — front view" }
+        ] },
       { name: "Casting & Rapid Tooling", caption: "Pouring molten metal into a sand mold", image: "assets/img/toolkit/sand-casting-pour.png",
         tools: ["Sand casting", "SLS-printed tooling", "Injection molding"],
         gallery: [] },
