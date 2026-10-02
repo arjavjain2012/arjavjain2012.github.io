@@ -473,8 +473,9 @@
       ${(s.gallery && s.gallery.length) ? `
       <h4 class="detail-sub">Gallery</h4>
       <div class="tile-grid">${s.gallery.map((g) => `
-        <figure class="gallery-item"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
+        <figure class="gallery-item"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${ZOOM_ICON_BADGE}</div>${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
     `;
+    wireGalleryLightboxes(projectCol);
 
     box.appendChild(carBox);
     box.appendChild(projectCol);
@@ -500,14 +501,14 @@
     // "Disciplines & sub-projects" section for cars that have them — side
     // and top stacked on the left, front spanning their combined height on
     // the right via a plain flex row's default stretch. Each view expands
-    // via openCadLightbox — a standalone overlay, not the site's modal
+    // via openImageLightbox — a standalone overlay, not the site's modal
     // stack — since these have no title/caption of their own and the car
     // detail underneath must stay fully visible, not get replaced by a
     // pushed view the way every other morph on the site works.
     if (p.cadViews) {
       const makeCadCell = (label, src, extraCls) => makeTile(
         `<img src="${esc(src)}" alt="${esc(p.title)} — ${esc(label)} view" loading="lazy">${ZOOM_ICON_BADGE}`,
-        (tile) => openCadLightbox(tile),
+        (tile) => openImageLightbox(tile),
         "cad-cell" + (extraCls ? " " + extraCls : "")
       );
       const cad = el("div", "cad-views");
@@ -590,13 +591,14 @@
   // A small always-on badge marking a CAD view as expandable.
   const ZOOM_ICON_BADGE = `<span class="cad-zoom-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>`;
 
-  // Standalone image lightbox for the CAD views: no title, no caption, no
-  // backdrop — the card it came from (and everything else already on
-  // screen, including the modal underneath) stays exactly as it is. The
-  // clicked image itself grows in place to a large centered size and
-  // shrinks back to the exact same spot on close, with a small close
-  // button that only appears pinned to the enlarged image's own corner.
-  function openCadLightbox(cell) {
+  // Standalone image lightbox (CAD views, sub-project/toolkit galleries):
+  // no title, no caption, no backdrop — the card it came from (and
+  // everything else already on screen, including the modal underneath)
+  // stays exactly as it is. The clicked image itself grows in place to a
+  // large centered size and shrinks back to the exact same spot on close,
+  // with a small close button that only appears pinned to the enlarged
+  // image's own corner.
+  function openImageLightbox(cell) {
     const img = cell.querySelector("img");
     const srcRect = img.getBoundingClientRect();
     const ratio = img.naturalWidth / img.naturalHeight || srcRect.width / srcRect.height;
@@ -665,6 +667,20 @@
     document.addEventListener("keydown", onKey, true);
     closeBtn.addEventListener("click", close);
     overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+  }
+
+  // Makes every ".gallery-item" figure inside a detail view (sub-project
+  // galleries, toolkit evidence galleries) open via openImageLightbox,
+  // the same click-to-enlarge/morph-back behavior as the CAD views.
+  function wireGalleryLightboxes(root) {
+    root.querySelectorAll(".gallery-item").forEach((fig) => {
+      fig.tabIndex = 0;
+      fig.setAttribute("role", "button");
+      fig.addEventListener("click", () => openImageLightbox(fig));
+      fig.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openImageLightbox(fig); }
+      });
+    });
   }
 
   function toolBadge(t) {
@@ -859,8 +875,9 @@
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
       <h4 class="detail-sub">Evidence</h4>
       <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
-        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
+        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy">${ZOOM_ICON_BADGE}</div><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
     `;
+    wireGalleryLightboxes(box);
     return box;
   }
   function renderToolkit(gridSel, kind, items) {
