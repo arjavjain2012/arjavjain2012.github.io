@@ -622,7 +622,9 @@
     img.style.visibility = "hidden"; // avoid a flash of the thumbnail once the clone grows away from it
 
     void clone.offsetWidth; // force layout so the "from" rect above paints before animating away
-    const maxW = window.innerWidth * 0.88, maxH = window.innerHeight * 0.88;
+    // Wide drawings are tiny at 88% of a phone's width — use nearly all of it.
+    const fill = window.innerWidth < 620 ? 0.95 : 0.88;
+    const maxW = window.innerWidth * fill, maxH = window.innerHeight * 0.88;
     let w = maxW, h = maxW / ratio;
     if (h > maxH) { h = maxH; w = maxH * ratio; }
     const top = (window.innerHeight - h) / 2, left = (window.innerWidth - w) / 2;
@@ -633,8 +635,8 @@
     clone.style.height = h + "px";
     // Pre-positioned (while invisible) to its final spot on the enlarged
     // image's corner, then just fades in once the grow finishes.
-    closeBtn.style.top = top - 14 + "px";
-    closeBtn.style.left = left + w - 18 + "px";
+    closeBtn.style.top = Math.max(top - 14, 6) + "px";
+    closeBtn.style.left = Math.min(left + w - 18, window.innerWidth - 38) + "px";
     const fadeInTimer = setTimeout(() => {
       closeBtn.style.transition = "opacity 0.15s ease";
       closeBtn.style.opacity = "1";
