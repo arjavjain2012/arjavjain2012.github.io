@@ -757,6 +757,9 @@
   // (slower, CSS-class-driven) entrance untouched until then, while making
   // every hover-driven scale change afterward snap at the fast pace below.
   function attachDockHover(cardsRow) {
+    // Touch screens emit emulated mouse events on tap, which left the row
+    // magnified after opening and closing a card.
+    if (window.matchMedia("(hover: none)").matches) return;
     const FALLOFF = 130, MAX_SCALE = 0.24;
     const HOVER_TRANSITION = "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out";
     const reset = () => {

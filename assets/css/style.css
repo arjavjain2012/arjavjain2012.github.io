@@ -1040,3 +1040,27 @@ body.modal-open { overflow: hidden; }
   .subproj-card-title { font-size: 14px; padding: 12px; }
   .modal-back, .modal-close { min-height: 40px; }
 }
+
+/* Top bar on phones/tablets. */
+@media (max-width: 820px) {
+  /* At 88% opacity, section headings scrolling underneath showed through
+     behind the search box and icons. The bar is navy in both themes, so a
+     solid navy fill is safe. */
+  header.nav { background: rgb(11, 13, 16); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  /* While the search box has focus, give it the whole bar instead of
+     squeezing it between the logo and the menu/social icons (the hamburger
+     used to sit on top of its right edge). */
+  .nav-inner:has(.nav-search:focus-within) .nav-toggle,
+  .nav-inner:has(.nav-search:focus-within) .nav-right { display: none; }
+  .nav-inner:has(.nav-search:focus-within) .nav-left { flex: 1 1 auto; }
+  .nav-inner:has(.nav-search:focus-within) .nav-search { flex: 1 1 auto; max-width: none; }
+  body.search-active .nav-search { border-color: var(--accent); }
+}
+
+/* Touch screens: a tap fires emulated hover/mouse events, which left the
+   last-tapped card lifted and the sub-project row magnified after closing
+   a card. Hover-only effects shouldn't apply there. */
+@media (hover: none) {
+  .tile:hover { transform: none; border-color: var(--line); }
+  .tile:hover .tile-image img { transform: none; }
+}
