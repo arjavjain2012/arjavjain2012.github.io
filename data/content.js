@@ -1045,8 +1045,8 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/cold-plate-ml-report.pdf" }
       ],
       tools: [
-        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" },
-        { name: "Python", logo: "assets/img/tools/python.svg" },
+        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys-logo.png" },
+        { name: "Python", logo: "assets/img/tools/python-logo.png" },
         { name: "scikit-learn", logo: "assets/img/tools/scikit-learn.svg" },
         { name: "XGBoost" }
       ]
@@ -1072,6 +1072,11 @@ window.SITE_CONTENT = {
       hideTagsRow: true,
       summary: "Powertrain and Vehicle Dynamics Engineer",
       bullets: [],
+      tools: [
+        { name: "VI-grade" },
+        { name: "Python" },
+        { name: "ANSYS" }
+      ],
       metrics: [
         { label: "Engineering Design, FSAEM 2026", value: "3rd" }
       ]
@@ -1126,7 +1131,7 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/magnesium-wheels-report.pptx" }
       ],
       tools: [
-        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" }
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks-logo.png" }
       ]
     },
     {
@@ -1203,8 +1208,8 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/jlr-bonnet-report.pptx" }
       ],
       tools: [
-        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" },
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks-logo.png" },
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.png" },
         { name: "Arduino", logo: "assets/img/tools/arduino.svg" }
       ]
     },
@@ -1262,7 +1267,7 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/dorle-report.pptx" }
       ],
       tools: [
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.png" }
       ]
     },
     {
@@ -1289,8 +1294,8 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/turbojet-nozzle-report.pptx" }
       ],
       tools: [
-        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
-        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys.svg" }
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks-logo.png" },
+        { name: "ANSYS Fluent", logo: "assets/img/tools/ansys-logo.png" }
       ]
     },
     {
@@ -1318,7 +1323,8 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/bosch-ev-report.pptx" }
       ],
       tools: [
-        { name: "MATLAB / Simulink", logo: "assets/img/tools/matlab.png" }
+        { name: "MATLAB / Simulink", logo: "assets/img/tools/mathworks.png" },
+        { name: "MS Office" }
       ]
     },
     {
@@ -1384,7 +1390,7 @@ window.SITE_CONTENT = {
         { label: "Final report", url: "assets/docs/rejuvenation-heritage-report.pptx" }
       ],
       tools: [
-        { name: "Python", logo: "assets/img/tools/python.svg" }
+        { name: "Python", logo: "assets/img/tools/python-logo.png" }
       ]
     },
     {
@@ -1414,7 +1420,10 @@ window.SITE_CONTENT = {
       tools: [
         { name: "TensorFlow", logo: "assets/img/tools/tensorflow.svg" },
         { name: "ROS", logo: "assets/img/tools/ros.svg" },
-        { name: "Raspberry Pi", logo: "assets/img/tools/raspberrypi.svg" }
+        { name: "Raspberry Pi", logo: "assets/img/tools/raspberrypi.svg" },
+        { name: "Python" },
+        { name: "Visio" },
+        { name: "MS Office" }
       ]
     },
     {
@@ -1486,12 +1495,12 @@ window.SITE_CONTENT = {
           tools: [
             { name: "PCAN" },
             { name: "CANape" },
-            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+            { name: "MATLAB", logo: "assets/img/tools/mathworks.png" },
             { name: "FlexAnalyzer" },
             { name: "Chroma" },
             { name: "ElektoAutomatik" },
             { name: "NI DAQ" },
-            { name: "Python", logo: "assets/img/tools/python.svg" }
+            { name: "Python", logo: "assets/img/tools/python-logo.png" }
           ]
         },
         {
@@ -1520,7 +1529,7 @@ window.SITE_CONTENT = {
             { name: "Draw.io" },
             { name: "Weg" },
             { name: "MS Office" },
-            { name: "Python", logo: "assets/img/tools/python.svg" }
+            { name: "Python", logo: "assets/img/tools/python-logo.png" }
           ]
         }
       ]
@@ -1588,7 +1597,7 @@ window.SITE_CONTENT = {
           tools: [
             { name: "3DExperience CATIA" },
             { name: "Star CCM+" },
-            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+            { name: "MATLAB", logo: "assets/img/tools/mathworks.png" },
             { name: "LTSpice" },
             { name: "PSpice" },
             { name: "ABAQUS" },
@@ -1607,9 +1616,10 @@ window.SITE_CONTENT = {
           ],
           tools: [
             { name: "3DExperience CATIA" },
-            { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
-            { name: "ANSYS", logo: "assets/img/tools/ansys.svg" },
-            { name: "Lucid" }
+            { name: "MATLAB", logo: "assets/img/tools/mathworks.png" },
+            { name: "ANSYS", logo: "assets/img/tools/ansys-logo.png" },
+            { name: "Lucid" },
+            { name: "Visio" }
           ]
         },
         {
@@ -1647,9 +1657,9 @@ window.SITE_CONTENT = {
         "Sized a paraffin PCM buffer to absorb 9 kJ of fast-charge heat per module, predicting a 15 K cut in peak cell temperature."
       ],
       tools: [
-        { name: "SolidWorks", logo: "assets/img/tools/solidworks.svg" },
-        { name: "ANSYS", logo: "assets/img/tools/ansys.svg" },
-        { name: "MATLAB", logo: "assets/img/tools/matlab.png" },
+        { name: "SolidWorks", logo: "assets/img/tools/solidworks-logo.png" },
+        { name: "ANSYS", logo: "assets/img/tools/ansys-logo.png" },
+        { name: "MATLAB", logo: "assets/img/tools/mathworks.png" },
         { name: "MS Office" }
       ]
     }

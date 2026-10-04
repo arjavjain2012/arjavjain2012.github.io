@@ -866,7 +866,7 @@ body.modal-open { overflow: hidden; }
 .modal-back:hover, .modal-close:hover { border-color: var(--accent); color: var(--accent); }
 .modal-crumbs { flex: 1; min-width: 0; font-family: var(--mono); font-size: 12px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .modal-body { padding: 28px 32px 64px; }
-.detail-hero { border: 1px solid var(--line); margin-bottom: 20px; }
+.detail-hero { position: relative; border: 1px solid var(--line); margin-bottom: 20px; cursor: zoom-in; }
 /* Same ratio as .tile-image, so a card's thumbnail and its detail hero are
    the same shape — the open/close morph can then swap between them with no
    visible change in the image's own proportions, only the box around it. */
@@ -962,9 +962,10 @@ body.modal-open { overflow: hidden; }
 .jlr-proj-cat:first-of-type { margin-top: 4px; }
 .jlr-proj-fulldetail .tools-row { margin-top: 20px; }
 .tools-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.tools-row + .skill-items { margin-top: 12px; }
 .tool-badge {
-  height: 40px;
-  padding: 0 16px;
+  height: 44px;
+  padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -972,7 +973,7 @@ body.modal-open { overflow: hidden; }
   border: 1px solid var(--line);
   border-radius: 4px;
 }
-.tool-badge img { height: 22px; width: auto; max-width: none; display: block; }
+.tool-badge img { height: 30px; width: auto; max-width: 150px; object-fit: contain; display: block; }
 .tool-badge-text { color: #1a1a1a; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
 
 /* ---------- Scroll-reveal ---------- */

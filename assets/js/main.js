@@ -209,6 +209,7 @@
     modalBody.innerHTML = "";
     const rendered = v.render();
     modalBody.appendChild(rendered);
+    wireGalleryLightboxes(modalBody);
     // The car+project split view needs more than the standard panel width
     // to give each of its two boxes real room.
     $(".modal-panel").classList.toggle("modal-panel-wide", rendered.classList.contains("sub-detail"));
@@ -467,7 +468,7 @@
       <h4 class="detail-sub">Technical Achievements</h4>
       <ul class="detail-list">${s.writeup.achievements.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
       <h4 class="detail-sub">Tools Used</h4>
-      <div class="skill-items">${s.writeup.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>` : `
+      ${toolsHtml(s.writeup.tools, "chip")}` : `
       <h4 class="detail-sub">Development highlights</h4>
       <ul class="detail-list">${(s.bullets || []).map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`}
       ${(s.gallery && s.gallery.length) ? `
@@ -580,10 +581,10 @@
       box.appendChild(h); box.appendChild(ul);
     }
     if (p.links && p.links.length) box.appendChild(el("div", "project-links", p.links.map(linkHtml).join("")));
-    if (p.tools && p.tools.length) {
-      const h = el("h4", "detail-sub", "Tools Used");
-      const row = el("div", "tools-row", p.tools.map(toolBadge).join(""));
-      box.appendChild(h); box.appendChild(row);
+    const toolList = [...(p.tools || []), ...subprojectToolRollup(p)];
+    if (toolList.length) {
+      box.appendChild(el("h4", "detail-sub", "Tools Used"));
+      box.insertAdjacentHTML("beforeend", toolsHtml(toolList, "badge"));
     }
     return box;
   }
@@ -677,11 +678,17 @@
     overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
   }
 
-  // Makes every ".gallery-item" figure inside a detail view (sub-project
-  // galleries, toolkit evidence galleries) open via openImageLightbox,
-  // the same click-to-enlarge/morph-back behavior as the CAD views.
+  // Makes the clickable images inside a detail view open in the lightbox:
+  // gallery cells, and the large hero image at the top of every expanded
+  // card (a zoom badge is added to the hero). Safe to call more than once on
+  // the same content — each element is wired only once.
   function wireGalleryLightboxes(root) {
-    root.querySelectorAll(".gallery-item").forEach((fig) => {
+    root.querySelectorAll(".gallery-item, .detail-hero").forEach((fig) => {
+      if (fig.dataset.zoomWired) return;
+      const img = fig.querySelector("img");
+      if (!img || /placeholder/.test(img.getAttribute("src") || "")) return;
+      fig.dataset.zoomWired = "1";
+      if (fig.classList.contains("detail-hero")) fig.insertAdjacentHTML("beforeend", ZOOM_ICON_BADGE);
       fig.tabIndex = 0;
       fig.setAttribute("role", "button");
       fig.addEventListener("click", () => openImageLightbox(fig));
@@ -691,10 +698,87 @@
     });
   }
 
-  function toolBadge(t) {
-    return t.logo
-      ? `<div class="tool-badge" title="${esc(t.name)}"><img src="${esc(t.logo)}" alt="${esc(t.name)}"></div>`
-      : `<div class="tool-badge tool-badge-text">${esc(t.name)}</div>`;
+  // Tool name -> logo (file in assets/img/tools) and display label. Names
+  // are matched against a lowercase copy, so "ANSYS ACP", "Ansys Icepak" and
+  // "ANSYS Fluent" all resolve to the ANSYS logo. One list serves featured
+  // projects, FSAE cars and sub-projects, and experience entries; a tool with
+  // no logo here simply renders as a text badge.
+  const TOOL_LOGOS = [
+    [/solidworks/, "solidworks-logo.png", "SolidWorks"],
+    [/ansys|icepak|fluent/, "ansys-logo.png", "ANSYS"],
+    [/matlab|simulink|simscape|stateflow/, "mathworks.png", "MATLAB / Simulink"],
+    [/altium/, "altium.svg", "Altium"],
+    [/ltspice/, "ltspice.png", "LTspice"],
+    [/pspice/, "pspice.png", "PSpice"],
+    [/multisim|\bni\b|national instruments|labview/, "national-instruments.png", "National Instruments"],
+    [/flexanalyzer|flexlogger/, "flexlogger.png", "FlexLogger"],
+    [/python/, "python-logo.png", "Python"],
+    [/carmaker/, "carmaker.png", "IPG CarMaker"],
+    [/vi-?grade|vi-?carrealtime|vi-?drivesim|suspensiongen/, "vi-grade.png", "VI-grade"],
+    [/catia|3dexperience|3dex/, "3dexperience.png", "3DEXPERIENCE CATIA"],
+    [/creo/, "creo.png", "PTC Creo"],
+    [/\bnx\b/, "siemens-nx.svg", "Siemens NX"],
+    [/abaqus/, "abaqus.png", "Abaqus"],
+    [/star[- ]?ccm/, "starccm.png", "STAR-CCM+"],
+    [/canape/, "canape.png", "Vector CANape"],
+    [/pcan/, "pcan.png", "PEAK PCAN"],
+    [/jira/, "jira.png", "Jira"],
+    [/polarion/, "polarion.png", "Polarion"],
+    [/lucid/, "lucidchart.png", "Lucidchart"],
+    [/draw\.?io/, "drawio.png", "draw.io"],
+    [/visio/, "visio.png", "Visio"],
+    [/ms office|msoffice|microsoft office|excel/, "msoffice.png", "Microsoft Office"],
+    [/chroma/, "chroma.png", "Chroma"],
+    [/elekt\w*[- ]?automatik/, "elektro-automatik.png", "Elektro-Automatik"],
+    [/\bweg\b/, "weg.png", "WEG"],
+    [/arduino/, "arduino.svg", "Arduino"],
+    [/proteus/, "proteus.svg", "Proteus"],
+    [/raspberry/, "raspberrypi.svg", "Raspberry Pi"],
+    [/\bros\b/, "ros.svg", "ROS"],
+    [/tensorflow/, "tensorflow.svg", "TensorFlow"],
+    [/scikit/, "scikit-learn.svg", "scikit-learn"]
+  ];
+  function toolInfo(t) {
+    const name = typeof t === "string" ? t : t.name;
+    const hit = TOOL_LOGOS.find(([re]) => re.test(name.toLowerCase()));
+    const logo = hit ? "assets/img/tools/" + hit[1] : (typeof t === "object" && t.logo) || null;
+    return { name, logo, label: hit ? hit[2] : name };
+  }
+
+  // A "Tools Used" block: one logo badge per distinct logo (several names that
+  // share a logo — e.g. MATLAB and Simulink — collapse into one badge whose
+  // tooltip lists them all), then anything without a logo. mode "badge" keeps
+  // unmatched tools as white text badges in the same row (featured projects,
+  // experience); mode "chip" puts them as dark text chips under the logos
+  // (FSAE sub-project write-ups).
+  function toolsHtml(list, mode) {
+    const groups = [], byLogo = new Map(), plain = [];
+    (list || []).forEach((t) => {
+      const { name, logo } = toolInfo(t);
+      if (!logo) { if (!plain.includes(name)) plain.push(name); return; }
+      if (byLogo.has(logo)) { const g = byLogo.get(logo); if (!g.names.includes(name)) g.names.push(name); }
+      else { const g = { logo, names: [name] }; byLogo.set(logo, g); groups.push(g); }
+    });
+    const badges = groups.map((g) => `<div class="tool-badge" title="${esc(g.names.join(", "))}"><img src="${esc(g.logo)}" alt="${esc(g.names.join(", "))}"></div>`).join("");
+    if (mode === "chip") {
+      return (badges ? `<div class="tools-row">${badges}</div>` : "") +
+        (plain.length ? `<div class="skill-items">${plain.map((n) => `<span class="skill-item">${esc(n)}</span>`).join("")}</div>` : "");
+    }
+    return `<div class="tools-row">${badges}${plain.map((n) => `<div class="tool-badge tool-badge-text">${esc(n)}</div>`).join("")}</div>`;
+  }
+
+  // A car's own tool row: the tools its sub-projects used that have a logo,
+  // most-used first, so every sub-project's tools roll up to the car.
+  function subprojectToolRollup(p) {
+    const subs = (C.subprojects && C.subprojects[p.id]) || [];
+    const counts = new Map();
+    subs.forEach((s) => ((s.writeup && s.writeup.tools) || []).forEach((t) => {
+      const { logo, label } = toolInfo(t);
+      if (!logo) return;
+      const c = counts.get(logo) || { name: label, n: 0 };
+      c.n += 1; counts.set(logo, c);
+    }));
+    return [...counts.values()].sort((a, b) => b.n - a.n).map((c) => ({ name: c.name }));
   }
 
   function highlightChips(p) {
@@ -1051,7 +1135,7 @@
           detailContent.innerHTML = `
             <h3 class="jlr-detail-title">${esc(p.title)}</h3>
             ${bulletsHtml}
-            ${p.tools && p.tools.length ? `<div class="detail-sub">Tools Used</div><div class="tools-row">${p.tools.map(toolBadge).join("")}</div>` : ""}
+            ${p.tools && p.tools.length ? `<div class="detail-sub">Tools Used</div>${toolsHtml(p.tools, "badge")}` : ""}
           `;
           fullDetail.hidden = false;
           fullDetail.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1073,7 +1157,7 @@
       box.appendChild(el("ul", "detail-list", e.bullets.map((b) => `<li>${esc(b)}</li>`).join("")));
       if (e.tools && e.tools.length) {
         box.appendChild(el("h4", "detail-sub", "Tools Used"));
-        box.appendChild(el("div", "tools-row", e.tools.map(toolBadge).join("")));
+        box.insertAdjacentHTML("beforeend", toolsHtml(e.tools, "badge"));
       }
     }
     if (linkedProject) {
@@ -1280,7 +1364,10 @@
     img.style.top = top + topOffset + "px";
   }
   const fsaeDrawingSpecs = [
-    { titlePart: "RMSE'21", topOffset: 20, image: "chassis-tubes-side.png", right: -40, width: 760, rotate: 60, flipV: true },
+    // The chassis sits below the last FSAE card, centred on the Thesis title
+    // beside it, so its upper part tucks behind the RMSE'21 "Vehicle
+    // Simulation" card above (see positionChassisBesideThesis).
+    { besideThesis: true, image: "chassis-tubes-side.png", right: -40, width: 760, rotate: 60, flipV: true },
     { titlePart: "IEM'26", topOffset: 10, image: "motor-mount-front.png", right: -40, width: 620, rotate: -6 }
   ];
   const fsaeDrawingEls = fsaeDrawingSpecs.map((spec) => {
@@ -1296,9 +1383,32 @@
     fsaeSection.appendChild(img);
     return img;
   });
-  const positionFsaeDrawings = () => fsaeDrawingSpecs.forEach((spec, i) => positionNextToFsaeRow(fsaeDrawingEls[i], spec.titlePart, spec.topOffset));
-  positionFsaeDrawings(); // best-effort now, corrected below once fonts settle
+  // Vertically centres a drawing on the "Thesis" heading, measured with
+  // offsets (not bounding rects) so the heading's scroll-reveal transform
+  // can't shift the result. The drawing rotates about its own centre, so
+  // centring its layout box centres what you see.
+  function positionChassisBesideThesis(img) {
+    const fsaeSection = $("#fsae"), thesisSection = $("#thesis");
+    const title = thesisSection && thesisSection.querySelector(".section-title");
+    if (!img || !fsaeSection || !title) return;
+    const sectionGap = thesisSection.getBoundingClientRect().top - fsaeSection.getBoundingClientRect().top;
+    const centerY = sectionGap + title.offsetTop + title.offsetHeight / 2;
+    img.style.top = Math.round(centerY - img.offsetHeight / 2) + "px";
+  }
+  const positionFsaeDrawings = () => fsaeDrawingSpecs.forEach((spec, i) => {
+    if (spec.besideThesis) positionChassisBesideThesis(fsaeDrawingEls[i]);
+    else positionNextToFsaeRow(fsaeDrawingEls[i], spec.titlePart, spec.topOffset);
+  });
+  positionFsaeDrawings(); // best-effort now, corrected below once fonts and the image settle
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(positionFsaeDrawings);
+  fsaeDrawingEls.forEach((img) => { if (img) img.addEventListener("load", positionFsaeDrawings); });
+  // The FSAE grids change height with the window width, moving the Thesis
+  // heading, so keep the placement in step.
+  let drawingResizeFrame = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(drawingResizeFrame);
+    drawingResizeFrame = requestAnimationFrame(positionFsaeDrawings);
+  });
 
   /* ---------------- Footer ---------------- */
   $("#footerText").textContent = `© ${new Date().getFullYear()} ${C.meta.name}`;
