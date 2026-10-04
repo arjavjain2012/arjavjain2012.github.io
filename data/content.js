@@ -170,7 +170,7 @@ window.SITE_CONTENT = {
   subprojects: {
     rmse23: [
       {
-        id: "24v-battery-and-bms", title: "24V Battery & BMS", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/24v-battery-and-bms/thumb.png", imageFit: "contain",
+        id: "24v-battery-and-bms", thumbAspect: 1.43, title: "24V Battery & BMS", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/24v-battery-and-bms/thumb.png", imageFit: "contain",
         highlights: ["Self-designed 7s4p LV pack and BMS powering ~360 W of low-voltage load at 92% efficiency"],
         metrics: [
           { value: "7s4p · 25.9 V", label: "Samsung 30Q LV pack" },
@@ -199,7 +199,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "board-level-and-integrated-testing", title: "Board Level & Integrated Testing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/board-level-and-integrated-testing/thumb.jpg",
+        id: "board-level-and-integrated-testing", thumbAspect: 1.78, title: "Board Level & Integrated Testing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/board-level-and-integrated-testing/thumb.jpg",
         highlights: ["Every safety device proven by a defined trigger: BMS, BSPD, IMD and HVD interlock"],
         metrics: [
           { value: "500 ms / 5 kW", label: "BSPD implausibility trip" },
@@ -223,7 +223,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "cfrp-composite-design-and-fabrication", title: "CFRP Composite Design & Fabrication", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/cfrp-composite-design-and-fabrication/thumb.jpg", imageFit: "contain",
+        id: "cfrp-composite-design-and-fabrication", thumbAspect: 0.56, title: "CFRP Composite Design & Fabrication", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/cfrp-composite-design-and-fabrication/thumb.jpg", imageFit: "contain",
         highlights: ["Carbon-fibre bodywork cut from 13 kg to 9 kg; floor closeouts, mounts and wings laid up in-house"],
         metrics: [
           { value: "13 → 9 kg", label: "Bodywork mass (glass → CFRP)" },
@@ -260,7 +260,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "chassis", title: "Chassis", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/chassis/thumb.png", imageFit: "contain",
+        id: "chassis", thumbAspect: 1.3, title: "Chassis", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/chassis/thumb.png", imageFit: "contain",
         highlights: ["Lighter 50F/50R space frame with 1755 N·m/° torsional stiffness, validated in FEA and on a twist rig"],
         metrics: [
           { value: "36 → 30 kg", label: "Chassis mass vs RMSE'19" },
@@ -297,7 +297,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "full-car-master-cad", title: "Full Car Master CAD", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/full-car-master-cad/thumb.png", imageFit: "contain",
+        id: "full-car-master-cad", thumbAspect: 1.36, title: "Full Car Master CAD", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/full-car-master-cad/thumb.png", imageFit: "contain",
         highlights: ["Single master assembly driving packaging, mass, CG and aero-body fit for the whole car"],
         metrics: [
           { value: "317 kg", label: "Car mass incl. 68 kg driver" },
@@ -320,7 +320,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "generative-design", title: "Generative Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/generative-design/thumb.png", imageFit: "contain",
+        id: "generative-design", thumbAspect: 1.57, title: "Generative Design", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/generative-design/thumb.png", imageFit: "contain",
         highlights: ["Wing mounts shaped by generative design under real aero loads, in 6061-T6"],
         metrics: [
           { value: "2", label: "Swan-neck wing mounts (rear)" },
@@ -340,7 +340,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "liquid-cooling-setup-and-validation", title: "Liquid Cooling Setup and Validation", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23/liquid-cooling-setup-and-validation/thumb.jpg",
+        id: "liquid-cooling-setup-and-validation", thumbAspect: 2, title: "Liquid Cooling Setup and Validation", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23/liquid-cooling-setup-and-validation/thumb.jpg",
         highlights: ["Single radiator held coolant inlet under 50 °C (motor) and 65 °C (MCU); bench test within 13% of model"],
         metrics: [
           { value: "135.9 kPa", label: "Loop pressure drop @ 7.5 LPM" },
@@ -364,7 +364,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "lltd-tuning", title: "LLTD Tuning", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/lltd-tuning/thumb.png", imageFit: "contain",
+        id: "lltd-tuning", thumbAspect: 1.77, title: "LLTD Tuning", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/lltd-tuning/thumb.png", imageFit: "contain",
         highlights: ["47/53 front/rear LLTD chosen from an understeer-gradient sweep — the first model-based LLTD on the team"],
         metrics: [
           { value: "47 / 53", label: "Front / rear LLTD" },
@@ -384,7 +384,7 @@ window.SITE_CONTENT = {
         gallery: []
       },
       {
-        id: "master-and-slave-bms", title: "Master & Slave BMS", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/master-and-slave-bms/thumb.jpg",
+        id: "master-and-slave-bms", thumbAspect: 1.48, title: "Master & Slave BMS", category: "Electronics & Controls", image: "assets/img/subprojects/rmse23/master-and-slave-bms/thumb.jpg",
         highlights: ["Eight-slave, one-master accumulator BMS covering a 128s6p pack with hardware fault latching"],
         metrics: [
           { value: "8 × 16", label: "Slave BMS boards × cells each" },
@@ -416,7 +416,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "motor-and-mcu-cooling", title: "Motor & MCU Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23/motor-and-mcu-cooling/thumb.png", imageFit: "contain",
+        id: "motor-and-mcu-cooling", thumbAspect: 1, title: "Motor & MCU Cooling", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse23/motor-and-mcu-cooling/thumb.png", imageFit: "contain",
         highlights: ["Transient motor and MCU loss model set a 1.9 kW duty; coolant kept below 50 °C and 65 °C"],
         metrics: [
           { value: "1.13 kW", label: "Avg motor loss (EMRAX 228)" },
@@ -443,7 +443,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "optimumlap-powertrain-sizing", title: "OptimumLap Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/optimumlap-powertrain-sizing/thumb.png", imageFit: "contain",
+        id: "optimumlap-powertrain-sizing", thumbAspect: 1.87, title: "OptimumLap Powertrain Sizing", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/optimumlap-powertrain-sizing/thumb.png", imageFit: "contain",
         highlights: ["70 kW peak / 45 kW continuous target from traction-limited lap-time sensitivity"],
         metrics: [
           { value: "70 kW", label: "Peak power target" },
@@ -466,7 +466,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "pacejka-tyre-modeling", title: "Pacejka Tyre Modeling", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/pacejka-tyre-modeling/thumb.png", imageFit: "contain",
+        id: "pacejka-tyre-modeling", thumbAspect: 1.58, title: "Pacejka Tyre Modeling", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/pacejka-tyre-modeling/thumb.png", imageFit: "contain",
         highlights: ["First processed TTC data into tyre models; Hoosier R25B 20.5/7.0 chosen from four candidates"],
         metrics: [
           { value: "4", label: "Tyres compared" },
@@ -493,7 +493,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "topology-optimization", title: "Topology Optimization", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/topology-optimization/thumb.png", imageFit: "contain",
+        id: "topology-optimization", thumbAspect: 2.28, title: "Topology Optimization", category: "Structures & Composites", image: "assets/img/subprojects/rmse23/topology-optimization/thumb.png", imageFit: "contain",
         highlights: ["Triangulated 6061-T6 pedals, rockers and uprights lightened by optimization and FEA"],
         metrics: [
           { value: "159 g / 104 g", label: "Brake / accelerator pedal" },
@@ -524,7 +524,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "tyre-slip-braking-model", title: "Tyre-Slip Braking Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/tyre-slip-braking-model/thumb.png", imageFit: "contain",
+        id: "tyre-slip-braking-model", thumbAspect: 2.09, title: "Tyre-Slip Braking Model", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse23/tyre-slip-braking-model/thumb.png", imageFit: "contain",
         highlights: ["Simulink slip model set a 3.1 brake bias and cut lock-up pedal force to 300 N"],
         metrics: [
           { value: "3.1", label: "Front : rear brake bias" },
@@ -548,7 +548,7 @@ window.SITE_CONTENT = {
     ],
     rmse21: [
       {
-        id: "538v-battery-pack-sizing-and-design", title: "538V Battery Pack Sizing & Design", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/538v-battery-pack-sizing-and-design/thumb.png", imageFit: "contain",
+        id: "538v-battery-pack-sizing-and-design", thumbAspect: 1.45, title: "538V Battery Pack Sizing & Design", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/538v-battery-pack-sizing-and-design/thumb.png", imageFit: "contain",
         highlights: ["538 V / 18 Ah, 128s6p accumulator sized from a well-to-wheel energy model"],
         metrics: [
           { value: "538 V · 18 Ah", label: "128s6p, Sony VTC6" },
@@ -589,7 +589,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "battery-forced-convection", title: "Battery Forced Convection", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/battery-forced-convection/thumb.png", imageFit: "contain",
+        id: "battery-forced-convection", thumbAspect: 1.75, title: "Battery Forced Convection", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/battery-forced-convection/thumb.png", imageFit: "contain",
         highlights: ["Icepak CFD showed 72.4 °C without cooling; two-fan forced air holds cells under 60 °C"],
         metrics: [
           { value: "72.4 → < 60 °C", label: "End-of-endurance cell temp" },
@@ -620,7 +620,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "battery-pack-enclosure-and-mounting", title: "Battery Pack Enclosure & Mounting", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/battery-pack-enclosure-and-mounting/thumb.png", imageFit: "contain",
+        id: "battery-pack-enclosure-and-mounting", thumbAspect: 1.32, title: "Battery Pack Enclosure & Mounting", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/battery-pack-enclosure-and-mounting/thumb.png", imageFit: "contain",
         highlights: ["1.5 mm laser-cut steel container; printed clips cut stress ~50% and lift the 20 g vertical FOS from 0.94 to 2.28"],
         metrics: [
           { value: "2.5 → 1.5 mm", label: "Container wall thickness" },
@@ -662,7 +662,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "brake-disc-design", title: "Brake Disc Design", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/brake-disc-design/thumb.png", imageFit: "contain",
+        id: "brake-disc-design", thumbAspect: 1.28, title: "Brake Disc Design", category: "Thermal & Energy Systems", image: "assets/img/subprojects/rmse21/brake-disc-design/thumb.png", imageFit: "contain",
         highlights: ["220 mm AISI 4130 slotted discs sized for 300–450 °C endurance and checked in thermal and structural FEA"],
         metrics: [
           { value: "220 mm", label: "Disc diameter" },
@@ -692,7 +692,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "drivetrain-and-pedal-box", title: "Drivetrain & Pedal Box", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21/drivetrain-and-pedal-box/thumb.jpg", imageFit: "contain",
+        id: "drivetrain-and-pedal-box", thumbAspect: 1.83, title: "Drivetrain & Pedal Box", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21/drivetrain-and-pedal-box/thumb.jpg", imageFit: "contain",
         highlights: ["EMRAX 228 + Torsen differential on a 3.615:1 chain drive, with a balance-bar pedal box tuned to 0.55F / 0.45R"],
         metrics: [
           { value: "3.615 : 1", label: "Chain reduction (13T / 47T)" },
@@ -721,7 +721,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "ergonomic-rigs", title: "Ergonomic Rigs", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/ergonomic-rigs/thumb.png", imageFit: "contain",
+        id: "ergonomic-rigs", thumbAspect: 1.3, title: "Ergonomic Rigs", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/ergonomic-rigs/thumb.png", imageFit: "contain",
         highlights: ["Adjustable wooden cockpit jig tested on four drivers set the seat angle and cockpit sizing"],
         metrics: [
           { value: "4", label: "Drivers measured" },
@@ -744,32 +744,32 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "lv-power-management", title: "LV Power Management", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/lv-power-management/thumb.png", imageFit: "contain",
-        highlights: ["Tree-structured LV distribution: fused, reverse-protected, filtered branches for every load group"],
+        id: "lv-power-management", thumbAspect: 1.96, title: "LV Power Management", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/lv-power-management/thumb.png", imageFit: "contain",
+        highlights: ["A 7s4p LV battery feeding fused, reverse-protected, filtered branches for every low-voltage load"],
         metrics: [
-          { value: "~550 W", label: "LV load (VCU, DAQ, relays, pump, fans)" },
-          { value: "24 V", label: "Main LV bus (12 / 5 / 3.3 V locally)" },
-          { value: "10.1 / 4.2 / 8.2 A", label: "Electronics / accumulator / motor-MCU branches" }
+          { value: "7s4p · 25.2 V", label: "Samsung 30Q LV battery" },
+          { value: "12 Ah · 60 A", label: "Capacity / peak discharge (5C)" },
+          { value: "≈ 360 W @ 92%", label: "LV load / efficiency" }
         ],
         writeup: {
-          overview: "Everything that is not the traction system — the VCU, DAQ, shutdown relays, coolant pump, radiator and accumulator fans — runs from the low-voltage system, and a fault in one branch must never take the others down. This project designed that distribution as a tree with protection on every branch.",
-          approach: "The load was tabulated by group at 24 V: LV electronics (VCU control 7.4 A, brake light, BSPD, discharge and TSAL, IMD, DAQ and sensors — 10.1 A in total), accumulator thermal (3.15 A of fans plus a 1.05 A box fan — 4.2 A) and motor and MCU thermal (a 5.7 A radiator fan and 2.5 A pump — 8.2 A), about 550 W overall. In the EDP-era design a BCM bus converter steps the accumulator voltage down to 34 V, which branches to three DCM converters at 24 V; the later design replaces that with a 7s4p 25.2 V, 12 Ah Samsung 30Q pack with 60 A peak capability (shown in the diagrams). Either way the structure is the same: a fused branch for each group (30 A, 10 A, 10 A and 5 A), each with reverse-polarity protection and input and output filters, plus an isolated ±15 V supply for the current sensor. Inside the VCU box a P-channel MOSFET (2SJ652) guards against reverse supply, LM2940 regulators make 12 V and 5 V from the 24 V rail, and an LDO makes 3.3 V from 5 V. A power card with isolated DC-DC modules shares the enclosure with the control, discharge, BSPD and DAQ boards. The BCM board is rated for about 1 kV, with a 1 kV fast-acting fuse (5 A on the BCM, 30 A on the DCM) and an RLC input filter that removes ripple before the DC-DC ICs.",
+          overview: "Everything that is not the traction system — the VCU, DAQ, shutdown-circuit relays, coolant pump, radiator and accumulator fans — runs from the low-voltage system, and a fault in one branch must never take the others down. This project designed that system around a dedicated lithium-ion LV battery and a tree of protected branches.",
+          approach: "A separate LV battery was chosen over DC-DC converters for being a robust, high-capacity source that delivers about 360 W at roughly 92% efficiency and is watched by its own BMS (over-voltage, under-voltage, over-current and short-circuit protection). The pack is 28 Samsung 30Q cells in 7s4p — about 25 V and 12 Ah, with a 60 A (5C) peak — selected for best-in-class capacity and energy density at a lower price than Sony VTC6. From the pack, a main fuse feeds one branch per load group: the power card (VCU, DAQ and electronics), motor and MCU thermal (radiator fan and pump) and accumulator thermal (fans), plus an isolated supply for the HV current sensor. Each branch has its own fuse (10 A, 10 A and 5 A downstream of the main), reverse-polarity protection and input and output filters, so a short or a reversed connection is confined to one branch. The power card steps 24 V down to 12 V, 5 V and 3.3 V with isolated DC-DC modules, behind a P-channel MOSFET reverse-polarity guard. The cards that make up the vehicle control unit — power card, control card, DAQ, discharge board and BSPD — are packaged together in one enclosure, with the battery's BMS fault line wired into the shutdown circuit.",
           achievements: [
-            "Tabulated the LV load by group (10.1 A electronics, 4.2 A accumulator thermal, 8.2 A motor and MCU thermal at 24 V, about 550 W) to size converters, fuses and wiring.",
+            "Specified a 7s4p Samsung 30Q LV battery (about 25 V, 12 Ah, 60 A peak) to supply roughly 360 W of low-voltage load at about 92% efficiency.",
             "Designed a tree-structured distribution with a fused, reverse-polarity-protected and filtered branch for each load group, so no single fault removes all low-voltage power.",
-            "Specified the power card and VCU boards — reverse-polarity MOSFET, 12 V / 5 V / 3.3 V regulation and isolated DC-DC stages — and packaged them with the control, discharge, BSPD and DAQ PCBs."
+            "Designed the power card — isolated DC-DC conversion to 12 V, 5 V and 3.3 V with a MOSFET reverse-polarity guard — and packaged it with the control, DAQ, discharge and BSPD boards in the VCU enclosure."
           ],
-          tools: ["Altium Designer", "LTspice", "SolidWorks"]
+          tools: ["Altium Designer", "SolidWorks", "Samsung 30Q cells"]
         },
         gallery: [
-          { image: "assets/img/subprojects/rmse21/lv-power-management/01.png", caption: "DC-DC architecture: fused branches to LV electronics, motor and MCU thermal and accumulator thermal loads", imageFit: "contain" },
+          { image: "assets/img/subprojects/rmse21/lv-power-management/01.png", caption: "LV distribution: battery fuse and fused branches to electronics, motor and MCU thermal, and accumulator thermal loads", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21/lv-power-management/02.jpg", caption: "Power card schematic: isolated DC-DC modules for 12 V, 5 V and 3.3 V", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21/lv-power-management/03.jpg", caption: "Power card PCB render", imageFit: "contain" },
           { image: "assets/img/subprojects/rmse21/lv-power-management/04.png", caption: "VCU enclosure layout: power card, control card, DAQ, discharge and BSPD PCBs", imageFit: "contain" }
         ]
       },
       {
-        id: "parametric-suspension-cad", title: "Parametric Suspension CAD", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/parametric-suspension-cad/thumb.png", imageFit: "contain",
+        id: "parametric-suspension-cad", thumbAspect: 1.86, title: "Parametric Suspension CAD", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/parametric-suspension-cad/thumb.png", imageFit: "contain",
         highlights: ["Suspension CAD regenerated from the VD team's hardpoints across 14 kinematic iterations"],
         metrics: [
           { value: "14", label: "Kinematic iterations regenerated" },
@@ -796,7 +796,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "precharge-and-rc-discharge-circuitry", title: "Precharge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/precharge-and-rc-discharge-circuitry/thumb.png", imageFit: "contain",
+        id: "precharge-and-rc-discharge-circuitry", thumbAspect: 2.22, title: "Precharge & RC Discharge Circuitry", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/precharge-and-rc-discharge-circuitry/thumb.png", imageFit: "contain",
         highlights: ["Inrush-limited AIR closing at 90–95% bus voltage and a 6.8 kΩ RC discharge that dumps the DC link on any fault"],
         metrics: [
           { value: "≥ 90–95%", label: "Bus voltage before AIR+ closes" },
@@ -827,7 +827,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "suspension-and-drivetrain-components", title: "Suspension & Drivetrain Components", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/suspension-and-drivetrain-components/thumb.jpg", imageFit: "contain",
+        id: "suspension-and-drivetrain-components", thumbAspect: 2.22, title: "Suspension & Drivetrain Components", category: "Structures & Composites", image: "assets/img/subprojects/rmse21/suspension-and-drivetrain-components/thumb.jpg", imageFit: "contain",
         highlights: ["25% mass cut at a 1.2 Goodman fatigue FOS; every part FEA-verified for its worst-case load"],
         metrics: [
           { value: "−25%", label: "Suspension & drivetrain mass" },
@@ -882,7 +882,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "vehicle-harness-and-coolant-line-routing", title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/vehicle-harness-and-coolant-line-routing/thumb.jpg", imageFit: "contain",
+        id: "vehicle-harness-and-coolant-line-routing", thumbAspect: 1.78, title: "Vehicle Harness & Coolant Line Routing", category: "Electronics & Controls", image: "assets/img/subprojects/rmse21/vehicle-harness-and-coolant-line-routing/thumb.jpg", imageFit: "contain",
         highlights: ["Harness and 1.9 m of coolant hose routed in CAD, with bend radii and service access checked before build"],
         metrics: [
           { value: "1,900 mm", label: "Total coolant hose run" },
@@ -905,7 +905,7 @@ window.SITE_CONTENT = {
         ]
       },
       {
-        id: "vehicle-simulation", title: "Vehicle Simulation", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21/vehicle-simulation/thumb.png", imageFit: "contain",
+        id: "vehicle-simulation", thumbAspect: 2.97, title: "Vehicle Simulation", category: "Vehicle Dynamics & Simulation", image: "assets/img/subprojects/rmse21/vehicle-simulation/thumb.png", imageFit: "contain",
         highlights: ["Forward powertrain model with a PI driver, and a 14-DOF vehicle-model build-out; ABS/TC simulated at +7% lap time"],
         metrics: [
           { value: "+7%", label: "Lap-time gain from simulated ABS / TC" },
@@ -999,6 +999,7 @@ window.SITE_CONTENT = {
           { image: "assets/img/toolkit/composite-nosecone-demoulded.jpeg", caption: "Cured CFRP nose cone, freshly demoulded" },
           { image: "assets/img/toolkit/composite-cfrp-bracket.jpeg", caption: "Small cured CFRP bracket, trimmed to size" },
           { image: "assets/img/toolkit/composite-mould-segments.jpeg", caption: "Split mould segments stacked after a layup run" },
+          { image: "assets/img/toolkit/composite-nosecone-plug.jpg", caption: "CNC-cut MDF nose-cone plug, being coated and smoothed before moulding" },
           { image: "assets/img/toolkit/composite-gfrp-nosecone-side.jpg", caption: "Cured fiberglass nose cone — side profile" },
           { image: "assets/img/toolkit/composite-gfrp-nosecone-vents.jpg", caption: "Fiberglass nose cone with cooling vent louvers" },
           { image: "assets/img/toolkit/composite-gfrp-nosecone-front.jpg", caption: "Fiberglass nose cone — front view" }
@@ -1006,7 +1007,7 @@ window.SITE_CONTENT = {
       { name: "Casting & Rapid Tooling", caption: "Pouring molten metal into a sand mold", image: "assets/img/toolkit/sand-casting-pour.png",
         tools: ["Sand casting", "SLS-printed tooling", "Injection molding"],
         gallery: [] },
-      { name: "Additive Manufacturing", caption: "FDM printing on an Ultimaker 2 Extended+", image: "assets/img/toolkit/additive-3d-printing.png",
+      { name: "Additive Manufacturing", caption: "FDM printing on an Ultimaker 2 Extended+", image: "assets/img/toolkit/additive-ultimaker-print.jpg", imagePosition: "50% 45%",
         tools: ["FDM", "SLA", "SLS", "Generative design"],
         gallery: [] },
       { name: "Welding & Fabrication", caption: "TIG welding an FSAE space-frame chassis", image: "assets/img/toolkit/welding-tig.jpg", imageFit: "contain",

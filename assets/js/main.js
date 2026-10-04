@@ -715,52 +715,88 @@
       </div>`, (tile) => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }, tile), "project-tile");
   }
 
-  // Sizes (columns x rows on a 6-column grid) for n cards, in DOM order.
-  // Five cards fill a 6 x 3 block exactly — one large card flanked by two
-  // small ones, then two wide cards — and the large card alternates sides
-  // from one block to the next. A final partial block is resized so the
-  // grid always ends flush instead of leaving a hole.
-  function bentoSizes(n) {
-    const blockA = ["4x2", "2x1", "2x1", "3x1", "3x1"];
-    const blockB = ["2x1", "4x2", "2x1", "3x1", "3x1"];
-    const tailA = { 1: ["6x2"], 2: ["3x2", "3x2"], 3: ["4x2", "2x1", "2x1"], 4: ["4x2", "2x1", "2x1", "6x1"] };
-    const tailB = { 1: ["6x2"], 2: ["3x2", "3x2"], 3: ["2x1", "4x2", "2x1"], 4: ["2x1", "4x2", "2x1", "6x1"] };
-    const blocks = Math.floor(n / 5), rest = n % 5;
+  // FSAE row: the car tile on the left with all of its sub-projects to the
+  // right as one compact grid of image cards — no discipline headings, and
+  // the whole grid is exactly as tall as the car tile beside it. Cards are
+  // laid out in justified rows: every row spans the full width and shares the
+  // same height, and within a row each card's width follows its thumbnail's
+  // aspect ratio, so wide thumbnails get wide cards and square ones get
+  // small ones. The disciplines still exist as filter chips in the opened
+  // car, and nothing is pulled into the Featured Projects grid.
+  const phoneMq = window.matchMedia("(max-width: 620px)");
+  const stackedMq = window.matchMedia("(max-width: 860px)");
+  let subgrids = [];
+
+  // Beside the tile (desktop) the row count sets card height, so it follows
+  // how many cards there are; stacked layouts use fixed-height rows instead
+  // (see CSS), with two or three cards per row.
+  function subgridRowCount(n) {
+    if (phoneMq.matches) return Math.ceil(n / 2);
+    if (stackedMq.matches) return Math.ceil(n / 3);
+    return n <= 2 ? 1 : n <= 6 ? 2 : n <= 9 ? 3 : 4;
+  }
+
+  // Split cards, in order, into `rows` rows whose summed aspect ratios are as
+  // even as possible, keeping at least one card in every row.
+  function partitionRows(aspects, rows) {
+    const target = aspects.reduce((a, b) => a + b, 0) / rows;
     const out = [];
-    for (let i = 0; i < blocks; i++) out.push(...(i % 2 ? blockB : blockA));
-    if (rest) out.push(...((blocks % 2 ? tailB : tailA)[rest]));
+    let cur = [], sum = 0;
+    aspects.forEach((a, i) => {
+      const cardsLeft = aspects.length - i;
+      const rowsAfterCur = rows - out.length - 1;
+      const mustBreak = cur.length && cardsLeft <= rowsAfterCur;
+      const betterToBreak = cur.length && out.length < rows - 1 && Math.abs(sum + a - target) > Math.abs(sum - target);
+      if (mustBreak || betterToBreak) { out.push(cur); cur = []; sum = 0; }
+      cur.push(i);
+      sum += a;
+    });
+    out.push(cur);
     return out;
   }
 
-  // FSAE row: the car tile on the left with all of its sub-projects laid out
-  // to the right as one bento grid of mixed-size image cards, so a viewer
-  // sees what was done inside a car without opening it and without touching
-  // the FSAE section's own vertical order or pulling sub-projects into the
-  // Featured Projects grid. The disciplines still exist as filter chips in
-  // the opened car, but the cards are no longer split under headings.
+  function layoutSubgrid(entry) {
+    const { grid, cards, aspects } = entry;
+    const rows = Math.max(1, Math.min(cards.length, subgridRowCount(cards.length)));
+    grid.innerHTML = "";
+    partitionRows(aspects, rows).forEach((idxs) => {
+      const rowEl = el("div", "fsae-subrow");
+      idxs.forEach((i) => rowEl.appendChild(cards[i]));
+      grid.appendChild(rowEl);
+    });
+  }
+  [phoneMq, stackedMq].forEach((mq) => mq.addEventListener("change", () => {
+    subgrids = subgrids.filter((e) => e.grid.isConnected);
+    subgrids.forEach(layoutSubgrid);
+  }));
+
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
     const carTile = projectTile(p);
     row.appendChild(carTile);
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
-      if (subs.length >= 6) row.classList.add("fsae-row-tall");
       const grid = el("div", "fsae-subgrid");
-      const sizes = bentoSizes(subs.length);
-      subs.forEach((s, i) => {
+      const cards = subs.map((s) => {
+        // Letterboxed (contain) thumbnails get a blurred copy of themselves
+        // behind them, so a wide card shows a soft matte instead of hard bars.
+        const matte = s.imageFit === "contain" ? `<span class="subproj-card-matte" style="background-image:url('${esc(s.image)}')"></span>` : "";
         // Passing carTile as a second origin makes the open/close morph
         // grow/shrink the car alongside the sub-project's own thumbnail,
         // instead of only the clicked card, so the whole row appears to
         // expand together into the two-box detail view.
-        // Letterboxed (contain) thumbnails get a blurred copy of themselves
-        // behind them, so a wide card shows a soft matte instead of hard bars.
-        const matte = s.imageFit === "contain" ? `<span class="subproj-card-matte" style="background-image:url('${esc(s.image)}')"></span>` : "";
-        grid.appendChild(makeTile(`
+        const card = makeTile(`
           ${matte}<img src="${esc(s.image)}" alt="" loading="lazy">
           <span class="subproj-card-title">${esc(s.title)}</span>`,
           (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
-          "subproj-card sp-" + sizes[i] + (s.imageFit === "contain" ? " subproj-card-contain" : "")));
+          "subproj-card" + (s.imageFit === "contain" ? " subproj-card-contain" : ""));
+        const aspect = Math.min(2.8, Math.max(1, s.thumbAspect || 1.6));
+        card.style.flex = `${aspect} 1 0`;
+        return { card, aspect };
       });
+      const entry = { grid, cards: cards.map((c) => c.card), aspects: cards.map((c) => c.aspect) };
+      layoutSubgrid(entry);
+      subgrids.push(entry);
       row.appendChild(grid);
     }
     return row;
@@ -867,8 +903,8 @@
       <h2 class="detail-title">${esc(item.name)}</h2>
       <div class="skill-items">${item.tools.map((t) => `<span class="skill-item">${esc(t)}</span>`).join("")}</div>
       <h4 class="detail-sub">Evidence</h4>
-      <div class="tile-grid">${[{ image: item.image, caption: item.caption }, ...(item.gallery || [])].map((g) => `
-        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy">${ZOOM_ICON_BADGE}</div><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
+      <div class="tile-grid">${[{ image: item.image, caption: item.caption, position: item.imagePosition }, ...(item.gallery || [])].map((g) => `
+        <figure class="gallery-item${item.imageFit === "contain" ? " gallery-item-contain" : ""}"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption)}" loading="lazy"${g.position ? ` style="object-position: ${esc(g.position)}"` : ""}>${ZOOM_ICON_BADGE}</div><figcaption class="${isBlankPlaceholder(g.caption) ? "needs-input" : ""}">${esc(g.caption)}</figcaption></figure>`).join("")}</div>
     `;
     wireGalleryLightboxes(box);
     return box;
@@ -877,7 +913,7 @@
     const grid = $(gridSel);
     (items || []).forEach((it) => {
       grid.appendChild(makeTile(`
-        <div class="tile-image${it.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"></div>
+        <div class="tile-image${it.imageFit === "contain" ? " tile-image-contain" : ""}"><img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy"${it.imagePosition ? ` style="object-position: ${esc(it.imagePosition)}"` : ""}></div>
         <div class="tile-body">
           <h3>${esc(it.name)}</h3>
           <div class="tile-caption ${isBlankPlaceholder(it.caption) ? "needs-input" : ""}">${esc(it.caption)}</div>
@@ -1266,17 +1302,15 @@
       });
     });
 
-    // The bento grid cascades in with the stagger restarting every five
-    // cards (one grid block), the same per-row pattern Featured Projects
-    // uses, so a long grid doesn't pile every late card onto one delay.
+    // The sub-project cards cascade in with the stagger restarting every
+    // five cards, the same per-row pattern Featured Projects uses, so a long
+    // grid doesn't pile every late card onto one delay.
     document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
       const carTile = row.querySelector(".project-tile");
       if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; }
-      row.querySelectorAll(".fsae-subgrid").forEach((grid) => {
-        Array.from(grid.children).forEach((card, i) => {
-          card.classList.add("reveal");
-          card.style.transitionDelay = (i % 5) * 70 + "ms";
-        });
+      row.querySelectorAll(".subproj-card").forEach((card, i) => {
+        card.classList.add("reveal");
+        card.style.transitionDelay = (i % 5) * 70 + "ms";
       });
     });
 

@@ -710,32 +710,22 @@ footer {
 .hl b { color: var(--accent); font-weight: 500; }
 .tile-hl { margin: 0; padding-left: 16px; color: var(--text-dim); font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
 
-/* FSAE section: each car sits on the left with all of its sub-projects laid
-   out to its right as one bento grid of mixed-size image cards (sizes are set
-   per card in fsaeCarRow via .sp-<cols>x<rows>), so a viewer sees what was done
-   inside a car without opening it — the section's own vertical order of cars
-   is untouched, and nothing is pulled into the Featured Projects grid. */
+/* FSAE section: each car sits on the left with all of its sub-projects to its
+   right as one compact grid of image cards. The grid is stretched to exactly
+   the car tile's height; cards are arranged in justified rows (built in
+   fsaeCarRow) where each card's flex-grow is its thumbnail's aspect ratio, so
+   the thumbnail decides how wide a card is. The section's own vertical order
+   of cars is untouched, and nothing is pulled into the Featured Projects
+   grid. */
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: minmax(0, 1fr); } }
-/* A car with a long grid keeps its tile in view while the cards scroll past,
-   instead of stretching the tile into a tall empty box. */
-.fsae-row-tall > .project-tile { align-self: start; position: sticky; top: 88px; }
-@media (max-width: 860px) { .fsae-row-tall > .project-tile { position: static; } }
-.fsae-subgrid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: minmax(124px, 1fr);
-  grid-auto-flow: dense;
-  gap: 12px;
-  min-width: 0;
-}
-.sp-4x2 { grid-column: span 4; grid-row: span 2; }
-.sp-2x1 { grid-column: span 2; }
-.sp-3x1 { grid-column: span 3; }
-.sp-6x2 { grid-column: span 6; grid-row: span 2; }
-.sp-3x2 { grid-column: span 3; grid-row: span 2; }
-.sp-6x1 { grid-column: span 6; }
+.fsae-subgrid { display: flex; flex-direction: column; gap: 8px; min-width: 0; min-height: 0; }
+.fsae-subrow { display: flex; gap: 8px; flex: 1 1 0; min-height: 0; }
+/* Stacked under the car tile there is no tile height to share, so rows get a
+   fixed height instead. */
+@media (max-width: 860px) { .fsae-subrow { flex: none; height: 124px; } }
+@media (max-width: 620px) { .fsae-subrow { height: 108px; } }
 .subproj-card {
   position: relative;
   min-width: 0;
@@ -744,7 +734,7 @@ footer {
 }
 .subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* Absolutely positioned so the image's own intrinsic height never props a
-   grid row open — row height comes from the grid, not the picture. */
+   row open — row height comes from the grid, not the picture. */
 .subproj-card img {
   position: absolute;
   inset: 0;
@@ -776,30 +766,21 @@ footer {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 14px;
-  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 9px;
+  background: rgba(0, 0, 0, 0.58);
   color: #fff;
   font-family: var(--sans);
   font-weight: 600;
-  font-size: 13px;
-  line-height: 1.35;
+  font-size: clamp(11.5px, 0.95vw, 13.5px);
+  line-height: 1.28;
   transition: background 0.25s ease;
 }
-.sp-4x2 .subproj-card-title, .sp-6x2 .subproj-card-title, .sp-3x2 .subproj-card-title { font-size: 19px; padding: 22px; }
-.sp-3x1 .subproj-card-title, .sp-6x1 .subproj-card-title { font-size: 15px; }
 @media (hover: hover) {
   .subproj-card:hover img { transform: scale(1.05); }
-  .subproj-card:hover .subproj-card-title { background: rgba(0, 0, 0, 0.36); }
+  .subproj-card:hover .subproj-card-title { background: rgba(0, 0, 0, 0.34); }
 }
-@media (max-width: 620px) {
-  .fsae-subgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(112px, 1fr); gap: 10px; }
-  .sp-4x2, .sp-6x2 { grid-column: span 2; grid-row: span 2; }
-  .sp-2x1 { grid-column: span 1; }
-  .sp-3x1, .sp-6x1 { grid-column: span 2; }
-  .sp-3x2 { grid-column: span 1; grid-row: span 2; }
-  .subproj-card-title { font-size: 13px; padding: 10px; }
-  .sp-4x2 .subproj-card-title, .sp-6x2 .subproj-card-title { font-size: 17px; }
-}
+@media (max-width: 860px) { .subproj-card-title { font-size: 12.5px; } }
+@media (max-width: 620px) { .subproj-card-title { font-size: 12px; padding: 5px 7px; } }
 
 /* Sub-project detail (modal): two independent, unconnected boxes of equal
    width — the parent car's full detail on the left, the sub-project's own
