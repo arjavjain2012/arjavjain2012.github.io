@@ -473,7 +473,7 @@
       ${(s.gallery && s.gallery.length) ? `
       <h4 class="detail-sub">Gallery</h4>
       <div class="tile-grid">${s.gallery.map((g) => `
-        <figure class="gallery-item"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${ZOOM_ICON_BADGE}</div>${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
+        <figure class="gallery-item${g.imageFit === "contain" ? " gallery-item-contain" : ""}"><div class="gallery-img-wrap"><img src="${esc(g.image)}" alt="${esc(g.caption || s.title)}" loading="lazy">${ZOOM_ICON_BADGE}</div>${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
     `;
     wireGalleryLightboxes(projectCol);
 
@@ -607,8 +607,14 @@
 
     const overlay = el("div", "cad-lightbox");
     const clone = img.cloneNode(true);
+    // Carry the thumbnail's own fit and letterbox colour onto the clone so it
+    // doesn't stretch (or lose its white matte) while it grows; at full size
+    // the box matches the image's ratio, so every fit looks identical.
+    const imgCs = getComputedStyle(img);
+    const matte = imgCs.backgroundColor === "rgba(0, 0, 0, 0)" ? getComputedStyle(cell).backgroundColor : imgCs.backgroundColor;
     clone.className = "cad-lightbox-img";
     Object.assign(clone.style, {
+      objectFit: imgCs.objectFit, objectPosition: imgCs.objectPosition, background: matte,
       top: srcRect.top + "px", left: srcRect.left + "px",
       width: srcRect.width + "px", height: srcRect.height + "px", transition: "none"
     });
@@ -709,73 +715,55 @@
       </div>`, (tile) => pushView({ crumb: shortTitle(p.title), render: () => projectDetail(p) }, tile), "project-tile");
   }
 
-  // FSAE row: the car tile on the left with its sub-projects dispersed to
-  // the right, grouped under one heading per discipline (the same 4 filters
-  // used for Featured Projects), each group's cards kept to a single
-  // (scrollable, never wrapping) line — so a viewer can see what was done
-  // inside a car, organized by discipline, without opening it and without
-  // touching the FSAE section's own vertical order or pulling sub-projects
-  // into the Featured Projects grid.
+  // Sizes (columns x rows on a 6-column grid) for n cards, in DOM order.
+  // Five cards fill a 6 x 3 block exactly — one large card flanked by two
+  // small ones, then two wide cards — and the large card alternates sides
+  // from one block to the next. A final partial block is resized so the
+  // grid always ends flush instead of leaving a hole.
+  function bentoSizes(n) {
+    const blockA = ["4x2", "2x1", "2x1", "3x1", "3x1"];
+    const blockB = ["2x1", "4x2", "2x1", "3x1", "3x1"];
+    const tailA = { 1: ["6x2"], 2: ["3x2", "3x2"], 3: ["4x2", "2x1", "2x1"], 4: ["4x2", "2x1", "2x1", "6x1"] };
+    const tailB = { 1: ["6x2"], 2: ["3x2", "3x2"], 3: ["2x1", "4x2", "2x1"], 4: ["2x1", "4x2", "2x1", "6x1"] };
+    const blocks = Math.floor(n / 5), rest = n % 5;
+    const out = [];
+    for (let i = 0; i < blocks; i++) out.push(...(i % 2 ? blockB : blockA));
+    if (rest) out.push(...((blocks % 2 ? tailB : tailA)[rest]));
+    return out;
+  }
+
+  // FSAE row: the car tile on the left with all of its sub-projects laid out
+  // to the right as one bento grid of mixed-size image cards, so a viewer
+  // sees what was done inside a car without opening it and without touching
+  // the FSAE section's own vertical order or pulling sub-projects into the
+  // Featured Projects grid. The disciplines still exist as filter chips in
+  // the opened car, but the cards are no longer split under headings.
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
     const carTile = projectTile(p);
     row.appendChild(carTile);
     const subs = (C.subprojects && C.subprojects[p.id]) || [];
     if (subs.length) {
-      const groups = el("div", "fsae-subprojects");
-      PROJECT_FILTER_CATEGORIES.forEach((cat) => {
-        const inCategory = subs.filter((s) => s.category === cat.tag);
-        if (!inCategory.length) return;
-        const group = el("div", "fsae-category-group");
-        group.appendChild(el("h5", "fsae-category-heading", esc(cat.label)));
-        const cards = el("div", "fsae-category-cards");
-        inCategory.forEach((s) => {
-          // Passing carTile as a second origin makes the open/close morph
-          // grow/shrink the car alongside the sub-project's own thumbnail,
-          // instead of only the clicked card, so the whole row appears to
-          // expand together into the two-box detail view.
-          cards.appendChild(makeTile(`
-            <img src="${esc(s.image)}" alt="" loading="lazy">
-            <span class="subproj-card-title">${esc(s.title)}</span>`,
-            (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
-            "subproj-card" + (s.imageFit === "contain" ? " subproj-card-contain" : "")));
-        });
-        group.appendChild(cards);
-        groups.appendChild(group);
-        attachDockHover(cards);
+      if (subs.length >= 6) row.classList.add("fsae-row-tall");
+      const grid = el("div", "fsae-subgrid");
+      const sizes = bentoSizes(subs.length);
+      subs.forEach((s, i) => {
+        // Passing carTile as a second origin makes the open/close morph
+        // grow/shrink the car alongside the sub-project's own thumbnail,
+        // instead of only the clicked card, so the whole row appears to
+        // expand together into the two-box detail view.
+        // Letterboxed (contain) thumbnails get a blurred copy of themselves
+        // behind them, so a wide card shows a soft matte instead of hard bars.
+        const matte = s.imageFit === "contain" ? `<span class="subproj-card-matte" style="background-image:url('${esc(s.image)}')"></span>` : "";
+        grid.appendChild(makeTile(`
+          ${matte}<img src="${esc(s.image)}" alt="" loading="lazy">
+          <span class="subproj-card-title">${esc(s.title)}</span>`,
+          (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
+          "subproj-card sp-" + sizes[i] + (s.imageFit === "contain" ? " subproj-card-contain" : "")));
       });
-      row.appendChild(groups);
+      row.appendChild(grid);
     }
     return row;
-  }
-
-  // iOS/macOS dock-style magnification: the card nearest the pointer grows,
-  // with a smooth falloff to neighbors, as the pointer moves across the row.
-  // Cards also carry .reveal (scroll-in fade+rise) on this same `transform`
-  // property; setting this combined transition inline, only once the
-  // pointer actually starts moving over the row, keeps the reveal's own
-  // (slower, CSS-class-driven) entrance untouched until then, while making
-  // every hover-driven scale change afterward snap at the fast pace below.
-  function attachDockHover(cardsRow) {
-    // Touch screens emit emulated mouse events on tap, which left the row
-    // magnified after opening and closing a card.
-    if (window.matchMedia("(hover: none)").matches) return;
-    const FALLOFF = 130, MAX_SCALE = 0.24;
-    const HOVER_TRANSITION = "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out";
-    const reset = () => {
-      cardsRow.querySelectorAll(".subproj-card").forEach((c) => { c.style.transform = ""; c.style.zIndex = ""; });
-    };
-    cardsRow.addEventListener("mousemove", (e) => {
-      cardsRow.querySelectorAll(".subproj-card").forEach((c) => {
-        const r = c.getBoundingClientRect();
-        const dist = Math.abs(e.clientX - (r.left + r.width / 2));
-        const influence = Math.max(0, 1 - dist / FALLOFF);
-        c.style.transition = HOVER_TRANSITION;
-        c.style.transform = influence > 0.01 ? `scale(${(1 + influence * MAX_SCALE).toFixed(3)})` : "";
-        c.style.zIndex = influence > 0.01 ? String(Math.round(influence * 100)) : "";
-      });
-    });
-    cardsRow.addEventListener("mouseleave", reset);
   }
 
   // Search blob per project: its own title/org/summary/bullets/tags, plus
@@ -1278,18 +1266,16 @@
       });
     });
 
-    // Each discipline group's card row cascades on its own, resetting the
-    // stagger delay back to 0 per group — the same pattern Featured
-    // Projects uses per grid row (cycleIndex = i % cols) — so this reads
-    // as the same animation as Featured Projects instead of one long
-    // continuous count down the whole car row.
+    // The bento grid cascades in with the stagger restarting every five
+    // cards (one grid block), the same per-row pattern Featured Projects
+    // uses, so a long grid doesn't pile every late card onto one delay.
     document.querySelectorAll("#fsaeGrid .fsae-row").forEach((row) => {
       const carTile = row.querySelector(".project-tile");
       if (carTile) { carTile.classList.add("reveal"); carTile.style.transitionDelay = "0ms"; }
-      row.querySelectorAll(".fsae-category-cards").forEach((cardsRow) => {
-        Array.from(cardsRow.children).forEach((card, i) => {
+      row.querySelectorAll(".fsae-subgrid").forEach((grid) => {
+        Array.from(grid.children).forEach((card, i) => {
           card.classList.add("reveal");
-          card.style.transitionDelay = i * 70 + "ms";
+          card.style.transitionDelay = (i % 5) * 70 + "ms";
         });
       });
     });

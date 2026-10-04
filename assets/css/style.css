@@ -710,45 +710,50 @@ footer {
 .hl b { color: var(--accent); font-weight: 500; }
 .tile-hl { margin: 0; padding-left: 16px; color: var(--text-dim); font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
 
-/* FSAE section: each car sits on the left with its sub-projects dispersed
-   as image cards to its right, so a viewer sees what was done inside a car
-   without opening it — the section's own vertical order of cars is
-   untouched, and nothing is pulled into the Featured Projects grid. */
+/* FSAE section: each car sits on the left with all of its sub-projects laid
+   out to its right as one bento grid of mixed-size image cards (sizes are set
+   per card in fsaeCarRow via .sp-<cols>x<rows>), so a viewer sees what was done
+   inside a car without opening it — the section's own vertical order of cars
+   is untouched, and nothing is pulled into the Featured Projects grid. */
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: minmax(0, 1fr); } }
-.fsae-subprojects { display: flex; flex-direction: column; gap: 22px; }
-/* One heading + one single-line (never-wrapping, scrolls if it overflows)
-   row of cards per discipline — the same 4 filters used for Featured
-   Projects. */
-.fsae-category-group { min-width: 0; }
-.fsae-category-heading {
-  margin: 0 0 2px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-faint);
+/* A car with a long grid keeps its tile in view while the cards scroll past,
+   instead of stretching the tile into a tall empty box. */
+.fsae-row-tall > .project-tile { align-self: start; position: sticky; top: 88px; }
+@media (max-width: 860px) { .fsae-row-tall > .project-tile { position: static; } }
+.fsae-subgrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(124px, 1fr);
+  grid-auto-flow: dense;
+  gap: 12px;
+  min-width: 0;
 }
-/* Extra padding-top gives the dock-hover grow (below) headroom to expand
-   into without being clipped by the row's own horizontal scroll overflow. */
-/* overflow-y: hidden (rather than the "auto" the spec implies once
-   overflow-x is non-visible) so a card's own vertical reveal transform
-   never makes the browser treat this row as momentarily overflowing —
-   that was showing a transient scrollbar for the duration of the reveal. */
-.fsae-category-cards { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 24px 2px 4px; }
+.sp-4x2 { grid-column: span 4; grid-row: span 2; }
+.sp-2x1 { grid-column: span 2; }
+.sp-3x1 { grid-column: span 3; }
+.sp-6x2 { grid-column: span 6; grid-row: span 2; }
+.sp-3x2 { grid-column: span 3; grid-row: span 2; }
+.sp-6x1 { grid-column: span 6; }
 .subproj-card {
   position: relative;
-  width: 160px;
-  flex: 0 0 auto;
-  aspect-ratio: 2 / 1;
+  min-width: 0;
   overflow: hidden;
   padding: 0;
-  transform-origin: center bottom;
-  transition: transform 0.15s ease-out;
 }
 .subproj-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.subproj-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Absolutely positioned so the image's own intrinsic height never props a
+   grid row open — row height comes from the grid, not the picture. */
+.subproj-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
 /* imageFit:"contain" sub-projects must not be cropped to fill the card the
    way a cover-fit image is — letterbox instead, matching how every other
    tile type on the site handles this flag. Background goes on the card
@@ -756,6 +761,14 @@ footer {
    computed background-color, picks it up too. */
 .subproj-card.subproj-card-contain { background: #fff; }
 .subproj-card.subproj-card-contain img { object-fit: contain; }
+.subproj-card-matte {
+  position: absolute;
+  inset: -24px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px);
+  pointer-events: none;
+}
 .subproj-card-title {
   position: absolute;
   inset: 0;
@@ -770,6 +783,22 @@ footer {
   font-weight: 600;
   font-size: 13px;
   line-height: 1.35;
+  transition: background 0.25s ease;
+}
+.sp-4x2 .subproj-card-title, .sp-6x2 .subproj-card-title, .sp-3x2 .subproj-card-title { font-size: 19px; padding: 22px; }
+.sp-3x1 .subproj-card-title, .sp-6x1 .subproj-card-title { font-size: 15px; }
+@media (hover: hover) {
+  .subproj-card:hover img { transform: scale(1.05); }
+  .subproj-card:hover .subproj-card-title { background: rgba(0, 0, 0, 0.36); }
+}
+@media (max-width: 620px) {
+  .fsae-subgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(112px, 1fr); gap: 10px; }
+  .sp-4x2, .sp-6x2 { grid-column: span 2; grid-row: span 2; }
+  .sp-2x1 { grid-column: span 1; }
+  .sp-3x1, .sp-6x1 { grid-column: span 2; }
+  .sp-3x2 { grid-column: span 1; grid-row: span 2; }
+  .subproj-card-title { font-size: 13px; padding: 10px; }
+  .sp-4x2 .subproj-card-title, .sp-6x2 .subproj-card-title { font-size: 17px; }
 }
 
 /* Sub-project detail (modal): two independent, unconnected boxes of equal
@@ -1033,11 +1062,6 @@ body.modal-open { overflow: hidden; }
   /* Two stacked padded boxes (modal + sub-project boxes) ate ~84px of a
      375px screen. */
   .sub-detail-car-box, .sub-detail-project { padding: 14px; }
-  /* Sub-project cards in the FSAE rows: bigger tap targets and room for
-     the title, snap so a swipe lands on a card with the next one peeking. */
-  .fsae-category-cards { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
-  .subproj-card { width: 210px; scroll-snap-align: start; }
-  .subproj-card-title { font-size: 14px; padding: 12px; }
   .modal-back, .modal-close { min-height: 40px; }
 }
 
