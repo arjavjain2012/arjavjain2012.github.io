@@ -735,7 +735,7 @@ window.SITE_CONTENT = {
       heroPosition: "50% 78%",
       cadViews: {
         side: "assets/img/projects/iem26-cad-side.png",
-        top: "assets/img/projects/iem26-cad-top.webp",
+        top: "assets/img/projects/iem26-cad-top.png",
         front: "assets/img/projects/iem26-cad-front.png"
       },
       dssFiles: [
