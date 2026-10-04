@@ -720,12 +720,22 @@ footer {
 #fsaeGrid { display: flex; flex-direction: column; gap: 36px; }
 .fsae-row { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
 @media (max-width: 860px) { .fsae-row { grid-template-columns: minmax(0, 1fr); } }
-.fsae-subgrid { display: flex; flex-direction: column; gap: 8px; min-width: 0; min-height: 0; }
+.fsae-subgrid { display: flex; flex-direction: row; gap: 8px; min-width: 0; min-height: 0; }
+.fsae-subrows { display: flex; flex-direction: column; gap: 8px; flex: 1 1 0; min-width: 0; min-height: 0; }
 .fsae-subrow { display: flex; gap: 8px; flex: 1 1 0; min-height: 0; }
+/* A portrait thumbnail stands as one tall card at the right end of the grid,
+   its width following its aspect ratio (capped so it never crowds the rows). */
+.subproj-card-tall { max-width: 24%; }
 /* Stacked under the car tile there is no tile height to share, so rows get a
    fixed height instead. */
 @media (max-width: 860px) { .fsae-subrow { flex: none; height: 124px; } }
-@media (max-width: 620px) { .fsae-subrow { height: 108px; } }
+@media (max-width: 620px) { .fsae-subrow { height: 108px; } .subproj-card-tall { max-width: 30%; } }
+/* One or two sub-projects: small fixed-size cards at the top of the column,
+   not a grid stretched to the car tile. */
+.fsae-subgrid-solo { align-self: start; }
+.fsae-subgrid-solo .fsae-subrows { flex: none; }
+.fsae-subgrid-solo .fsae-subrow { flex: none; height: 80px; }
+.fsae-subgrid-solo .subproj-card { width: 160px; }
 .subproj-card {
   position: relative;
   min-width: 0;

@@ -756,19 +756,57 @@
   }
 
   function layoutSubgrid(entry) {
-    const { grid, cards, aspects } = entry;
-    const rows = Math.max(1, Math.min(cards.length, subgridRowCount(cards.length)));
+    const { grid, cards, aspects, raw } = entry;
+    entry.mode = layoutMode();
     grid.innerHTML = "";
-    partitionRows(aspects, rows).forEach((idxs) => {
+    const solo = cards.length <= 2;
+    grid.classList.toggle("fsae-subgrid-solo", solo);
+    const rowsWrap = el("div", "fsae-subrows");
+    cards.forEach((c) => { c.classList.remove("subproj-card-tall"); c.style.aspectRatio = ""; });
+
+    if (solo) {
+      // One or two sub-projects: small fixed-size cards, not a stretched grid.
       const rowEl = el("div", "fsae-subrow");
-      idxs.forEach((i) => rowEl.appendChild(cards[i]));
-      grid.appendChild(rowEl);
+      cards.forEach((c) => { c.style.flex = "none"; rowEl.appendChild(c); });
+      rowsWrap.appendChild(rowEl);
+      grid.appendChild(rowsWrap);
+      return;
+    }
+
+    // A portrait thumbnail becomes a tall card standing at the right end of
+    // the grid, full height; everything else is justified into rows beside it.
+    const tall = [], rest = [];
+    // (Only beside the car tile: stacked under it, a tall strip would run the
+    // whole height of the grid, so portrait thumbnails are just normal cards.)
+    cards.forEach((_, i) => (raw[i] < 0.8 && !stackedMq.matches ? tall : rest).push(i));
+    const rows = Math.max(1, Math.min(rest.length, subgridRowCount(rest.length)));
+    partitionRows(rest.map((i) => aspects[i]), rows).forEach((idxs) => {
+      const rowEl = el("div", "fsae-subrow");
+      idxs.forEach((k) => {
+        cards[rest[k]].style.flex = `${aspects[rest[k]]} 1 0`;
+        rowEl.appendChild(cards[rest[k]]);
+      });
+      rowsWrap.appendChild(rowEl);
+    });
+    grid.appendChild(rowsWrap);
+    tall.forEach((i) => {
+      cards[i].classList.add("subproj-card-tall");
+      cards[i].style.flex = "none";
+      cards[i].style.aspectRatio = String(raw[i]);
+      grid.appendChild(cards[i]);
     });
   }
-  [phoneMq, stackedMq].forEach((mq) => mq.addEventListener("change", () => {
+  // Re-flow every grid whenever the layout mode (desktop / stacked / phone)
+  // changes. Media-query change events cover real resizes; the window-resize
+  // check is a fallback for environments that don't fire them.
+  const layoutMode = () => (phoneMq.matches ? "phone" : stackedMq.matches ? "stacked" : "desktop");
+  function relayoutSubgrids() {
     subgrids = subgrids.filter((e) => e.grid.isConnected);
-    subgrids.forEach(layoutSubgrid);
-  }));
+    const mode = layoutMode();
+    subgrids.forEach((e) => { if (e.mode !== mode) layoutSubgrid(e); });
+  }
+  [phoneMq, stackedMq].forEach((mq) => mq.addEventListener("change", relayoutSubgrids));
+  window.addEventListener("resize", relayoutSubgrids);
 
   function fsaeCarRow(p) {
     const row = el("div", "fsae-row");
@@ -785,16 +823,14 @@
         // grow/shrink the car alongside the sub-project's own thumbnail,
         // instead of only the clicked card, so the whole row appears to
         // expand together into the two-box detail view.
-        const card = makeTile(`
+        return makeTile(`
           ${matte}<img src="${esc(s.image)}" alt="" loading="lazy">
           <span class="subproj-card-title">${esc(s.title)}</span>`,
           (tile) => pushView({ crumb: shortTitle(s.title), render: () => subDetail(p, s) }, tile, carTile),
           "subproj-card" + (s.imageFit === "contain" ? " subproj-card-contain" : ""));
-        const aspect = Math.min(2.8, Math.max(1, s.thumbAspect || 1.6));
-        card.style.flex = `${aspect} 1 0`;
-        return { card, aspect };
       });
-      const entry = { grid, cards: cards.map((c) => c.card), aspects: cards.map((c) => c.aspect) };
+      const raw = subs.map((s) => s.thumbAspect || 1.6);
+      const entry = { grid, cards, raw, aspects: raw.map((a) => Math.min(2.8, Math.max(1, a))) };
       layoutSubgrid(entry);
       subgrids.push(entry);
       row.appendChild(grid);
