@@ -116,6 +116,16 @@ window.SITE_CONTENT = {
         "Proposed an ETD-xi framework — the first to unify knock-timing and autoignition-mode prediction in multi-dimensional DNS.",
         "Wrote MATLAB post-processing to detect autoignition kernels and track pressure-wave reflections across the DNS dataset."
       ],
+      tools: [
+        { name: "PeleC" },
+        { name: "AMReX" },
+        { name: "Cantera" },
+        { name: "MATLAB" },
+        { name: "Python" },
+        { name: "ParaView" },
+        { name: "VisIt" },
+        { name: "MS Office" }
+      ],
       metrics: [
         { label: "Mesh resolution", value: "3.9 micron cells (AMR)" },
         { label: "Engine-like conditions studied", value: "3" },
@@ -1104,6 +1114,10 @@ window.SITE_CONTENT = {
       links: [
         { label: "Final report", url: "assets/docs/combustion-lab-report.pdf" },
         { label: "Video report", url: "assets/docs/combustion-lab-video-report.pptx" }
+      ],
+      tools: [
+        { name: "LIFBASE" },
+        { name: "HITRAN" }
       ]
     },
     {

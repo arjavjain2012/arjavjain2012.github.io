@@ -117,7 +117,15 @@ section { padding: 96px 0; scroll-margin-top: 84px; position: relative; z-index:
   height: auto;
   max-width: 85%;
 }
-@media (max-width: 1150px) { .bg-drawing { display: none; } }
+/* Narrow screens: only the drawings that have a phone placement (.bg-drawing-m,
+   set in main.js) show — smaller, fainter, bled off a section corner — and
+   sections clip anything that pokes past the page edge. */
+@media (max-width: 1150px) {
+  .bg-drawing { display: none; }
+  .bg-drawing.bg-drawing-m { display: block; opacity: 0.3; }
+  :root[data-theme="light"] .bg-drawing.bg-drawing-m { opacity: 0.16; }
+  section { overflow-x: clip; }
+}
 
 .section-head {
   display: flex;
@@ -369,17 +377,35 @@ button.stat-clickable.active {
   outline: none;
 }
 button.stat-clickable .stat-label { text-decoration: underline dotted var(--text-faint); text-underline-offset: 3px; }
+/* The publications list opens in the page flow, directly under the stat
+   strip, and pushes the About section down instead of floating over it. The
+   open/close is a 0fr -> 1fr grid-row transition, so the height tracks the
+   content exactly (no measured heights) and everything below glides with it. */
 .stat-popover {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  width: 50%;
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.5s cubic-bezier(0.45, 0, 0.2, 1),
+              margin-top 0.5s cubic-bezier(0.45, 0, 0.2, 1),
+              opacity 0.3s ease,
+              visibility 0s linear 0.5s;
+}
+.stat-popover.open {
+  grid-template-rows: 1fr;
+  margin-top: 10px;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.stat-popover-inner { min-height: 0; overflow: hidden; }
+.stat-popover-body {
   background: var(--bg-raised);
   border: 1px solid var(--line);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   padding: 16px 18px 18px;
-  z-index: 20;
 }
+@media (prefers-reduced-motion: reduce) { .stat-popover, .stat-popover.open { transition-duration: 0.01s; } }
 .stat-popover-head {
   display: flex;
   align-items: center;
@@ -402,12 +428,11 @@ button.stat-clickable .stat-label { text-decoration: underline dotted var(--text
   padding: 2px 4px;
 }
 .stat-popover-close:hover { color: var(--accent); }
-.stat-popover .pub-list { gap: 10px; }
+.stat-popover .pub-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px; }
 .stat-popover .pub-item { background: var(--bg); }
 @media (max-width: 720px) {
   .stat-strip { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(2) { border-right: none; }
-  .stat-popover { width: 100%; }
 }
 
 /* ---------- About ---------- */
@@ -1063,6 +1088,10 @@ body.modal-open { overflow: hidden; }
      behind the search box and icons. The bar is navy in both themes, so a
      solid navy fill is safe. */
   header.nav { background: rgb(11, 13, 16); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  /* The dropdown menu carries the nav's light-on-navy text in both themes,
+     but its background followed --bg-raised, which is white in light mode,
+     leaving pale text on white. Keep it navy like the bar above it. */
+  .nav-links { background: rgb(11, 13, 16); }
   /* While the search box has focus, give it the whole bar instead of
      squeezing it between the logo and the menu/social icons (the hamburger
      used to sit on top of its right edge). */

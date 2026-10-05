@@ -121,20 +121,34 @@
         <div class="pub-meta">${esc(p.venue)}${p.status ? ` — <span class="pub-status">${esc(p.status)}</span>` : ""}</div>
       </li>`;
     }).join("");
-    statPopover.innerHTML = `
+    statPopover.innerHTML = `<div class="stat-popover-inner"><div class="stat-popover-body">
       <div class="stat-popover-head">Publications<button type="button" class="stat-popover-close" id="statPopoverClose" aria-label="Close">✕</button></div>
       <ul class="pub-list">${rows || `<li class="pub-item pub-placeholder"><span class="needs-input">— add publication details —</span></li>`}</ul>
-    `;
+    </div></div>`;
     $("#statPopoverClose").addEventListener("click", (e) => { e.stopPropagation(); closePopover(); });
   }
-  function openPopover() { renderPubPopover(); statPopover.hidden = false; pubStat.classList.add("active"); }
-  function closePopover() { statPopover.hidden = true; pubStat.classList.remove("active"); }
+  // The box is rendered once, collapsed, then the .open class transitions it
+  // in; closing just removes the class, so the content stays put while the
+  // height eases back and the page below slides up with it.
+  const popoverOpen = () => statPopover.classList.contains("open");
+  function openPopover() {
+    if (!statPopover.firstChild) renderPubPopover();
+    statPopover.setAttribute("aria-hidden", "false");
+    pubStat.classList.add("active");
+    void statPopover.offsetHeight; // commit the collapsed state before opening
+    statPopover.classList.add("open");
+  }
+  function closePopover() {
+    statPopover.classList.remove("open");
+    statPopover.setAttribute("aria-hidden", "true");
+    pubStat.classList.remove("active");
+  }
   pubStat.addEventListener("click", (e) => {
     e.stopPropagation();
-    statPopover.hidden ? openPopover() : closePopover();
+    popoverOpen() ? closePopover() : openPopover();
   });
   document.addEventListener("click", (e) => {
-    if (!statPopover.hidden && !statPopover.contains(e.target) && e.target !== pubStat) closePopover();
+    if (popoverOpen() && !statPopover.contains(e.target) && e.target !== pubStat) closePopover();
   });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePopover(); });
 
@@ -390,6 +404,11 @@
       onDone();
     }, MORPH_DURATION * 1000);
   }
+  // Set right before the code itself moves through history (the close button,
+  // the in-modal back arrow, Escape) so the popstate it triggers is treated as
+  // already animated; any other popstate is the browser/phone back button, and
+  // gets the same collapse animation before the view changes.
+  let selfNav = false;
   function closeModal() {
     if (modal.hidden) return;
     const top = stack[stack.length - 1];
@@ -398,12 +417,12 @@
       modal.hidden = true;
       document.body.classList.remove("modal-open");
       stack = [];
-      if (depth) history.go(-depth);
+      if (depth) { selfNav = true; history.go(-depth); }
     };
     morphClose(top, finish, true);
   }
   function popView() {
-    morphClose(stack[stack.length - 1], () => history.back(), false);
+    morphClose(stack[stack.length - 1], () => { selfNav = true; history.back(); }, false);
   }
   modalBack.addEventListener("click", popView);
   $("#modalClose").addEventListener("click", closeModal);
@@ -413,8 +432,26 @@
       if (stack.length > 1) popView(); else closeModal();
     }
   });
+  let backClosing = false, backTarget = 0;
   window.addEventListener("popstate", (e) => {
     const depth = (e.state && e.state.modalDepth) || 0;
+    if (selfNav) { selfNav = false; applyDepth(depth); return; }
+    // Browser/phone back while a card is open: collapse the top card the same
+    // way the cross does, then land on the level history moved to. A second
+    // back during the animation just retargets where it lands.
+    if (!modal.hidden && depth < stack.length) {
+      backTarget = depth;
+      if (backClosing) return;
+      backClosing = true;
+      morphClose(stack[stack.length - 1], () => {
+        backClosing = false;
+        applyDepth(backTarget);
+      }, backTarget === 0);
+      return;
+    }
+    applyDepth(depth);
+  });
+  function applyDepth(depth) {
     if (depth > 0 && depth <= stack.length) {
       stack.length = depth;
       modal.hidden = false;
@@ -431,7 +468,7 @@
       document.body.classList.remove("modal-open");
       stack = [];
     }
-  });
+  }
 
   const makeTile = (html, onOpen, cls) => {
     const t = el("article", "tile " + (cls || ""));
@@ -1222,6 +1259,7 @@
       ${metricsRow(t.metrics)}
       <h4 class="detail-sub">Development highlights</h4>
       <ul class="detail-list">${t.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${t.tools && t.tools.length ? `<h4 class="detail-sub">Tools Used</h4>${toolsHtml(t.tools, "badge")}` : ""}
       <div class="pub-block">
         <div class="pub-block-label">Publications</div>
         <ul class="pub-list">${pubListHtml(t.publications) || `<li class="pub-item pub-placeholder"><span class="needs-input">— add publication details —</span></li>`}</ul>
@@ -1311,29 +1349,52 @@
   // Each entry gives explicit top/bottom/left/right offsets (px, relative to
   // its section) instead of a generic corner, so placement can be tuned
   // precisely — e.g. pushed down past a grid's cards, or bled off-page.
+  // `m` (optional) is the phone/tablet placement (≤1150px): a smaller copy
+  // pinned in a section corner and bled off the edge. Entries without `m`
+  // are desktop-only, as before.
   const BG_DRAWINGS = [
-    { section: "experience", image: "front-upright-front.png", bottom: 10, left: -40, width: 580, rotate: 4 },
-    { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5 },
-    { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6 },
+    { section: "experience", image: "front-upright-front.png", bottom: 10, left: -40, width: 580, rotate: 4,
+      m: { top: 8, right: -56, width: 230 } },
+    { section: "thesis", image: "rocker-connect-front.png", bottom: 10, left: -40, width: 580, rotate: -5,
+      m: { bottom: 6, left: -56, width: 240 } },
+    { section: "projects", image: "a-arm-upper-front.png", top: 60, right: -40, width: 520, rotate: 6,
+      m: { top: 24, right: -64, width: 250 } },
     { section: "projects", image: "roll-damper-front.png", top: 800, left: -60, width: 900, rotate: -35, opacity: 0.22 },
     { section: "projects", image: "front-wing-profile.png", top: 1115, right: 0, width: 340, rotate: 5 },
-    { section: "projects", image: "rack-pinion-side.png", bottom: -35, left: -40, width: 700, rotate: 3 },
-    { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4 },
-    { section: "toolkit", image: "steering-wheel-front.png", bottom: 10, left: -40, width: 640, rotate: -5 },
-    { section: "toolkit", image: "rear-upright-front.png", top: 290, right: -40, width: 420, rotate: 5 },
-    { section: "learnings", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4 }
+    { section: "projects", image: "rack-pinion-side.png", bottom: -35, left: -40, width: 700, rotate: 3,
+      m: { bottom: 0, left: -70, width: 290 } },
+    { section: "education", image: "brake-disc-front.png", bottom: 10, left: -40, width: 640, rotate: 4,
+      m: { bottom: 6, left: -60, width: 240 } },
+    { section: "toolkit", image: "steering-wheel-front.png", bottom: 10, left: -40, width: 640, rotate: -5,
+      m: { bottom: 6, left: -60, width: 250 } },
+    { section: "toolkit", image: "rear-upright-front.png", top: 290, right: -40, width: 420, rotate: 5,
+      m: { top: 20, right: -56, width: 210 } },
+    { section: "learnings", image: "front-upright-struct-front.png", bottom: 10, right: -40, width: 600, rotate: 4,
+      m: { bottom: 6, right: -60, width: 240 } }
   ];
+  const drawingMq = window.matchMedia("(max-width: 1150px)");
+  const drawingEdges = ["top", "bottom", "left", "right"];
+  const drawingBoxes = [];
+  // Applies the desktop or the phone placement, whichever matches the screen.
+  // Rotation is set once and never touched here (the parallax adds a drift to
+  // the same transform).
+  function layoutDrawing(img, d) {
+    const p = drawingMq.matches && d.m ? d.m : d;
+    img.style.width = p.width + "px";
+    drawingEdges.forEach((k) => { img.style[k] = p[k] !== undefined ? p[k] + "px" : ""; });
+    img.style.opacity = !drawingMq.matches && d.opacity !== undefined ? d.opacity : "";
+  }
   function placeDrawing(host, d) {
-    const img = el("img", "bg-drawing");
+    const img = el("img", "bg-drawing" + (d.m ? " bg-drawing-m" : ""));
     img.src = "assets/img/bg-drawings/" + d.image;
     img.alt = "";
     img.setAttribute("aria-hidden", "true");
-    img.style.width = d.width + "px";
-    ["top", "bottom", "left", "right"].forEach((k) => { if (d[k] !== undefined) img.style[k] = d[k] + "px"; });
     img.style.transform = `${d.flipV ? "scaleY(-1) " : ""}rotate(${d.rotate}deg)`;
-    if (d.opacity !== undefined) img.style.opacity = d.opacity;
+    layoutDrawing(img, d);
+    drawingBoxes.push([img, d]);
     host.appendChild(img);
   }
+  drawingMq.addEventListener("change", () => drawingBoxes.forEach(([img, d]) => layoutDrawing(img, d)));
   BG_DRAWINGS.forEach((d) => {
     const host = $("#" + d.section);
     if (host) placeDrawing(host, d);
